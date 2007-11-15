@@ -1,0 +1,109 @@
+====================================================================
+LTCore v10.3.12 - Debug Log - Session : 7/17/2005 3:03:18 PM
+====================================================================
+[07/17/2005 15:03:18.156]   Building C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Logs\Errors.txt
+[07/17/2005 15:03:18.171]   Building C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Logs\Chatlog.txt
+[07/17/2005 15:03:18.187]   Building C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Logs\Events.txt
+[07/17/2005 15:03:18.328]   
+[07/17/2005 15:03:18.328]   *********************************
+[07/17/2005 15:03:18.343]   .....Initializing Plugin.....
+[07/17/2005 15:03:18.343]   *********************************
+[07/17/2005 15:03:18.359]   IPlugin_Initialize : loading Plugin View
+[07/17/2005 15:03:18.500]   ACHooks : True
+[07/17/2005 15:03:18.500]   [Engine] CreateEngineObjects - Start
+[07/17/2005 15:03:18.515]   [Engine] dbMonster.Initialize - before New DataFile
+[07/17/2005 15:03:18.515]   [Engine] dbMonster.Initialize - after New DataFile
+[07/17/2005 15:03:18.515]   [Engine] clsExceptions.Initialize
+[07/17/2005 15:03:18.531]   [Engine] clsExceptions.Init done
+[07/17/2005 15:03:18.546]   [Engine] CreateEngineObjects - End
+[07/17/2005 15:03:18.546]   [Engine] ----- Engine Initialization -----
+[07/17/2005 15:03:18.562]   [Engine] [Settings] Loaded Shared Settings from C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Shared.ini
+[07/17/2005 15:03:18.562]   [Engine] ---------------------------------
+[07/17/2005 15:03:18.578]   [Engine] [Filters] DarksideFilter loaded.
+[07/17/2005 15:03:18.578]   [Engine] [Filters] NetEcho loaded.
+[07/17/2005 15:03:18.593]   [Engine] [Filters] CharacterStats loaded.
+[07/17/2005 15:03:18.593]   [Engine] ---------------------------------
+[07/17/2005 15:03:18.609]   [Engine] [Plugin Interface] Initializing User Interface
+[07/17/2005 15:03:18.609]   [Engine] UIMain.Init() -- Begin
+[07/17/2005 15:03:18.625]   [Engine] UIMain.Init() -- End
+[07/17/2005 15:03:18.625]   [Engine] UIMacro.Init() -- Begin
+[07/17/2005 15:03:18.640]   [Engine] UIMacro.Init() -- End
+[07/17/2005 15:03:18.656]   [Engine] UIBuffs.Init() -- Begin
+[07/17/2005 15:03:18.656]   [Engine] UIBuffs.Init() -- End
+[07/17/2005 15:03:18.671]   [Engine] UIMonsters.Init() -- Begin
+[07/17/2005 15:03:18.671]   [Engine] UIMonsters.Init() -- End
+[07/17/2005 15:03:18.687]   [Engine] UIIrc.Init() -- Begin
+[07/17/2005 15:03:18.703]   [Engine] UIIrc.Init() -- End
+[07/17/2005 15:03:18.703]   [Engine] UIMsgLog.Init() -- Begin
+[07/17/2005 15:03:18.718]   [Engine] UIMsgLog.Init() -- End
+[07/17/2005 15:03:18.718]   [Engine] UIOptions.Init() -- Begin
+[07/17/2005 15:03:18.734]   [Engine] UIOptions.Init() -- End
+[07/17/2005 15:03:18.734]   [Engine] UIAntiBan.Init() -- Begin
+[07/17/2005 15:03:18.750]   [Engine] UIAntiBan.Init() -- End
+[07/17/2005 15:03:18.750]   [Engine] UILoot.Init() -- Begin
+[07/17/2005 15:03:18.765]   [Engine] UILoot.Init() -- End
+[07/17/2005 15:03:18.781]   [Engine] [Plugin Interface] Initialization complete (Errors: False)
+[07/17/2005 15:03:18.781]   [Engine] ---------------------------------
+[07/17/2005 15:03:18.796]   [Engine] Loading Spells Databases
+[07/17/2005 15:03:19.578]   [Engine] [HUD] Init Begin
+[07/17/2005 15:03:19.593]   [Engine] [HUD] Init Complete
+[07/17/2005 15:03:19.593]   [Engine] ---------------------------------
+[07/17/2005 15:03:19.609]   [Engine] ...Shared Config : True
+[07/17/2005 15:03:19.609]   [Engine] ...Filters : True
+[07/17/2005 15:03:19.625]   [Engine] ...UI : True
+[07/17/2005 15:03:19.625]   [Engine] ...Spells : True
+[07/17/2005 15:03:19.625]   [Engine] ---------------------------------
+[07/17/2005 15:03:19.640]   [Engine] Engine Init Complete : True
+[07/17/2005 15:03:19.640]   [Engine] *********************************
+[07/17/2005 15:03:19.656]   [Engine] 
+[07/17/2005 15:03:19.656]   Clock Timer Started
+[07/17/2005 15:03:19.671]   Plugin Initialization Complete : True
+[07/17/2005 15:03:19.671]   xCore.IPlugin_Initialize: player: LocalPlayer
+[07/17/2005 15:03:23.218]   LifeTank X -- http://www.darkside-online.com 
+[07/17/2005 15:03:23.234]   PAUSE:Pause Macro, CTRL+F1:Toggle Macro, CTRL+F2:Toggle HUD, CTRL+F3:Rebuff, CTRL+F4:Set Sticky
+[07/17/2005 15:03:23.250]   [Engine] IEngine_OnLogin
+[07/17/2005 15:03:23.250]   [Engine] --------- KeyBoard Settings ----------
+[07/17/2005 15:03:23.265]   [Engine] Change Combat : 192
+[07/17/2005 15:03:23.281]   [Engine] Ready         : 83
+[07/17/2005 15:03:23.281]   [Engine] Attack Low : 46
+[07/17/2005 15:03:23.296]   [Engine]        Medium : 35
+[07/17/2005 15:03:23.296]   [Engine]        High : 34
+[07/17/2005 15:03:23.312]   [Engine] Move   Forward : 38
+[07/17/2005 15:03:23.312]   [Engine]        Backward : 40
+[07/17/2005 15:03:23.328]   [Engine] Turn   Left : 37
+[07/17/2005 15:03:34.375]   <EVENT> Login Complete
+[07/17/2005 15:03:34.375]   [Engine] ----- Filters Test -------
+[07/17/2005 15:03:34.390]   [Engine] Server : Wintersebb
+[07/17/2005 15:03:34.390]   [Engine] Player GUID : 1342898851
+[07/17/2005 15:03:34.406]   [Engine] Player Name : Xeon Xo
+[07/17/2005 15:03:34.406]   [Engine] Monarch Name : The Highlanders
+[07/17/2005 15:03:34.421]   [Engine] Patron Name : Xeon's Mule
+[07/17/2005 15:03:34.421]   [Engine] --------------------------
+[07/17/2005 15:03:34.437]   [Engine] clsACWindow.UpdateDimensions - w:1280 h:960
+[07/17/2005 15:03:34.437]   [Engine] SetDefaultDmg : 0 (Slash) - From: clsSpells.FindAndSetDefaultDamage
+[07/17/2005 15:03:34.453]   [Engine] SetDefaultDmg : 1 (Bludgeon) - From: clsSpells.FindAndSetDefaultDamage
+[07/17/2005 15:03:34.453]   [Engine] SetDefaultDmg : 2 (Pierce) - From: clsSpells.FindAndSetDefaultDamage
+[07/17/2005 15:03:34.468]   [Engine] SetDefaultDmg : 3 (Fire) - From: clsSpells.FindAndSetDefaultDamage
+[07/17/2005 15:03:34.468]   [Engine] SetDefaultDmg : 4 (Cold) - From: clsSpells.FindAndSetDefaultDamage
+[07/17/2005 15:03:34.484]   [Engine] SetDefaultDmg : 5 (Acid) - From: clsSpells.FindAndSetDefaultDamage
+[07/17/2005 15:03:34.484]   [Engine] SetDefaultDmg : 6 (Lightning) - From: clsSpells.FindAndSetDefaultDamage
+[07/17/2005 15:03:34.500]   [Engine] Profile Xeon Xo doesnt exist. Creating one.
+[07/17/2005 15:03:34.500]   [Engine] Creating New Profile : Xeon Xo
+[07/17/2005 15:03:34.515]   [Engine] Copying folder C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Default to C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Xeon Xo (WE)
+[07/17/2005 15:03:34.515]   [Engine] MirrorFolder - Creating new folder : C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Xeon Xo (WE)
+[07/17/2005 15:03:34.531]   [Engine] ...Copied C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Default\AutoRespond.xml to C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Xeon Xo (WE)\AutoRespond.xml
+[07/17/2005 15:03:34.546]   [Engine] ...Copied C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Default\Exceptions.xml to C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Xeon Xo (WE)\Exceptions.xml
+[07/17/2005 15:03:34.562]   [Engine] ...Copied C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Default\LifeTank.ini to C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Xeon Xo (WE)\LifeTank.ini
+[07/17/2005 15:03:34.593]   [Engine] ...Copied C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Default\Monsters.dat to C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Xeon Xo (WE)\Monsters.dat
+[07/17/2005 15:03:34.609]   [Engine] MirrorFolder - Creating new folder : C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Xeon Xo (WE)\Buffs
+[07/17/2005 15:03:34.625]   [Engine] MirrorFolder - Creating new folder : C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Xeon Xo (WE)\Buffs\Default
+[07/17/2005 15:03:34.625]   [Engine] ...Copied C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Default\Buffs\Default\BuffsCfg.ini to C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Xeon Xo (WE)\Buffs\Default\BuffsCfg.ini
+[07/17/2005 15:03:34.656]   [Engine] MirrorFolder - Creating new folder : C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Xeon Xo (WE)\Logs
+[07/17/2005 15:03:34.656]   [Engine] ...Copied C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Default\Logs\Chatlog.txt to C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Xeon Xo (WE)\Logs\Chatlog.txt
+[07/17/2005 15:03:34.687]   [Engine] ...Copied C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Default\Logs\Debug.txt to C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Xeon Xo (WE)\Logs\Debug.txt
+[07/17/2005 15:03:34.703]   [Engine] ...Copied C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Default\Logs\Errors.txt to C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Xeon Xo (WE)\Logs\Errors.txt
+[07/17/2005 15:03:34.718]   [Engine] ...Copied C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Default\Logs\Events.txt to C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Xeon Xo (WE)\Logs\Events.txt
+[07/17/2005 15:03:34.734]   [Engine] MirrorFolder - Creating new folder : C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Xeon Xo (WE)\Macro
+[07/17/2005 15:03:34.750]   [Engine] MirrorFolder - Creating new folder : C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Xeon Xo (WE)\Macro\Default
+[07/17/2005 15:03:34.765]   [Engine] ...Copied C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Default\Macro\Default\MacroCfg.ini to C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Xeon Xo (WE)\Macro\Default\MacroCfg.ini
+[07/17/2005 15:03:34.812]   Building C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Xeon Xo (WE)\Logs\Debug.txt

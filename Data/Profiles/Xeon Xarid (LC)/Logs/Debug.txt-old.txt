@@ -1,0 +1,105 @@
+====================================================================
+LTCore v11.6.4 - Debug Log - Session : 2/24/2006 9:07:27 AM
+====================================================================
+[02/24/2006 09:07:27.906]  [Engine] [Profile] Loaded Config from C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Xeon Xarid (LC)\LifeTank.ini
+[02/24/2006 09:07:27.921]  [Engine] [LoadMacroProfile tursh] Loaded Macro Profile from C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Xeon Xarid (LC)\Macro\tursh\MacroCfg.ini
+[02/24/2006 09:07:27.937]  [Engine] [LoadBuffsProfile tursh] Loaded Buff Profile from C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Xeon Xarid (LC)\Buffs\tursh\BuffsCfg.ini
+[02/24/2006 09:07:27.937]  [Engine] [LoadLootProfile xeon] Loaded Loot Profile from C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Loot\xeon\LootCfg.ini
+[02/24/2006 09:07:27.968]  [Engine] Loot Filters loaded successfully from C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Xeon Xarid (LC)\LootFilters.dat
+[02/24/2006 09:07:28.546]  [Engine] [Database] Monsters loaded
+[02/24/2006 09:07:28.546]  [Engine] Exceptions - 0 items added to list
+[02/24/2006 09:07:28.546]  [Engine] [Plugin Interface] Loading User Interface Settings...
+[02/24/2006 09:07:28.546]  [Engine] UpdateProfileList
+[02/24/2006 09:07:28.593]  [Engine] UpdateProfileList
+[02/24/2006 09:07:28.609]  [Engine] UpdateProfileList
+[02/24/2006 09:07:28.625]  Default damage set to Pierce
+[02/24/2006 09:07:28.625]  [Engine] ---- NavType : 0
+[02/24/2006 09:07:28.640]  [Engine] clsUIMacro.LoadItemsList - Loading list from C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Xeon Xarid (LC)\Healitems.dat
+[02/24/2006 09:07:28.640]  [Engine] clsUIMacro.LoadItemsList - Loading list from C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Xeon Xarid (LC)\Stamitems.dat
+[02/24/2006 09:07:28.656]  [Engine] [UIBuffs] Loading controls value
+[02/24/2006 09:07:28.656]  [Engine] Filling Buff Spells lists controls (InitBuffsListControls)
+[02/24/2006 09:07:28.718]  [Engine] clsUIBuffs.InitBuffsListControls: lsOtherLifePros: Armor Other
+[02/24/2006 09:07:28.718]  [Engine] clsUIBuffs.InitBuffsListControls: lsOtherLifePros: Acid Protection Other
+[02/24/2006 09:07:28.718]  [Engine] clsUIBuffs.InitBuffsListControls: lsOtherLifePros: Bludgeoning Protection Other
+[02/24/2006 09:07:28.718]  [Engine] clsUIBuffs.InitBuffsListControls: lsOtherLifePros: Cold Protection Other
+[02/24/2006 09:07:28.718]  [Engine] clsUIBuffs.InitBuffsListControls: lsOtherLifePros: Fire Protection Other
+[02/24/2006 09:07:28.718]  [Engine] clsUIBuffs.InitBuffsListControls: lsOtherLifePros: Lightning Protection Other
+[02/24/2006 09:07:28.718]  [Engine] clsUIBuffs.InitBuffsListControls: lsOtherLifePros: Blade Protection Other
+[02/24/2006 09:07:28.718]  [Engine] clsUIBuffs.InitBuffsListControls: lsOtherLifePros: Piercing Protection Other
+[02/24/2006 09:07:28.734]  [Engine] [UIMonsters] Loading controls value
+[02/24/2006 09:07:28.734]  [Engine] UIMonsters.LoadMonsterList - Loading MonsterList
+[02/24/2006 09:07:30.109]  [Engine] [UIIrc] Loading controls value
+[02/24/2006 09:07:30.109]  [Engine] [UIMsgLog] Loading controls values
+[02/24/2006 09:07:30.109]  [Engine] [UIOptions] Loading controls settings
+[02/24/2006 09:07:30.140]  [Engine] C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Xeon Xarid (LC)\LifeTank.ini -- GetValue : could not find control: chkLockHuds
+[02/24/2006 09:07:30.140]  [Engine] C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Xeon Xarid (LC)\LifeTank.ini -- GetValue : could not find control: chkDisableLogs
+[02/24/2006 09:07:30.140]  [Engine] UILoot.LoadItemsList - Loading list from C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Xeon Xarid (LC)\FriendsList.dat
+[02/24/2006 09:07:30.140]  [Engine] UILoot.LoadItemsList - Loading list from C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Xeon Xarid (LC)\DetectList.dat
+[02/24/2006 09:07:30.140]  [Engine] [UIAntiBan] Loading controls settings
+[02/24/2006 09:07:30.156]  [Engine] [UILoot] Loading controls settings
+[02/24/2006 09:07:30.156]  [Engine] UILoot.LoadItemsList - Loading list from C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Loot\xeon\ItemsToPickup.dat
+[02/24/2006 09:07:30.171]  [Engine] UILoot.LoadItemsList - Loading list from C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Loot\xeon\ItemsToIgnore.dat
+[02/24/2006 09:07:30.171]  [Engine] UILoot.LoadItemsList - Loading list from C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Loot\xeon\CorpsesToLoot.dat
+[02/24/2006 09:07:30.187]  [Engine] [Plugin Interface] Loading complete (Errors :False)
+[02/24/2006 09:07:30.187]  [Engine] clsAutoResponse - 17 items loaded
+[02/24/2006 09:07:30.187]  [Engine] clsHUD.StartHUDs: Starting
+[02/24/2006 09:07:30.203]  [Engine] startMacroHUD called
+[02/24/2006 09:07:30.234]  [Engine] macroHUDpos: x: 20  y: 60
+[02/24/2006 09:07:30.234]  [Engine] clsHUD.moveHUD:  x:20   y:60
+[02/24/2006 09:07:30.250]  [Engine] clsHUD.moveHUD:  x:20   y:120
+[02/24/2006 09:07:30.265]  [Engine] clsHUD.moveHUD:  x:200   y:60
+[02/24/2006 09:07:30.281]  [Engine] clsHUD.moveHUD:  x:20   y:300
+[02/24/2006 09:07:30.281]  [Engine] clsHUD.moveHUD:  x:200   y:127
+[02/24/2006 09:07:30.281]  PAUSE:Pause Macro, CTRL+F1:Toggle Macro, CTRL+F2:Toggle HUD, CTRL+F3:Rebuff, CTRL+F4:Set Sticky
+[02/24/2006 09:08:15.484]  [Engine] clsACEvents: ForcedExit()
+[02/24/2006 09:08:15.484]  IPlugin2_Terminate - Start
+[02/24/2006 09:08:15.484]  [Engine] [Settings] Saving plugin configuration...
+[02/24/2006 09:08:15.484]  [Engine] [Settings] Saved : C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Shared.ini
+[02/24/2006 09:08:15.531]  [Engine] [Plugin Interface] Saving User Interface Settings...
+[02/24/2006 09:08:15.531]  [Engine] [UIMain] Saving controls settings
+[02/24/2006 09:08:15.531]  [Engine] [UIMacro] Saving controls settings
+[02/24/2006 09:08:15.531]  [Engine] clsUIMacro.SaveItemsList - Saving list to C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Xeon Xarid (LC)\Healitems.dat
+[02/24/2006 09:08:15.546]  [Engine] clsUIMacro.SaveItemsList - Saving list to C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Xeon Xarid (LC)\Stamitems.dat
+[02/24/2006 09:08:15.546]  [Engine] [UIBuffs] Saving controls settings
+[02/24/2006 09:08:15.562]  [Engine] [UIMonsters] Saving controls settings
+[02/24/2006 09:08:15.562]  [Engine] [UIIrc] Saving controls settings
+[02/24/2006 09:08:15.562]  [Engine] [UIMsgLog] Saving controls settings
+[02/24/2006 09:08:15.562]  [Engine] [UIOptions] Saving controls settings
+[02/24/2006 09:08:15.578]  [Engine] UILoot.SaveItemsList - Saving list to C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Xeon Xarid (LC)\FriendsList.dat
+[02/24/2006 09:08:15.578]  [Engine] UILoot.SaveItemsList - Saving list to C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Xeon Xarid (LC)\DetectList.dat
+[02/24/2006 09:08:15.593]  [Engine] [UIAntiBan] Saving controls settings
+[02/24/2006 09:08:15.593]  [Engine] [UILoot] Saving controls settings
+[02/24/2006 09:08:15.593]  [Engine] UILoot.SaveItemsList - Saving list to C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Loot\xeon\ItemsToPickup.dat
+[02/24/2006 09:08:15.609]  [Engine] UILoot.SaveItemsList - Saving list to C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Loot\xeon\ItemsToIgnore.dat
+[02/24/2006 09:08:15.625]  [Engine] UILoot.SaveItemsList - Saving list to C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Loot\xeon\CorpsesToLoot.dat
+[02/24/2006 09:08:15.687]  [Engine] Exceptions - 0 items saved to C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Xeon Xarid (LC)\Exceptions.xml
+[02/24/2006 09:08:15.687]  [Engine] [Plugin Interface] Save complete (Errors :False)
+[02/24/2006 09:08:15.750]  [Engine] Loot Filters (30) saved to C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Xeon Xarid (LC)\LootFilters.dat successfully
+[02/24/2006 09:08:15.750]  [Engine] [Settings] Saved : C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Xeon Xarid (LC)\LifeTank.ini
+[02/24/2006 09:08:15.765]  [Engine] [Settings] Saved : C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Xeon Xarid (LC)\Macro\tursh\MacroCfg.ini
+[02/24/2006 09:08:15.781]  [Engine] [Settings] Saved : C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Xeon Xarid (LC)\Buffs\tursh\BuffsCfg.ini
+[02/24/2006 09:08:15.781]  [Engine] [Settings] Saved : C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Loot\xeon\LootCfg.ini
+[02/24/2006 09:08:15.781]  Core.Terminate
+[02/24/2006 09:08:15.781]  [Engine] IEngine_Terminate - start
+[02/24/2006 09:08:15.781]  [Engine] DeleteEngineObjects - Start
+[02/24/2006 09:08:16.093]  [Engine] PluginInterface.Unload() -- Begin
+[02/24/2006 09:08:16.093]  [Engine] UIMain.Unload() -- Begin
+[02/24/2006 09:08:16.109]  [Engine] UIMain.Unload() -- End
+[02/24/2006 09:08:16.109]  [Engine] UIMacro.Unload() -- Begin
+[02/24/2006 09:08:16.109]  [Engine] UIMacro.Unload() -- End
+[02/24/2006 09:08:16.109]  [Engine] UIBuffs.Unload() -- Begin
+[02/24/2006 09:08:16.109]  [Engine] UIBuffs.Unload() -- End
+[02/24/2006 09:08:16.109]  [Engine] UIMonsters.Unload() -- Begin
+[02/24/2006 09:08:16.109]  [Engine] UIMonsters.Unload() -- End
+[02/24/2006 09:08:16.109]  [Engine] UIIrc.Unload() -- Begin
+[02/24/2006 09:08:16.109]  [Engine] UIIrc.Unload() -- End
+[02/24/2006 09:08:16.109]  [Engine] UIMsgLog.Unload() -- Begin
+[02/24/2006 09:08:16.109]  [Engine] UIMsgLog.Unload() -- End
+[02/24/2006 09:08:16.109]  [Engine] UIOptions.Unload() -- Begin
+[02/24/2006 09:08:16.109]  [Engine] UIOptions.Unload() -- End
+[02/24/2006 09:08:16.109]  [Engine] UIAntiBan.Unload() -- Begin
+[02/24/2006 09:08:16.109]  [Engine] UIAntiBan.Unload() -- End
+[02/24/2006 09:08:16.109]  [Engine] UILoot.Unload() -- Begin
+[02/24/2006 09:08:16.109]  [Engine] UILoot.Unload() -- End
+[02/24/2006 09:08:16.109]  [Engine] PluginInterface.Unload() -- End
+[02/24/2006 09:08:16.109]  [Engine] DeleteEngineObjects - End

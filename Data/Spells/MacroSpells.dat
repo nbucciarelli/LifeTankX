@@ -1,0 +1,70 @@
+<spl=Revitalize Other I><type=0><family=Revitalize Other><sch=0><lvl=1><id=1183><desc=Restores 11-20 points of the target's Stamina.>
+<spl=Revitalize Other II><type=0><family=Revitalize Other><sch=0><lvl=2><id=1184><desc=Restores 16-30 points of the target's Stamina.>
+<spl=Revitalize Other III><type=0><family=Revitalize Other><sch=0><lvl=3><id=1185><desc=Restores 26-50 points of the target's Stamina.>
+<spl=Revitalize Other IV><type=0><family=Revitalize Other><sch=0><lvl=4><id=1186><desc=Restores 38-75 points of the target's Stamina.>
+<spl=Revitalize Other V><type=0><family=Revitalize Other><sch=0><lvl=5><id=1187><desc=Restores 51-100 points of the target's Stamina.>
+<spl=Revitalize Other VI><type=0><family=Revitalize Other><sch=0><lvl=6><id=1188><desc=Restores 76-150 points of the target's Stamina.>
+<spl=Replenish><type=0><family=Revitalize Other><sch=0><lvl=7><id=2082><desc=Restores 100-175 points of the target's Stamina.>
+<spl=Revitalize Self I><type=0><family=Revitalize Self><sch=0><lvl=1><id=1177><desc=Restores 11-20 points of the caster's Stamina.>
+<spl=Revitalize Self II><type=0><family=Revitalize Self><sch=0><lvl=2><id=1178><desc=Restores 16-30 points of the caster's Stamina.>
+<spl=Revitalize Self III><type=0><family=Revitalize Self><sch=0><lvl=3><id=1179><desc=Restores 26-50 points of the caster's Stamina.>
+<spl=Revitalize Self IV><type=0><family=Revitalize Self><sch=0><lvl=4><id=1180><desc=Restores 38-75 points of the caster's Stamina.>
+<spl=Revitalize Self V><type=0><family=Revitalize Self><sch=0><lvl=5><id=1181><desc=Restores 51-100 points of the caster's Stamina.>
+<spl=Revitalize Self VI><type=0><family=Revitalize Self><sch=0><lvl=6><id=1182><desc=Restores 76-150 points of the caster's Stamina.>
+<spl=Robustification><type=0><family=Revitalize Self><sch=0><lvl=7><id=2083><desc=Restores 100-175 points of the caster's Stamina.>
+<spl=Infuse Health Other I><type=0><family=Infuse Health Other><sch=0><lvl=1><id=1225><desc=Drains one-quarter of the caster's Health and gives 75% of that to the target.>
+<spl=Infuse Health Other II><type=0><family=Infuse Health Other><sch=0><lvl=2><id=1226><desc=Drains one-quarter of the caster's Health and gives 90% of that to the target.>
+<spl=Infuse Health Other III><type=0><family=Infuse Health Other><sch=0><lvl=3><id=1227><desc=Drains one-quarter of the caster's Health and gives 105% of that to the target.>
+<spl=Infuse Health Other IV><type=0><family=Infuse Health Other><sch=0><lvl=4><id=1228><desc=Drains one-quarter of the caster's Health and gives 120% of that to the target.>
+<spl=Infuse Health Other V><type=0><family=Infuse Health Other><sch=0><lvl=5><id=1229><desc=Drains one-quarter of the caster's Health and gives 135% of that to the target.>
+<spl=Infuse Health Other VI><type=0><family=Infuse Health Other><sch=0><lvl=6><id=1230><desc=Drains one-quarter of the caster's Health and gives 150% of that to the target.>
+<spl=Gift of Vitality><type=0><family=Infuse Health Other><sch=0><lvl=7><id=2335><desc=Drains one-quarter of the caster's Health and gives 175% of that to the target.>
+<spl=Infuse Stamina Other I><type=0><family=Infuse Stamina Other><sch=0><lvl=1><id=1243><desc=Drains one-quarter of the caster's Stamina and gives 75% of that to the target.>
+<spl=Infuse Stamina Other II><type=0><family=Infuse Stamina Other><sch=0><lvl=2><id=1244><desc=Drains one-quarter of the caster's Stamina and gives 90% of that to the target.>
+<spl=Infuse Stamina Other III><type=0><family=Infuse Stamina Other><sch=0><lvl=3><id=1245><desc=Drains one-quarter of the caster's Stamina and gives 105% of that to the target.>
+<spl=Infuse Stamina Other IV><type=0><family=Infuse Stamina Other><sch=0><lvl=4><id=1246><desc=Drains one-quarter of the caster's Stamina and gives 120% of that to the target.>
+<spl=Infuse Stamina Other V><type=0><family=Infuse Stamina Other><sch=0><lvl=5><id=1247><desc=Drains one-quarter of the caster's Stamina and gives 135% of that to the target.>
+<spl=Infuse Stamina Other VI><type=0><family=Infuse Stamina Other><sch=0><lvl=6><id=1248><desc=Drains one-quarter of the caster's Stamina and gives 150% of that to the target.>
+<spl=Gift of Vigor><type=0><family=Infuse Stamina Other><sch=0><lvl=7><id=2337><desc=Drains one-quarter of the caster's Stamina and gives 175% of that to the target.>
+<spl=Infuse Mana Other I><type=0><family=Infuse Mana Other><sch=0><lvl=1><id=9><desc=Drains one-quarter of the caster's Mana and gives 75% of that to the target.>
+<spl=Infuse Mana Other II><type=0><family=Infuse Mana Other><sch=0><lvl=2><id=1255><desc=Drains one-quarter of the caster's Mana and gives 90% of that to the target.>
+<spl=Infuse Mana Other III><type=0><family=Infuse Mana Other><sch=0><lvl=3><id=1256><desc=Drains one-quarter of the caster's Mana and gives 105% of that to the target.>
+<spl=Infuse Mana Other IV><type=0><family=Infuse Mana Other><sch=0><lvl=4><id=1257><desc=Drains one-quarter of the caster's Mana and gives 120% of that to the target.>
+<spl=Infuse Mana Other V><type=0><family=Infuse Mana Other><sch=0><lvl=5><id=1258><desc=Drains one-quarter of the caster's Mana and gives 135% of that to the target.>
+<spl=Infuse Mana Other VI><type=0><family=Infuse Mana Other><sch=0><lvl=6><id=1259><desc=Drains one-quarter of the caster's Mana and gives 150% of that to the target.>
+<spl=Gift of Essence><type=0><family=Infuse Mana Other><sch=0><lvl=7><id=2336><desc=Drains one-quarter of the caster's Mana and gives 175% of that to the target.>
+<spl=Heal Self I><type=0><family=Heal Self><sch=0><lvl=1><id=6><desc=Restores 8-15 points of the caster's Health.>
+<spl=Heal Self II><type=0><family=Heal Self><sch=0><lvl=2><id=1157><desc=Restores 11-20 points of the caster's Health.>
+<spl=Heal Self III><type=0><family=Heal Self><sch=0><lvl=3><id=1158><desc=Restores 16-30 points of the caster's Health.>
+<spl=Heal Self IV><type=0><family=Heal Self><sch=0><lvl=4><id=1159><desc=Restores 26-50 points of the caster's Health.>
+<spl=Heal Self V><type=0><family=Heal Self><sch=0><lvl=5><id=1160><desc=Restores 38-75 points of the caster's Health.>
+<spl=Heal Self VI><type=0><family=Heal Self><sch=0><lvl=6><id=1161><desc=Restores 51-100 points of the caster's Health.>
+<spl=Adja's Intervention><type=0><family=Heal Self><sch=0><lvl=7><id=2073><desc=Restores 75-125 points of the caster's Health.>
+<spl=Heal Other I><type=0><family=Heal Other><sch=0><lvl=1><id=5><desc=Restores 8-15 points of the target's Health.>
+<spl=Heal Other II><type=0><family=Heal Other><sch=0><lvl=2><id=1162><desc=Restores 11-20 points of the target's Health.>
+<spl=Heal Other III><type=0><family=Heal Other><sch=0><lvl=3><id=1163><desc=Restores 16-30 points of the target's Health.>
+<spl=Heal Other IV><type=0><family=Heal Other><sch=0><lvl=4><id=1164><desc=Restores 26-50 points of the target's Health.>
+<spl=Heal Other V><type=0><family=Heal Other><sch=0><lvl=5><id=1165><desc=Restores 38-75 points of the target's Health.>
+<spl=Heal Other VI><type=0><family=Heal Other><sch=0><lvl=6><id=1166><desc=Restores 51-100 points of the target's Health.>
+<spl=Adja's Gift><type=0><family=Heal Other><sch=0><lvl=7><id=2072><desc=Restores 75-125 points of the target's Health.>
+<spl=Stamina to Mana Self I><type=0><family=Stamina to Mana Self><sch=0><lvl=1><id=1676><desc=Drains one-half of the caster's Stamina and gives 75% of that to his/her Mana.>
+<spl=Stamina to Mana Self II><type=0><family=Stamina to Mana Self><sch=0><lvl=2><id=1677><desc=Drains one-half of the caster's Stamina and gives 90% of that to his/her Mana.>
+<spl=Stamina to Mana Self III><type=0><family=Stamina to Mana Self><sch=0><lvl=3><id=1678><desc=Drains one-half of the caster's Stamina and gives 105% of that to his/her Mana.>
+<spl=Stamina to Mana Self IV><type=0><family=Stamina to Mana Self><sch=0><lvl=4><id=1679><desc=Drains one-half of the caster's Stamina and gives 120% of that to his/her Mana.>
+<spl=Stamina to Mana Self V><type=0><family=Stamina to Mana Self><sch=0><lvl=5><id=1680><desc=Drains one-half of the caster's Stamina and gives 135% of that to his/her Mana.>
+<spl=Stamina to Mana Self VI><type=0><family=Stamina to Mana Self><sch=0><lvl=6><id=1681><desc=Drains one-half of the caster's Stamina and gives 150% of that to his/her Mana.>
+<spl=Meditative Trance><type=0><family=Stamina to Mana Self><sch=0><lvl=7><id=2345><desc=Drains one-half of the caster's Stamina and gives 175% of that to his/her Mana.>
+<spl=Stamina to Health Self I><type=0><family=Stamina to Health Self><sch=0><lvl=1><id=1664><desc=Drains one-half of the caster's Stamina and gives 75% of that to his/her Health.>
+<spl=Stamina to Health Self II><type=0><family=Stamina to Health Self><sch=0><lvl=2><id=1665><desc=Drains one-half of the caster's Stamina and gives 90% of that to his/her Health.>
+<spl=Stamina to Health Self III><type=0><family=Stamina to Health Self><sch=0><lvl=3><id=1666><desc=Drains one-half of the caster's Stamina and gives 105% of that to his/her Health.>
+<spl=Stamina to Health Self IV><type=0><family=Stamina to Health Self><sch=0><lvl=4><id=1667><desc=Drains one-half of the caster's Stamina and gives 120% of that to his/her Health.>
+<spl=Stamina to Health Self V><type=0><family=Stamina to Health Self><sch=0><lvl=5><id=1668><desc=Drains one-half of the caster's Stamina and gives 135% of that to his/her Health.>
+<spl=Stamina to Health Self VI><type=0><family=Stamina to Health Self><sch=0><lvl=6><id=1669><desc=Drains one-half of the caster's Stamina and gives 150% of that to his/her Health.>
+<spl=Rushed Recovery><type=0><family=Stamina to Health Self><sch=0><lvl=7><id=2343><desc=Drains one-half of the caster's Stamina and gives 175% of that to his/her Health.>
+<spl=Health to Mana Self I><type=0><family=Health to Mana Self><sch=0><lvl=1><id=1278><desc=Drains one-half of the caster's Health and gives 75% of that to his/her Mana.>
+<spl=Health to Mana Self II><type=0><family=Health to Mana Self><sch=0><lvl=2><id=1279><desc=Drains one-half of the caster's Health and gives 90% of that to his/her Mana.>
+<spl=Health to Mana Self III><type=0><family=Health to Mana Self><sch=0><lvl=3><id=1280><desc=Drains one-half of the caster's Health and gives 105% of that to his/her Mana.>
+<spl=Health to Mana Self IV><type=0><family=Health to Mana Self><sch=0><lvl=4><id=1702><desc=Drains one-half of the caster's Health and gives 120% of that to his/her Mana.>
+<spl=Health to Mana Self V><type=0><family=Health to Mana Self><sch=0><lvl=5><id=1703><desc=Drains one-half of the caster's Health and gives 135% of that to his/her Mana.>
+<spl=Health to Mana Self VI><type=0><family=Health to Mana Self><sch=0><lvl=6><id=1704><desc=Drains one-half of the caster's Health and gives 150% of that to his/her Mana.>
+<spl=Cannibalize><type=0><family=Health to Mana Self><sch=0><lvl=7><id=2332><desc=Drains one-half of the caster's Health and gives 175% of that to his/her Mana.>

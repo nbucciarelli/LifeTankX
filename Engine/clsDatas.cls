@@ -1,0 +1,330 @@
+VERSION 1.0 CLASS
+BEGIN
+  MultiUse = -1  'True
+  Persistable = 0  'NotPersistable
+  DataBindingBehavior = 0  'vbNone
+  DataSourceBehavior  = 0  'vbNone
+  MTSTransactionMode  = 0  'NotAnMTSObject
+END
+Attribute VB_Name = "clsDatas"
+Attribute VB_GlobalNameSpace = False
+Attribute VB_Creatable = False
+Attribute VB_PredeclaredId = False
+Attribute VB_Exposed = False
+Option Explicit
+
+Public mLogOutputPath As String
+Public mDebugMode As Boolean
+
+Public mdbMonsters As dbMonsters    'monsters database
+Private m_LootFilters As clsLootFiltersManager
+Private m_Exceptions As clsExceptions
+Private m_AutoResponse As clsAutoResponse
+
+Public memCurrentItem1 As Long
+Public memCurrentItem2 As Long
+Public memCastSpell As Long
+
+Public mMaxWarLevel As Integer
+Public mMaxVulnLevel As Integer
+Public mMaxBuffLevel As Integer
+
+'Macro equipment
+Private m_WeaponGUID As Long
+Private m_objWeapon As acObject
+Private m_ShieldGUID As Long
+Private m_objShield As acObject
+Private m_BowGUID As Long
+Private m_objBow As acObject
+Private m_WandGUID As Long
+Private m_objWand As acObject
+    
+Private m_sArrows As String
+Private m_sArrowHead As String
+Private m_sArrowShaft As String
+
+'#####################################################################################
+'#
+'#                          CONSTRUCTOR / DESTRUCTOR
+'#
+'#####################################################################################
+
+Private Sub Class_Initialize()
+On Error GoTo ErrorHandler
+
+    mLogOutputPath = PATH_LOGS
+    mDebugMode = False
+    
+    mMaxWarLevel = 7
+    mMaxVulnLevel = 7
+    mMaxBuffLevel = 7
+    
+    m_WeaponGUID = 0
+    m_ShieldGUID = 0
+    m_BowGUID = 0
+    m_WandGUID = 0
+    
+    Set m_objBow = Nothing
+    Set m_objShield = Nothing
+    Set m_objWeapon = Nothing
+    Set m_objWand = Nothing
+
+    Set mdbMonsters = New dbMonsters
+    Set m_LootFilters = New clsLootFiltersManager
+    Set m_Exceptions = New clsExceptions
+    Set m_AutoResponse = New clsAutoResponse
+    
+Fin:
+    Exit Sub
+ErrorHandler:
+    PrintErrorMessage "clsDatas.Class_Initialize - " & Err.Description
+    Resume Fin
+End Sub
+
+Private Sub Class_Terminate()
+    Set mdbMonsters = Nothing
+    Set m_objWeapon = Nothing
+    Set m_objShield = Nothing
+    Set m_objBow = Nothing
+    Set m_objShield = Nothing
+    Set m_Exceptions = Nothing
+    Set m_LootFilters = Nothing
+    Set m_AutoResponse = Nothing
+End Sub
+
+'#####################################################################################
+'#
+'#                                PROPERTIES
+'#
+'#####################################################################################
+Public Property Get LootFilters() As clsLootFiltersManager
+    Set LootFilters = m_LootFilters
+End Property
+
+Public Property Get Exceptions() As clsExceptions
+    Set Exceptions = m_Exceptions
+End Property
+
+Public Property Get getClassAutoResponse() As clsAutoResponse
+    Set getClassAutoResponse = m_AutoResponse
+End Property
+
+Public Property Get MinManaThreshold() As Integer
+    MinManaThreshold = g_ui.Macro.sldMana.SliderPosition
+End Property
+
+Public Property Get MinStamThreshold() As Integer
+    MinStamThreshold = g_ui.Macro.sldStam.SliderPosition
+End Property
+
+Public Property Get MinHealthThreshold() As Integer
+    MinHealthThreshold = g_ui.Macro.sldHealth.SliderPosition
+End Property
+
+Public Property Get CriticalHealthThreshold() As Integer
+    CriticalHealthThreshold = g_ui.Macro.sldCritHealth.SliderPosition
+End Property
+
+Public Property Get FellowHealthThreshold() As Integer
+    FellowHealthThreshold = g_ui.Macro.sldFellowHealth.SliderPosition
+End Property
+
+Public Property Get FellowStamThreshold() As Integer
+    FellowStamThreshold = g_ui.Macro.sldFellowStam.SliderPosition
+End Property
+
+Public Property Get SalvagerFrequency() As Integer
+    SalvagerFrequency = Val(g_ui.Loot.txtSalvageFrequency.Text)
+End Property
+
+'Ranges
+Public Property Get DangerZoneRadius() As Integer
+    DangerZoneRadius = Val(g_ui.Macro.txtDangerZone.Text)
+End Property
+
+Public Property Get MacroSpellsLevel() As Integer
+    MacroSpellsLevel = g_ui.Macro.chMacroSpellsLevel.Selected + 1
+End Property
+
+Public Property Get HealSpellsLevel() As Integer
+    HealSpellsLevel = g_ui.Macro.chHealSpellsLevel.Selected + 1
+End Property
+
+Public Property Get EmergencySpellsLevel() As Integer
+    EmergencySpellsLevel = g_ui.Macro.chEmergencySpellsLevel.Selected + 1
+End Property
+
+Public Property Get BuffsSpellsLevel() As Integer
+    BuffsSpellsLevel = g_ui.Buffs.chMaxBuffSpellLevel.Selected + 1
+End Property
+
+Public Property Get RebuffInterval() As Integer
+    RebuffInterval = Val(g_ui.Buffs.txtRebuffInterval.Text)
+End Property
+
+Public Property Get NumContinuousBuffs() As Integer
+    NumContinuousBuffs = Val(g_ui.Buffs.txtNumContinuousBuffs.Text)
+End Property
+
+Public Property Get LootSearchRadius() As Integer
+    LootSearchRadius = Val(g_ui.Loot.txtPickupRange.Text)
+End Property
+
+Public Property Get LootMinValue() As Long
+    LootMinValue = Val(g_ui.Loot.txtPickupMinValue.Text)
+End Property
+
+Public Property Get LootMinBurdenRatio() As Integer
+    LootMinBurdenRatio = Val(g_ui.Loot.txtBurdenRatio.Text)
+End Property
+
+Public Property Get CastBreakerTime() As Integer    'in Seconds!
+    'CastBreakerTime = g_ui.Macro.sldCastBreaker.SliderPosition
+    CastBreakerTime = 1
+End Property
+
+'------------------------------------
+'Macro Equipments
+'------------------------------------
+'GET Objects
+Public Property Get Weapon() As acObject
+    Set Weapon = m_objWeapon
+End Property
+
+Public Property Get Shield() As acObject
+    Set Shield = m_objShield
+End Property
+
+Public Property Get Bow() As acObject
+    Set Bow = m_objBow
+End Property
+
+Public Property Get Wand() As acObject
+    Set Wand = m_objWand
+End Property
+
+'Fletching
+Public Property Get Arrows() As String
+    Arrows = m_sArrows
+End Property
+
+Public Property Let Arrows(ByVal sVal As String)
+    m_sArrows = sVal
+End Property
+
+Public Property Get ArrowHead() As String
+    ArrowHead = m_sArrowHead
+End Property
+
+Public Property Let ArrowHead(ByVal sVal As String)
+    m_sArrowHead = sVal
+End Property
+
+Public Property Get ArrowShaft() As String
+    ArrowShaft = m_sArrowShaft
+End Property
+
+Public Property Let ArrowShaft(ByVal sVal As String)
+    m_sArrowShaft = sVal
+End Property
+
+'GET GUIDs
+Public Property Get WeaponGUID() As Long
+    WeaponGUID = m_WeaponGUID
+End Property
+
+Public Property Get ShieldGUID() As Long
+    ShieldGUID = m_ShieldGUID
+End Property
+
+Public Property Get BowGUID() As Long
+    BowGUID = m_BowGUID
+End Property
+
+Public Property Get WandGUID() As Long
+    WandGUID = m_WandGUID
+End Property
+
+'SET GUIDs
+Public Property Let WeaponGUID(ByVal lVal As Long)
+    Call SetGUID(lVal, m_WeaponGUID, m_objWeapon)
+End Property
+
+Public Property Let ShieldGUID(ByVal lVal As Long)
+    Call SetGUID(lVal, m_ShieldGUID, m_objShield)
+End Property
+
+Public Property Let BowGUID(ByVal lVal As Long)
+    Call SetGUID(lVal, m_BowGUID, m_objBow)
+End Property
+
+Public Property Let WandGUID(ByVal lVal As Long)
+    Call SetGUID(lVal, m_WandGUID, m_objWand)
+End Property
+
+'#####################################################################################
+'#
+'#                                  PRIVATE
+'#
+'#####################################################################################
+
+Private Sub SetGUID(ByVal lVal As Long, ByRef lGUID As Long, ByRef objItem As acObject)
+    lGUID = lVal
+    
+    If lVal = 0 Then Exit Sub
+    
+    If Valid(g_Objects) Then
+        If g_Objects.Items.Inv.Exists(lVal) Then
+            Set objItem = g_Objects.Items.Inv(lVal)
+        Else
+            Set objItem = Nothing
+        End If
+    Else
+        PrintErrorMessage "clsDatas.SetGUID : g_objects is NULL"
+        Set objItem = Nothing
+    End If
+End Sub
+
+'#####################################################################################
+'#
+'#                                  PUBLIC
+'#
+'#####################################################################################
+
+'Public Sub GetMemlocks()
+'    MyDebug "Retreiving memlocs from xml for castspell function"
+'    memCurrentItem1 = g_PluginSite.QueryMemLoc("CurrentItem1")
+'    memCurrentItem2 = g_PluginSite.QueryMemLoc("CurrentItem2")
+'    memCastSpell = g_PluginSite.QueryMemLoc("CastSpell")
+'    MyDebug ".....CurrentItem1 = " & memCurrentItem1 & " [Hex=" & Hex(memCurrentItem1) & "]"
+'    MyDebug ".....CurrentItem2 = " & memCurrentItem2 & " [Hex=" & Hex(memCurrentItem2) & "]"
+'    MyDebug ".....CastSpell = " & memCastSpell & " [Hex=" & Hex(memCastSpell) & "]"
+'End Sub
+
+
+Public Sub SetDebugMode(ByVal bVal As Boolean)
+    mDebugMode = bVal
+End Sub
+
+Public Function LoadMonsters(Optional ByVal sBaseFolder As String = "") As Boolean
+    If sBaseFolder = "" Then
+        sBaseFolder = App.Path & "\" & PATH_DATA
+    End If
+    
+    LoadMonsters = mdbMonsters.LoadDatabase(sBaseFolder & "\" & FILE_MONSTERS)
+End Function
+
+Public Function LoadLootFilters(Optional ByVal sBaseFolder As String = "") As Boolean
+    If sBaseFolder = "" Then
+        sBaseFolder = App.Path & "\" & PATH_DATA
+    End If
+    
+    LoadLootFilters = m_LootFilters.LoadFilters(sBaseFolder & "\" & FILE_LOOT_FILTERS)
+End Function
+
+Public Function SaveLootFilters(Optional ByVal sPath As String = "") As Boolean
+    SaveLootFilters = m_LootFilters.SaveFilters(sPath)
+End Function
+
+
+

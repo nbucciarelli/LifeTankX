@@ -1,0 +1,104 @@
+====================================================================
+LTCore v11.6.4 - Debug Log - Session : 2/24/2006 9:14:03 AM
+====================================================================
+[02/24/2006 09:14:03.250]   Building C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Logs\Errors.txt
+[02/24/2006 09:14:03.250]   Building C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Logs\Chatlog.txt
+[02/24/2006 09:14:03.265]   Building C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Logs\Events.txt
+[02/24/2006 09:14:03.281]   clsServices.Class_Initialize
+[02/24/2006 09:14:03.296]   clsACEvetns.SetDarksideFilter
+[02/24/2006 09:14:03.484]   <EVENT> Main.Class_Initialize - done
+[02/24/2006 09:14:03.484]   
+[02/24/2006 09:14:03.500]   *********************************
+[02/24/2006 09:14:03.500]   .....Initializing Plugin.....
+[02/24/2006 09:14:03.515]   *********************************
+[02/24/2006 09:14:03.515]   ACHooks : True
+[02/24/2006 09:14:03.515]   IPlugin2_Initialize : loading Plugin View
+[02/24/2006 09:14:03.703]   clsACEvetns.SetDarksideFilter
+[02/24/2006 09:14:03.718]   <EVENT> Core.Class_Initialize - done
+[02/24/2006 09:14:03.734]   Core.Initialize
+[02/24/2006 09:14:03.734]   [Engine] CreateEngineObjects - Start
+[02/24/2006 09:14:03.734]   [Engine] dbMonster.Initialize - before New DataFile
+[02/24/2006 09:14:03.750]   [Engine] dbMonster.Initialize - after New DataFile
+[02/24/2006 09:14:03.750]   [Engine] clsExceptions.Initialize
+[02/24/2006 09:14:03.765]   [Engine] clsExceptions.Init done
+[02/24/2006 09:14:03.781]   [Engine] CreateEngineObjects - End
+[02/24/2006 09:14:03.781]   [Engine] ----- Engine Initialization -----
+[02/24/2006 09:14:03.796]   [Engine] [Settings] Loaded Shared Settings from C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Shared.ini
+[02/24/2006 09:14:03.796]   [Engine] ---------------------------------
+[02/24/2006 09:14:03.812]   [Engine] [Filters] DarksideFilter loaded.
+[02/24/2006 09:14:03.812]   [Engine] [Filters] CharacterStats loaded.
+[02/24/2006 09:14:03.828]   [Engine] [Filters] World Filter loaded.
+[02/24/2006 09:14:03.828]   [Engine] ---------------------------------
+[02/24/2006 09:14:03.843]   [Engine] [Plugin Interface] Initializing User Interface
+[02/24/2006 09:14:03.843]   [Engine] UIMain.Init() -- Begin
+[02/24/2006 09:14:03.859]   [Engine] UIMain.Init() -- End
+[02/24/2006 09:14:03.859]   [Engine] UIMacro.Init() -- Begin
+[02/24/2006 09:14:03.875]   [Engine] UIMacro.Init() -- End
+[02/24/2006 09:14:03.890]   [Engine] UIBuffs.Init() -- Begin
+[02/24/2006 09:14:03.906]   [Engine] UIBuffs.Init() -- End
+[02/24/2006 09:14:03.921]   [Engine] UIMonsters.Init() -- Begin
+[02/24/2006 09:14:03.921]   [Engine] UIMonsters.Init() -- End
+[02/24/2006 09:14:03.937]   [Engine] UIIrc.Init() -- Begin
+[02/24/2006 09:14:03.937]   [Engine] UIIrc.Init() -- End
+[02/24/2006 09:14:03.953]   [Engine] UIMsgLog.Init() -- Begin
+[02/24/2006 09:14:03.953]   [Engine] UIMsgLog.Init() -- End
+[02/24/2006 09:14:03.968]   [Engine] UIOptions.Init() -- Begin
+[02/24/2006 09:14:03.984]   [Engine] UIOptions.Init() -- End
+[02/24/2006 09:14:04.000]   [Engine] UIAntiBan.Init() -- Begin
+[02/24/2006 09:14:04.000]   [Engine] UIAntiBan.Init() -- End
+[02/24/2006 09:14:04.015]   [Engine] UILoot.Init() -- Begin
+[02/24/2006 09:14:04.031]   [Engine] UILoot.Init() -- End
+[02/24/2006 09:14:04.046]   [Engine] [Plugin Interface] Initialization complete (Errors: False)
+[02/24/2006 09:14:04.046]   [Engine] ---------------------------------
+[02/24/2006 09:14:04.046]   [Engine] Loading Spells Databases
+[02/24/2006 09:14:04.968]   [Engine] [HUD] Init Begin
+[02/24/2006 09:14:04.984]   [Engine] [HUD] Init Complete
+[02/24/2006 09:14:04.984]   [Engine] ---------------------------------
+[02/24/2006 09:14:05.000]   [Engine] ...Shared Config : True
+[02/24/2006 09:14:05.000]   [Engine] ...Filters : True
+[02/24/2006 09:14:05.015]   [Engine] ...UI : True
+[02/24/2006 09:14:05.015]   [Engine] ...Spells : True
+[02/24/2006 09:14:05.031]   [Engine] ---------------------------------
+[02/24/2006 09:14:05.031]   [Engine] Engine Init Complete : True
+[02/24/2006 09:14:05.046]   [Engine] *********************************
+[02/24/2006 09:14:05.046]   [Engine] 
+[02/24/2006 09:14:05.062]   Clock Timer Started
+[02/24/2006 09:14:05.062]   Plugin Initialization Complete : True
+[02/24/2006 09:14:05.125]   [Engine] clsHUD_DeviceLost called
+[02/24/2006 09:14:05.140]   [Engine] clsHUD.createAllHuds
+[02/24/2006 09:14:05.140]   [Engine] clsHUD.createAllHuds: Removing any existing huds
+[02/24/2006 09:14:05.156]   [Engine] clsHUD.removeAllHuds called
+[02/24/2006 09:14:05.156]   [Engine] clsHUD.createAllHuds: now creating individual huds
+[02/24/2006 09:14:05.171]   [Engine] clsHUD.createMacroHUD
+[02/24/2006 09:14:05.171]   [Engine] createMacroHUD: no existing HUD, so creating a default one
+[02/24/2006 09:14:05.187]   [Engine] clsHUD.createStatsHUD
+[02/24/2006 09:14:05.187]   [Engine] clsHUD.createInvHUD
+[02/24/2006 09:14:05.203]   [Engine] clsHUD.createDebugHUD
+[02/24/2006 09:14:05.203]   [Engine] clsHUD.createDOTHUD
+[02/24/2006 09:14:05.218]   [Engine] clsHUD.moveHUD:  x:20   y:60
+[02/24/2006 09:14:05.218]   [Engine] clsHUD.moveHUD:  x:20   y:120
+[02/24/2006 09:14:05.234]   [Engine] clsHUD.moveHUD:  x:200   y:60
+[02/24/2006 09:14:05.250]   [Engine] clsHUD.moveHUD:  x:20   y:300
+[02/24/2006 09:14:05.250]   [Engine] clsHUD.moveHUD:  x:200   y:127
+[02/24/2006 09:14:07.984]   m_DSFilter_Onlogin -- start
+[02/24/2006 09:14:07.984]   [Engine] IEngine_OnLogin
+[02/24/2006 09:14:08.000]   [Engine] --------- KeyBoard Settings ----------
+[02/24/2006 09:14:08.031]   [Engine] Ready         : 89
+[02/24/2006 09:14:08.031]   [Engine] Jump          : 32
+[02/24/2006 09:14:08.046]   [Engine] Attack Low : 46
+[02/24/2006 09:14:08.046]   [Engine]        Medium : 35
+[02/24/2006 09:14:08.062]   [Engine]        High : 34
+[02/24/2006 09:14:08.062]   [Engine] *** Checking for Correct windows resolution ***
+[02/24/2006 09:14:08.078]   [Engine] acRect dimensions: 1152 x 864
+[02/24/2006 09:14:08.078]   Window: 1152 x 864
+[02/24/2006 09:14:08.093]   [Engine] IEngine_OnLogin all done
+[02/24/2006 09:14:15.437]   <EVENT> Login Complete
+[02/24/2006 09:14:15.453]   [Engine] ----- Filters Test -------
+[02/24/2006 09:14:15.453]   [Engine] Server : Leafcull
+[02/24/2006 09:14:15.468]   [Engine] Player GUID : 1343087348
+[02/24/2006 09:14:15.468]   [Engine] Player Name : Xeon Xarid
+[02/24/2006 09:14:15.484]   [Engine] Monarch Name : Scarey Mary
+[02/24/2006 09:14:15.500]   [Engine] Patron Name : Scarey Mary
+[02/24/2006 09:14:15.500]   [Engine] --------------------------
+[02/24/2006 09:14:15.515]   [Engine] IEngine_OnLoginComplete: before LoadProfile for: Xeon Xarid
+[02/24/2006 09:14:15.515]   [Engine] clsProfile.LoadProfile for: Xeon Xarid

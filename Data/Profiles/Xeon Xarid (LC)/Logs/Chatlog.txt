@@ -1,0 +1,6 @@
+====================================================================
+LTCore v11.6.4 - Chat Log - Session : 2/24/2006 9:14:15 AM
+====================================================================
+[02/24/2006 09:15:25.671]  Ruby Jet's stats since last restart: 553 Reqs, 59621 Spells, 0 Fizzles, 5364 Prismatics, 42 Platinum Scarabs burned. -b-
+[02/24/2006 09:15:58.890]  You say, "cool, thanks"
+[02/24/2006 09:16:05.328]  Astryn says, "thank you sir"

@@ -1,0 +1,63 @@
+<spl=Fire Vulnerability Other I><type=8><family=Fire Vulnerability Other><sch=0><lvl=1><elemt=3><id=21><icon=100668291><desc=Increases damage the target takes from Fire by 10%.>
+<spl=Fire Vulnerability Other II><type=8><family=Fire Vulnerability Other><sch=0><lvl=2><elemt=3><id=1104><icon=100668291><desc=Increases damage the target takes from Fire by 25%.>
+<spl=Fire Vulnerability Other III><type=8><family=Fire Vulnerability Other><sch=0><lvl=3><elemt=3><id=1105><icon=100668291><desc=Increases damage the target takes from Fire by 50%.>
+<spl=Fire Vulnerability Other IV><type=8><family=Fire Vulnerability Other><sch=0><lvl=4><elemt=3><id=1106><icon=100668291><desc=Increases damage the target takes from Fire by 75%.>
+<spl=Fire Vulnerability Other V><type=8><family=Fire Vulnerability Other><sch=0><lvl=5><elemt=3><id=1107><icon=100668291><desc=Increases damage the target takes from Fire by 100%.>
+<spl=Fire Vulnerability Other VI><type=8><family=Fire Vulnerability Other><sch=0><lvl=6><elemt=3><id=1108><icon=100668291><desc=Increases damage the target takes from Fire by 150%.>
+<spl=Inferno's Gift><type=8><family=Fire Vulnerability Other><sch=0><lvl=7><elemt=3><id=2170><icon=100668291><desc=Increases damage the target takes from Fire by 185%.>
+<spl=Acid Vulnerability Other I><type=8><family=Acid Vulnerability Other><sch=0><lvl=1><elemt=5><id=521><icon=100668344><desc=Increases damage the target takes from acid by 10%>
+<spl=Acid Vulnerability Other II><type=8><family=Acid Vulnerability Other><sch=0><lvl=2><elemt=5><id=522><icon=100668344><desc=Increases damage the target takes from acid by 25%>
+<spl=Acid Vulnerability Other III><type=8><family=Acid Vulnerability Other><sch=0><lvl=3><elemt=5><id=523><icon=100668344><desc=Increases damage the target takes from acid by 50%.>
+<spl=Acid Vulnerability Other IV><type=8><family=Acid Vulnerability Other><sch=0><lvl=4><elemt=5><id=524><icon=100668344><desc=Increases damage the target takes from acid by 75%.>
+<spl=Acid Vulnerability Other V><type=8><family=Acid Vulnerability Other><sch=0><lvl=5><elemt=5><id=525><icon=100668344><desc=Increases damage the target takes from acid by 100%.>
+<spl=Acid Vulnerability Other VI><type=8><family=Acid Vulnerability Other><sch=0><lvl=6><elemt=5><id=526><icon=100668344><desc=Increases damage the target takes from acid by 150%.>
+<spl=Olthoi's Gift><type=8><family=Acid Vulnerability Other><sch=0><lvl=7><elemt=5><id=2162><icon=100668344><desc=Increases damage the target takes from acid by 185%.>
+<spl=Bludgeoning Vulnerability Other I><type=8><family=Bludgeoning Vulnerability Other><sch=0><lvl=1><elemt=1><id=1048><icon=100668345><desc=Increases damage the target takes from Bludgeoning by 10%.>
+<spl=Bludgeoning Vulnerability Other II><type=8><family=Bludgeoning Vulnerability Other><sch=0><lvl=2><elemt=1><id=1049><icon=100668345><desc=Increases damage the target takes from Bludgeoning by 25%.>
+<spl=Bludgeoning Vulnerability Other III><type=8><family=Bludgeoning Vulnerability Other><sch=0><lvl=3><elemt=1><id=1050><icon=100668345><desc=Increases damage the target takes from Bludgeoning by 50%.>
+<spl=Bludgeoning Vulnerability Other IV><type=8><family=Bludgeoning Vulnerability Other><sch=0><lvl=4><elemt=1><id=1051><icon=100668345><desc=Increases damage the target takes from Bludgeoning by 75%.>
+<spl=Bludgeoning Vulnerability Other V><type=8><family=Bludgeoning Vulnerability Other><sch=0><lvl=5><elemt=1><id=1052><icon=100668345><desc=Increases damage the target takes from Bludgeoning by 100%.>
+<spl=Bludgeoning Vulnerability Other VI><type=8><family=Bludgeoning Vulnerability Other><sch=0><lvl=6><elemt=1><id=1053><icon=100668345><desc=Increases damage the target takes from Bludgeoning by 150%.>
+<spl=Tusker's Gift><type=8><family=Bludgeoning Vulnerability Other><sch=0><lvl=7><elemt=1><id=2166><icon=100668345><desc=Increases damage the target takes from Bludgeoning by 185%.>
+<spl=Cold Vulnerability Other I><type=8><family=Cold Vulnerability Other><sch=0><lvl=1><elemt=4><id=1060><icon=100668292><desc=Increases damage the target takes from Cold by 10%.>
+<spl=Cold Vulnerability Other II><type=8><family=Cold Vulnerability Other><sch=0><lvl=2><elemt=4><id=1061><icon=100668292><desc=Increases damage the target takes from Cold by 25%.>
+<spl=Cold Vulnerability Other III><type=8><family=Cold Vulnerability Other><sch=0><lvl=3><elemt=4><id=1062><icon=100668292><desc=Increases damage the target takes from Cold by 50%.>
+<spl=Cold Vulnerability Other IV><type=8><family=Cold Vulnerability Other><sch=0><lvl=4><elemt=4><id=1063><icon=100668292><desc=Increases damage the target takes from Cold by 75%.>
+<spl=Cold Vulnerability Other V><type=8><family=Cold Vulnerability Other><sch=0><lvl=5><elemt=4><id=1064><icon=100668292><desc=Increases damage the target takes from Cold by 100%.>
+<spl=Cold Vulnerability Other VI><type=8><family=Cold Vulnerability Other><sch=0><lvl=6><elemt=4><id=1065><icon=100668292><desc=Increases damage the target takes from Cold by 150%.>
+<spl=Gelidite's Gift><type=8><family=Cold Vulnerability Other><sch=0><lvl=7><elemt=4><id=2168><icon=100668292><desc=Increases damage the target takes from Cold by 185%.>
+<spl=Lightning Vulnerability Other I><type=8><family=Lightning Vulnerability Other><sch=0><lvl=1><elemt=6><id=1084><icon=100668346><desc=Increases damage the target takes from Lightning by 10%.>
+<spl=Lightning Vulnerability Other II><type=8><family=Lightning Vulnerability Other><sch=0><lvl=2><elemt=6><id=1085><icon=100668346><desc=Increases damage the target takes from Lightning by 25%.>
+<spl=Lightning Vulnerability Other III><type=8><family=Lightning Vulnerability Other><sch=0><lvl=3><elemt=6><id=1086><icon=100668346><desc=Increases damage the target takes from Lightning by 50%.>
+<spl=Lightning Vulnerability Other IV><type=8><family=Lightning Vulnerability Other><sch=0><lvl=4><elemt=6><id=1087><icon=100668346><desc=Increases damage the target takes from Lightning by 75%.>
+<spl=Lightning Vulnerability Other V><type=8><family=Lightning Vulnerability Other><sch=0><lvl=5><elemt=6><id=1088><icon=100668346><desc=Increases damage the target takes from Lightning by 100%.>
+<spl=Lightning Vulnerability Other VI><type=8><family=Lightning Vulnerability Other><sch=0><lvl=6><elemt=6><id=1089><icon=100668346><desc=Increases damage the target takes from Lightning by 150%.>
+<spl=Astyrrian's Gift><type=8><family=Lightning Vulnerability Other><sch=0><lvl=7><elemt=6><id=2172><icon=100668346><desc=Increases damage the target takes from Lightning by 185%.>
+<spl=Blade Vulnerability Other I><type=8><family=Blade Vulnerability Other><sch=0><lvl=1><elemt=0><id=1127><icon=100668348><desc=Increases damage the target takes from Slashing by 10%.>
+<spl=Blade Vulnerability Other II><type=8><family=Blade Vulnerability Other><sch=0><lvl=2><elemt=0><id=1128><icon=100668348><desc=Increases damage the target takes from Slashing by 25%.>
+<spl=Blade Vulnerability Other III><type=8><family=Blade Vulnerability Other><sch=0><lvl=3><elemt=0><id=1129><icon=100668348><desc=Increases damage the target takes from Slashing by 50%.>
+<spl=Blade Vulnerability Other IV><type=8><family=Blade Vulnerability Other><sch=0><lvl=4><elemt=0><id=1130><icon=100668348><desc=Increases damage the target takes from Slashing by 75%.>
+<spl=Blade Vulnerability Other V><type=8><family=Blade Vulnerability Other><sch=0><lvl=5><elemt=0><id=1131><icon=100668348><desc=Increases damage the target takes from Slashing by 100%.>
+<spl=Blade Vulnerability Other VI><type=8><family=Blade Vulnerability Other><sch=0><lvl=6><elemt=0><id=1132><icon=100668348><desc=Increases damage the target takes from Slashing by 150%.>
+<spl=Swordsman's Gift><type=8><family=Blade Vulnerability Other><sch=0><lvl=7><elemt=0><id=2164><icon=100668348><desc=Increases damage the target takes from Slashing by 185%.>
+<spl=Piercing Vulnerability Other I><type=8><family=Piercing Vulnerability Other><sch=0><lvl=1><elemt=2><id=1151><icon=100668347><desc=Increases damage the target takes from Piercing by 10%.>
+<spl=Piercing Vulnerability Other II><type=8><family=Piercing Vulnerability Other><sch=0><lvl=2><elemt=2><id=1152><icon=100668347><desc=Increases damage the target takes from Piercing by 25%.>
+<spl=Piercing Vulnerability Other III><type=8><family=Piercing Vulnerability Other><sch=0><lvl=3><elemt=2><id=1153><icon=100668347><desc=Increases damage the target takes from Piercing by 50%.>
+<spl=Piercing Vulnerability Other IV><type=8><family=Piercing Vulnerability Other><sch=0><lvl=4><elemt=2><id=1154><icon=100668347><desc=Increases damage the target takes from Piercing by 75%.>
+<spl=Piercing Vulnerability Other V><type=8><family=Piercing Vulnerability Other><sch=0><lvl=5><elemt=2><id=1155><icon=100668347><desc=Increases damage the target takes from Piercing by 100%.>
+<spl=Piercing Vulnerability Other VI><type=8><family=Piercing Vulnerability Other><sch=0><lvl=6><elemt=2><id=1156><icon=100668347><desc=Increases damage the target takes from Piercing by 150%.>
+<spl=Archer's Gift><type=8><family=Piercing Vulnerability Other><sch=0><lvl=7><elemt=2><id=2174><icon=100668347><desc=Increases damage the target takes from Piercing by 185%.>
+<spl=Imperil Other I><type=0><family=Imperil Other><sch=0><lvl=1><id=25><icon=100668293><desc=Decreases the target's natural armor by 20 points.>
+<spl=Imperil Other II><type=0><family=Imperil Other><sch=0><lvl=2><id=1323><icon=100668293><desc=Decreases the target's natural armor by 50 points.>
+<spl=Imperil Other III><type=0><family=Imperil Other><sch=0><lvl=3><id=1324><icon=100668293><desc=Decreases the target's natural armor by 75 points.>
+<spl=Imperil Other IV><type=0><family=Imperil Other><sch=0><lvl=4><id=1325><icon=100668293><desc=Decreases the target's natural armor by 100 points.>
+<spl=Imperil Other V><type=0><family=Imperil Other><sch=0><lvl=5><id=1326><icon=100668293><desc=Decreases the target's natural armor by 150 points.>
+<spl=Imperil Other VI><type=0><family=Imperil Other><sch=0><lvl=6><id=1327><icon=100668293><desc=Decreases the target's natural armor by 200 points.>
+<spl=Gossamer Flesh><type=0><family=Imperil Other><sch=0><lvl=7><id=2074><icon=100668293><desc=Decreases the target's natural armor by 225 points.>
+<spl=Magic Yield Other I><type=0><family=Magic Yield Other><sch=2><lvl=1><id=280><icon=100668330><desc=Decreases the target's Magic Defense skill by 10 points.>
+<spl=Magic Yield Other II><type=0><family=Magic Yield Other><sch=2><lvl=2><id=281><icon=100668330><desc=Decreases the target's Magic Defense skill by 15 points.>
+<spl=Magic Yield Other III><type=0><family=Magic Yield Other><sch=2><lvl=3><id=282><icon=100668330><desc=Decreases the target's Magic Defense skill by 20 points.>
+<spl=Magic Yield Other IV><type=0><family=Magic Yield Other><sch=2><lvl=4><id=283><icon=100668330><desc=Decreases the target's Magic Defense skill by 25 points.>
+<spl=Magic Yield Other V><type=0><family=Magic Yield Other><sch=2><lvl=5><id=284><icon=100668330><desc=Decreases the target's Magic Defense skill by 30 points.>
+<spl=Magic Yield Other VI><type=0><family=Magic Yield Other><sch=2><lvl=6><id=285><icon=100668330><desc=Decreases the target's Magic Defense skill by 35 points.>
+<spl=Futility><type=0><family=Magic Yield Other><sch=2><lvl=7><id=2282><icon=100668330><desc=Decreases the target's Magic Defense skill by 40 points.>

@@ -1,0 +1,21 @@
+====================================================================
+LTCore v11.6.1 - Events Log - Session : 1/26/2006 7:56:10 PM
+====================================================================
+[01/26/2006 20:09:32.953]  Xeon Xarid wants to join the fellowship.
+[01/26/2006 20:56:00.140]  Savage intruder wants to join the fellowship.
+[01/26/2006 21:28:17.140]  Gizmo rune-warrior wants to join the fellowship.
+[01/26/2006 22:06:47.109]  Magical lady wants to join the fellowship.
+[01/26/2006 23:48:47.781]  The Unknown Knows wants to join the fellowship.
+[01/26/2006 23:57:22.640]  Otama wants to join the fellowship.
+[01/27/2006 00:41:02.453]  Valients Devil wants to join the fellowship.
+[01/27/2006 02:20:10.234]  Dichotomy wants to join the fellowship.
+[01/27/2006 02:25:29.062]  Dichotomy wants to join the fellowship.
+[01/27/2006 02:35:09.843]  Teferi wants to join the fellowship.
+[01/27/2006 03:09:42.765]  Valients Devil wants to join the fellowship.
+[01/27/2006 03:44:13.765]  Valients Devil wants to join the fellowship.
+[01/27/2006 06:37:34.250]  Joann wants to join the fellowship.
+[01/27/2006 06:48:51.109]  Coconut Head wants to join the fellowship.
+[01/27/2006 07:09:47.718]  Damage Master wants to join the fellowship.
+[01/27/2006 07:27:56.156]  White Storm wants to join the fellowship.
+[01/27/2006 08:03:31.515]  Maximum death wants to join the fellowship.
+[01/27/2006 08:30:06.109]  Logging out - Reason : Running out of Prismatic Tapers (48)

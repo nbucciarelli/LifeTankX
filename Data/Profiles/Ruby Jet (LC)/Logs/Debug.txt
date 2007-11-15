@@ -1,0 +1,877 @@
+====================================================================
+LTCore v11.6.1 - Debug Log - Session : 1/27/2006 8:52:56 AM
+====================================================================
+[01/27/2006 08:52:56.859]  [Engine] [Profile] Loaded Config from C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Ruby Jet (LC)\LifeTank.ini
+[01/27/2006 08:52:56.859]  [Engine] [LoadMacroProfile olthoi] Loaded Macro Profile from C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Ruby Jet (LC)\Macro\olthoi\MacroCfg.ini
+[01/27/2006 08:52:56.875]  [Engine] [LoadBuffsProfile olthoi] Loaded Buff Profile from C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Ruby Jet (LC)\Buffs\olthoi\BuffsCfg.ini
+[01/27/2006 08:52:56.890]  [Engine] [LoadLootProfile ruby] Loaded Loot Profile from C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Loot\ruby\LootCfg.ini
+[01/27/2006 08:52:56.890]  [Engine] Loot Filters loaded successfully from C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Ruby Jet (LC)\LootFilters.dat
+[01/27/2006 08:52:57.312]  [Engine] [Database] Monsters loaded
+[01/27/2006 08:52:57.312]  [Engine] Exceptions - 0 items added to list
+[01/27/2006 08:52:57.312]  [Engine] [Plugin Interface] Loading User Interface Settings...
+[01/27/2006 08:52:57.312]  [Engine] UpdateProfileList
+[01/27/2006 08:52:57.328]  [Engine] UpdateProfileList
+[01/27/2006 08:52:57.343]  [Engine] UpdateProfileList
+[01/27/2006 08:52:57.359]  Default damage set to Bludgeon
+[01/27/2006 08:52:57.359]  [Engine] ---- NavType : 5
+[01/27/2006 08:52:57.359]  [Engine] Loading Route : C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Routes\Default Route.rte
+[01/27/2006 08:52:57.375]  [Engine] Route loaded - 4 waypoint(s)
+[01/27/2006 08:52:57.375]  Loaded route : Default Route (4 waypoints)
+[01/27/2006 08:52:57.375]  [Engine] clsUIMacro.LoadItemsList - Loading list from C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Ruby Jet (LC)\Healitems.dat
+[01/27/2006 08:52:57.390]  [Engine] clsUIMacro.LoadItemsList - Loading list from C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Ruby Jet (LC)\Stamitems.dat
+[01/27/2006 08:52:57.390]  [Engine] [UIBuffs] Loading controls value
+[01/27/2006 08:52:57.406]  [Engine] Filling Buff Spells lists controls (InitBuffsListControls)
+[01/27/2006 08:52:57.453]  [Engine] clsUIBuffs.InitBuffsListControls: lsOtherLifePros: Armor Other
+[01/27/2006 08:52:57.453]  [Engine] clsUIBuffs.InitBuffsListControls: lsOtherLifePros: Acid Protection Other
+[01/27/2006 08:52:57.453]  [Engine] clsUIBuffs.InitBuffsListControls: lsOtherLifePros: Bludgeoning Protection Other
+[01/27/2006 08:52:57.453]  [Engine] clsUIBuffs.InitBuffsListControls: lsOtherLifePros: Cold Protection Other
+[01/27/2006 08:52:57.453]  [Engine] clsUIBuffs.InitBuffsListControls: lsOtherLifePros: Fire Protection Other
+[01/27/2006 08:52:57.453]  [Engine] clsUIBuffs.InitBuffsListControls: lsOtherLifePros: Lightning Protection Other
+[01/27/2006 08:52:57.453]  [Engine] clsUIBuffs.InitBuffsListControls: lsOtherLifePros: Blade Protection Other
+[01/27/2006 08:52:57.453]  [Engine] clsUIBuffs.InitBuffsListControls: lsOtherLifePros: Piercing Protection Other
+[01/27/2006 08:52:57.484]  [Engine] [UIMonsters] Loading controls value
+[01/27/2006 08:52:57.484]  [Engine] UIMonsters.LoadMonsterList - Loading MonsterList
+[01/27/2006 08:52:58.390]  [Engine] [UIIrc] Loading controls value
+[01/27/2006 08:52:58.390]  [Engine] [UIMsgLog] Loading controls values
+[01/27/2006 08:52:58.390]  [Engine] [UIOptions] Loading controls settings
+[01/27/2006 08:52:58.421]  [Engine] C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Ruby Jet (LC)\LifeTank.ini -- GetValue : could not find control: chkLockHuds
+[01/27/2006 08:52:58.421]  [Engine] [UIAntiBan] Loading controls settings
+[01/27/2006 08:52:58.421]  [Engine] [UILoot] Loading controls settings
+[01/27/2006 08:52:58.437]  [Engine] UILoot.LoadItemsList - Loading list from C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Loot\ruby\ItemsToPickup.dat
+[01/27/2006 08:52:58.437]  [Engine] UILoot.LoadItemsList - Loading list from C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Loot\ruby\ItemsToIgnore.dat
+[01/27/2006 08:52:58.437]  [Engine] UILoot.LoadItemsList - Loading list from C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Loot\ruby\CorpsesToLoot.dat
+[01/27/2006 08:52:58.453]  [Engine] [Plugin Interface] Loading complete (Errors :False)
+[01/27/2006 08:52:58.453]  [Engine] clsAutoResponse - 18 items loaded
+[01/27/2006 08:52:58.453]  [Engine] clsHUD.StartHUDs: Starting
+[01/27/2006 08:52:58.453]  [Engine] startMacroHUD called
+[01/27/2006 08:52:58.500]  [Engine] macroHUDpos: x: 20  y: 60
+[01/27/2006 08:52:58.500]  [Engine] clsHUD.moveHUD:  x:20   y:60
+[01/27/2006 08:52:58.500]  [Engine] clsHUD.moveHUD:  x:20   y:120
+[01/27/2006 08:52:58.515]  [Engine] clsHUD.moveHUD:  x:200   y:60
+[01/27/2006 08:52:58.531]  [Engine] clsHUD.moveHUD:  x:20   y:300
+[01/27/2006 08:52:58.531]  [Engine] clsHUD.moveHUD:  x:200   y:127
+[01/27/2006 08:52:58.531]  PAUSE:Pause Macro, CTRL+F1:Toggle Macro, CTRL+F2:Toggle HUD, CTRL+F3:Rebuff, CTRL+F4:Set Sticky
+[01/27/2006 08:52:58.546]  [Engine] clsACEvents.OnCreateObject: Olthoi Ripper : -1671578361
+[01/27/2006 08:53:00.390]  [Engine] clsACEvents.HandleConsoleMessage:(7) Arcanum Salvaging VII has expired.
+[01/27/2006 08:53:00.703]  [Engine] clsACEvents.HandleConsoleMessage:(21) Olthoi Slayer nicks your chest for 1 point of piercing damage!
+[01/27/2006 08:53:01.546]  [Engine] clsACEvents.HandleConsoleMessage:(21) Olthoi Slayer nicks your chest for 4 points of piercing damage!
+[01/27/2006 08:53:02.687]  [Engine] clsACEvents.HandleConsoleMessage:(17) You say, "Shurov Thipaj"
+[01/27/2006 08:53:02.796]  [Engine] clsACEvents.HandleConsoleMessage:(21) You evaded Olthoi Ripper!
+[01/27/2006 08:53:03.250]  [Engine] clsACEvents.HandleConsoleMessage:(21) Olthoi Ripper blisters your lower arm for 7 points of acid damage!
+[01/27/2006 08:53:03.359]  [Engine] clsACEvents.HandleConsoleMessage:(21) You evaded Olthoi Ripper!
+[01/27/2006 08:53:03.546]  [Engine] clsACEvents.HandleConsoleMessage:(21) You evaded Olthoi Slayer!
+[01/27/2006 08:53:03.609]  [Engine] clsACEvents.HandleConsoleMessage:(21) You evaded Olthoi Ripper!
+[01/27/2006 08:53:04.015]  [Engine] clsACEvents.HandleConsoleMessage:(21) You evaded Olthoi Slayer!
+[01/27/2006 08:53:04.171]  [Engine] clsACEvents.HandleConsoleMessage:(7) The spell consumed the following components: Prismatic Taper
+[01/27/2006 08:53:04.734]  [Engine] clsACEvents.HandleConsoleMessage:(21) You evaded Olthoi Ripper!
+[01/27/2006 08:53:05.062]  [Engine] clsACEvents.HandleConsoleMessage:(21) You evaded Olthoi Slayer!
+[01/27/2006 08:53:05.109]  [Engine] clsACEvents.HandleConsoleMessage:(21) You evaded Olthoi Ripper!
+[01/27/2006 08:53:05.218]  [Engine] clsACEvents.HandleConsoleMessage:(21) You evaded Olthoi Ripper!
+[01/27/2006 08:53:05.218]  [Engine] clsACEvents.HandleConsoleMessage:(21) You evaded Olthoi Ripper!
+[01/27/2006 08:53:05.875]  [Engine] clsACEvents.HandleConsoleMessage:(21) You evaded Olthoi Ripper!
+[01/27/2006 08:53:05.875]  [Engine] clsACEvents.HandleConsoleMessage:(21) You evaded Olthoi Ripper!
+[01/27/2006 08:53:05.984]  [Engine] clsACEvents.HandleConsoleMessage:(21) Olthoi Ripper grazes your foot for 4 points of bludgeoning damage!
+[01/27/2006 08:53:06.343]  [Engine] clsACEvents.OnCreateObject: Surface : 1879457929
+[01/27/2006 08:53:06.343]  [Engine] clsACEvents.OnCreateObject: Olthoi Slasher : -1671929204
+[01/27/2006 08:53:06.343]  [Engine] clsACEvents.OnCreateObject: Olthoi Slasher : -1671541401
+[01/27/2006 08:53:06.343]  [Engine] clsACEvents.OnCreateObject: Olthoi Slasher : -1671543443
+[01/27/2006 08:53:15.343]  [Engine] clsACEvents.HandleConsoleMessage:(17) You say, "Shurov Thiguz"
+[01/27/2006 08:53:16.859]  [Engine] clsACEvents.HandleConsoleMessage:(7) The spell consumed the following components: Prismatic Taper
+[01/27/2006 08:53:20.796]  [Engine] clsACEvents.OnCreateObject: Life Stone : 1924210744
+[01/27/2006 08:53:20.796]  [Engine] clsACEvents.OnCreateObject: Orb of the Bunny Booty : -2145838971
+[01/27/2006 08:53:20.796]  [Engine] clsACEvents.OnCreateObject: Dragon-buda : 1343078453
+[01/27/2006 08:53:20.796]  Unfriendly Player Detected : Dragon-buda (87.5S 67.1W)
+[01/27/2006 08:53:20.796]  [Engine] clsACEvents.OnCreateObject: Arcine : 1343079356
+[01/27/2006 08:53:20.796]  Unfriendly Player Detected : Arcine (87.5S 67.1W)
+[01/27/2006 08:53:20.796]  [Engine] clsACEvents.OnCreateObject: Green Garnet Fire Sceptre : -2143812971
+[01/27/2006 08:53:20.796]  [Engine] clsACEvents.OnCreateObject: Lugian Hammer : -1688803634
+[01/27/2006 08:53:20.812]  [Engine] clsACEvents.OnCreateObject: Rkos the Armorer : 1924210729
+[01/27/2006 08:53:20.812]  [Engine] clsACEvents.OnCreateObject: War Hammer : -1688803633
+[01/27/2006 08:53:20.812]  [Engine] clsACEvents.OnCreateObject: Ry'zir al-Nabit : 1924210730
+[01/27/2006 08:53:20.812]  [Engine] clsACEvents.OnCreateObject: Odvik the Inn Keeper : 1924206626
+[01/27/2006 08:53:20.812]  [Engine] clsACEvents.OnCreateObject: Beer Keg : 1924206655
+[01/27/2006 08:53:20.812]  [Engine] clsACEvents.OnCreateObject: Beer Keg : 1924206654
+[01/27/2006 08:53:20.812]  [Engine] clsACEvents.OnCreateObject: Chest : 1924206630
+[01/27/2006 08:53:22.531]  [Engine] clsACEvents.OnCreateObject: Ground Portal : 1924210728
+[01/27/2006 08:53:22.546]  [Engine] clsACEvents.OnCreateObject: Tunlok Weapons Master : 1924210706
+[01/27/2006 08:53:22.546]  [Engine] clsACEvents.OnCreateObject: Lugian Mace : -1688803628
+[01/27/2006 08:53:22.546]  [Engine] clsACEvents.OnCreateObject: Aun Amanaualuan the Elder Shaman : 1924210707
+[01/27/2006 08:53:22.546]  [Engine] clsACEvents.OnCreateObject: Buadren : -1688803597
+[01/27/2006 08:53:22.546]  [Engine] clsACEvents.OnCreateObject: War Hammer : -1688803623
+[01/27/2006 08:53:22.546]  [Engine] clsACEvents.OnCreateObject: Thimrin Woodsetter : 1924210708
+[01/27/2006 08:53:22.546]  [Engine] clsACEvents.OnCreateObject: Tree Portal : 1924210709
+[01/27/2006 08:53:22.546]  [Engine] clsACEvents.OnCreateObject: Xeon Xarid : 1343087348
+[01/27/2006 08:53:22.546]  [Engine] clsACEvents.OnCreateObject: Silver Blunt Sceptre : -2017192076
+[01/27/2006 08:53:22.546]  [Engine] clsACEvents.OnCreateObject: Pickaxe : -1668648046
+[01/27/2006 08:53:22.562]  [Engine] clsACEvents.OnCreateObject: Auroch Skull : 1924206640
+[01/27/2006 08:53:22.562]  [Engine] clsACEvents.OnCreateObject: Chest : 1924206639
+[01/27/2006 08:53:22.562]  [Engine] clsACEvents.OnCreateObject: Chest : 1924206638
+[01/27/2006 08:53:22.562]  [Engine] clsACEvents.OnCreateObject: Aun Gunditealuan the Marksman : 1924210726
+[01/27/2006 08:53:22.562]  [Engine] clsACEvents.OnCreateObject: Longbow : -1688803635
+[01/27/2006 08:53:22.562]  [Engine] clsACEvents.OnCreateObject: Aun Oreilauri the Healer : 1924210727
+[01/27/2006 08:53:22.562]  [Engine] clsACEvents.OnCreateObject: Chest : 1924210734
+[01/27/2006 08:53:22.562]  [Engine] clsACEvents.OnCreateObject: Pyreal Target Drudge : -1668648130
+[01/27/2006 08:53:22.578]  [Engine] clsACEvents.OnCreateObject: Dojiro Sangi the Grocer : 1924206623
+[01/27/2006 08:53:22.578]  [Engine] clsACEvents.OnCreateObject: Grand Master Scrivener of War Magic : 1924210719
+[01/27/2006 08:53:22.578]  [Engine] clsACEvents.OnCreateObject: Grand Master Scrivener of Creature Magic : 1924210720
+[01/27/2006 08:53:22.578]  [Engine] clsACEvents.OnCreateObject: Grand Master Scrivener of Item Magic : 1924210721
+[01/27/2006 08:53:22.578]  [Engine] clsACEvents.OnCreateObject: Door : 1924210703
+[01/27/2006 08:53:22.578]  [Engine] clsACEvents.OnCreateObject: Fountain : 1924210735
+[01/27/2006 08:53:22.578]  [Engine] clsACEvents.OnCreateObject: Chest : 1924210732
+[01/27/2006 08:53:22.578]  [Engine] clsACEvents.OnCreateObject: Focusing Stone : -1668648059
+[01/27/2006 08:53:22.578]  [Engine] clsACEvents.OnCreateObject: Shot in the Arm Bowyers : 1924210724
+[01/27/2006 08:53:22.593]  [Engine] clsACEvents.OnCreateObject: The Healer's Home : 1924210725
+[01/27/2006 08:53:22.593]  [Engine] clsACEvents.OnCreateObject: Agent of the Arcanum  : 1924210723
+[01/27/2006 08:53:22.593]  [Engine] clsACEvents.OnCreateObject: Well : 1924210736
+[01/27/2006 08:53:22.593]  [Engine] clsACEvents.OnCreateObject: Grand Master Scrivener of Life Magic : 1924210722
+[01/27/2006 08:53:23.812]  [Engine] clsACEvents.OnCreateObject: Door : 1924210704
+[01/27/2006 08:53:23.812]  [Engine] clsACEvents.OnCreateObject: Door : 1924210705
+[01/27/2006 08:53:23.812]  [Engine] clsACEvents.OnCreateObject: Fountain : 1924206644
+[01/27/2006 08:53:23.828]  [Engine] clsACEvents.OnCreateObject: Fountain : 1924206643
+[01/27/2006 08:53:23.828]  [Engine] clsACEvents.OnCreateObject: House of Bones : 1924206642
+[01/27/2006 08:53:23.828]  [Engine] clsACEvents.OnCreateObject: Door : 1924206609
+[01/27/2006 08:53:23.828]  [Engine] clsACEvents.OnCreateObject: Rkos and Ry'zir's Metalworks : 1924210731
+[01/27/2006 08:53:23.828]  [Engine] clsACEvents.OnCreateObject: Town Mason and Storage : 1924210737
+[01/27/2006 08:53:23.828]  [Engine] clsACEvents.OnCreateObject: Door : 1924206610
+[01/27/2006 08:53:23.828]  [Engine] clsACEvents.OnCreateObject: Auroch Cow : -1668648111
+[01/27/2006 08:53:23.828]  [Engine] clsACEvents.OnCreateObject: Auroch Yearling : -1668648112
+[01/27/2006 08:53:23.843]  [Engine] clsACEvents.OnCreateObject: Heavy Crossbow : -1668648056
+[01/27/2006 08:53:23.843]  [Engine] clsACEvents.OnCreateObject: Auroch Bull : -1668648114
+[01/27/2006 08:53:23.843]  [Engine] clsACEvents.OnCreateObject: Auroch Yearling : -1668648108
+[01/27/2006 08:53:23.843]  [Engine] clsACEvents.OnCreateObject: Heavy Crossbow : -1668648082
+[01/27/2006 08:53:23.843]  [Engine] clsACEvents.OnCreateObject: Lady Dain's Tower (Archmagus) : 1924210733
+[01/27/2006 08:53:23.843]  [Engine] clsACEvents.OnCreateObject: Door : 1924206607
+[01/27/2006 08:53:23.843]  [Engine] clsACEvents.OnCreateObject: Sangi's Goods : 1924206624
+[01/27/2006 08:53:23.843]  [Engine] clsACEvents.OnCreateObject: The Ravenous Mattekar Tavern : 1924206625
+[01/27/2006 08:53:23.859]  [Engine] clsACEvents.OnCreateObject: Sliding Door : 1924206611
+[01/27/2006 08:53:23.859]  [Engine] clsACEvents.OnCreateObject: Door : 1924206608
+[01/27/2006 08:53:29.375]  [Major Detected] Opal Frost Board with Nail : Major Invulnerability
+[01/27/2006 08:53:29.375]  [Engine] ID'ing selected item
+[01/27/2006 08:53:29.375]  Opal Frost Board with Nail, work 6, dmg 21.6-36, +12 atk/+10 MeleeD, Mace 370+ to wield, Atlan's Alacrity, Blood Drinker VI, Major Invulnerability, Elysa's Sight, Lore 163, Mace 336, Value 15426, 500 BU
+[01/27/2006 08:53:31.171]  [Engine] clsACEvent.OnRemoveObject: Olthoi Ripper : -1671979171
+[01/27/2006 08:53:31.171]  [Engine] clsACEvent.OnRemoveObject: Olthoi Ripper : -1672521354
+[01/27/2006 08:53:31.171]  [Engine] clsACEvent.OnRemoveObject: Olthoi Ripper : -1671578361
+[01/27/2006 08:53:31.187]  [Engine] clsACEvent.OnRemoveObject: Olthoi Ripper : -1672516497
+[01/27/2006 08:53:31.187]  [Engine] clsACEvent.OnRemoveObject: Olthoi Slayer : -1671485847
+[01/27/2006 08:53:31.187]  [Engine] clsACEvent.OnRemoveObject: Olthoi Ripper : -1672515198
+[01/27/2006 08:53:35.265]  [Engine] clsACEvents.OnCreateObject: Heavy Crossbow : -1668648044
+[01/27/2006 08:53:39.781]  [Major Detected] Ivory Electric Sceptre : Major Salvaging Aptitude
+[01/27/2006 08:53:39.781]  [Engine] ID'ing selected item
+[01/27/2006 08:53:39.781]  Ivory Electric Sceptre, work 8, +6 ManaC/+10 MeleeD/+6 PvM, Frost Bolt VI, Mystic's Blessing, Mana Conversion Mastery Self VI, Major Salvaging Aptitude, Infected Spirit Caress, Lore 234, Aluvian, Value 20822, 50 BU
+[01/27/2006 08:53:43.890]  [Engine] clsACEvent.OnRemoveObject: Olthoi Slasher : -1671543443
+[01/27/2006 08:53:43.890]  [Engine] clsACEvent.OnRemoveObject: Olthoi Slasher : -1671929204
+[01/27/2006 08:53:43.890]  [Engine] clsACEvent.OnRemoveObject: Surface : 1879457929
+[01/27/2006 08:53:43.890]  [Engine] clsACEvent.OnRemoveObject: Olthoi Slasher : -1671541401
+[01/27/2006 08:53:52.515]  [Engine] clsACEvents.HandleConsoleMessage:(0) You give Xeon Xarid Opal Frost Board with Nail.
+[01/27/2006 08:53:52.515]  [Engine] clsACEvents.HandleConsoleMessage:(0) You give Xeon Xarid Opal Frost Board with Nail.
+[01/27/2006 08:53:53.937]  [Engine] clsACEvents.HandleConsoleMessage:(0) You give Xeon Xarid Ivory Electric Sceptre.
+[01/27/2006 08:53:53.937]  [Engine] clsACEvents.HandleConsoleMessage:(0) You give Xeon Xarid Ivory Electric Sceptre.
+[01/27/2006 08:53:54.843]  [Engine] clsACEvents.HandleConsoleMessage:(0) You give Xeon Xarid Gold Covenant Greaves.
+[01/27/2006 08:53:54.843]  [Engine] clsACEvents.HandleConsoleMessage:(0) You give Xeon Xarid Gold Covenant Greaves.
+[01/27/2006 08:53:55.953]  [Engine] clsACEvents.HandleConsoleMessage:(0) You give Xeon Xarid Armoredillo Hide Loafers.
+[01/27/2006 08:53:55.953]  [Engine] clsACEvents.HandleConsoleMessage:(0) You give Xeon Xarid Armoredillo Hide Loafers.
+[01/27/2006 08:53:57.656]  [Engine] clsACEvents.HandleConsoleMessage:(0) You give Xeon Xarid Bronze Covenant Greaves.
+[01/27/2006 08:53:57.656]  [Engine] clsACEvents.HandleConsoleMessage:(0) You give Xeon Xarid Bronze Covenant Greaves.
+[01/27/2006 08:54:00.609]  [Engine] clsACEvents.HandleConsoleMessage:(0) You give Xeon Xarid Salvaged Mahogany (100).
+[01/27/2006 08:54:00.609]  [Engine] clsACEvents.HandleConsoleMessage:(0) You give Xeon Xarid Salvaged Mahogany (100).
+[01/27/2006 08:54:01.625]  [Engine] clsACEvents.HandleConsoleMessage:(0) You give Xeon Xarid Salvaged Mahogany (100).
+[01/27/2006 08:54:01.625]  [Engine] clsACEvents.HandleConsoleMessage:(0) You give Xeon Xarid Salvaged Mahogany (100).
+[01/27/2006 08:54:02.859]  [Engine] clsACEvents.HandleConsoleMessage:(0) You give Xeon Xarid Salvaged Steel (100).
+[01/27/2006 08:54:02.859]  [Engine] clsACEvents.HandleConsoleMessage:(0) You give Xeon Xarid Salvaged Steel (100).
+[01/27/2006 08:54:04.000]  [Engine] clsACEvents.HandleConsoleMessage:(0) You give Xeon Xarid Salvaged Steel (100).
+[01/27/2006 08:54:04.000]  [Engine] clsACEvents.HandleConsoleMessage:(0) You give Xeon Xarid Salvaged Steel (100).
+[01/27/2006 08:54:05.109]  [Engine] clsACEvents.HandleConsoleMessage:(0) You give Xeon Xarid Salvaged Brass (100).
+[01/27/2006 08:54:05.109]  [Engine] clsACEvents.HandleConsoleMessage:(0) You give Xeon Xarid Salvaged Brass (100).
+[01/27/2006 08:54:06.531]  [Engine] clsACEvents.HandleConsoleMessage:(0) You give Xeon Xarid 29 Gold Peas.
+[01/27/2006 08:54:06.531]  [Engine] clsACEvents.HandleConsoleMessage:(0) You give Xeon Xarid 29 Gold Peas.
+[01/27/2006 08:54:07.546]  [Engine] clsACEvents.HandleConsoleMessage:(0) You give Xeon Xarid 15 Pyreal Peas.
+[01/27/2006 08:54:07.546]  [Engine] clsACEvents.HandleConsoleMessage:(0) You give Xeon Xarid 15 Pyreal Peas.
+[01/27/2006 08:54:15.687]  [Engine] clsACEvent.OnRemoveObject: Silver Pea : -1671301918
+[01/27/2006 08:54:17.500]  [Engine] clsACEvent.OnRemoveObject: Opal Frost Board with Nail : -1669992647
+[01/27/2006 08:54:18.906]  [Engine] clsACEvent.OnRemoveObject: Ivory Electric Sceptre : -1672531276
+[01/27/2006 08:54:19.796]  [Engine] clsACEvents.HandleConsoleMessage:(0) You give Xeon Xarid 16 Silver Peas.
+[01/27/2006 08:54:19.796]  [Engine] clsACEvents.HandleConsoleMessage:(0) You give Xeon Xarid 16 Silver Peas.
+[01/27/2006 08:54:19.890]  [Engine] clsACEvent.OnRemoveObject: Gold Covenant Greaves : -1677526176
+[01/27/2006 08:54:20.937]  [Engine] clsACEvent.OnRemoveObject: Armoredillo Hide Loafers : -1671975198
+[01/27/2006 08:54:21.484]  [Engine] clsACEvents.HandleConsoleMessage:(7) You cast Blackmoor’s Favor on yourself, surpassing Blackmoor’s Favor
+[01/27/2006 08:54:22.625]  [Engine] clsACEvent.OnRemoveObject: Bronze Covenant Greaves : -1672516575
+[01/27/2006 08:54:23.171]  [Engine] clsACEvents.HandleConsoleMessage:(7) You cast Asheron’s Benediction on yourself, surpassing Asheron’s Benediction
+[01/27/2006 08:54:25.562]  [Engine] clsACEvent.OnRemoveObject: Salvaged Mahogany (100) : -1671488879
+[01/27/2006 08:54:26.609]  [Engine] clsACEvent.OnRemoveObject: Salvaged Mahogany (100) : -1671974436
+[01/27/2006 08:54:27.812]  [Engine] clsACEvent.OnRemoveObject: Salvaged Steel (100) : -1671280900
+[01/27/2006 08:54:28.984]  [Engine] clsACEvent.OnRemoveObject: Salvaged Steel (100) : -1672524315
+[01/27/2006 08:54:30.093]  [Engine] clsACEvent.OnRemoveObject: Salvaged Brass (100) : -1672075478
+[01/27/2006 08:54:31.500]  [Engine] clsACEvent.OnRemoveObject: Gold Pea : -1672496294
+[01/27/2006 08:54:32.500]  [Engine] OnApproachVendor: Vendor:Aun Amanaualuan the Elder Shaman
+[01/27/2006 08:54:32.578]  [Engine] clsACEvents.HandleConsoleMessage:(3) Aun Amanaualuan the Elder Shaman tells you, "Welcome, my friend. You have helped this town greatly. How may I serve you."
+[01/27/2006 08:54:32.578]  [Engine] clsACEvents.HandleConsoleMessage:(3) Aun Amanaualuan the Elder Shaman tells you, "Welcome, my friend. You have helped this town greatly. How may I serve you."
+[01/27/2006 08:54:32.578]  [Engine] clsACEvent.OnRemoveObject: Pyreal Pea : -1671975709
+[01/27/2006 08:54:38.578]  [Engine] OnApproachVendor: Vendor:Aun Amanaualuan the Elder Shaman
+[01/27/2006 08:54:38.640]  [Engine] clsACEvents.HandleConsoleMessage:(3) Aun Amanaualuan the Elder Shaman tells you, "Yes."
+[01/27/2006 08:54:38.640]  [Engine] clsACEvents.HandleConsoleMessage:(3) Aun Amanaualuan the Elder Shaman tells you, "Yes."
+[01/27/2006 08:54:39.390]  [Engine] clsACEvents.OnCreateObject: Pyreal : -1668758056
+[01/27/2006 08:54:39.390]  [Engine] clsACEvents.OnCreateObject: Pyreal : -1668712992
+[01/27/2006 08:54:39.390]  [Engine] clsACEvents.OnCreateObject: Pyreal : -1668927442
+[01/27/2006 08:54:39.406]  [Engine] clsACEvents.OnCreateObject: Pyreal : -1668625595
+[01/27/2006 08:54:39.406]  [Engine] clsACEvents.OnCreateObject: Pyreal : -1668713020
+[01/27/2006 08:54:39.406]  [Engine] clsACEvents.OnCreateObject: Pyreal : -1668927289
+[01/27/2006 08:54:39.406]  [Engine] clsACEvents.OnCreateObject: Pyreal : -1668985463
+[01/27/2006 08:54:39.406]  [Engine] clsACEvents.OnCreateObject: Pyreal : -1668760646
+[01/27/2006 08:54:39.406]  [Engine] clsACEvents.OnCreateObject: Pyreal : -1668712546
+[01/27/2006 08:54:39.406]  [Engine] clsACEvents.OnCreateObject: Pyreal : -1668757177
+[01/27/2006 08:54:39.406]  [Engine] clsACEvents.OnCreateObject: Pyreal : -1668758791
+[01/27/2006 08:54:39.421]  [Engine] clsACEvents.OnCreateObject: Pyreal : -1668717075
+[01/27/2006 08:54:39.421]  [Engine] clsACEvents.OnCreateObject: Pyreal : -1668625593
+[01/27/2006 08:54:39.421]  [Engine] clsACEvents.OnCreateObject: Pyreal : -1714077169
+[01/27/2006 08:54:39.421]  [Engine] clsACEvents.OnCreateObject: Pyreal : -1668927877
+[01/27/2006 08:54:39.421]  [Engine] clsACEvents.OnCreateObject: Pyreal : -1668713308
+[01/27/2006 08:54:39.421]  [Engine] clsACEvents.OnCreateObject: Pyreal : -1668759564
+[01/27/2006 08:54:39.421]  [Engine] clsACEvents.OnCreateObject: Pyreal : -1669615014
+[01/27/2006 08:54:39.421]  [Engine] clsACEvents.OnCreateObject: Pyreal : -1669169875
+[01/27/2006 08:54:39.531]  [Engine] Commands: Got /fc -> /fillcomps
+[01/27/2006 08:54:42.859]  [Engine] OnApproachVendor: Vendor:Aun Amanaualuan the Elder Shaman
+[01/27/2006 08:54:42.875]  [Engine] clsACEvent.OnRemoveObject: Pyreal : -1668712546
+[01/27/2006 08:54:42.875]  [Engine] clsACEvent.OnRemoveObject: Pyreal : -1668757177
+[01/27/2006 08:54:42.875]  [Engine] clsACEvent.OnRemoveObject: Pyreal : -1668758791
+[01/27/2006 08:54:42.875]  [Engine] clsACEvent.OnRemoveObject: Pyreal : -1668717075
+[01/27/2006 08:54:42.875]  [Engine] clsACEvent.OnRemoveObject: Pyreal : -1668625593
+[01/27/2006 08:54:42.875]  [Engine] clsACEvent.OnRemoveObject: Pyreal : -1714077169
+[01/27/2006 08:54:42.890]  [Engine] clsACEvent.OnRemoveObject: Pyreal : -1668927877
+[01/27/2006 08:54:42.890]  [Engine] clsACEvent.OnRemoveObject: Pyreal : -1668713308
+[01/27/2006 08:54:42.890]  [Engine] clsACEvent.OnRemoveObject: Pyreal : -1668759564
+[01/27/2006 08:54:42.890]  [Engine] clsACEvent.OnRemoveObject: Pyreal : -1669615014
+[01/27/2006 08:54:42.890]  [Engine] clsACEvent.OnRemoveObject: Pyreal : -1669169875
+[01/27/2006 08:54:42.890]  [Engine] clsACEvents.OnCreateObject: Prismatic Taper : -1668712514
+[01/27/2006 08:54:42.890]  [Engine] clsACEvents.OnCreateObject: Prismatic Taper : -1668758284
+[01/27/2006 08:54:42.890]  [Engine] clsACEvents.OnCreateObject: Prismatic Taper : -1668758812
+[01/27/2006 08:54:42.906]  [Engine] clsACEvents.OnCreateObject: Prismatic Taper : -1668712289
+[01/27/2006 08:54:42.984]  [Engine] clsACEvents.HandleConsoleMessage:(3) Aun Amanaualuan the Elder Shaman tells you, "Use that with care and it will care for you."
+[01/27/2006 08:54:42.984]  [Engine] clsACEvents.HandleConsoleMessage:(3) Aun Amanaualuan the Elder Shaman tells you, "Use that with care and it will care for you."
+[01/27/2006 08:54:44.796]  [Engine] clsACEvent.OnRemoveObject: Silver Pea : -1671583279
+[01/27/2006 08:54:50.203]  [Engine] clsACEvent.OnRemoveObject: Prismatic Taper : -1668712289
+[01/27/2006 08:54:55.656]  [Engine] clsACEvents.HandleConsoleMessage:(7) You cast Blackmoor’s Favor on yourself, surpassing Blackmoor’s Favor
+[01/27/2006 08:54:56.703]  [Engine] clsACEvents.HandleConsoleMessage:(7) You cast Asheron’s Benediction on yourself, surpassing Asheron’s Benediction
+[01/27/2006 08:55:02.687]  [Engine] clsACEvent.OnRemoveObject: Silver Pea : -1671975945
+[01/27/2006 08:55:03.562]  [Engine] clsACEvents.HandleConsoleMessage:(7) Executor's Blessing has expired.
+[01/27/2006 08:55:09.718]  [Engine] clsACEvents.OnCreateObject: Focusing Stone : -2147013545
+[01/27/2006 08:55:17.390]  [Engine] clsACEvents.HandleConsoleMessage:(7) Xeon Xarid cast Brilliance on you
+[01/27/2006 08:55:21.953]  [Engine] clsACEvents.HandleConsoleMessage:(7) Silk Tunic cast Bludgeoning Protection Self VI on you, but it is surpassed by Blessing of the Mace Turner
+[01/27/2006 08:55:21.968]  [Engine] clsACEvents.HandleConsoleMessage:(7) Silk Tunic cast Fiery Blessing on you
+[01/27/2006 08:55:21.968]  [Engine] clsACEvents.HandleConsoleMessage:(7) Silk Tunic cast Major Focus on you
+[01/27/2006 08:55:31.984]  [Engine] clsACEvents.HandleConsoleMessage:(13) Your base Arcane Lore skill is now 301!
+[01/27/2006 08:55:31.984]  [Engine] clsACEvents.HandleConsoleMessage:(13) Your base Arcane Lore skill is now 301!
+[01/27/2006 08:55:32.734]  [Engine] clsACEvents.HandleConsoleMessage:(13) Your base Arcane Lore skill is now 302!
+[01/27/2006 08:55:32.734]  [Engine] clsACEvents.HandleConsoleMessage:(13) Your base Arcane Lore skill is now 302!
+[01/27/2006 08:55:33.437]  [Engine] clsACEvents.HandleConsoleMessage:(13) Your base Arcane Lore skill is now 303!
+[01/27/2006 08:55:33.437]  [Engine] clsACEvents.HandleConsoleMessage:(13) Your base Arcane Lore skill is now 303!
+[01/27/2006 08:55:33.984]  [Engine] clsACEvents.HandleConsoleMessage:(13) Your base Arcane Lore skill is now 304!
+[01/27/2006 08:55:33.984]  [Engine] clsACEvents.HandleConsoleMessage:(13) Your base Arcane Lore skill is now 304!
+[01/27/2006 08:55:34.625]  [Engine] clsACEvents.HandleConsoleMessage:(13) Your base Arcane Lore skill is now 305 and has reached its upper limit!
+[01/27/2006 08:55:34.625]  [Engine] clsACEvents.HandleConsoleMessage:(13) Your base Arcane Lore skill is now 305 and has reached its upper limit!
+[01/27/2006 08:55:43.984]  [Engine] clsACEvents.HandleConsoleMessage:(0) You give Xeon Xarid Satin Tunic.
+[01/27/2006 08:55:43.984]  [Engine] clsACEvents.HandleConsoleMessage:(0) You give Xeon Xarid Satin Tunic.
+[01/27/2006 08:55:48.453]  [Engine] clsACEvents.HandleConsoleMessage:(7) Brilliance has expired.
+[01/27/2006 08:56:06.625]  [Engine] clsACEvents.HandleConsoleMessage:(7) You cast Blackmoor’s Favor on yourself, surpassing Blackmoor’s Favor
+[01/27/2006 08:56:07.609]  [Engine] clsACEvents.HandleConsoleMessage:(7) You cast Asheron’s Benediction on yourself, surpassing Asheron’s Benediction
+[01/27/2006 08:56:08.953]  [Engine] clsACEvent.OnRemoveObject: Satin Tunic : -1784052419
+[01/27/2006 08:56:11.296]  [Engine] Commands: Got /hr -> /house recall
+[01/27/2006 08:56:12.015]  [Engine] clsACEvents.HandleConsoleMessage:(23) Ruby Jet is recalling home.
+[01/27/2006 08:56:12.015]  [Engine] clsACEvents.HandleConsoleMessage:(23) Ruby Jet is recalling home.
+[01/27/2006 08:56:17.703]  [Engine] clsACEvents.HandleConsoleMessage:(23) Xeon Xarid is recalling to the Allegiance housing.
+[01/27/2006 08:56:17.703]  [Engine] clsACEvents.HandleConsoleMessage:(23) Xeon Xarid is recalling to the Allegiance housing.
+[01/27/2006 08:56:27.906]  [Engine] clsACEvents.OnCreateObject: Ruby Jet's Apartment : 2014314710
+[01/27/2006 08:56:27.921]  [Engine] clsACEvents.OnCreateObject: Door : 2014314708
+[01/27/2006 08:56:27.921]  [Engine] clsACEvents.OnCreateObject: Apartment : 2014314707
+[01/27/2006 08:56:27.921]  [Engine] clsACEvents.OnCreateObject: Floor Hook : 2014314706
+[01/27/2006 08:56:27.921]  [Engine] clsACEvents.OnCreateObject: Jack o' Lantern : 2014314705
+[01/27/2006 08:56:27.921]  [Engine] clsACEvents.OnCreateObject: Wall Hook : 2014314704
+[01/27/2006 08:56:27.921]  [Engine] clsACEvents.OnCreateObject: Storage : 2014314703
+[01/27/2006 08:56:27.921]  [Engine] clsACEvents.OnCreateObject: Apartment : 2014314709
+[01/27/2006 08:56:27.921]  [Engine] clsACEvents.OnCreateObject: Apartment : 2014314693
+[01/27/2006 08:56:27.937]  [Engine] clsACEvents.OnCreateObject: Floor Hook : 2014314692
+[01/27/2006 08:56:27.937]  [Engine] clsACEvents.OnCreateObject: Wall Hook : 2014314691
+[01/27/2006 08:56:27.937]  [Engine] clsACEvents.OnCreateObject: Wall Hook : 2014314690
+[01/27/2006 08:56:27.937]  [Engine] clsACEvents.OnCreateObject: Storage : 2014314689
+[01/27/2006 08:56:28.328]  [Engine] clsACEvents.OnCreateObject: Apartment : 2014314696
+[01/27/2006 08:56:28.328]  [Engine] clsACEvents.OnCreateObject: Door : 2014314694
+[01/27/2006 08:56:29.093]  [Engine] clsACEvents.OnCreateObject: Door : 2014314716
+[01/27/2006 08:56:29.093]  [Engine] clsACEvents.OnCreateObject: Apartment : 2014314715
+[01/27/2006 08:56:29.093]  [Engine] clsACEvents.OnCreateObject: Floor Hook : 2014314714
+[01/27/2006 08:56:29.093]  [Engine] clsACEvents.OnCreateObject: Wall Hook : 2014314713
+[01/27/2006 08:56:29.093]  [Engine] clsACEvents.OnCreateObject: Wall Hook : 2014314712
+[01/27/2006 08:56:29.093]  [Engine] clsACEvents.OnCreateObject: Storage : 2014314711
+[01/27/2006 08:56:29.093]  [Engine] clsACEvents.OnCreateObject: Apartment : 2014314695
+[01/27/2006 08:56:29.125]  [Engine] clsACEvents.HandleConsoleMessage:(3) Aun Amanaualuan the Elder Shaman tells you, "Please come again."
+[01/27/2006 08:56:29.125]  [Engine] clsACEvents.HandleConsoleMessage:(3) Aun Amanaualuan the Elder Shaman tells you, "Please come again."
+[01/27/2006 08:56:29.203]  [Engine] clsACEvents.OnCreateObject: Apartment : 2014314701
+[01/27/2006 08:56:29.203]  [Engine] clsACEvents.OnCreateObject: Floor Hook : 2014314700
+[01/27/2006 08:56:29.218]  [Engine] clsACEvents.OnCreateObject: Wall Hook : 2014314699
+[01/27/2006 08:56:29.218]  [Engine] clsACEvents.OnCreateObject: Wall Hook : 2014314698
+[01/27/2006 08:56:29.218]  [Engine] clsACEvents.OnCreateObject: Storage : 2014314697
+[01/27/2006 08:56:29.750]  [Engine] clsACEvents.OnCreateObject: Door : 2014314702
+[01/27/2006 08:56:29.765]  [Engine] clsACEvents.OnCreateObject: Apartment : 2014314679
+[01/27/2006 08:56:29.765]  [Engine] clsACEvents.OnCreateObject: Floor Hook : 2014314678
+[01/27/2006 08:56:29.765]  [Engine] clsACEvents.OnCreateObject: Wall Hook : 2014314677
+[01/27/2006 08:56:29.765]  [Engine] clsACEvents.OnCreateObject: Wall Hook : 2014314676
+[01/27/2006 08:56:29.765]  [Engine] clsACEvents.OnCreateObject: Storage : 2014314675
+[01/27/2006 08:56:29.781]  [Engine] clsACEvents.OnCreateObject: Apartment : 2014314687
+[01/27/2006 08:56:30.515]  [Engine] clsACEvents.OnCreateObject: Floor Hook : 2014314686
+[01/27/2006 08:56:30.515]  [Engine] clsACEvents.OnCreateObject: Wall Hook : 2014314685
+[01/27/2006 08:56:30.515]  [Engine] clsACEvents.OnCreateObject: Wall Hook : 2014314684
+[01/27/2006 08:56:30.515]  [Engine] clsACEvents.OnCreateObject: Storage : 2014314683
+[01/27/2006 08:56:30.515]  [Engine] clsACEvents.OnCreateObject: Door : 2014314680
+[01/27/2006 08:56:30.531]  [Engine] clsACEvents.OnCreateObject: Apartment : 2014314682
+[01/27/2006 08:56:30.531]  [Engine] clsACEvents.OnCreateObject: Apartment : 2014314681
+[01/27/2006 08:56:30.531]  [Engine] clsACEvents.OnCreateObject: Door : 2014314688
+[01/27/2006 08:56:36.453]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] <Tell:IIDString:0:Xeon Xarid>Xeon Xarid<\Tell> says, "dropping majors at mansion
+[01/27/2006 08:56:36.453]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] Xeon Xarid says, "dropping majors at mansion
+[01/27/2006 08:56:43.500]  [Engine] clsACEvents.HandleConsoleMessage:(7) Blessing of the Mace Turner has expired.
+[01/27/2006 08:56:51.921]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] <Tell:IIDString:0:Rijasa>Rijasa<\Tell> says, "what kind of majors? :)
+[01/27/2006 08:56:51.921]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] Rijasa says, "what kind of majors? :)
+[01/27/2006 08:56:52.937]  [Engine] clsACEvent.OnRemoveObject: Heavy Crossbow : -1668648082
+[01/27/2006 08:56:52.937]  [Engine] clsACEvent.OnRemoveObject: Focusing Stone : -1668648059
+[01/27/2006 08:56:52.953]  [Engine] clsACEvent.OnRemoveObject: Chest : 1924210732
+[01/27/2006 08:56:52.953]  [Engine] clsACEvent.OnRemoveObject: Door : 1924210703
+[01/27/2006 08:56:52.953]  [Engine] clsACEvent.OnRemoveObject: Grand Master Scrivener of Item Magic : 1924210721
+[01/27/2006 08:56:52.953]  [Engine] clsACEvent.OnRemoveObject: Grand Master Scrivener of Creature Magic : 1924210720
+[01/27/2006 08:56:52.953]  [Engine] clsACEvent.OnRemoveObject: Grand Master Scrivener of War Magic : 1924210719
+[01/27/2006 08:56:52.953]  [Engine] clsACEvent.OnRemoveObject: Pyreal Target Drudge : -1668648130
+[01/27/2006 08:56:52.984]  [Engine] clsACEvent.OnRemoveObject: Chest : 1924210734
+[01/27/2006 08:56:52.984]  [Engine] clsACEvent.OnRemoveObject: Aun Oreilauri the Healer : 1924210727
+[01/27/2006 08:56:52.984]  [Engine] clsACEvent.OnRemoveObject: Longbow : -1688803635
+[01/27/2006 08:56:52.984]  [Engine] clsACEvent.OnRemoveObject: Aun Gunditealuan the Marksman : 1924210726
+[01/27/2006 08:56:52.984]  [Engine] clsACEvent.OnRemoveObject: Pickaxe : -1668648046
+[01/27/2006 08:56:53.000]  [Engine] clsACEvent.OnRemoveObject: Dojiro Sangi the Grocer : 1924206623
+[01/27/2006 08:56:53.015]  [Engine] clsACEvent.OnRemoveObject: Chest : 1924206638
+[01/27/2006 08:56:53.015]  [Engine] clsACEvent.OnRemoveObject: Chest : 1924206639
+[01/27/2006 08:56:53.015]  [Engine] clsACEvent.OnRemoveObject: Auroch Skull : 1924206640
+[01/27/2006 08:56:53.015]  [Engine] clsACEvent.OnRemoveObject: Chest : 1924206630
+[01/27/2006 08:56:53.015]  [Engine] clsACEvent.OnRemoveObject: War Hammer : -1688803633
+[01/27/2006 08:56:53.031]  [Engine] clsACEvent.OnRemoveObject: Ry'zir al-Nabit : 1924210730
+[01/27/2006 08:56:53.046]  [Engine] clsACEvent.OnRemoveObject: Lugian Hammer : -1688803634
+[01/27/2006 08:56:53.046]  [Engine] clsACEvent.OnRemoveObject: Rkos the Armorer : 1924210729
+[01/27/2006 08:56:53.093]  [Engine] clsACEvent.OnRemoveObject: Beer Keg : 1924206654
+[01/27/2006 08:56:53.093]  [Engine] clsACEvent.OnRemoveObject: Beer Keg : 1924206655
+[01/27/2006 08:56:53.093]  [Engine] clsACEvent.OnRemoveObject: Odvik the Inn Keeper : 1924206626
+[01/27/2006 08:56:53.093]  [Engine] clsACEvent.OnRemoveObject: The Healer's Home : 1924210725
+[01/27/2006 08:56:53.093]  [Engine] clsACEvent.OnRemoveObject: Shot in the Arm Bowyers : 1924210724
+[01/27/2006 08:56:53.109]  [Engine] clsACEvent.OnRemoveObject: Door : 1924210705
+[01/27/2006 08:56:53.109]  [Engine] clsACEvent.OnRemoveObject: Door : 1924210704
+[01/27/2006 08:56:53.109]  [Engine] clsACEvent.OnRemoveObject: Grand Master Scrivener of Life Magic : 1924210722
+[01/27/2006 08:56:53.125]  [Engine] clsACEvent.OnRemoveObject: Agent of the Arcanum  : 1924210723
+[01/27/2006 08:56:53.125]  [Engine] clsACEvent.OnRemoveObject: Fountain : 1924210735
+[01/27/2006 08:56:53.125]  [Engine] clsACEvent.OnRemoveObject: Green Garnet Fire Sceptre : -2143812971
+[01/27/2006 08:56:53.140]  [Engine] clsACEvent.OnRemoveObject: Life Stone : 1924210744
+[01/27/2006 08:56:53.140]  [Engine] clsACEvent.OnRemoveObject: Arcine : 1343079356
+[01/27/2006 08:56:53.156]  [Engine] clsACEvent.OnRemoveObject: Orb of the Bunny Booty : -2145838971
+[01/27/2006 08:56:53.171]  [Engine] clsACEvent.OnRemoveObject: Dragon-buda : 1343078453
+[01/27/2006 08:56:53.187]  [Engine] clsACEvent.OnRemoveObject: Heavy Crossbow : -1668648056
+[01/27/2006 08:56:53.187]  [Engine] clsACEvent.OnRemoveObject: Silver Blunt Sceptre : -2017192076
+[01/27/2006 08:56:53.187]  [Engine] clsACEvent.OnRemoveObject: Xeon Xarid : 1343087348
+[01/27/2006 08:56:53.203]  [Engine] clsACEvent.OnRemoveObject: Tree Portal : 1924210709
+[01/27/2006 08:56:53.203]  [Engine] clsACEvent.OnRemoveObject: War Hammer : -1688803623
+[01/27/2006 08:56:53.203]  [Engine] clsACEvent.OnRemoveObject: Thimrin Woodsetter : 1924210708
+[01/27/2006 08:56:53.234]  [Engine] clsACEvent.OnRemoveObject: Buadren : -1688803597
+[01/27/2006 08:56:53.250]  [Engine] clsACEvent.OnRemoveObject: Aun Amanaualuan the Elder Shaman : 1924210707
+[01/27/2006 08:56:53.250]  [Engine] clsACEvent.OnRemoveObject: Lugian Mace : -1688803628
+[01/27/2006 08:56:53.250]  [Engine] clsACEvent.OnRemoveObject: Tunlok Weapons Master : 1924210706
+[01/27/2006 08:56:53.265]  [Engine] clsACEvent.OnRemoveObject: Ground Portal : 1924210728
+[01/27/2006 08:56:53.265]  [Engine] clsACEvent.OnRemoveObject: Town Mason and Storage : 1924210737
+[01/27/2006 08:56:53.265]  [Engine] clsACEvent.OnRemoveObject: Rkos and Ry'zir's Metalworks : 1924210731
+[01/27/2006 08:56:53.265]  [Engine] clsACEvent.OnRemoveObject: Well : 1924210736
+[01/27/2006 08:56:53.281]  [Engine] clsACEvent.OnRemoveObject: Fountain : 1924206644
+[01/27/2006 08:56:53.281]  [Engine] clsACEvent.OnRemoveObject: Heavy Crossbow : -1668648044
+[01/27/2006 08:56:53.281]  [Engine] clsACEvent.OnRemoveObject: Lady Dain's Tower (Archmagus) : 1924210733
+[01/27/2006 08:56:53.296]  [Engine] clsACEvent.OnRemoveObject: Door : 1924206609
+[01/27/2006 08:56:53.296]  [Engine] clsACEvent.OnRemoveObject: House of Bones : 1924206642
+[01/27/2006 08:56:53.296]  [Engine] clsACEvent.OnRemoveObject: Door : 1924206610
+[01/27/2006 08:56:53.296]  [Engine] clsACEvent.OnRemoveObject: Fountain : 1924206643
+[01/27/2006 08:56:53.312]  [Engine] clsACEvent.OnRemoveObject: Auroch Yearling : -1668648108
+[01/27/2006 08:56:53.312]  [Engine] clsACEvent.OnRemoveObject: Auroch Bull : -1668648114
+[01/27/2006 08:56:53.312]  [Engine] clsACEvent.OnRemoveObject: Auroch Yearling : -1668648112
+[01/27/2006 08:56:53.312]  [Engine] clsACEvent.OnRemoveObject: Auroch Cow : -1668648111
+[01/27/2006 08:56:53.328]  [Engine] clsACEvent.OnRemoveObject: Door : 1924206607
+[01/27/2006 08:56:53.328]  [Engine] clsACEvent.OnRemoveObject: Sliding Door : 1924206611
+[01/27/2006 08:56:53.328]  [Engine] clsACEvent.OnRemoveObject: Sangi's Goods : 1924206624
+[01/27/2006 08:56:53.359]  [Engine] clsACEvent.OnRemoveObject: Door : 1924206608
+[01/27/2006 08:56:53.359]  [Engine] clsACEvent.OnRemoveObject: The Ravenous Mattekar Tavern : 1924206625
+[01/27/2006 08:56:55.421]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] <Tell:IIDString:0:Zorren>Zorren<\Tell> says, "you know im on that!
+[01/27/2006 08:56:55.421]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] Zorren says, "you know im on that!
+[01/27/2006 08:57:14.406]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] <Tell:IIDString:0:Scarey Mary>Scarey Mary<\Tell> says, "hi Rijasa ! congrats on the new baby =)
+[01/27/2006 08:57:14.406]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] Scarey Mary says, "hi Rijasa ! congrats on the new baby =)
+[01/27/2006 08:57:23.234]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] <Tell:IIDString:0:Zorren>Zorren<\Tell> says, "any good amuli..need somthing quicker to allbane instead of all this gsc
+[01/27/2006 08:57:23.234]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] Zorren says, "any good amuli..need somthing quicker to allbane instead of all this gsc
+[01/27/2006 08:57:28.531]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] <Tell:IIDString:0:Rijasa>Rijasa<\Tell> says, "ty--seng musta made an announcement
+[01/27/2006 08:57:28.531]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] Rijasa says, "ty--seng musta made an announcement
+[01/27/2006 08:57:36.453]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] <Tell:IIDString:0:Xeon Xarid>Xeon Xarid<\Tell> says, "yeah, I got a full set for ya Z
+[01/27/2006 08:57:36.453]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] Xeon Xarid says, "yeah, I got a full set for ya Z
+[01/27/2006 08:57:59.609]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] <Tell:IIDString:0:Scarey Mary>Scarey Mary<\Tell> says, "yup
+[01/27/2006 08:57:59.609]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] Scarey Mary says, "yup
+[01/27/2006 08:58:15.421]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] <Tell:IIDString:0:Scarey Mary>Scarey Mary<\Tell> says, "had you on motd. did you have a boy or girl ?
+[01/27/2006 08:58:15.421]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] Scarey Mary says, "had you on motd. did you have a boy or girl ?
+[01/27/2006 08:58:32.703]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] <Tell:IIDString:0:Rijasa>Rijasa<\Tell> says, "at least my wife is home again so I can play a bit ;)
+[01/27/2006 08:58:32.703]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] Rijasa says, "at least my wife is home again so I can play a bit ;)
+[01/27/2006 08:58:47.187]  [Engine] clsACEvents.HandleConsoleMessage:(7) Blessing of the Blade Turner has expired.
+[01/27/2006 09:00:15.453]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] <Tell:IIDString:0:Scarey Mary>Scarey Mary<\Tell> says, "first baby ?
+[01/27/2006 09:00:15.453]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] Scarey Mary says, "first baby ?
+[01/27/2006 09:00:48.390]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] <Tell:IIDString:0:Rijasa>Rijasa<\Tell> says, "4th
+[01/27/2006 09:00:48.390]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] Rijasa says, "4th
+[01/27/2006 09:00:50.578]  [Engine] clsACEvents.HandleConsoleMessage:(7) Blessing of the Arrow Turner has expired.
+[01/27/2006 09:00:52.187]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] <Tell:IIDString:0:Flu>Flu<\Tell> says, "wow
+[01/27/2006 09:00:52.187]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] Flu says, "wow
+[01/27/2006 09:00:52.531]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] <Tell:IIDString:0:Scarey Mary>Scarey Mary<\Tell> says, "wow
+[01/27/2006 09:00:52.531]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] Scarey Mary says, "wow
+[01/27/2006 09:00:55.250]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] <Tell:IIDString:0:Loops>Loops<\Tell> says, "holy smokes
+[01/27/2006 09:00:55.250]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] Loops says, "holy smokes
+[01/27/2006 09:01:06.406]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] <Tell:IIDString:0:Rijasa>Rijasa<\Tell> says, "lol--yes, I'm spawning my own little brood
+[01/27/2006 09:01:06.406]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] Rijasa says, "lol--yes, I'm spawning my own little brood
+[01/27/2006 09:01:10.796]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] <Tell:IIDString:0:Scarey Mary>Scarey Mary<\Tell> says, "lol
+[01/27/2006 09:01:10.796]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] Scarey Mary says, "lol
+[01/27/2006 09:01:31.359]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] <Tell:IIDString:0:Zorren>Zorren<\Tell> says, "better have them playin AC while there in diapers
+[01/27/2006 09:01:31.359]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] Zorren says, "better have them playin AC while there in diapers
+[01/27/2006 09:02:08.312]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] <Tell:IIDString:0:Xeon Xarid>Xeon Xarid<\Tell> says, "ok Z, omw
+[01/27/2006 09:02:08.312]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] Xeon Xarid says, "ok Z, omw
+[01/27/2006 09:02:10.390]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] <Tell:IIDString:0:Rijasa>Rijasa<\Tell> says, "I think my oldest will, but she's likes to look at the trees more than the monsters so leveling her would be a pain
+[01/27/2006 09:02:10.390]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] Rijasa says, "I think my oldest will, but she's likes to look at the trees more than the monsters so leveling her would be a pain
+[01/27/2006 09:02:22.078]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] <Tell:IIDString:0:Zorren>Zorren<\Tell> says, "lol...trees
+[01/27/2006 09:02:22.078]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] Zorren says, "lol...trees
+[01/27/2006 09:02:27.281]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] <Tell:IIDString:0:Zorren>Zorren<\Tell> says, "k Xeon
+[01/27/2006 09:02:27.281]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] Zorren says, "k Xeon
+[01/27/2006 09:02:50.984]  [Engine] clsACEvents.OnCreateObject: Pack : -2114644641
+[01/27/2006 09:02:50.984]  [Engine] clsACEvents.OnCreateObject: Writ of Refuge : -2073520153
+[01/27/2006 09:02:50.984]  [Engine] clsACEvents.OnCreateObject: Trade Note (10,000) : -1836644500
+[01/27/2006 09:02:50.984]  [Engine] clsACEvents.OnCreateObject: Yanshi Portal Gem : -1780870082
+[01/27/2006 09:02:50.984]  [Engine] clsACEvents.OnCreateObject: Duke Raoul's Distillation : -1835576965
+[01/27/2006 09:02:50.984]  [Engine] clsACEvents.OnCreateObject: Apothecary Zongo's Stout : -1835599891
+[01/27/2006 09:02:50.984]  [Engine] clsACEvents.OnCreateObject: Bobo's Stout : -2109069176
+[01/27/2006 09:02:51.000]  [Engine] clsACEvents.OnCreateObject: Amber Ape : -2109069239
+[01/27/2006 09:02:56.281]  [Engine] clsACEvents.HandleConsoleMessage:(7) Caustic Blessing has expired.
+[01/27/2006 09:02:58.906]  [Engine] Commands: Got /mr -> /house mansion_recall
+[01/27/2006 09:02:59.015]  [Engine] clsACEvents.HandleConsoleMessage:(23) Ruby Jet is recalling to the Allegiance housing.
+[01/27/2006 09:02:59.015]  [Engine] clsACEvents.HandleConsoleMessage:(23) Ruby Jet is recalling to the Allegiance housing.
+[01/27/2006 09:02:59.468]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] <Tell:IIDString:0:Rijasa>Rijasa<\Tell> says, "heh--+12 dam +10 elec bow...wk 9 :(
+[01/27/2006 09:02:59.468]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] Rijasa says, "heh--+12 dam +10 elec bow...wk 9 :(
+[01/27/2006 09:03:12.859]  [Engine] clsACEvent.OnRemoveObject: Apartment : 2014314679
+[01/27/2006 09:03:12.859]  [Engine] clsACEvent.OnRemoveObject: Floor Hook : 2014314678
+[01/27/2006 09:03:12.859]  [Engine] clsACEvent.OnRemoveObject: Wall Hook : 2014314676
+[01/27/2006 09:03:12.859]  [Engine] clsACEvent.OnRemoveObject: Floor Hook : 2014314686
+[01/27/2006 09:03:12.859]  [Engine] clsACEvent.OnRemoveObject: Wall Hook : 2014314690
+[01/27/2006 09:03:12.859]  [Engine] clsACEvent.OnRemoveObject: Storage : 2014314689
+[01/27/2006 09:03:12.859]  [Engine] clsACEvent.OnRemoveObject: Wall Hook : 2014314685
+[01/27/2006 09:03:12.859]  [Engine] clsACEvent.OnRemoveObject: Door : 2014314694
+[01/27/2006 09:03:12.859]  [Engine] clsACEvent.OnRemoveObject: Apartment : 2014314701
+[01/27/2006 09:03:12.859]  [Engine] clsACEvent.OnRemoveObject: Door : 2014314702
+[01/27/2006 09:03:12.859]  [Engine] clsACEvent.OnRemoveObject: Storage : 2014314697
+[01/27/2006 09:03:12.859]  [Engine] clsACEvent.OnRemoveObject: Wall Hook : 2014314698
+[01/27/2006 09:03:12.859]  [Engine] clsACEvent.OnRemoveObject: Wall Hook : 2014314699
+[01/27/2006 09:03:12.875]  [Engine] clsACEvent.OnRemoveObject: Storage : 2014314675
+[01/27/2006 09:03:12.875]  [Engine] clsACEvent.OnRemoveObject: Wall Hook : 2014314684
+[01/27/2006 09:03:12.875]  [Engine] clsACEvent.OnRemoveObject: Floor Hook : 2014314700
+[01/27/2006 09:03:12.875]  [Engine] clsACEvent.OnRemoveObject: Storage : 2014314683
+[01/27/2006 09:03:12.875]  [Engine] clsACEvent.OnRemoveObject: Wall Hook : 2014314677
+[01/27/2006 09:03:12.875]  [Engine] clsACEvent.OnRemoveObject: Wall Hook : 2014314691
+[01/27/2006 09:03:12.875]  [Engine] clsACEvent.OnRemoveObject: Floor Hook : 2014314692
+[01/27/2006 09:03:12.875]  [Engine] clsACEvent.OnRemoveObject: Apartment : 2014314693
+[01/27/2006 09:03:12.875]  [Engine] clsACEvent.OnRemoveObject: Door : 2014314680
+[01/27/2006 09:03:12.875]  [Engine] clsACEvent.OnRemoveObject: Door : 2014314688
+[01/27/2006 09:03:12.875]  [Engine] clsACEvent.OnRemoveObject: Apartment : 2014314687
+[01/27/2006 09:03:14.312]  [Engine] clsACEvents.OnCreateObject: K'nath Lair Portal : 2096910428
+[01/27/2006 09:03:14.312]  [Engine] clsACEvents.OnCreateObject: Olthoi Resurgent : 2096910429
+[01/27/2006 09:03:14.312]  [Engine] clsACEvents.OnCreateObject: Burun Kukuur Floatee : 2096910430
+[01/27/2006 09:03:14.312]  [Engine] clsACEvents.OnCreateObject: Dangerous Portal Device : 2096910431
+[01/27/2006 09:03:14.312]  [Engine] clsACEvents.OnCreateObject: Roof Hook : 2096910432
+[01/27/2006 09:03:14.312]  [Engine] clsACEvents.OnCreateObject: Scarey Mary's Mansion : 2096910400
+[01/27/2006 09:03:15.906]  [Engine] clsACEvents.OnCreateObject: Mansion : 2096910403
+[01/27/2006 09:03:15.906]  [Engine] clsACEvents.OnCreateObject: Door : 2096910336
+[01/27/2006 09:03:15.906]  [Engine] clsACEvents.OnCreateObject: Bronze Morning Star : 2096910407
+[01/27/2006 09:03:15.906]  [Engine] clsACEvents.OnCreateObject: Bronze Longbow : 2096910408
+[01/27/2006 09:03:15.906]  [Engine] clsACEvents.OnCreateObject: Bronze Tower Shield : 2096910409
+[01/27/2006 09:03:15.906]  [Engine] clsACEvents.OnCreateObject: Bronze Spear : 2096910410
+[01/27/2006 09:03:15.906]  [Engine] clsACEvents.OnCreateObject: Chandelier : 2096910337
+[01/27/2006 09:03:15.906]  [Engine] clsACEvents.OnCreateObject: Bronze Atlatl : 2096910338
+[01/27/2006 09:03:15.906]  [Engine] clsACEvents.OnCreateObject: Bronze Quintessence Sickle : 2096910339
+[01/27/2006 09:03:15.921]  [Engine] clsACEvents.OnCreateObject: Bronze Short Sword : 2096910340
+[01/27/2006 09:03:15.921]  [Engine] clsACEvents.OnCreateObject: Fertilized Sundew : 2096910341
+[01/27/2006 09:03:15.921]  [Engine] clsACEvents.OnCreateObject: Fertilized Fly Trap : 2096910342
+[01/27/2006 09:03:15.921]  [Engine] clsACEvents.OnCreateObject: Fertilized Pitcher Plant : 2096910343
+[01/27/2006 09:03:15.921]  [Engine] clsACEvents.OnCreateObject: Door : 2096910345
+[01/27/2006 09:03:15.921]  [Engine] clsACEvents.OnCreateObject: Door : 2096910344
+[01/27/2006 09:03:15.921]  [Engine] clsACEvents.OnCreateObject: Ceiling Hook : 2096910411
+[01/27/2006 09:03:15.921]  [Engine] clsACEvents.OnCreateObject: Pearl of Acid Baning : 2096910412
+[01/27/2006 09:03:15.921]  [Engine] clsACEvents.OnCreateObject: Krau Li's Crystal : 2096910413
+[01/27/2006 09:03:15.921]  [Engine] clsACEvents.OnCreateObject: Bronze Round Shield : 2096910414
+[01/27/2006 09:03:15.937]  [Engine] clsACEvents.OnCreateObject: Repaired Shadow Stone : 2096910415
+[01/27/2006 09:03:15.937]  [Engine] clsACEvents.OnCreateObject: Tome of Blood and Bone : 2096910346
+[01/27/2006 09:03:15.937]  [Engine] clsACEvents.OnCreateObject: Bronze Morning Star : 2096910347
+[01/27/2006 09:03:15.937]  [Engine] clsACEvents.OnCreateObject: Bronze Spear : 2096910348
+[01/27/2006 09:03:15.937]  [Engine] clsACEvents.OnCreateObject: Chandelier : 2096910416
+[01/27/2006 09:03:15.937]  [Engine] clsACEvents.OnCreateObject: Door : 2096910399
+[01/27/2006 09:03:16.468]  [Engine] clsACEvents.OnCreateObject: Door : 2096910398
+[01/27/2006 09:03:16.468]  [Engine] clsACEvents.OnCreateObject: Homecoming Pennant : 2096910457
+[01/27/2006 09:03:16.468]  [Engine] clsACEvents.OnCreateObject: Wallbound Niffis : 2096910458
+[01/27/2006 09:03:16.468]  [Engine] clsACEvents.OnCreateObject: Holiday Lights : 2096910459
+[01/27/2006 09:03:16.468]  [Engine] clsACEvents.OnCreateObject: Pack Gold Remoran : 2096910460
+[01/27/2006 09:03:16.468]  [Engine] clsACEvents.OnCreateObject: Outland Portal Device : 2096910461
+[01/27/2006 09:03:16.468]  [Engine] clsACEvents.OnCreateObject: Yard Hook : 2096910462
+[01/27/2006 09:03:16.468]  [Engine] clsACEvents.OnCreateObject: Bael'Zharon Flag : 2096910417
+[01/27/2006 09:03:16.468]  [Engine] clsACEvents.OnCreateObject: Lesser Direlands Device : 2096910418
+[01/27/2006 09:03:16.468]  [Engine] clsACEvents.OnCreateObject: Citadels Portal Device : 2096910419
+[01/27/2006 09:03:16.953]  [Engine] clsACEvents.OnCreateObject: Portal to Kivik Lir's Temple : 2096910455
+[01/27/2006 09:03:16.953]  [Engine] clsACEvents.OnCreateObject: Replica of a Tursh Totem : 2096910456
+[01/27/2006 09:03:16.953]  [Engine] clsACEvents.OnCreateObject: Door : 2096910349
+[01/27/2006 09:03:16.953]  [Engine] clsACEvents.OnCreateObject: Caliginous Aegis : 2096910350
+[01/27/2006 09:03:16.953]  [Engine] clsACEvents.OnCreateObject: Head of the Olthoi Queen : 2096910351
+[01/27/2006 09:03:16.953]  [Engine] clsACEvents.OnCreateObject: Chalk Board : 2096910352
+[01/27/2006 09:03:16.953]  [Engine] clsACEvents.OnCreateObject: Head of the Olthoi Queen : 2096910353
+[01/27/2006 09:03:16.953]  [Engine] clsACEvents.OnCreateObject: Head of the Olthoi Queen : 2096910354
+[01/27/2006 09:03:16.968]  [Engine] clsACEvents.OnCreateObject: Stave of Palenqual : 2096910355
+[01/27/2006 09:03:16.968]  [Engine] clsACEvents.OnCreateObject: Warrior's Jewel : 2096910356
+[01/27/2006 09:03:16.968]  [Engine] clsACEvents.OnCreateObject: Ceiling Hook : 2096910420
+[01/27/2006 09:03:16.968]  [Engine] clsACEvents.OnCreateObject: Door : 2096910357
+[01/27/2006 09:03:17.281]  [Engine] clsACEvents.OnCreateObject: Coffin : 2096910421
+[01/27/2006 09:03:17.296]  [Engine] clsACEvents.OnCreateObject: Evader's Crystal : 2096910422
+[01/27/2006 09:03:17.296]  [Engine] clsACEvents.OnCreateObject: Medicated Stamina Kit : 2096910423
+[01/27/2006 09:03:17.296]  [Engine] clsACEvents.OnCreateObject: Hunter's Crystal : 2096910424
+[01/27/2006 09:03:17.296]  [Engine] clsACEvents.OnCreateObject: Oswald's Crystal : 2096910425
+[01/27/2006 09:03:17.296]  [Engine] clsACEvents.OnCreateObject: Elysa's Crystal : 2096910426
+[01/27/2006 09:03:17.296]  [Engine] clsACEvents.OnCreateObject: Hamud's Crystal : 2096910427
+[01/27/2006 09:03:17.296]  [Engine] clsACEvents.OnCreateObject: Door : 2096910358
+[01/27/2006 09:03:17.296]  [Engine] clsACEvents.OnCreateObject: Ursuin Rug : 2096910359
+[01/27/2006 09:03:17.296]  [Engine] clsACEvents.OnCreateObject: Olthoi Lands Portal Device : 2096910360
+[01/27/2006 09:03:17.296]  [Engine] clsACEvents.OnCreateObject: Decorative Bronze Statue : 2096910361
+[01/27/2006 09:03:17.765]  [Engine] clsACEvents.OnCreateObject: Pack Lugian : 2096910362
+[01/27/2006 09:03:17.765]  [Engine] clsACEvents.OnCreateObject: Door : 2096910364
+[01/27/2006 09:03:17.765]  [Engine] clsACEvents.OnCreateObject: Decorative Bronze Statue  : 2096910363
+[01/27/2006 09:03:17.765]  [Engine] clsACEvents.OnCreateObject: Door : 2096910365
+[01/27/2006 09:03:17.765]  [Engine] clsACEvents.OnCreateObject: Mansion : 2096910402
+[01/27/2006 09:03:17.765]  [Engine] clsACEvents.OnCreateObject: Pack Cow : 2096910366
+[01/27/2006 09:03:17.781]  [Engine] clsACEvents.OnCreateObject: Mansion : 2096910404
+[01/27/2006 09:03:18.843]  [Engine] clsACEvents.OnCreateObject: Pack P. : 2096910367
+[01/27/2006 09:03:18.859]  [Engine] clsACEvents.OnCreateObject: Door : 2096910382
+[01/27/2006 09:03:18.859]  [Engine] clsACEvents.OnCreateObject: Portal to Izji Qo's Temple : 2096910446
+[01/27/2006 09:03:18.859]  [Engine] clsACEvents.OnCreateObject: Black Spawn Den Portal Device : 2096910447
+[01/27/2006 09:03:18.859]  [Engine] clsACEvents.OnCreateObject: Roof Hook : 2096910448
+[01/27/2006 09:03:18.859]  [Engine] clsACEvents.OnCreateObject: Sapphire Sceptre : -2145349846
+[01/27/2006 09:03:18.859]  [Engine] clsACEvents.OnCreateObject: Security : 1342969930
+[01/27/2006 09:03:18.859]  [Engine] clsACEvents.OnCreateObject: Silver Large Kite Shield : -2140593025
+[01/27/2006 09:03:18.859]  [Engine] clsACEvents.OnCreateObject: Silver Flaming Broad Sword : -2126100378
+[01/27/2006 09:03:18.859]  [Engine] clsACEvents.OnCreateObject: Treated Healing Kit : -1881490308
+[01/27/2006 09:03:18.859]  [Engine] clsACEvents.OnCreateObject: Focusing Stone : -2147172696
+[01/27/2006 09:03:18.875]  [Engine] clsACEvents.OnCreateObject: Zorren : 1343094944
+[01/27/2006 09:03:18.875]  [Engine] clsACEvents.OnCreateObject: Scarey Mary : 1342747180
+[01/27/2006 09:03:20.390]  [Engine] clsACEvents.OnCreateObject: Xeon Xarid : 1343087348
+[01/27/2006 09:03:20.390]  [Engine] clsACEvents.OnCreateObject: Silver Blunt Sceptre : -2017192076
+[01/27/2006 09:03:20.406]  [Engine] clsACEvents.OnCreateObject: Large Red Fish : 2096910433
+[01/27/2006 09:03:20.406]  [Engine] clsACEvents.OnCreateObject: Map of Auberean : 2096910434
+[01/27/2006 09:03:20.406]  [Engine] clsACEvents.OnCreateObject: Falling Leaves : 2096910435
+[01/27/2006 09:03:20.421]  [Engine] clsACEvents.OnCreateObject: Bending Willow and Setting Sun : 2096910436
+[01/27/2006 09:03:20.421]  [Engine] clsACEvents.OnCreateObject: Wall Hook : 2096910437
+[01/27/2006 09:03:20.421]  [Engine] clsACEvents.OnCreateObject: Assault Bow : 2096910438
+[01/27/2006 09:03:20.421]  [Engine] clsACEvents.OnCreateObject: Wall Hook : 2096910439
+[01/27/2006 09:03:20.437]  [Engine] clsACEvents.OnCreateObject: Wall Hook : 2096910440
+[01/27/2006 09:03:20.437]  [Engine] clsACEvents.OnCreateObject: Oxidized Statue : 2096910368
+[01/27/2006 09:03:20.437]  [Engine] clsACEvents.OnCreateObject: Globe of Auberean : 2096910369
+[01/27/2006 09:03:20.437]  [Engine] clsACEvents.OnCreateObject: Divan : 2096910371
+[01/27/2006 09:03:20.437]  [Engine] clsACEvents.OnCreateObject: Pack Drudge : 2096910370
+[01/27/2006 09:03:20.437]  [Engine] clsACEvents.OnCreateObject: Couch : 2096910372
+[01/27/2006 09:03:20.437]  [Engine] clsACEvents.OnCreateObject: Alloy Machine : 2096910373
+[01/27/2006 09:03:20.437]  [Engine] clsACEvents.OnCreateObject: Into the Unknown : 2096910374
+[01/27/2006 09:03:20.437]  [Engine] clsACEvents.OnCreateObject: The Studious Mind : 2096910375
+[01/27/2006 09:03:20.437]  [Engine] clsACEvents.OnCreateObject: Outcast : 2096910441
+[01/27/2006 09:03:20.437]  [Engine] clsACEvents.OnCreateObject: The Hero : 2096910442
+[01/27/2006 09:03:20.453]  [Engine] clsACEvents.OnCreateObject: Ceiling Hook : 2096910443
+[01/27/2006 09:03:20.453]  [Engine] clsACEvents.OnCreateObject: Ceiling Hook : 2096910444
+[01/27/2006 09:03:20.453]  [Engine] clsACEvents.OnCreateObject: Door : 2096910376
+[01/27/2006 09:03:20.453]  [Engine] clsACEvents.OnCreateObject: Holiday Lights : 2096910377
+[01/27/2006 09:03:20.453]  [Engine] clsACEvents.OnCreateObject: Chandelier : 2096910445
+[01/27/2006 09:03:20.453]  [Engine] clsACEvents.OnCreateObject: Door : 2096910378
+[01/27/2006 09:03:20.453]  [Engine] clsACEvents.OnCreateObject: House Portal : 2096910401
+[01/27/2006 09:03:20.453]  [Engine] clsACEvents.OnCreateObject: Door : 2096910379
+[01/27/2006 09:03:20.453]  [Engine] clsACEvents.OnCreateObject: Door : 2096910380
+[01/27/2006 09:03:20.453]  [Engine] clsACEvents.OnCreateObject: Door : 2096910381
+[01/27/2006 09:03:20.468]  [Engine] clsACEvents.OnCreateObject: Door : 2096910383
+[01/27/2006 09:03:20.468]  [Engine] clsACEvents.OnCreateObject: Imbuer's Crystal : 2096910452
+[01/27/2006 09:03:20.468]  [Engine] clsACEvents.OnCreateObject: Polestar : 2096910453
+[01/27/2006 09:03:20.468]  [Engine] clsACEvents.OnCreateObject: Banished Bow : 2096910454
+[01/27/2006 09:03:20.468]  [Engine] clsACEvents.OnCreateObject: Decorative Bronze Statue : 2096910384
+[01/27/2006 09:03:20.468]  [Engine] clsACEvents.OnCreateObject: Skeleton : 2096910385
+[01/27/2006 09:03:20.468]  [Engine] clsACEvents.OnCreateObject: Tremendous Monouga Pack Doll : 2096910386
+[01/27/2006 09:03:20.468]  [Engine] clsACEvents.OnCreateObject: Bending Willow and Setting Sun : 2096910387
+[01/27/2006 09:03:20.468]  [Engine] clsACEvents.OnCreateObject: Skeletal Guise : 2096910388
+[01/27/2006 09:03:20.468]  [Engine] clsACEvents.OnCreateObject: Soul Staff : 2096910389
+[01/27/2006 09:03:20.484]  [Engine] clsACEvents.OnCreateObject: Falling Leaves : 2096910390
+[01/27/2006 09:03:20.484]  [Engine] clsACEvents.OnCreateObject: Snowman Snowglobe : 2096910449
+[01/27/2006 09:03:20.484]  [Engine] clsACEvents.OnCreateObject: Olthoi Enslavement : 2096910450
+[01/27/2006 09:03:20.484]  [Engine] clsACEvents.OnCreateObject: Assault Bow : 2096910451
+[01/27/2006 09:03:20.484]  [Engine] clsACEvents.OnCreateObject: Door : 2096910391
+[01/27/2006 09:03:20.484]  [Engine] clsACEvents.OnCreateObject: Ivory Frost Bow : 2096910392
+[01/27/2006 09:03:20.484]  [Engine] clsACEvents.OnCreateObject: Two Headed Snowman Mask : 2096910393
+[01/27/2006 09:03:20.484]  [Engine] clsACEvents.OnCreateObject: Door : 2096910394
+[01/27/2006 09:03:20.484]  [Engine] clsACEvents.OnCreateObject: Font of Jojii : 2096910395
+[01/27/2006 09:03:20.500]  [Engine] clsACEvents.OnCreateObject: Head of the Homunculus : 2096910396
+[01/27/2006 09:03:20.500]  [Engine] clsACEvents.OnCreateObject: Door : 2096910397
+[01/27/2006 09:03:20.500]  [Engine] clsACEvents.OnCreateObject: Mansion : 2096910405
+[01/27/2006 09:03:21.593]  [Engine] clsACEvent.OnRemoveObject: Yanshi Portal Gem : -1780870082
+[01/27/2006 09:03:21.593]  [Engine] clsACEvent.OnRemoveObject: Amber Ape : -2109069239
+[01/27/2006 09:03:21.593]  [Engine] clsACEvent.OnRemoveObject: Trade Note (10,000) : -1836644500
+[01/27/2006 09:03:21.593]  [Engine] clsACEvent.OnRemoveObject: Bobo's Stout : -2109069176
+[01/27/2006 09:03:21.593]  [Engine] clsACEvent.OnRemoveObject: Apothecary Zongo's Stout : -1835599891
+[01/27/2006 09:03:21.593]  [Engine] clsACEvent.OnRemoveObject: Pack : -2114644641
+[01/27/2006 09:03:21.593]  [Engine] clsACEvent.OnRemoveObject: Writ of Refuge : -2073520153
+[01/27/2006 09:03:21.593]  [Engine] clsACEvent.OnRemoveObject: Duke Raoul's Distillation : -1835576965
+[01/27/2006 09:03:21.859]  [Engine] OnLocalChat (2): Zorren : Xeon..any idea what this is??
+[01/27/2006 09:03:21.875]  [Engine] clsACEvents.HandleConsoleMessage:(2) <Tell:IIDString:1343094944:Zorren>Zorren<\Tell> says, "Xeon..any idea what this is??"
+[01/27/2006 09:03:21.875]  [Engine] clsACEvents.HandleConsoleMessage:(2) Zorren says, "Xeon..any idea what this is??"
+[01/27/2006 09:03:38.015]  [Engine] OnLocalChat (2): Zorren : caught it fishing..junk?
+[01/27/2006 09:03:38.046]  [Engine] clsACEvents.HandleConsoleMessage:(2) <Tell:IIDString:1343094944:Zorren>Zorren<\Tell> says, "caught it fishing..junk?"
+[01/27/2006 09:03:38.046]  [Engine] clsACEvents.HandleConsoleMessage:(2) Zorren says, "caught it fishing..junk?"
+[01/27/2006 09:03:39.062]  [Engine] clsACEvent.OnRemoveObject: Wall Hook : 2014314713
+[01/27/2006 09:03:39.062]  [Engine] clsACEvent.OnRemoveObject: Wall Hook : 2014314712
+[01/27/2006 09:03:39.062]  [Engine] clsACEvent.OnRemoveObject: Storage : 2014314711
+[01/27/2006 09:03:39.062]  [Engine] clsACEvent.OnRemoveObject: Door : 2014314716
+[01/27/2006 09:03:39.062]  [Engine] clsACEvent.OnRemoveObject: Apartment : 2014314682
+[01/27/2006 09:03:39.062]  [Engine] clsACEvent.OnRemoveObject: Apartment : 2014314681
+[01/27/2006 09:03:39.062]  [Engine] clsACEvent.OnRemoveObject: Apartment : 2014314695
+[01/27/2006 09:03:39.062]  [Engine] clsACEvent.OnRemoveObject: Apartment : 2014314696
+[01/27/2006 09:03:39.062]  [Engine] clsACEvent.OnRemoveObject: Floor Hook : 2014314714
+[01/27/2006 09:03:39.078]  [Engine] clsACEvent.OnRemoveObject: Apartment : 2014314715
+[01/27/2006 09:03:39.078]  [Engine] clsACEvent.OnRemoveObject: Ruby Jet's Apartment : 2014314710
+[01/27/2006 09:03:39.078]  [Engine] clsACEvent.OnRemoveObject: Apartment : 2014314707
+[01/27/2006 09:03:39.078]  [Engine] clsACEvent.OnRemoveObject: Door : 2014314708
+[01/27/2006 09:03:39.078]  [Engine] clsACEvent.OnRemoveObject: Storage : 2014314703
+[01/27/2006 09:03:39.078]  [Engine] clsACEvent.OnRemoveObject: Floor Hook : 2014314706
+[01/27/2006 09:03:39.078]  [Engine] clsACEvent.OnRemoveObject: Jack o' Lantern : 2014314705
+[01/27/2006 09:03:39.078]  [Engine] clsACEvent.OnRemoveObject: Wall Hook : 2014314704
+[01/27/2006 09:03:39.078]  [Engine] clsACEvent.OnRemoveObject: Apartment : 2014314709
+[01/27/2006 09:03:48.531]  [Engine] OnLocalChat (2): Xeon Xarid : hmm,
+[01/27/2006 09:03:48.578]  [Engine] clsACEvents.HandleConsoleMessage:(2) <Tell:IIDString:1343087348:Xeon Xarid>Xeon Xarid<\Tell> says, "hmm,"
+[01/27/2006 09:03:48.578]  [Engine] clsACEvents.HandleConsoleMessage:(2) Xeon Xarid says, "hmm,"
+[01/27/2006 09:03:58.906]  [Engine] OnLocalChat (2): Xeon Xarid : you might be able to turn it in for a skelton costume
+[01/27/2006 09:03:58.937]  [Engine] clsACEvents.HandleConsoleMessage:(2) <Tell:IIDString:1343087348:Xeon Xarid>Xeon Xarid<\Tell> says, "you might be able to turn it in for a skelton costume"
+[01/27/2006 09:03:58.937]  [Engine] clsACEvents.HandleConsoleMessage:(2) Xeon Xarid says, "you might be able to turn it in for a skelton costume"
+[01/27/2006 09:04:11.171]  [Engine] OnLocalChat (2): Zorren : oo cool..where abouts?
+[01/27/2006 09:04:11.203]  [Engine] clsACEvents.HandleConsoleMessage:(2) <Tell:IIDString:1343094944:Zorren>Zorren<\Tell> says, "oo cool..where abouts?"
+[01/27/2006 09:04:11.203]  [Engine] clsACEvents.HandleConsoleMessage:(2) Zorren says, "oo cool..where abouts?"
+[01/27/2006 09:04:11.593]  [Engine] clsACEvents.HandleConsoleMessage:(7) The spell Brogard's Defiance on Silk Pants has expired.
+[01/27/2006 09:04:11.609]  [Engine] clsACEvents.HandleConsoleMessage:(7) The spell Brogard's Defiance on Copper Teardrop Crown has expired.
+[01/27/2006 09:04:11.609]  [Engine] clsACEvents.HandleConsoleMessage:(7) The spell Brogard's Defiance on Gold Platemail Gauntlets has expired.
+[01/27/2006 09:04:11.671]  [Engine] clsACEvents.HandleConsoleMessage:(7) The spell Brogard's Defiance on Silver Diforsa Tassets has expired.
+[01/27/2006 09:04:11.671]  [Engine] clsACEvents.HandleConsoleMessage:(7) The spell Brogard's Defiance on Gromnie Hide Koujia Sleeves has expired.
+[01/27/2006 09:04:11.671]  [Engine] clsACEvents.HandleConsoleMessage:(7) The spell Brogard's Defiance on Silver Diforsa Greaves has expired.
+[01/27/2006 09:04:11.671]  [Engine] clsACEvents.HandleConsoleMessage:(7) The spell Brogard's Defiance on Copper Sollerets has expired.
+[01/27/2006 09:04:11.671]  [Engine] clsACEvents.HandleConsoleMessage:(7) The spell Brogard's Defiance on Gold Diforsa Girth has expired.
+[01/27/2006 09:04:11.671]  [Engine] clsACEvents.HandleConsoleMessage:(7) The spell Brogard's Defiance on Gold Tenassa Breastplate has expired.
+[01/27/2006 09:04:24.031]  [Engine] OnLocalChat (2): Xeon Xarid : I think the mask makers
+[01/27/2006 09:04:24.062]  [Engine] clsACEvents.HandleConsoleMessage:(2) <Tell:IIDString:1343087348:Xeon Xarid>Xeon Xarid<\Tell> says, "I think the mask makers"
+[01/27/2006 09:04:24.062]  [Engine] clsACEvents.HandleConsoleMessage:(2) Xeon Xarid says, "I think the mask makers"
+[01/27/2006 09:04:38.765]  [Engine] OnLocalChat (2): Xeon Xarid : I'd have to look it up...not 100% sure
+[01/27/2006 09:04:38.812]  [Engine] clsACEvents.HandleConsoleMessage:(2) <Tell:IIDString:1343087348:Xeon Xarid>Xeon Xarid<\Tell> says, "I'd have to look it up...not 100% sure"
+[01/27/2006 09:04:38.812]  [Engine] clsACEvents.HandleConsoleMessage:(2) Xeon Xarid says, "I'd have to look it up...not 100% sure"
+[01/27/2006 09:04:46.921]  [Engine] OnLocalChat (2): Security : For fizz-free buffing... ;) -b-
+[01/27/2006 09:04:46.953]  [Engine] clsACEvents.HandleConsoleMessage:(2) <Tell:IIDString:1342969930:Security>Security<\Tell> says, "For fizz-free buffing... ;) -b-"
+[01/27/2006 09:04:46.953]  [Engine] clsACEvents.HandleConsoleMessage:(2) Security says, "For fizz-free buffing... ;) -b-"
+[01/27/2006 09:04:48.375]  [Engine] OnLocalChat (2): Xeon Xarid : hmm, not bad
+[01/27/2006 09:04:48.406]  [Engine] clsACEvents.HandleConsoleMessage:(2) <Tell:IIDString:1343087348:Xeon Xarid>Xeon Xarid<\Tell> says, "hmm, not bad"
+[01/27/2006 09:04:48.406]  [Engine] clsACEvents.HandleConsoleMessage:(2) Xeon Xarid says, "hmm, not bad"
+[01/27/2006 09:04:54.406]  [Engine] OnLocalChat (2): Zorren : ok thanks though..didnt know if it was garbage
+[01/27/2006 09:04:54.437]  [Engine] clsACEvents.HandleConsoleMessage:(2) <Tell:IIDString:1343094944:Zorren>Zorren<\Tell> says, "ok thanks though..didnt know if it was garbage"
+[01/27/2006 09:04:54.437]  [Engine] clsACEvents.HandleConsoleMessage:(2) Zorren says, "ok thanks though..didnt know if it was garbage"
+[01/27/2006 09:05:02.406]  [Engine] OnLocalChat (2): Zorren : nice stuff..thanks
+[01/27/2006 09:05:02.437]  [Engine] clsACEvents.HandleConsoleMessage:(2) <Tell:IIDString:1343094944:Zorren>Zorren<\Tell> says, "nice stuff..thanks"
+[01/27/2006 09:05:02.437]  [Engine] clsACEvents.HandleConsoleMessage:(2) Zorren says, "nice stuff..thanks"
+[01/27/2006 09:05:06.156]  [Engine] OnLocalChat (2): Xeon Xarid : and it's all over 400 AL :)
+[01/27/2006 09:05:06.187]  [Engine] clsACEvents.HandleConsoleMessage:(2) <Tell:IIDString:1343087348:Xeon Xarid>Xeon Xarid<\Tell> says, "and it's all over 400 AL :)"
+[01/27/2006 09:05:06.187]  [Engine] clsACEvents.HandleConsoleMessage:(2) Xeon Xarid says, "and it's all over 400 AL :)"
+[01/27/2006 09:05:21.250]  [Engine] OnLocalChat (2): Zorren : goddies goodies..wont die now hopefully
+[01/27/2006 09:05:21.281]  [Engine] clsACEvents.HandleConsoleMessage:(2) <Tell:IIDString:1343094944:Zorren>Zorren<\Tell> says, "goddies goodies..wont die now hopefully"
+[01/27/2006 09:05:21.281]  [Engine] clsACEvents.HandleConsoleMessage:(2) Zorren says, "goddies goodies..wont die now hopefully"
+[01/27/2006 09:05:25.375]  [Engine] clsACEvents.HandleConsoleMessage:(12) Xeon Xarid grins
+[01/27/2006 09:05:25.375]  [Engine] clsACEvents.HandleConsoleMessage:(12) Xeon Xarid grins
+[01/27/2006 09:05:52.156]  [Engine] clsACEvents.HandleConsoleMessage:(2) You say, "Mary"
+[01/27/2006 09:05:52.156]  [Engine] clsACEvents.HandleConsoleMessage:(2) You say, "Mary"
+[01/27/2006 09:05:57.687]  [Engine] clsACEvent.OnRemoveObject: Silver Blunt Sceptre : -2017192076
+[01/27/2006 09:05:57.687]  [Engine] clsACEvent.OnRemoveObject: Xeon Xarid : 1343087348
+[01/27/2006 09:05:58.796]  [Engine] OnLocalChat (2): Scarey Mary : hi
+[01/27/2006 09:05:58.828]  [Engine] clsACEvents.HandleConsoleMessage:(2) <Tell:IIDString:1342747180:Scarey Mary>Scarey Mary<\Tell> says, "hi"
+[01/27/2006 09:05:58.828]  [Engine] clsACEvents.HandleConsoleMessage:(2) Scarey Mary says, "hi"
+[01/27/2006 09:06:02.468]  [Engine] clsACEvents.HandleConsoleMessage:(2) You say, "you got any good costumes or robes?"
+[01/27/2006 09:06:02.468]  [Engine] clsACEvents.HandleConsoleMessage:(2) You say, "you got any good costumes or robes?"
+[01/27/2006 09:06:08.015]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] <Tell:IIDString:0:Zorren>Zorren<\Tell> says, "Xeon, i owe you like soo much its not even funny
+[01/27/2006 09:06:08.015]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] Zorren says, "Xeon, i owe you like soo much its not even funny
+[01/27/2006 09:06:08.265]  [Engine] OnLocalChat (2): Scarey Mary : sure
+[01/27/2006 09:06:08.296]  [Engine] clsACEvents.HandleConsoleMessage:(2) <Tell:IIDString:1342747180:Scarey Mary>Scarey Mary<\Tell> says, "sure"
+[01/27/2006 09:06:08.296]  [Engine] clsACEvents.HandleConsoleMessage:(2) Scarey Mary says, "sure"
+[01/27/2006 09:06:11.140]  [Engine] clsACEvents.HandleConsoleMessage:(2) You say, "I'm gonna set up as a buff boyt"
+[01/27/2006 09:06:11.140]  [Engine] clsACEvents.HandleConsoleMessage:(2) You say, "I'm gonna set up as a buff boyt"
+[01/27/2006 09:06:19.968]  [Engine] clsACEvents.HandleConsoleMessage:(7) The spell Swordsman's Bane on Silk Pants has expired.
+[01/27/2006 09:06:19.984]  [Engine] clsACEvents.HandleConsoleMessage:(7) The spell Swordsman's Bane on Copper Teardrop Crown has expired.
+[01/27/2006 09:06:19.984]  [Engine] clsACEvents.HandleConsoleMessage:(7) The spell Swordsman's Bane on Gold Platemail Gauntlets has expired.
+[01/27/2006 09:06:19.984]  [Engine] clsACEvents.HandleConsoleMessage:(7) The spell Swordsman's Bane on Silver Diforsa Tassets has expired.
+[01/27/2006 09:06:19.984]  [Engine] clsACEvents.HandleConsoleMessage:(7) The spell Swordsman's Bane on Gromnie Hide Koujia Sleeves has expired.
+[01/27/2006 09:06:19.984]  [Engine] clsACEvents.HandleConsoleMessage:(7) The spell Swordsman's Bane on Silver Diforsa Greaves has expired.
+[01/27/2006 09:06:19.984]  [Engine] clsACEvents.HandleConsoleMessage:(7) The spell Swordsman's Bane on Copper Sollerets has expired.
+[01/27/2006 09:06:19.984]  [Engine] clsACEvents.HandleConsoleMessage:(7) The spell Swordsman's Bane on Gold Diforsa Girth has expired.
+[01/27/2006 09:06:19.984]  [Engine] clsACEvents.HandleConsoleMessage:(7) The spell Swordsman's Bane on Gold Tenassa Breastplate has expired.
+[01/27/2006 09:06:21.640]  [Engine] clsACEvent.OnRemoveObject: Focusing Stone : -2147172696
+[01/27/2006 09:06:21.640]  [Engine] clsACEvent.OnRemoveObject: Scarey Mary : 1342747180
+[01/27/2006 09:06:22.421]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] <Tell:IIDString:0:Zorren>Zorren<\Tell> says, "whats coord ussually top out at anyone know?
+[01/27/2006 09:06:22.421]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] Zorren says, "whats coord ussually top out at anyone know?
+[01/27/2006 09:06:28.484]  [Engine] clsACEvents.OnCreateObject: Superb Isparian Wand : -2021548824
+[01/27/2006 09:06:41.656]  [Engine] clsACEvents.OnCreateObject: Ahrondyll : 1342730803
+[01/27/2006 09:06:41.984]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] <Tell:IIDString:0:Ruby Jet>Ruby Jet<\Tell> says, "you can add 190 points to any skill
+[01/27/2006 09:06:41.984]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] Ruby Jet says, "you can add 190 points to any skill
+[01/27/2006 09:06:50.328]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] <Tell:IIDString:0:Ruby Jet>Ruby Jet<\Tell> says, "so it depends on what it started as
+[01/27/2006 09:06:50.328]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] Ruby Jet says, "so it depends on what it started as
+[01/27/2006 09:06:50.796]  [Engine] OnLocalChat (2): Ahrondyll : buff boy ; ) i like that
+[01/27/2006 09:06:50.812]  [Engine] clsACEvents.HandleConsoleMessage:(2) <Tell:IIDString:1342730803:Ahrondyll>Ahrondyll<\Tell> says, "buff boy ; ) i like that"
+[01/27/2006 09:06:50.812]  [Engine] clsACEvents.HandleConsoleMessage:(2) Ahrondyll says, "buff boy ; ) i like that"
+[01/27/2006 09:06:56.125]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] <Tell:IIDString:0:Zorren>Zorren<\Tell> says, "k thanks
+[01/27/2006 09:06:56.125]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] Zorren says, "k thanks
+[01/27/2006 09:06:56.328]  [Engine] clsACEvents.HandleConsoleMessage:(12) Ruby Jet grins
+[01/27/2006 09:06:56.328]  [Engine] clsACEvents.HandleConsoleMessage:(12) Ruby Jet grins
+[01/27/2006 09:07:06.218]  [Engine] clsACEvents.OnCreateObject: Marksman's Robe : -2117271591
+[01/27/2006 09:07:07.625]  [Engine] clsACEvents.OnCreateObject: Doppelganger Robe : -2146489166
+[01/27/2006 09:07:09.750]  [Engine] ID'ing selected item
+[01/27/2006 09:07:11.250]  [Engine] clsACEvents.OnCreateObject: Hearty Reedshark Robe : -2139283890
+[01/27/2006 09:07:12.453]  [Engine] ID'ing selected item
+[01/27/2006 09:07:13.468]  [Engine] ID'ing selected item
+[01/27/2006 09:07:13.468]  Hearty Reedshark Robe, work 0, AL 185, Axe 60+ to wield, Value 6500, 600 BU
+[01/27/2006 09:07:19.953]  [Engine] clsACEvents.HandleConsoleMessage:(2) You say, "reedsahrk!"
+[01/27/2006 09:07:19.953]  [Engine] clsACEvents.HandleConsoleMessage:(2) You say, "reedsahrk!"
+[01/27/2006 09:07:20.890]  [Engine] clsACEvents.OnCreateObject: Hearty Reedshark Robe : -2142198929
+[01/27/2006 09:07:28.031]  [Engine] OnLocalChat (2): Ahrondyll : lol cool huh ?
+[01/27/2006 09:07:28.062]  [Engine] clsACEvents.HandleConsoleMessage:(2) <Tell:IIDString:1342730803:Ahrondyll>Ahrondyll<\Tell> says, "lol cool huh ?"
+[01/27/2006 09:07:28.062]  [Engine] clsACEvents.HandleConsoleMessage:(2) Ahrondyll says, "lol cool huh ?"
+[01/27/2006 09:07:29.296]  [Engine] ID'ing selected item
+[01/27/2006 09:07:29.296]  Hearty Reedshark Robe, work 0, AL 185, Axe 60+ to wield, Value 6500, 600 BU
+[01/27/2006 09:07:32.750]  [Engine] OnLocalChat (2): Ahrondyll : which you want ?
+[01/27/2006 09:07:32.781]  [Engine] clsACEvents.HandleConsoleMessage:(2) <Tell:IIDString:1342730803:Ahrondyll>Ahrondyll<\Tell> says, "which you want ?"
+[01/27/2006 09:07:32.781]  [Engine] clsACEvents.HandleConsoleMessage:(2) Ahrondyll says, "which you want ?"
+[01/27/2006 09:07:37.265]  [Engine] clsACEvents.HandleConsoleMessage:(2) You say, "the red of course :)"
+[01/27/2006 09:07:37.265]  [Engine] clsACEvents.HandleConsoleMessage:(2) You say, "the red of course :)"
+[01/27/2006 09:07:39.906]  [Engine] OnLocalChat (2): Ahrondyll : ive had these forever
+[01/27/2006 09:07:39.937]  [Engine] clsACEvents.HandleConsoleMessage:(2) <Tell:IIDString:1342730803:Ahrondyll>Ahrondyll<\Tell> says, "ive had these forever"
+[01/27/2006 09:07:39.937]  [Engine] clsACEvents.HandleConsoleMessage:(2) Ahrondyll says, "ive had these forever"
+[01/27/2006 09:07:46.921]  [Engine] OnLocalChat (2): Security : Tell me PROFILES to see all the spell profiles I can cast -b-
+[01/27/2006 09:07:46.953]  [Engine] clsACEvents.HandleConsoleMessage:(2) <Tell:IIDString:1342969930:Security>Security<\Tell> says, "Tell me PROFILES to see all the spell profiles I can cast -b-"
+[01/27/2006 09:07:46.953]  [Engine] clsACEvents.HandleConsoleMessage:(2) Security says, "Tell me PROFILES to see all the spell profiles I can cast -b-"
+[01/27/2006 09:07:49.968]  [Engine] clsACEvents.HandleConsoleMessage:(0) Ahrondyll gives you Hearty Reedshark Robe.
+[01/27/2006 09:07:49.968]  [Engine] clsACEvents.HandleConsoleMessage:(0) Ahrondyll gives you Hearty Reedshark Robe.
+[01/27/2006 09:07:59.140]  [Engine] clsACEvents.HandleConsoleMessage:(7) The spell Archer's Bane on Silk Pants has expired.
+[01/27/2006 09:07:59.218]  [Engine] clsACEvents.HandleConsoleMessage:(7) The spell Archer's Bane on Copper Teardrop Crown has expired.
+[01/27/2006 09:07:59.218]  [Engine] clsACEvents.HandleConsoleMessage:(7) The spell Archer's Bane on Gold Platemail Gauntlets has expired.
+[01/27/2006 09:07:59.218]  [Engine] clsACEvents.HandleConsoleMessage:(7) The spell Archer's Bane on Silver Diforsa Tassets has expired.
+[01/27/2006 09:07:59.218]  [Engine] clsACEvents.HandleConsoleMessage:(7) The spell Archer's Bane on Gromnie Hide Koujia Sleeves has expired.
+[01/27/2006 09:07:59.218]  [Engine] clsACEvents.HandleConsoleMessage:(7) The spell Archer's Bane on Silver Diforsa Greaves has expired.
+[01/27/2006 09:07:59.218]  [Engine] clsACEvents.HandleConsoleMessage:(7) The spell Archer's Bane on Copper Sollerets has expired.
+[01/27/2006 09:07:59.218]  [Engine] clsACEvents.HandleConsoleMessage:(7) The spell Archer's Bane on Gold Diforsa Girth has expired.
+[01/27/2006 09:07:59.234]  [Engine] clsACEvents.HandleConsoleMessage:(7) The spell Archer's Bane on Gold Tenassa Breastplate has expired.
+[01/27/2006 09:08:01.531]  [Engine] clsACEvents.HandleConsoleMessage:(2) You say, "sweet!"
+[01/27/2006 09:08:01.531]  [Engine] clsACEvents.HandleConsoleMessage:(2) You say, "sweet!"
+[01/27/2006 09:08:02.843]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] <Tell:IIDString:0:Zorren>Zorren<\Tell> says, "k 54 points to go until i max it..;)
+[01/27/2006 09:08:02.843]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] Zorren says, "k 54 points to go until i max it..;)
+[01/27/2006 09:08:04.906]  [Engine] OnLocalChat (2): Ahrondyll : ya that looks cool =)
+[01/27/2006 09:08:04.937]  [Engine] clsACEvents.HandleConsoleMessage:(2) <Tell:IIDString:1342730803:Ahrondyll>Ahrondyll<\Tell> says, "ya that looks cool =)"
+[01/27/2006 09:08:04.937]  [Engine] clsACEvents.HandleConsoleMessage:(2) Ahrondyll says, "ya that looks cool =)"
+[01/27/2006 09:08:11.296]  [Engine] clsACEvents.HandleConsoleMessage:(2) You say, "thanks Mary"
+[01/27/2006 09:08:11.296]  [Engine] clsACEvents.HandleConsoleMessage:(2) You say, "thanks Mary"
+[01/27/2006 09:08:13.468]  [Major Detected] Gold Platemail Gauntlets : Major Coordination
+[01/27/2006 09:08:16.406]  [Engine] OnLocalChat (2): Ahrondyll : you bet !
+[01/27/2006 09:08:16.437]  [Engine] clsACEvents.HandleConsoleMessage:(2) <Tell:IIDString:1342730803:Ahrondyll>Ahrondyll<\Tell> says, "you bet !"
+[01/27/2006 09:08:16.437]  [Engine] clsACEvents.HandleConsoleMessage:(2) Ahrondyll says, "you bet !"
+[01/27/2006 09:08:18.937]  [Engine] clsACEvents.OnCreateObject: Opal Staff : -1686649279
+[01/27/2006 09:08:31.015]  [Engine] OnLocalChat (2): Ahrondyll : well 15 min i go back for aunt
+[01/27/2006 09:08:31.046]  [Engine] clsACEvents.HandleConsoleMessage:(2) <Tell:IIDString:1342730803:Ahrondyll>Ahrondyll<\Tell> says, "well 15 min i go back for aunt"
+[01/27/2006 09:08:31.046]  [Engine] clsACEvents.HandleConsoleMessage:(2) Ahrondyll says, "well 15 min i go back for aunt"
+[01/27/2006 09:08:39.203]  [Engine] clsACEvents.HandleConsoleMessage:(2) You say, "ok, I'm off to work"
+[01/27/2006 09:08:39.203]  [Engine] clsACEvents.HandleConsoleMessage:(2) You say, "ok, I'm off to work"
+[01/27/2006 09:08:41.781]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] <Tell:IIDString:0:Ahrondyll>Ahrondyll<\Tell> says, "i gotta go
+[01/27/2006 09:08:41.781]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] Ahrondyll says, "i gotta go
+[01/27/2006 09:08:49.171]  [Engine] OnLocalChat (2): Ahrondyll : thanks for being a buff boy !
+[01/27/2006 09:08:49.203]  [Engine] clsACEvents.HandleConsoleMessage:(2) <Tell:IIDString:1342730803:Ahrondyll>Ahrondyll<\Tell> says, "thanks for being a buff boy !"
+[01/27/2006 09:08:49.203]  [Engine] clsACEvents.HandleConsoleMessage:(2) Ahrondyll says, "thanks for being a buff boy !"
+[01/27/2006 09:08:50.906]  [Engine] clsACEvent.OnRemoveObject: Opal Staff : -1686649279
+[01/27/2006 09:08:50.906]  [Engine] clsACEvent.OnRemoveObject: Zorren : 1343094944
+[01/27/2006 09:08:53.859]  [Engine] clsACEvents.HandleConsoleMessage:(12) Ruby Jet grins
+[01/27/2006 09:08:53.859]  [Engine] clsACEvents.HandleConsoleMessage:(12) Ruby Jet grins
+[01/27/2006 09:08:57.156]  [Engine] OnLocalChat (2): Ahrondyll : =)
+[01/27/2006 09:08:57.203]  [Engine] clsACEvents.HandleConsoleMessage:(2) <Tell:IIDString:1342730803:Ahrondyll>Ahrondyll<\Tell> says, "=)"
+[01/27/2006 09:08:57.203]  [Engine] clsACEvents.HandleConsoleMessage:(2) Ahrondyll says, "=)"
+[01/27/2006 09:09:00.203]  [Engine] clsACEvents.HandleConsoleMessage:(2) You say, "well still gotta get it setup"
+[01/27/2006 09:09:00.203]  [Engine] clsACEvents.HandleConsoleMessage:(2) You say, "well still gotta get it setup"
+[01/27/2006 09:09:02.000]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] <Tell:IIDString:0:Tername>Tername<\Tell> says, "bye mary
+[01/27/2006 09:09:02.000]  [Engine] clsACEvents.HandleConsoleMessage:(18) [Allegiance] Tername says, "bye mary
+[01/27/2006 09:09:02.359]  [Engine] clsACEvents.HandleConsoleMessage:(12) Ruby Jet sighs
+[01/27/2006 09:09:02.359]  [Engine] clsACEvents.HandleConsoleMessage:(12) Ruby Jet sighs
+[01/27/2006 09:09:05.281]  [Engine] ID'ing selected item
+[01/27/2006 09:09:12.125]  [Engine] ID'ing selected item
+[01/27/2006 09:09:25.140]  [Engine] clsACEvent.OnRemoveObject: Titan Mana Charge : -1724756927
+[01/27/2006 09:09:25.187]  [Engine] clsACEvents.HandleConsoleMessage:(0) The Mana Stone gives 5,000 points of mana to the following items: Silk Pants, Green Garnet Heavy Bracelet, Gold Ring, Sunstone Ring, White Sapphire Heavy Bracelet, Silk Tunic, Ruby Blunt Baton
+You need 711 more mana to fully charge your items.
+[01/27/2006 09:09:25.187]  [Engine] clsACEvents.HandleConsoleMessage:(0) The Mana Stone gives 5,000 points of mana to the following items: Silk Pants, Green Garnet Heavy Bracelet, Gold Ring, Sunstone Ring, White Sapphire Heavy Bracelet, Silk Tunic, Ruby Blunt Baton
+You need 711 more mana to fully charge your items.
+[01/27/2006 09:09:25.187]  [Engine] clsACEvents.HandleConsoleMessage:(0) The Mana Stone is destroyed.
+[01/27/2006 09:09:25.187]  [Engine] clsACEvents.HandleConsoleMessage:(0) The Mana Stone is destroyed.
+[01/27/2006 09:09:29.656]  [Engine] clsACEvents.HandleConsoleMessage:(0) Logging off...
+[01/27/2006 09:09:29.656]  [Engine] clsACEvents.HandleConsoleMessage:(0) Logging off...
+[01/27/2006 09:09:29.843]  [Engine] clsACEvents.HandleConsoleMessage:(0) You have left the General channel.
+[01/27/2006 09:09:29.843]  [Engine] clsACEvents.HandleConsoleMessage:(0) You have left the General channel.
+[01/27/2006 09:09:30.078]  [Engine] clsACEvents.HandleConsoleMessage:(0) You have left the Trade channel.
+[01/27/2006 09:09:30.078]  [Engine] clsACEvents.HandleConsoleMessage:(0) You have left the Trade channel.
+[01/27/2006 09:09:30.093]  [Engine] clsACEvents.HandleConsoleMessage:(0) You have left the LFG channel.
+[01/27/2006 09:09:30.093]  [Engine] clsACEvents.HandleConsoleMessage:(0) You have left the LFG channel.
+[01/27/2006 09:09:30.093]  [Engine] clsACEvents.HandleConsoleMessage:(0) You have left the Allegiance channel.
+[01/27/2006 09:09:30.093]  [Engine] clsACEvents.HandleConsoleMessage:(0) You have left the Allegiance channel.
+[01/27/2006 09:09:34.953]  [Engine] clsACEvents: ForcedExit()
+[01/27/2006 09:09:34.953]  IPlugin2_Terminate - Start
+[01/27/2006 09:09:34.953]  [Engine] [Settings] Saving plugin configuration...
+[01/27/2006 09:09:34.968]  [Engine] [Settings] Saved : C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Shared.ini
+[01/27/2006 09:09:35.000]  [Engine] [Plugin Interface] Saving User Interface Settings...
+[01/27/2006 09:09:35.000]  [Engine] [UIMain] Saving controls settings
+[01/27/2006 09:09:35.000]  [Engine] [UIMacro] Saving controls settings
+[01/27/2006 09:09:35.015]  [Engine] clsUIMacro.SaveItemsList - Saving list to C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Ruby Jet (LC)\Healitems.dat
+[01/27/2006 09:09:35.015]  [Engine] clsUIMacro.SaveItemsList - Saving list to C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Ruby Jet (LC)\Stamitems.dat
+[01/27/2006 09:09:35.015]  [Engine] [UIBuffs] Saving controls settings
+[01/27/2006 09:09:35.046]  [Engine] [UIMonsters] Saving controls settings
+[01/27/2006 09:09:35.046]  [Engine] [UIIrc] Saving controls settings
+[01/27/2006 09:09:35.046]  [Engine] [UIMsgLog] Saving controls settings
+[01/27/2006 09:09:35.046]  [Engine] [UIOptions] Saving controls settings
+[01/27/2006 09:09:35.046]  [Engine] [UIAntiBan] Saving controls settings
+[01/27/2006 09:09:35.046]  [Engine] [UILoot] Saving controls settings
+[01/27/2006 09:09:35.062]  [Engine] UILoot.SaveItemsList - Saving list to C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Loot\ruby\ItemsToPickup.dat
+[01/27/2006 09:09:35.062]  [Engine] UILoot.SaveItemsList - Saving list to C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Loot\ruby\ItemsToIgnore.dat
+[01/27/2006 09:09:35.078]  [Engine] UILoot.SaveItemsList - Saving list to C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Loot\ruby\CorpsesToLoot.dat
+[01/27/2006 09:09:35.093]  [Engine] Exceptions - 0 items saved to C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Ruby Jet (LC)\Exceptions.xml
+[01/27/2006 09:09:35.093]  [Engine] [Plugin Interface] Save complete (Errors :False)
+[01/27/2006 09:09:35.109]  [Engine] Loot Filters (12) saved to C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Ruby Jet (LC)\LootFilters.dat successfully
+[01/27/2006 09:09:35.125]  [Engine] [Settings] Saved : C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Ruby Jet (LC)\LifeTank.ini
+[01/27/2006 09:09:35.125]  [Engine] [Settings] Saved : C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Ruby Jet (LC)\Macro\olthoi\MacroCfg.ini
+[01/27/2006 09:09:35.140]  [Engine] [Settings] Saved : C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Profiles\Ruby Jet (LC)\Buffs\olthoi\BuffsCfg.ini
+[01/27/2006 09:09:35.140]  [Engine] [Settings] Saved : C:\Documents and Settings\jcox\My Documents\AC-source\LifeTankX-source\Data\Loot\ruby\LootCfg.ini
+[01/27/2006 09:09:35.140]  Core.Terminate
+[01/27/2006 09:09:35.140]  [Engine] IEngine_Terminate - start
+[01/27/2006 09:09:35.140]  [Engine] DeleteEngineObjects - Start
+[01/27/2006 09:09:35.359]  [Engine] PluginInterface.Unload() -- Begin
+[01/27/2006 09:09:35.359]  [Engine] UIMain.Unload() -- Begin
+[01/27/2006 09:09:35.359]  [Engine] UIMain.Unload() -- End
+[01/27/2006 09:09:35.359]  [Engine] UIMacro.Unload() -- Begin
+[01/27/2006 09:09:35.359]  [Engine] UIMacro.Unload() -- End
+[01/27/2006 09:09:35.359]  [Engine] UIBuffs.Unload() -- Begin
+[01/27/2006 09:09:35.359]  [Engine] UIBuffs.Unload() -- End
+[01/27/2006 09:09:35.359]  [Engine] UIMonsters.Unload() -- Begin
+[01/27/2006 09:09:35.359]  [Engine] UIMonsters.Unload() -- End
+[01/27/2006 09:09:35.359]  [Engine] UIIrc.Unload() -- Begin
+[01/27/2006 09:09:35.359]  [Engine] UIIrc.Unload() -- End
+[01/27/2006 09:09:35.359]  [Engine] UIMsgLog.Unload() -- Begin
+[01/27/2006 09:09:35.359]  [Engine] UIMsgLog.Unload() -- End
+[01/27/2006 09:09:35.359]  [Engine] UIOptions.Unload() -- Begin
+[01/27/2006 09:09:35.359]  [Engine] UIOptions.Unload() -- End
+[01/27/2006 09:09:35.359]  [Engine] UIAntiBan.Unload() -- Begin
+[01/27/2006 09:09:35.359]  [Engine] UIAntiBan.Unload() -- End
+[01/27/2006 09:09:35.359]  [Engine] UILoot.Unload() -- Begin
+[01/27/2006 09:09:35.359]  [Engine] UILoot.Unload() -- End
+[01/27/2006 09:09:35.359]  [Engine] PluginInterface.Unload() -- End
+[01/27/2006 09:09:35.375]  [Engine] DeleteEngineObjects - End
+[01/27/2006 09:09:35.375]  Plugin Objects Unload - Start 
+[01/27/2006 09:09:35.375]  Plugin Objects Unload - End
+[01/27/2006 09:09:35.375]  IPlugin2_Terminate - End

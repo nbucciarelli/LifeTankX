@@ -1,0 +1,3778 @@
+<id=1><spl=Strength Other I>
+<id=2><spl=Strength Self I>
+<id=3><spl=Weakness Other I>
+<id=4><spl=Weakness Self I>
+<id=5><spl=Heal Other I>
+<id=6><spl=Heal Self I>
+<id=7><spl=Harm Other I>
+<id=8><spl=Harm Self I>
+<id=9><spl=Infuse Mana Other I>
+<id=15><spl=Vulnerability Other I>
+<id=16><spl=Vulnerability Self I>
+<id=17><spl=Invulnerability Other I>
+<id=18><spl=Invulnerability Self I>
+<id=19><spl=Fire Protection Other I>
+<id=20><spl=Fire Protection Self I>
+<id=21><spl=Fire Vulnerability Other I>
+<id=22><spl=Fire Vulnerability Self I>
+<id=23><spl=Armor Other I>
+ <id=24><spl=Armor Self I>
+ <id=25><spl=Imperil Other I>
+ <id=26><spl=Imperil Self I>
+ <id=27><spl=Flame Bolt I>
+ <id=28><spl=Frost Bolt I>
+ <id=35><spl=Blood Drinker I>
+ <id=36><spl=Blood Loather I>
+ <id=37><spl=Blade Bane I>
+ <id=38><spl=Blade Lure I>
+ <id=47><spl=Primary Portal Tie>
+ <id=48><spl=Primary Portal Recall>
+ <id=49><spl=Swift Killer I>
+ <id=50><spl=Leaden Weapon I>
+ <id=51><spl=Impenetrability I>
+ <id=53><spl=Rejuvenation Other I>
+ <id=54><spl=Rejuvenation Self I>
+ <id=57><spl=Magic Bolt>
+ <id=58><spl=Acid Stream I>
+ <id=59><spl=Acid Stream II>
+ <id=60><spl=Acid Stream III>
+ <id=61><spl=Acid Stream IV>
+ <id=62><spl=Acid Stream V>
+ <id=63><spl=Acid Stream VI>
+ <id=64><spl=Shock Wave I>
+ <id=65><spl=Shock Wave II>
+ <id=66><spl=Shock Wave III>
+ <id=67><spl=Shock Wave IV>
+ <id=68><spl=Shock Wave V>
+ <id=69><spl=Shock Wave VI>
+ <id=70><spl=Frost Bolt II>
+ <id=71><spl=Frost Bolt III>
+ <id=72><spl=Frost Bolt IV>
+ <id=73><spl=Frost Bolt V>
+ <id=74><spl=Frost Bolt VI>
+ <id=75><spl=Lightning Bolt I>
+ <id=76><spl=Lightning Bolt II>
+ <id=77><spl=Lightning Bolt III>
+ <id=78><spl=Lightning Bolt IV>
+ <id=79><spl=Lightning Bolt V>
+ <id=80><spl=Lightning Bolt VI>
+ <id=81><spl=Flame Bolt II>
+ <id=82><spl=Flame Bolt III>
+ <id=83><spl=Flame Bolt IV>
+ <id=84><spl=Flame Bolt V>
+ <id=85><spl=Flame Bolt VI>
+ <id=86><spl=Force Bolt I>
+ <id=87><spl=Force Bolt II>
+ <id=88><spl=Force Bolt III>
+ <id=89><spl=Force Bolt IV>
+ <id=90><spl=Force Bolt V>
+ <id=91><spl=Force Bolt VI>
+ <id=92><spl=Whirling Blade I>
+ <id=93><spl=Whirling Blade II>
+ <id=94><spl=Whirling Blade III>
+ <id=95><spl=Whirling Blade IV>
+ <id=96><spl=Whirling Blade V>
+ <id=97><spl=Whirling Blade VI>
+ <id=99><spl=Acid Blast III>
+ <id=100><spl=Acid Blast IV>
+ <id=101><spl=Acid Blast V>
+ <id=102><spl=Acid Blast VI>
+ <id=103><spl=Shock Blast III>
+ <id=104><spl=Shock Blast IV>
+ <id=105><spl=Shock Blast V>
+ <id=106><spl=Shock Blast VI>
+ <id=107><spl=Frost Blast III>
+ <id=108><spl=Frost Blast IV>
+ <id=109><spl=Frost Blast V>
+ <id=110><spl=Frost Blast VI>
+ <id=111><spl=Lightning Blast III>
+ <id=112><spl=Lightning Blast IV>
+ <id=113><spl=Lightning Blast V>
+ <id=114><spl=Lightning Blast VI>
+ <id=115><spl=Flame Blast III>
+ <id=116><spl=Flame Blast IV>
+ <id=117><spl=Flame Blast V>
+ <id=118><spl=Flame Blast VI>
+ <id=119><spl=Force Blast III>
+ <id=120><spl=Force Blast IV>
+ <id=121><spl=Force Blast V>
+ <id=122><spl=Force Blast VI>
+ <id=123><spl=Blade Blast III>
+ <id=124><spl=Blade Blast IV>
+ <id=125><spl=Blade Blast V>
+ <id=126><spl=Blade Blast VI>
+ <id=127><spl=Acid Volley III>
+ <id=128><spl=Acid Volley IV>
+ <id=129><spl=Acid Volley V>
+ <id=130><spl=Acid Volley VI>
+ <id=131><spl=Bludgeoning Volley III>
+ <id=132><spl=Bludgeoning Volley IV>
+ <id=133><spl=Bludgeoning Volley V>
+ <id=134><spl=Bludgeoning Volley VI>
+ <id=135><spl=Frost Volley III>
+ <id=136><spl=Frost Volley IV>
+ <id=137><spl=Frost Volley V>
+ <id=138><spl=Frost Volley VI>
+ <id=139><spl=Lightning Volley III>
+ <id=140><spl=Lightning Volley IV>
+ <id=141><spl=Lightning Volley V>
+ <id=142><spl=Lightning Volley VI>
+ <id=143><spl=Flame Volley III>
+ <id=144><spl=Flame Volley IV>
+ <id=145><spl=Flame Volley V>
+ <id=146><spl=Flame Volley VI>
+ <id=147><spl=Force Volley III>
+ <id=148><spl=Force Volley IV>
+ <id=149><spl=Force Volley V>
+ <id=150><spl=Force Volley VI>
+ <id=151><spl=Blade Volley III>
+ <id=152><spl=Blade Volley IV>
+ <id=153><spl=Blade Volley V>
+ <id=154><spl=Blade Volley VI>
+ <id=157><spl=Summon Primary Portal I>
+ <id=158><spl=Summon Primary Portal II>
+ <id=159><spl=Regeneration Other I>
+ <id=160><spl=Regeneration Other II>
+ <id=161><spl=Regeneration Other III>
+ <id=162><spl=Regeneration Other IV>
+ <id=163><spl=Regeneration Other V>
+ <id=164><spl=Regeneration Other VI>
+ <id=165><spl=Regeneration Self I>
+ <id=166><spl=Regeneration Self II>
+ <id=167><spl=Regeneration Self III>
+ <id=168><spl=Regeneration Self IV>
+ <id=169><spl=Regeneration Self V>
+ <id=170><spl=Regeneration Self VI>
+ <id=171><spl=Fester Other I>
+ <id=172><spl=Fester Other II>
+ <id=173><spl=Fester Other III>
+ <id=174><spl=Fester Other IV>
+ <id=175><spl=Fester Other V>
+ <id=176><spl=Fester Other VI>
+ <id=178><spl=Fester Self I>
+ <id=179><spl=Fester Self II>
+ <id=180><spl=Fester Self III>
+ <id=181><spl=Fester Self IV>
+ <id=182><spl=Fester Self V>
+ <id=183><spl=Fester Self VI>
+ <id=184><spl=Rejuvenation Other II>
+ <id=185><spl=Rejuvenation Other III>
+ <id=186><spl=Rejuvenation Other IV>
+ <id=187><spl=Rejuvenation Other V>
+ <id=188><spl=Rejuvenation Other VI>
+ <id=189><spl=Rejuvenation Self II>
+ <id=190><spl=Rejuvenation Self III>
+ <id=191><spl=Rejuvenation Self IV>
+ <id=192><spl=Rejuvenation Self V>
+ <id=193><spl=Rejuvenation Self VI>
+ <id=194><spl=Exhaustion Other I>
+ <id=195><spl=Exhaustion Other II>
+ <id=196><spl=Exhaustion Other III>
+ <id=197><spl=Exhaustion Other IV>
+ <id=198><spl=Exhaustion Other V>
+ <id=199><spl=Exhaustion Other VI>
+ <id=200><spl=Exhaustion Self I>
+ <id=201><spl=Exhaustion Self II>
+ <id=202><spl=Exhaustion Self III>
+ <id=203><spl=Exhaustion Self IV>
+ <id=204><spl=Exhaustion Self V>
+ <id=205><spl=Exhaustion Self VI>
+ <id=206><spl=Mana Renewal Other I>
+ <id=207><spl=Mana Renewal Other II>
+ <id=208><spl=Mana Renewal Other III>
+ <id=209><spl=Mana Renewal Other IV>
+ <id=210><spl=Mana Renewal Other V>
+ <id=211><spl=Mana Renewal Other VI>
+ <id=212><spl=Mana Renewal Self I>
+ <id=213><spl=Mana Renewal Self II>
+ <id=214><spl=Mana Renewal Self III>
+ <id=215><spl=Mana Renewal Self IV>
+ <id=216><spl=Mana Renewal Self V>
+ <id=217><spl=Mana Renewal Self VI>
+ <id=218><spl=Mana Depletion Other I>
+ <id=219><spl=Mana Depletion Other II>
+ <id=220><spl=Mana Depletion Other III>
+ <id=221><spl=Mana Depletion Other IV>
+ <id=222><spl=Mana Depletion Other V>
+ <id=223><spl=Mana Depletion Other VI>
+ <id=224><spl=Mana Depletion Self I>
+ <id=225><spl=Mana Depletion Self II>
+ <id=226><spl=Mana Depletion Self III>
+ <id=227><spl=Mana Depletion Self IV>
+ <id=228><spl=Mana Depletion Self V>
+ <id=229><spl=Mana Depletion Self VI>
+ <id=230><spl=Vulnerability Other II>
+ <id=231><spl=Vulnerability Other III>
+ <id=232><spl=Vulnerability Other IV>
+ <id=233><spl=Vulnerability Other V>
+ <id=234><spl=Vulnerability Other VI>
+ <id=235><spl=Vulnerability Self II>
+ <id=236><spl=Vulnerability Self III>
+ <id=237><spl=Vulnerability Self IV>
+ <id=238><spl=Vulnerability Self V>
+ <id=239><spl=Vulnerability Self VI>
+ <id=240><spl=Invulnerability Other II>
+ <id=241><spl=Invulnerability Other III>
+ <id=242><spl=Invulnerability Other IV>
+ <id=243><spl=Invulnerability Other V>
+ <id=244><spl=Invulnerability Other VI>
+ <id=245><spl=Invulnerability Self II>
+ <id=246><spl=Invulnerability Self III>
+ <id=247><spl=Invulnerability Self IV>
+ <id=248><spl=Invulnerability Self V>
+ <id=249><spl=Invulnerability Self VI>
+ <id=250><spl=Impregnability Other I>
+ <id=251><spl=Impregnability Other II>
+ <id=252><spl=Impregnability Other III>
+ <id=253><spl=Impregnability Other IV>
+ <id=254><spl=Impregnability Other V>
+ <id=255><spl=Impregnability Other VI>
+ <id=256><spl=Impregnability Self I>
+ <id=257><spl=Impregnability Self II>
+ <id=258><spl=Impregnability Self III>
+ <id=259><spl=Impregnability Self IV>
+ <id=260><spl=Impregnability Self V>
+ <id=261><spl=Impregnability Self VI>
+ <id=262><spl=Defenselessness Other I>
+ <id=263><spl=Defenselessness Other II>
+ <id=264><spl=Defenselessness Other III>
+ <id=265><spl=Defenselessness Other IV>
+ <id=266><spl=Defenselessness Other V>
+ <id=267><spl=Defenselessness Other VI>
+ <id=268><spl=Magic Resistance Other I>
+ <id=269><spl=Magic Resistance Other II>
+ <id=270><spl=Magic Resistance Other III>
+ <id=271><spl=Magic Resistance Other IV>
+ <id=272><spl=Magic Resistance Other V>
+ <id=273><spl=Magic Resistance Other VI>
+ <id=274><spl=Magic Resistance Self I>
+ <id=275><spl=Magic Resistance Self II>
+ <id=276><spl=Magic Resistance Self III>
+ <id=277><spl=Magic Resistance Self IV>
+ <id=278><spl=Magic Resistance Self V>
+ <id=279><spl=Magic Resistance Self VI>
+ <id=280><spl=Magic Yield Other I>
+ <id=281><spl=Magic Yield Other II>
+ <id=282><spl=Magic Yield Other III>
+ <id=283><spl=Magic Yield Other IV>
+ <id=284><spl=Magic Yield Other V>
+ <id=285><spl=Magic Yield Other VI>
+ <id=286><spl=Magic Yield Self I>
+ <id=287><spl=Magic Yield Self II>
+ <id=288><spl=Magic Yield Self III>
+ <id=289><spl=Magic Yield Self IV>
+ <id=290><spl=Magic Yield Self V>
+ <id=291><spl=Magic Yield Self VI>
+ <id=292><spl=Axe Mastery Other I>
+ <id=293><spl=Axe Mastery Other II>
+ <id=294><spl=Axe Mastery Other III>
+ <id=295><spl=Axe Mastery Other IV>
+ <id=296><spl=Axe Mastery Other V>
+ <id=297><spl=Axe Mastery Other VI>
+ <id=298><spl=Axe Mastery Self I>
+ <id=299><spl=Axe Mastery Self II>
+ <id=300><spl=Axe Mastery Self III>
+ <id=301><spl=Axe Mastery Self IV>
+ <id=302><spl=Axe Mastery Self V>
+ <id=303><spl=Axe Mastery Self VI>
+ <id=304><spl=Axe Ineptitude Other I>
+ <id=305><spl=Axe Ineptitude Other II>
+ <id=306><spl=Axe Ineptitude Other III>
+ <id=307><spl=Axe Ineptitude Other IV>
+ <id=308><spl=Axe Ineptitude Other V>
+ <id=309><spl=Axe Ineptitude Other VI>
+ <id=310><spl=Axe Ineptitude Self I>
+ <id=311><spl=Axe Ineptitude Self II>
+ <id=312><spl=Axe Ineptitude Self III>
+ <id=313><spl=Axe Ineptitude Self IV>
+ <id=314><spl=Axe Ineptitude Self V>
+ <id=315><spl=Axe Ineptitude Self VI>
+ <id=316><spl=Dagger Mastery Other I>
+ <id=317><spl=Dagger Mastery Other II>
+ <id=318><spl=Dagger Mastery Other III>
+ <id=319><spl=Dagger Mastery Other IV>
+ <id=320><spl=Dagger Mastery Other V>
+ <id=321><spl=Dagger Mastery Other VI>
+ <id=322><spl=Dagger Mastery Self I>
+ <id=323><spl=Dagger Mastery Self II>
+ <id=324><spl=Dagger Mastery Self III>
+ <id=325><spl=Dagger Mastery Self IV>
+ <id=326><spl=Dagger Mastery Self V>
+ <id=327><spl=Dagger Mastery Self VI>
+ <id=328><spl=Dagger Ineptitude Other I>
+ <id=329><spl=Dagger Ineptitude Other II>
+ <id=330><spl=Dagger Ineptitude Other III>
+ <id=331><spl=Dagger Ineptitude Other IV>
+ <id=332><spl=Dagger Ineptitude Other V>
+ <id=333><spl=Dagger Ineptitude Other VI>
+ <id=334><spl=Dagger Ineptitude Self I>
+ <id=335><spl=Dagger Ineptitude Self II>
+ <id=336><spl=Dagger Ineptitude Self III>
+ <id=337><spl=Dagger Ineptitude Self IV>
+ <id=338><spl=Dagger Ineptitude Self V>
+ <id=339><spl=Dagger Ineptitude Self VI>
+ <id=340><spl=Mace Mastery Other I>
+ <id=341><spl=Mace Mastery Other II>
+ <id=342><spl=Mace Mastery Other III>
+ <id=343><spl=Mace Mastery Other IV>
+ <id=344><spl=Mace Mastery Other V>
+ <id=345><spl=Mace Mastery Other VI>
+ <id=346><spl=Mace Mastery Self I>
+ <id=347><spl=Mace Mastery Self II>
+ <id=348><spl=Mace Mastery Self III>
+ <id=349><spl=Mace Mastery Self IV>
+ <id=350><spl=Mace Mastery Self V>
+ <id=351><spl=Mace Mastery Self VI>
+ <id=352><spl=Mace Ineptitude Other I>
+ <id=353><spl=Mace Ineptitude Other II>
+ <id=354><spl=Mace Ineptitude Other III>
+ <id=355><spl=Mace Ineptitude Other IV>
+ <id=356><spl=Mace Ineptitude Other V>
+ <id=357><spl=Mace Ineptitude Other VI>
+ <id=358><spl=Mace Ineptitude Self I>
+ <id=359><spl=Mace Ineptitude Self II>
+ <id=360><spl=Mace Ineptitude Self III>
+ <id=361><spl=Mace Ineptitude Self IV>
+ <id=362><spl=Mace Ineptitude Self V>
+ <id=363><spl=Mace Ineptitude Self VI>
+ <id=364><spl=Spear Mastery Other I>
+ <id=365><spl=Spear Mastery Other II>
+ <id=366><spl=Spear Mastery Other III>
+ <id=367><spl=Spear Mastery Other IV>
+ <id=368><spl=Spear Mastery Other V>
+ <id=369><spl=Spear Mastery Other VI>
+ <id=370><spl=Spear Mastery Self I>
+ <id=371><spl=Spear Mastery Self II>
+ <id=372><spl=Spear Mastery Self III>
+ <id=373><spl=Spear Mastery Self IV>
+ <id=374><spl=Spear Mastery Self V>
+ <id=375><spl=Spear Mastery Self VI>
+ <id=376><spl=Spear Ineptitude Other I>
+ <id=377><spl=Spear Ineptitude Other II>
+ <id=378><spl=Spear Ineptitude Other III>
+ <id=379><spl=Spear Ineptitude Other IV>
+ <id=380><spl=Spear Ineptitude Other V>
+ <id=381><spl=Spear Ineptitude Other VI>
+ <id=382><spl=Spear Ineptitude Self I>
+ <id=383><spl=Spear Ineptitude Self II>
+ <id=384><spl=Spear Ineptitude Self III>
+ <id=385><spl=Spear Ineptitude Self IV>
+ <id=386><spl=Spear Ineptitude Self V>
+ <id=387><spl=Spear Ineptitude Self VI>
+ <id=388><spl=Staff Mastery Other I>
+ <id=389><spl=Staff Mastery Other II>
+ <id=390><spl=Staff Mastery Other III>
+ <id=391><spl=Staff Mastery Other IV>
+ <id=392><spl=Staff Mastery Other V>
+ <id=393><spl=Staff Mastery Other VI>
+ <id=394><spl=Staff Mastery Self I>
+ <id=395><spl=Staff Mastery Self II>
+ <id=396><spl=Staff Mastery Self III>
+ <id=397><spl=Staff Mastery Self IV>
+ <id=398><spl=Staff Mastery Self V>
+ <id=399><spl=Staff Mastery Self VI>
+ <id=400><spl=Staff Ineptitude Other I>
+ <id=401><spl=Staff Ineptitude Other II>
+ <id=402><spl=Staff Ineptitude Other III>
+ <id=403><spl=Staff Ineptitude Other IV>
+ <id=404><spl=Staff Ineptitude Other V>
+ <id=405><spl=Staff Ineptitude Other VI>
+ <id=406><spl=Staff Ineptitude Self I>
+ <id=407><spl=Staff Ineptitude Self II>
+ <id=408><spl=Staff Ineptitude Self III>
+ <id=409><spl=Staff Ineptitude Self IV>
+ <id=410><spl=Staff Ineptitude Self V>
+ <id=411><spl=Staff Ineptitude Self VI>
+ <id=412><spl=Sword Mastery Other I>
+ <id=413><spl=Sword Mastery Other II>
+ <id=414><spl=Sword Mastery Other III>
+ <id=415><spl=Sword Mastery Other IV>
+ <id=416><spl=Sword Mastery Other V>
+ <id=417><spl=Sword Mastery Other VI>
+ <id=418><spl=Sword Mastery Self I>
+ <id=419><spl=Sword Mastery Self II>
+ <id=420><spl=Sword Mastery Self III>
+ <id=421><spl=Sword Mastery Self IV>
+ <id=422><spl=Sword Mastery Self V>
+ <id=423><spl=Sword Mastery Self VI>
+ <id=424><spl=Sword Ineptitude Other I>
+ <id=425><spl=Sword Ineptitude Other II>
+ <id=426><spl=Sword Ineptitude Other III>
+ <id=427><spl=Sword Ineptitude Other IV>
+ <id=428><spl=Sword Ineptitude Other V>
+ <id=429><spl=Sword Ineptitude Other VI>
+ <id=430><spl=Sword Ineptitude Self I>
+ <id=431><spl=Sword Ineptitude Self II>
+ <id=432><spl=Sword Ineptitude Self III>
+ <id=433><spl=Sword Ineptitude Self IV>
+ <id=435><spl=Sword Ineptitude Self V>
+ <id=436><spl=Sword Ineptitude Self VI>
+ <id=437><spl=Unarmed Combat Mastery Other I>
+ <id=438><spl=Unarmed Combat Mastery Other II>
+ <id=439><spl=Unarmed Combat Mastery Other III>
+ <id=440><spl=Unarmed Combat Mastery Other IV>
+ <id=441><spl=Unarmed Combat Mastery Other V>
+ <id=442><spl=Unarmed Combat Mastery Other VI>
+ <id=443><spl=Unarmed Combat Mastery Self I>
+ <id=444><spl=Unarmed Combat Mastery Self II>
+ <id=445><spl=Unarmed Combat Mastery Self III>
+ <id=446><spl=Unarmed Combat Mastery Self IV>
+ <id=447><spl=Unarmed Combat Mastery Self V>
+ <id=448><spl=Unarmed Combat Mastery Self VI>
+ <id=449><spl=Unarmed Combat Ineptitude Other I>
+ <id=450><spl=Unarmed Combat Ineptitude Other II>
+ <id=451><spl=Unarmed Combat Ineptitude Other III>
+ <id=452><spl=Unarmed Combat Ineptitude Other IV>
+ <id=453><spl=Unarmed Combat Ineptitude Other V>
+ <id=454><spl=Unarmed Combat Ineptitude Other VI>
+ <id=455><spl=Unarmed Combat Ineptitude Self I>
+ <id=456><spl=Unarmed Combat Ineptitude Self II>
+ <id=457><spl=Unarmed Combat Ineptitude Self III>
+ <id=458><spl=Unarmed Combat Ineptitude Self IV>
+ <id=459><spl=Unarmed Combat Ineptitude Self V>
+ <id=460><spl=Unarmed Combat Ineptitude Self VI>
+ <id=461><spl=Bow Mastery Other I>
+ <id=462><spl=Bow Mastery Other II>
+ <id=463><spl=Bow Mastery Other III>
+ <id=464><spl=Bow Mastery Other IV>
+ <id=465><spl=Bow Mastery Other V>
+ <id=466><spl=Bow Mastery Other VI>
+ <id=467><spl=Bow Mastery Self I>
+ <id=468><spl=Bow Mastery Self II>
+ <id=469><spl=Bow Mastery Self III>
+ <id=470><spl=Bow Mastery Self IV>
+ <id=471><spl=Bow Mastery Self V>
+ <id=472><spl=Bow Mastery Self VI>
+ <id=473><spl=Bow Ineptitude Other I>
+ <id=474><spl=Bow Ineptitude Other II>
+ <id=475><spl=Bow Ineptitude Other III>
+ <id=476><spl=Bow Ineptitude Other IV>
+ <id=477><spl=Bow Ineptitude Other V>
+ <id=478><spl=Bow Ineptitude Other VI>
+ <id=479><spl=Bow Ineptitude Self I>
+ <id=480><spl=Bow Ineptitude Self II>
+ <id=481><spl=Bow Ineptitude Self III>
+ <id=482><spl=Bow Ineptitude Self IV>
+ <id=483><spl=Bow Ineptitude Self V>
+ <id=484><spl=Bow Ineptitude Self VI>
+ <id=485><spl=Crossbow Mastery Other I>
+ <id=486><spl=Crossbow Mastery Other II>
+ <id=487><spl=Crossbow Mastery Other III>
+ <id=488><spl=Crossbow Mastery Other IV>
+ <id=489><spl=Crossbow Mastery Other V>
+ <id=490><spl=Crossbow Mastery Other VI>
+ <id=491><spl=Crossbow Mastery Self I>
+ <id=492><spl=Crossbow Mastery Self II>
+ <id=493><spl=Crossbow Mastery Self III>
+ <id=494><spl=Crossbow Mastery Self IV>
+ <id=495><spl=Crossbow Mastery Self V>
+ <id=496><spl=Crossbow Mastery Self VI>
+ <id=497><spl=Crossbow Ineptitude Other I>
+ <id=498><spl=Crossbow Ineptitude Other II>
+ <id=499><spl=Crossbow Ineptitude Other III>
+ <id=500><spl=Crossbow Ineptitude Other IV>
+ <id=501><spl=Crossbow Ineptitude Other V>
+ <id=502><spl=Crossbow Ineptitude Other VI>
+ <id=503><spl=Crossbow Ineptitude Self I>
+ <id=504><spl=Crossbow Ineptitude Self II>
+ <id=505><spl=Crossbow Ineptitude Self III>
+ <id=506><spl=Crossbow Ineptitude Self IV>
+ <id=507><spl=Crossbow Ineptitude Self V>
+ <id=508><spl=Crossbow Ineptitude Self VI>
+ <id=509><spl=Acid Protection Other I>
+ <id=510><spl=Acid Protection Other II>
+ <id=511><spl=Acid Protection Other III>
+ <id=512><spl=Acid Protection Other IV>
+ <id=513><spl=Acid Protection Other V>
+ <id=514><spl=Acid Protection Other VI>
+ <id=515><spl=Acid Protection Self I>
+ <id=516><spl=Acid Protection Self II>
+ <id=517><spl=Acid Protection Self III>
+ <id=518><spl=Acid Protection Self IV>
+ <id=519><spl=Acid Protection Self V>
+ <id=520><spl=Acid Protection Self VI>
+ <id=521><spl=Acid Vulnerability Other I>
+ <id=522><spl=Acid Vulnerability Other II>
+ <id=523><spl=Acid Vulnerability Other III>
+ <id=524><spl=Acid Vulnerability Other IV>
+ <id=525><spl=Acid Vulnerability Other V>
+ <id=526><spl=Acid Vulnerability Other VI>
+ <id=527><spl=Acid Vulnerability Self I>
+ <id=528><spl=Acid Vulnerability Self II>
+ <id=529><spl=Acid Vulnerability Self III>
+ <id=530><spl=Acid Vulnerability Self IV>
+ <id=531><spl=Acid Vulnerability Self V>
+ <id=532><spl=Acid Vulnerability Self VI>
+ <id=533><spl=Thrown Weapons Mastery Other I>
+ <id=534><spl=Thrown Weapons Mastery Other II>
+ <id=535><spl=Thrown Weapons Mastery Other III>
+ <id=536><spl=Thrown Weapons Mastery Other IV>
+ <id=537><spl=Thrown Weapons Mastery Other V>
+ <id=538><spl=Thrown Weapons Mastery Other VI>
+ <id=539><spl=Thrown Weapons Mastery Self I>
+ <id=540><spl=Thrown Weapons Mastery Self II>
+ <id=541><spl=Thrown Weapons Mastery Self III>
+ <id=542><spl=Thrown Weapons Mastery Self IV>
+ <id=543><spl=Thrown Weapons Mastery Self V>
+ <id=544><spl=Thrown Weapons Mastery Self VI>
+ <id=545><spl=Thrown Weapons Ineptitude Other I>
+ <id=546><spl=Thrown Weapons Ineptitude Other II>
+ <id=547><spl=Thrown Weapons Ineptitude Other III>
+ <id=548><spl=Thrown Weapons Ineptitude Other IV>
+ <id=549><spl=Thrown Weapons Ineptitude Other V>
+ <id=550><spl=Thrown Weapons Ineptitude Other VI>
+ <id=551><spl=Thrown Weapons Ineptitude Self I>
+ <id=552><spl=Thrown Weapons Ineptitude Self II>
+ <id=553><spl=Thrown Weapons Ineptitude Self III>
+ <id=554><spl=Thrown Weapons Ineptitude Self IV>
+ <id=555><spl=Thrown Weapons Ineptitude Self V>
+ <id=556><spl=Thrown Weapons Ineptitude Self VI>
+ <id=557><spl=Creature Enchantment Mastery Self I>
+ <id=558><spl=Creature Enchantment Mastery Self II>
+ <id=559><spl=Creature Enchantment Mastery Self III>
+ <id=560><spl=Creature Enchantment Mastery Self IV>
+ <id=561><spl=Creature Enchantment Mastery Self V>
+ <id=562><spl=Creature Enchantment Mastery Self VI>
+ <id=563><spl=Creature Enchantment Mastery Other I>
+ <id=564><spl=Creature Enchantment Mastery Other II>
+ <id=565><spl=Creature Enchantment Mastery Other III>
+ <id=566><spl=Creature Enchantment Mastery Other IV>
+ <id=567><spl=Creature Enchantment Mastery Other V>
+ <id=568><spl=Creature Enchantment Mastery Other VI>
+ <id=569><spl=Creature Enchantment Ineptitude Other I>
+ <id=570><spl=Creature Enchantment Ineptitude Other II>
+ <id=571><spl=Creature Enchantment Ineptitude Other III>
+ <id=572><spl=Creature Enchantment Ineptitude Other IV>
+ <id=573><spl=Creature Enchantment Ineptitude Other V>
+ <id=574><spl=Creature Enchantment Ineptitude Other VI>
+ <id=575><spl=Creature Enchantment Ineptitude Self I>
+ <id=576><spl=Creature Enchantment Ineptitude Self II>
+ <id=577><spl=Creature Enchantment Ineptitude Self III>
+ <id=578><spl=Creature Enchantment Ineptitude Self IV>
+ <id=579><spl=Creature Enchantment Ineptitude Self V>
+ <id=580><spl=Creature Enchantment Ineptitude Self VI>
+ <id=581><spl=Item Enchantment Mastery Self I>
+ <id=582><spl=Item Enchantment Mastery Self II>
+ <id=583><spl=Item Enchantment Mastery Self III>
+ <id=584><spl=Item Enchantment Mastery Self IV>
+ <id=585><spl=Item Enchantment Mastery Self V>
+ <id=586><spl=Item Enchantment Mastery Self VI>
+ <id=587><spl=Item Enchantment Mastery Other I>
+ <id=588><spl=Item Enchantment Mastery Other II>
+ <id=589><spl=Item Enchantment Mastery Other III>
+ <id=590><spl=Item Enchantment Mastery Other IV>
+ <id=591><spl=Item Enchantment Mastery Other V>
+ <id=592><spl=Item Enchantment Mastery Other VI>
+ <id=593><spl=Item Enchantment Ineptitude Other I>
+ <id=594><spl=Item Enchantment Ineptitude Other II>
+ <id=595><spl=Item Enchantment Ineptitude Other III>
+ <id=596><spl=Item Enchantment Ineptitude Other IV>
+ <id=597><spl=Item Enchantment Ineptitude Other V>
+ <id=598><spl=Item Enchantment Ineptitude Other VI>
+ <id=599><spl=Item Enchantment Ineptitude Self I>
+ <id=600><spl=Item Enchantment Ineptitude Self II>
+ <id=601><spl=Item Enchantment Ineptitude Self III>
+ <id=602><spl=Item Enchantment Ineptitude Self IV>
+ <id=603><spl=Item Enchantment Ineptitude Self V>
+ <id=604><spl=Item Enchantment Ineptitude Self VI>
+ <id=605><spl=Life Magic Mastery Self I>
+ <id=606><spl=Life Magic Mastery Self II>
+ <id=607><spl=Life Magic Mastery Self III>
+ <id=608><spl=Life Magic Mastery Self IV>
+ <id=609><spl=Life Magic Mastery Self V>
+ <id=610><spl=Life Magic Mastery Self VI>
+ <id=611><spl=Life Magic Mastery Other I>
+ <id=612><spl=Life Magic Mastery Other II>
+ <id=613><spl=Life Magic Mastery Other III>
+ <id=614><spl=Life Magic Mastery Other IV>
+ <id=615><spl=Life Magic Mastery Other V>
+ <id=616><spl=Life Magic Mastery Other VI>
+ <id=617><spl=Life Magic Ineptitude Self I>
+ <id=618><spl=Life Magic Ineptitude Self II>
+ <id=619><spl=Life Magic Ineptitude Self III>
+ <id=620><spl=Life Magic Ineptitude Self IV>
+ <id=621><spl=Life Magic Ineptitude Self V>
+ <id=622><spl=Life Magic Ineptitude Self VI>
+ <id=623><spl=Life Magic Ineptitude Other I>
+ <id=624><spl=Life Magic Ineptitude Other II>
+ <id=625><spl=Life Magic Ineptitude Other III>
+ <id=626><spl=Life Magic Ineptitude Other IV>
+ <id=627><spl=Life Magic Ineptitude Other V>
+ <id=628><spl=Life Magic Ineptitude Other VI>
+ <id=629><spl=War Magic Mastery Self I>
+ <id=630><spl=War Magic Mastery Self II>
+ <id=631><spl=War Magic Mastery Self III>
+ <id=632><spl=War Magic Mastery Self IV>
+ <id=633><spl=War Magic Mastery Self V>
+ <id=634><spl=War Magic Mastery Self VI>
+ <id=635><spl=War Magic Mastery Other I>
+ <id=636><spl=War Magic Mastery Other II>
+ <id=637><spl=War Magic Mastery Other III>
+ <id=638><spl=War Magic Mastery Other IV>
+ <id=639><spl=War Magic Mastery Other V>
+ <id=640><spl=War Magic Mastery Other VI>
+ <id=641><spl=War Magic Ineptitude Self I>
+ <id=642><spl=War Magic Ineptitude Self II>
+ <id=643><spl=War Magic Ineptitude Self III>
+ <id=644><spl=War Magic Ineptitude Self IV>
+ <id=645><spl=War Magic Ineptitude Self V>
+ <id=646><spl=War Magic Ineptitude Self VI>
+ <id=647><spl=War Magic Ineptitude Other I>
+ <id=648><spl=War Magic Ineptitude Other II>
+ <id=649><spl=War Magic Ineptitude Other III>
+ <id=650><spl=War Magic Ineptitude Other IV>
+ <id=651><spl=War Magic Ineptitude Other V>
+ <id=652><spl=War Magic Ineptitude Other VI>
+ <id=653><spl=Mana Conversion Mastery Self I>
+ <id=654><spl=Mana Conversion Mastery Self II>
+ <id=655><spl=Mana Conversion Mastery Self III>
+ <id=656><spl=Mana Conversion Mastery Self IV>
+ <id=657><spl=Mana Conversion Mastery Self V>
+ <id=658><spl=Mana Conversion Mastery Self VI>
+ <id=659><spl=Mana Conversion Mastery Other I>
+ <id=660><spl=Mana Conversion Mastery Other II>
+ <id=661><spl=Mana Conversion Mastery Other III>
+ <id=662><spl=Mana Conversion Mastery Other IV>
+ <id=663><spl=Mana Conversion Mastery Other V>
+ <id=664><spl=Mana Conversion Mastery Other VI>
+ <id=665><spl=Mana Conversion Ineptitude Self I>
+ <id=666><spl=Vitae>
+ <id=667><spl=Mana Conversion Ineptitude Self II>
+ <id=668><spl=Mana Conversion Ineptitude Self III>
+ <id=669><spl=Mana Conversion Ineptitude Self IV>
+ <id=670><spl=Mana Conversion Ineptitude Self V>
+ <id=671><spl=Mana Conversion Ineptitude Self VI>
+ <id=672><spl=Mana Conversion Ineptitude Other I>
+ <id=673><spl=Mana Conversion Ineptitude Other II>
+ <id=674><spl=Mana Conversion Ineptitude Other III>
+ <id=675><spl=Mana Conversion Ineptitude Other IV>
+ <id=676><spl=Mana Conversion Ineptitude Other V>
+ <id=677><spl=Mana Conversion Ineptitude Other VI>
+ <id=678><spl=Arcane Enlightenment Self I>
+ <id=679><spl=Arcane Enlightenment Self II>
+ <id=680><spl=Arcane Enlightenment Self III>
+ <id=681><spl=Arcane Enlightenment Self IV>
+ <id=682><spl=Arcane Enlightenment Self V>
+ <id=683><spl=Arcane Enlightenment Self VI>
+ <id=684><spl=Arcane Enlightenment Other I>
+ <id=685><spl=Arcane Enlightenment Other II>
+ <id=686><spl=Arcane Enlightenment Other III>
+ <id=687><spl=Arcane Enlightenment Other IV>
+ <id=688><spl=Arcane Enlightenment Other V>
+ <id=689><spl=Arcane Enlightenment Other VI>
+ <id=690><spl=Arcane Benightedness Self I>
+ <id=691><spl=Arcane Benightedness Self II>
+ <id=692><spl=Arcane Benightedness Self III>
+ <id=693><spl=Arcane Benightedness Self IV>
+ <id=694><spl=Arcane Benightedness Self V>
+ <id=695><spl=Arcane Benightedness Self VI>
+ <id=696><spl=Arcane Benightedness Other I>
+ <id=697><spl=Arcane Benightedness Other II>
+ <id=698><spl=Arcane Benightedness Other III>
+ <id=699><spl=Arcane Benightedness Other IV>
+ <id=700><spl=Arcane Benightedness Other V>
+ <id=701><spl=Arcane Benightedness Other VI>
+ <id=702><spl=Armor Tinkering Expertise Self I>
+ <id=703><spl=Armor Tinkering Expertise Self II>
+ <id=704><spl=Armor Tinkering Expertise Self III>
+ <id=705><spl=Armor Tinkering Expertise Self IV>
+ <id=706><spl=Armor Tinkering Expertise Self V>
+ <id=707><spl=Armor Tinkering Expertise Self VI>
+ <id=708><spl=Armor Tinkering Expertise Other I>
+ <id=709><spl=Armor Tinkering Expertise Other II>
+ <id=710><spl=Armor Tinkering Expertise Other III>
+ <id=711><spl=Armor Tinkering Expertise Other IV>
+ <id=712><spl=Armor Tinkering Expertise Other V>
+ <id=713><spl=Armor Tinkering Expertise Other VI>
+ <id=714><spl=Armor Tinkering Ignorance Self I>
+ <id=715><spl=Armor Tinkering Ignorance Self II>
+ <id=716><spl=Armor Tinkering Ignorance Self III>
+ <id=717><spl=Armor Tinkering Ignorance Self IV>
+ <id=718><spl=Armor Tinkering Ignorance Self V>
+ <id=719><spl=Armor Tinkering Ignorance Self VI>
+ <id=720><spl=Armor Tinkering Ignorance Other I>
+ <id=721><spl=Armor Tinkering Ignorance Other II>
+ <id=722><spl=Armor Tinkering Ignorance Other III>
+ <id=723><spl=Armor Tinkering Ignorance Other IV>
+ <id=724><spl=Armor Tinkering Ignorance Other V>
+ <id=725><spl=Armor Tinkering Ignorance Other VI>
+ <id=726><spl=Item Tinkering Expertise Self I>
+ <id=727><spl=Item Tinkering Expertise Self II>
+ <id=728><spl=Item Tinkering Expertise Self III>
+ <id=729><spl=Item Tinkering Expertise Self IV>
+ <id=730><spl=Item Tinkering Expertise Self V>
+ <id=731><spl=Item Tinkering Expertise Self VI>
+ <id=732><spl=Item Tinkering Expertise Other I>
+ <id=733><spl=Item Tinkering Expertise Other II>
+ <id=734><spl=Item Tinkering Expertise Other III>
+ <id=735><spl=Item Tinkering Expertise Other IV>
+ <id=736><spl=Item Tinkering Expertise Other V>
+ <id=737><spl=Item Tinkering Expertise Other VI>
+ <id=738><spl=Item Tinkering Ignorance Self I>
+ <id=739><spl=Item Tinkering Ignorance Self II>
+ <id=740><spl=Item Tinkering Ignorance Self III>
+ <id=741><spl=Item Tinkering Ignorance Self IV>
+ <id=742><spl=Item Tinkering Ignorance Self V>
+ <id=743><spl=Item Tinkering Ignorance Self VI>
+ <id=744><spl=Item Tinkering Ignorance Other I>
+ <id=745><spl=Item Tinkering Ignorance Other II>
+ <id=746><spl=Item Tinkering Ignorance Other III>
+ <id=747><spl=Item Tinkering Ignorance Other IV>
+ <id=748><spl=Item Tinkering Ignorance Other V>
+ <id=749><spl=Item Tinkering Ignorance Other VI>
+ <id=750><spl=Magic Item Tinkering Expertise Self I>
+ <id=751><spl=Magic Item Tinkering Expertise Self II>
+ <id=752><spl=Magic Item Tinkering Expertise Self III>
+ <id=753><spl=Magic Item Tinkering Expertise Self IV>
+ <id=754><spl=Magic Item Tinkering Expertise Self V>
+ <id=755><spl=Magic Item Tinkering Expertise Self VI>
+ <id=756><spl=Magic Item Tinkering Expertise Other I>
+ <id=757><spl=Magic Item Tinkering Expertise Other II>
+ <id=758><spl=Magic Item Tinkering Expertise Other III>
+ <id=759><spl=Magic Item Tinkering Expertise Other IV>
+ <id=760><spl=Magic Item Tinkering Expertise Other V>
+ <id=761><spl=Magic Item Tinkering Expertise Other VI>
+ <id=762><spl=Magic Item Tinkering Ignorance Self I>
+ <id=763><spl=Magic Item Tinkering Ignorance Self II>
+ <id=764><spl=Magic Item Tinkering Ignorance Self III>
+ <id=765><spl=Magic Item Tinkering Ignorance Self IV>
+ <id=766><spl=Magic Item Tinkering Ignorance Self V>
+ <id=767><spl=Magic Item Tinkering Ignorance Self VI>
+ <id=768><spl=Magic Item Tinkering Ignorance Other I>
+ <id=769><spl=Magic Item Tinkering Ignorance Other II>
+ <id=770><spl=Magic Item Tinkering Ignorance Other III>
+ <id=771><spl=Magic Item Tinkering Ignorance Other IV>
+ <id=772><spl=Magic Item Tinkering Ignorance Other V>
+ <id=773><spl=Magic Item Tinkering Ignorance Other VI>
+ <id=774><spl=Weapon Tinkering Expertise Self I>
+ <id=775><spl=Weapon Tinkering Expertise Self II>
+ <id=776><spl=Weapon Tinkering Expertise Self III>
+ <id=777><spl=Weapon Tinkering Expertise Self IV>
+ <id=778><spl=Weapon Tinkering Expertise Self V>
+ <id=779><spl=Weapon Tinkering Expertise Self VI>
+ <id=780><spl=Weapon Tinkering Expertise Other I>
+ <id=781><spl=Weapon Tinkering Expertise Other II>
+ <id=782><spl=Weapon Tinkering Expertise Other III>
+ <id=783><spl=Weapon Tinkering Expertise Other IV>
+ <id=784><spl=Weapon Tinkering Expertise Other V>
+ <id=785><spl=Weapon Tinkering Expertise Other VI>
+ <id=786><spl=Weapon Tinkering Ignorance Self I>
+ <id=787><spl=Weapon Tinkering Ignorance Self II>
+ <id=788><spl=Weapon Tinkering Ignorance Self III>
+ <id=789><spl=Weapon Tinkering Ignorance Self IV>
+ <id=790><spl=Weapon Tinkering Ignorance Self V>
+ <id=791><spl=Weapon Tinkering Ignorance Self VI>
+ <id=792><spl=Weapon Tinkering Ignorance Other I>
+ <id=793><spl=Weapon Tinkering Ignorance Other II>
+ <id=794><spl=Weapon Tinkering Ignorance Other III>
+ <id=795><spl=Weapon Tinkering Ignorance Other IV>
+ <id=796><spl=Weapon Tinkering Ignorance Other V>
+ <id=797><spl=Weapon Tinkering Ignorance Other VI>
+ <id=798><spl=Monster Attunement Self I>
+ <id=799><spl=Monster Attunement Self II>
+ <id=800><spl=Monster Attunement Self III>
+ <id=801><spl=Monster Attunement Self IV>
+ <id=802><spl=Monster Attunement Self V>
+ <id=803><spl=Monster Attunement Self VI>
+ <id=804><spl=Monster Attunement Other I>
+ <id=805><spl=Monster Attunement Other II>
+ <id=806><spl=Monster Attunement Other III>
+ <id=807><spl=Monster Attunement Other IV>
+ <id=808><spl=Monster Attunement Other V>
+ <id=809><spl=Monster Attunement Other VI>
+ <id=810><spl=Fire Protection Other II>
+ <id=811><spl=Monster Unfamiliarity Self I>
+ <id=812><spl=Monster Unfamiliarity Self II>
+ <id=813><spl=Monster Unfamiliarity Self III>
+ <id=814><spl=Monster Unfamiliarity Self IV>
+ <id=815><spl=Monster Unfamiliarity Self V>
+ <id=816><spl=Monster Unfamiliarity Self VI>
+ <id=817><spl=Monster Unfamiliarity Other I>
+ <id=818><spl=Monster Unfamiliarity Other II>
+ <id=819><spl=Monster Unfamiliarity Other III>
+ <id=820><spl=Monster Unfamiliarity Other IV>
+ <id=821><spl=Monster Unfamiliarity Other V>
+ <id=822><spl=Monster Unfamiliarity Other VI>
+ <id=824><spl=Person Attunement Self I>
+ <id=825><spl=Person Attunement Self II>
+ <id=826><spl=Person Attunement Self III>
+ <id=827><spl=Person Attunement Self IV>
+ <id=828><spl=Person Attunement Self V>
+ <id=829><spl=Person Attunement Self VI>
+ <id=830><spl=Person Attunement Other I>
+ <id=831><spl=Person Attunement Other II>
+ <id=832><spl=Person Attunement Other III>
+ <id=833><spl=Person Attunement Other IV>
+ <id=834><spl=Person Attunement Other V>
+ <id=835><spl=Person Attunement Other VI>
+ <id=836><spl=Fire Protection Other III>
+ <id=837><spl=Person Unfamiliarity Self I>
+ <id=838><spl=Person Unfamiliarity Self II>
+ <id=839><spl=Person Unfamiliarity Self III>
+ <id=840><spl=Person Unfamiliarity Self IV>
+ <id=841><spl=Person Unfamiliarity Self V>
+ <id=842><spl=Person Unfamiliarity Self VI>
+ <id=843><spl=Person Unfamiliarity Other I>
+ <id=844><spl=Person Unfamiliarity Other II>
+ <id=845><spl=Person Unfamiliarity Other III>
+ <id=846><spl=Person Unfamiliarity Other IV>
+ <id=847><spl=Person Unfamiliarity Other V>
+ <id=848><spl=Person Unfamiliarity Other VI>
+ <id=849><spl=Fire Protection Other IV>
+ <id=850><spl=Deception Mastery Self I>
+ <id=851><spl=Deception Mastery Self II>
+ <id=852><spl=Deception Mastery Self III>
+ <id=853><spl=Deception Mastery Self IV>
+ <id=854><spl=Deception Mastery Self V>
+ <id=855><spl=Deception Mastery Self VI>
+ <id=856><spl=Deception Mastery Other I>
+ <id=857><spl=Deception Mastery Other II>
+ <id=858><spl=Deception Mastery Other III>
+ <id=859><spl=Deception Mastery Other IV>
+ <id=860><spl=Deception Mastery Other V>
+ <id=861><spl=Deception Mastery Other VI>
+ <id=862><spl=Deception Ineptitude Self I>
+ <id=863><spl=Deception Ineptitude Self II>
+ <id=864><spl=Deception Ineptitude Self III>
+ <id=865><spl=Deception Ineptitude Self IV>
+ <id=866><spl=Deception Ineptitude Self V>
+ <id=867><spl=Deception Ineptitude Self VI>
+ <id=868><spl=Deception Ineptitude Other I>
+ <id=869><spl=Deception Ineptitude Other II>
+ <id=870><spl=Deception Ineptitude Other III>
+ <id=871><spl=Deception Ineptitude Other IV>
+ <id=872><spl=Deception Ineptitude Other V>
+ <id=873><spl=Deception Ineptitude Other VI>
+ <id=874><spl=Healing Mastery Self I>
+ <id=875><spl=Healing Mastery Self II>
+ <id=876><spl=Healing Mastery Self III>
+ <id=877><spl=Healing Mastery Self IV>
+ <id=878><spl=Healing Mastery Self V>
+ <id=879><spl=Healing Mastery Self VI>
+ <id=880><spl=Healing Mastery Other I>
+ <id=881><spl=Healing Mastery Other II>
+ <id=882><spl=Healing Mastery Other III>
+ <id=883><spl=Healing Mastery Other IV>
+ <id=884><spl=Healing Mastery Other V>
+ <id=885><spl=Healing Mastery Other VI>
+ <id=886><spl=Healing Ineptitude Self I>
+ <id=887><spl=Healing Ineptitude Self II>
+ <id=888><spl=Healing Ineptitude Self III>
+ <id=889><spl=Healing Ineptitude Self IV>
+ <id=890><spl=Healing Ineptitude Self V>
+ <id=891><spl=Healing Ineptitude Self VI>
+ <id=892><spl=Healing Ineptitude Other I>
+ <id=893><spl=Healing Ineptitude Other II>
+ <id=894><spl=Healing Ineptitude Other III>
+ <id=895><spl=Healing Ineptitude Other IV>
+ <id=896><spl=Healing Ineptitude Other V>
+ <id=897><spl=Healing Ineptitude Other VI>
+ <id=898><spl=Leadership Mastery Self I>
+ <id=899><spl=Leadership Mastery Self II>
+ <id=900><spl=Leadership Mastery Self III>
+ <id=901><spl=Leadership Mastery Self IV>
+ <id=902><spl=Leadership Mastery Self V>
+ <id=903><spl=Leadership Mastery Self VI>
+ <id=904><spl=Leadership Mastery Other I>
+ <id=905><spl=Leadership Mastery Other II>
+ <id=906><spl=Leadership Mastery Other III>
+ <id=907><spl=Leadership Mastery Other IV>
+ <id=908><spl=Leadership Mastery Other V>
+ <id=909><spl=Leadership Mastery Other VI>
+ <id=910><spl=Leadership Ineptitude Self I>
+ <id=911><spl=Leadership Ineptitude Self II>
+ <id=912><spl=Leadership Ineptitude Self III>
+ <id=913><spl=Leadership Ineptitude Self IV>
+ <id=914><spl=Leadership Ineptitude Self V>
+ <id=915><spl=Leadership Ineptitude Self VI>
+ <id=916><spl=Leadership Ineptitude Other I>
+ <id=917><spl=Leadership Ineptitude Other II>
+ <id=918><spl=Leadership Ineptitude Other III>
+ <id=919><spl=Leadership Ineptitude Other IV>
+ <id=920><spl=Leadership Ineptitude Other V>
+ <id=921><spl=Leadership Ineptitude Other VI>
+ <id=922><spl=Lockpick Mastery Self I>
+ <id=923><spl=Lockpick Mastery Self II>
+ <id=924><spl=Lockpick Mastery Self III>
+ <id=925><spl=Lockpick Mastery Self IV>
+ <id=926><spl=Lockpick Mastery Self V>
+ <id=927><spl=Lockpick Mastery Self VI>
+ <id=928><spl=Lockpick Mastery Other I>
+ <id=929><spl=Lockpick Mastery Other II>
+ <id=930><spl=Lockpick Mastery Other III>
+ <id=931><spl=Lockpick Mastery Other IV>
+ <id=932><spl=Lockpick Mastery Other V>
+ <id=933><spl=Lockpick Mastery Other VI>
+ <id=934><spl=Lockpick Ineptitude Self I>
+ <id=935><spl=Lockpick Ineptitude Self II>
+ <id=936><spl=Lockpick Ineptitude Self III>
+ <id=937><spl=Lockpick Ineptitude Self IV>
+ <id=938><spl=Lockpick Ineptitude Self V>
+ <id=939><spl=Lockpick Ineptitude Self VI>
+ <id=940><spl=Lockpick Ineptitude Other I>
+ <id=941><spl=Lockpick Ineptitude Other II>
+ <id=942><spl=Lockpick Ineptitude Other III>
+ <id=943><spl=Lockpick Ineptitude Other IV>
+ <id=944><spl=Lockpick Ineptitude Other V>
+ <id=945><spl=Lockpick Ineptitude Other VI>
+ <id=946><spl=Fealty Self I>
+ <id=947><spl=Fealty Self II>
+ <id=948><spl=Fealty Self III>
+ <id=949><spl=Fealty Self IV>
+ <id=950><spl=Fealty Self V>
+ <id=951><spl=Fealty Self VI>
+ <id=952><spl=Fealty Other I>
+ <id=953><spl=Fealty Other II>
+ <id=954><spl=Fealty Other III>
+ <id=955><spl=Fealty Other IV>
+ <id=956><spl=Fealty Other V>
+ <id=957><spl=Fealty Other VI>
+ <id=958><spl=Faithlessness Self I>
+ <id=959><spl=Faithlessness Self II>
+ <id=960><spl=Faithlessness Self III>
+ <id=961><spl=Faithlessness Self IV>
+ <id=962><spl=Faithlessness Self V>
+ <id=963><spl=Faithlessness Self VI>
+ <id=964><spl=Faithlessness Other I>
+ <id=965><spl=Faithlessness Other II>
+ <id=966><spl=Faithlessness Other III>
+ <id=967><spl=Faithlessness Other IV>
+ <id=968><spl=Faithlessness Other V>
+ <id=969><spl=Faithlessness Other VI>
+ <id=970><spl=Jumping Mastery Self I>
+ <id=971><spl=Jumping Mastery Self II>
+ <id=972><spl=Jumping Mastery Self III>
+ <id=973><spl=Jumping Mastery Self IV>
+ <id=974><spl=Jumping Mastery Self V>
+ <id=975><spl=Jumping Mastery Self VI>
+ <id=976><spl=Jumping Mastery Other I>
+ <id=977><spl=Jumping Mastery Other II>
+ <id=978><spl=Jumping Mastery Other III>
+ <id=979><spl=Jumping Mastery Other IV>
+ <id=980><spl=Jumping Mastery Other V>
+ <id=981><spl=Jumping Mastery Other VI>
+ <id=982><spl=Sprint Self I>
+ <id=983><spl=Sprint Self II>
+ <id=984><spl=Sprint Self III>
+ <id=985><spl=Sprint Self IV>
+ <id=986><spl=Sprint Self V>
+ <id=987><spl=Sprint Self VI>
+ <id=988><spl=Sprint Other I>
+ <id=989><spl=Sprint Other II>
+ <id=990><spl=Sprint Other III>
+ <id=991><spl=Sprint Other IV>
+ <id=992><spl=Sprint Other V>
+ <id=993><spl=Sprint Other VI>
+ <id=994><spl=Leaden Feet Self I>
+ <id=995><spl=Leaden Feet Self II>
+ <id=996><spl=Leaden Feet Self III>
+ <id=997><spl=Leaden Feet Self IV>
+ <id=998><spl=Leaden Feet Self V>
+ <id=999><spl=Leaden Feet Self VI>
+ <id=1000><spl=Leaden Feet Other I>
+ <id=1001><spl=Leaden Feet Other II>
+ <id=1002><spl=Leaden Feet Other III>
+ <id=1003><spl=Leaden Feet Other IV>
+ <id=1004><spl=Leaden Feet Other V>
+ <id=1005><spl=Leaden Feet Other VI>
+ <id=1006><spl=Jumping Ineptitude Self I>
+ <id=1007><spl=Jumping Ineptitude Self II>
+ <id=1008><spl=Jumping Ineptitude Self III>
+ <id=1009><spl=Jumping Ineptitude Self IV>
+ <id=1010><spl=Jumping Ineptitude Self V>
+ <id=1011><spl=Jumping Ineptitude Self VI>
+ <id=1012><spl=Jumping Ineptitude Other I>
+ <id=1013><spl=Jumping Ineptitude Other II>
+ <id=1014><spl=Jumping Ineptitude Other III>
+ <id=1015><spl=Jumping Ineptitude Other IV>
+ <id=1016><spl=Jumping Ineptitude Other V>
+ <id=1017><spl=Jumping Ineptitude Other VI>
+ <id=1018><spl=Bludgeoning Protection Self I>
+ <id=1019><spl=Bludgeoning Protection Self II>
+ <id=1020><spl=Bludgeoning Protection Self III>
+ <id=1021><spl=Bludgeoning Protection Self IV>
+ <id=1022><spl=Bludgeoning Protection Self V>
+ <id=1023><spl=Bludgeoning Protection Self VI>
+ <id=1024><spl=Bludgeoning Protection Other I>
+ <id=1025><spl=Bludgeoning Protection Other II>
+ <id=1026><spl=Bludgeoning Protection Other III>
+ <id=1027><spl=Bludgeoning Protection Other IV>
+ <id=1028><spl=Bludgeoning Protection Other V>
+ <id=1029><spl=Bludgeoning Protection Other VI>
+ <id=1030><spl=Cold Protection Self I>
+ <id=1031><spl=Cold Protection Self II>
+ <id=1032><spl=Cold Protection Self III>
+ <id=1033><spl=Cold Protection Self IV>
+ <id=1034><spl=Cold Protection Self V>
+ <id=1035><spl=Cold Protection Self VI>
+ <id=1036><spl=Cold Protection Other I>
+ <id=1037><spl=Cold Protection Other II>
+ <id=1038><spl=Cold Protection Other III>
+ <id=1039><spl=Cold Protection Other IV>
+ <id=1040><spl=Cold Protection Other V>
+ <id=1041><spl=Cold Protection Other VI>
+ <id=1042><spl=Bludgeoning Vulnerability Self I>
+ <id=1043><spl=Bludgeoning Vulnerability Self II>
+ <id=1044><spl=Bludgeoning Vulnerability Self III>
+ <id=1045><spl=Bludgeoning Vulnerability Self IV>
+ <id=1046><spl=Bludgeoning Vulnerability Self V>
+ <id=1047><spl=Bludgeoning Vulnerability Self VI>
+ <id=1048><spl=Bludgeoning Vulnerability Other I>
+ <id=1049><spl=Bludgeoning Vulnerability Other II>
+ <id=1050><spl=Bludgeoning Vulnerability Other III>
+ <id=1051><spl=Bludgeoning Vulnerability Other IV>
+ <id=1052><spl=Bludgeoning Vulnerability Other V>
+ <id=1053><spl=Bludgeoning Vulnerability Other VI>
+ <id=1054><spl=Cold Vulnerability Self I>
+ <id=1055><spl=Cold Vulnerability Self II>
+ <id=1056><spl=Cold Vulnerability Self III>
+ <id=1057><spl=Cold Vulnerability Self IV>
+ <id=1058><spl=Cold Vulnerability Self V>
+ <id=1059><spl=Cold Vulnerability Self VI>
+ <id=1060><spl=Cold Vulnerability Other I>
+ <id=1061><spl=Cold Vulnerability Other II>
+ <id=1062><spl=Cold Vulnerability Other III>
+ <id=1063><spl=Cold Vulnerability Other IV>
+ <id=1064><spl=Cold Vulnerability Other V>
+ <id=1065><spl=Cold Vulnerability Other VI>
+ <id=1066><spl=Lightning Protection Self I>
+ <id=1067><spl=Lightning Protection Self II>
+ <id=1068><spl=Lightning Protection Self III>
+ <id=1069><spl=Lightning Protection Self IV>
+ <id=1070><spl=Lightning Protection Self V>
+ <id=1071><spl=Lightning Protection Self VI>
+ <id=1072><spl=Lightning Protection Other I>
+ <id=1073><spl=Lightning Protection Other II>
+ <id=1074><spl=Lightning Protection Other III>
+ <id=1075><spl=Lightning Protection Other IV>
+ <id=1076><spl=Lightning Protection Other V>
+ <id=1077><spl=Lightning Protection Other VI>
+ <id=1078><spl=Lightning Vulnerability Self I>
+ <id=1079><spl=Lightning Vulnerability Self II>
+ <id=1080><spl=Lightning Vulnerability Self III>
+ <id=1081><spl=Lightning Vulnerability Self IV>
+ <id=1082><spl=Lightning Vulnerability Self V>
+ <id=1083><spl=Lightning Vulnerability Self VI>
+ <id=1084><spl=Lightning Vulnerability Other I>
+ <id=1085><spl=Lightning Vulnerability Other II>
+ <id=1086><spl=Lightning Vulnerability Other III>
+ <id=1087><spl=Lightning Vulnerability Other IV>
+ <id=1088><spl=Lightning Vulnerability Other V>
+ <id=1089><spl=Lightning Vulnerability Other VI>
+ <id=1090><spl=Fire Protection Self II>
+ <id=1091><spl=Fire Protection Self III>
+ <id=1092><spl=Fire Protection Self IV>
+ <id=1093><spl=Fire Protection Self V>
+ <id=1094><spl=Fire Protection Self VI>
+ <id=1095><spl=Fire Protection Other V>
+ <id=1096><spl=Fire Protection Other VI>
+ <id=1097><spl=Flaming Missile>
+ <id=1098><spl=Fire Vulnerability Self II>
+ <id=1099><spl=Fire Vulnerability Self III>
+ <id=1100><spl=Fire Vulnerability Self IV>
+ <id=1101><spl=Fire Vulnerability Self V>
+ <id=1102><spl=Fire Vulnerability Self VI>
+ <id=1104><spl=Fire Vulnerability Other II>
+ <id=1105><spl=Fire Vulnerability Other III>
+ <id=1106><spl=Fire Vulnerability Other IV>
+ <id=1107><spl=Fire Vulnerability Other V>
+ <id=1108><spl=Fire Vulnerability Other VI>
+ <id=1109><spl=Blade Protection Self I>
+ <id=1110><spl=Blade Protection Self II>
+ <id=1111><spl=Blade Protection Self III>
+ <id=1112><spl=Blade Protection Self IV>
+ <id=1113><spl=Blade Protection Self V>
+ <id=1114><spl=Blade Protection Self VI>
+ <id=1115><spl=Blade Protection Other I>
+ <id=1116><spl=Blade Protection Other II>
+ <id=1117><spl=Blade Protection Other III>
+ <id=1118><spl=Blade Protection Other IV>
+ <id=1119><spl=Blade Protection Other V>
+ <id=1120><spl=Blade Protection Other VI>
+ <id=1121><spl=Blade Vulnerability Self I>
+ <id=1122><spl=Blade Vulnerability Self II>
+ <id=1123><spl=Blade Vulnerability Self III>
+ <id=1124><spl=Blade Vulnerability Self IV>
+ <id=1125><spl=Blade Vulnerability Self V>
+ <id=1126><spl=Blade Vulnerability Self VI>
+ <id=1127><spl=Blade Vulnerability Other I>
+ <id=1128><spl=Blade Vulnerability Other II>
+ <id=1129><spl=Blade Vulnerability Other III>
+ <id=1130><spl=Blade Vulnerability Other IV>
+ <id=1131><spl=Blade Vulnerability Other V>
+ <id=1132><spl=Blade Vulnerability Other VI>
+ <id=1133><spl=Piercing Protection Self I>
+ <id=1134><spl=Piercing Protection Self II>
+ <id=1135><spl=Piercing Protection Self III>
+ <id=1136><spl=Piercing Protection Self IV>
+ <id=1137><spl=Piercing Protection Self V>
+ <id=1138><spl=Piercing Protection Self VI>
+ <id=1139><spl=Piercing Protection Other I>
+ <id=1140><spl=Piercing Protection Other II>
+ <id=1141><spl=Piercing Protection Other III>
+ <id=1142><spl=Piercing Protection Other IV>
+ <id=1143><spl=Piercing Protection Other V>
+ <id=1144><spl=Piercing Protection Other VI>
+ <id=1145><spl=Piercing Vulnerability Self I>
+ <id=1146><spl=Piercing Vulnerability Self II>
+ <id=1147><spl=Piercing Vulnerability Self III>
+ <id=1148><spl=Piercing Vulnerability Self IV>
+ <id=1149><spl=Piercing Vulnerability Self V>
+ <id=1150><spl=Piercing Vulnerability Self VI>
+ <id=1151><spl=Piercing Vulnerability Other I>
+ <id=1152><spl=Piercing Vulnerability Other II>
+ <id=1153><spl=Piercing Vulnerability Other III>
+ <id=1154><spl=Piercing Vulnerability Other IV>
+ <id=1155><spl=Piercing Vulnerability Other V>
+ <id=1156><spl=Piercing Vulnerability Other VI>
+ <id=1157><spl=Heal Self II>
+ <id=1158><spl=Heal Self III>
+ <id=1159><spl=Heal Self IV>
+ <id=1160><spl=Heal Self V>
+ <id=1161><spl=Heal Self VI>
+ <id=1162><spl=Heal Other II>
+ <id=1163><spl=Heal Other III>
+ <id=1164><spl=Heal Other IV>
+ <id=1165><spl=Heal Other V>
+ <id=1166><spl=Heal Other VI>
+ <id=1167><spl=Harm Self II>
+ <id=1168><spl=Harm Self III>
+ <id=1169><spl=Harm Self IV>
+ <id=1170><spl=Harm Self V>
+ <id=1171><spl=Harm Self VI>
+ <id=1172><spl=Harm Other II>
+ <id=1173><spl=Harm Other III>
+ <id=1174><spl=Harm Other IV>
+ <id=1175><spl=Harm Other V>
+ <id=1176><spl=Harm Other VI>
+ <id=1177><spl=Revitalize Self I>
+ <id=1178><spl=Revitalize Self II>
+ <id=1179><spl=Revitalize Self III>
+ <id=1180><spl=Revitalize Self IV>
+ <id=1181><spl=Revitalize Self V>
+ <id=1182><spl=Revitalize Self VI>
+ <id=1183><spl=Revitalize Other I>
+ <id=1184><spl=Revitalize Other II>
+ <id=1185><spl=Revitalize Other III>
+ <id=1186><spl=Revitalize Other IV>
+ <id=1187><spl=Revitalize Other V>
+ <id=1188><spl=Revitalize Other VI>
+ <id=1189><spl=Enfeeble Self I>
+ <id=1190><spl=Enfeeble Self II>
+ <id=1191><spl=Enfeeble Self III>
+ <id=1192><spl=Enfeeble Self IV>
+ <id=1193><spl=Enfeeble Self V>
+ <id=1194><spl=Enfeeble Self VI>
+ <id=1195><spl=Enfeeble Other I>
+ <id=1196><spl=Enfeeble Other II>
+ <id=1197><spl=Enfeeble Other III>
+ <id=1198><spl=Enfeeble Other IV>
+ <id=1199><spl=Enfeeble Other V>
+ <id=1200><spl=Enfeeble Other VI>
+ <id=1201><spl=Mana Boost Self I>
+ <id=1202><spl=Mana Boost Self II>
+ <id=1203><spl=Mana Boost Self III>
+ <id=1204><spl=Mana Boost Self IV>
+ <id=1205><spl=Mana Boost Self V>
+ <id=1206><spl=Mana Boost Self VI>
+ <id=1207><spl=Mana Boost Other I>
+ <id=1208><spl=Mana Boost Other II>
+ <id=1209><spl=Mana Boost Other III>
+ <id=1210><spl=Mana Boost Other IV>
+ <id=1211><spl=Mana Boost Other V>
+ <id=1212><spl=Mana Boost Other VI>
+ <id=1213><spl=Mana Drain Self I>
+ <id=1214><spl=Mana Drain Self II>
+ <id=1215><spl=Mana Drain Self III>
+ <id=1216><spl=Mana Drain Self IV>
+ <id=1217><spl=Mana Drain Self V>
+ <id=1218><spl=Mana Drain Self VI>
+ <id=1219><spl=Mana Drain Other I>
+ <id=1220><spl=Mana Drain Other II>
+ <id=1221><spl=Mana Drain Other III>
+ <id=1222><spl=Mana Drain Other IV>
+ <id=1223><spl=Mana Drain Other V>
+ <id=1224><spl=Mana Drain Other VI>
+ <id=1225><spl=Infuse Health Other I>
+ <id=1226><spl=Infuse Health Other II>
+ <id=1227><spl=Infuse Health Other III>
+ <id=1228><spl=Infuse Health Other IV>
+ <id=1229><spl=Infuse Health Other V>
+ <id=1230><spl=Infuse Health Other VI>
+ <id=1237><spl=Drain Health Other I>
+ <id=1238><spl=Drain Health Other II>
+ <id=1239><spl=Drain Health Other III>
+ <id=1240><spl=Drain Health Other IV>
+ <id=1241><spl=Drain Health Other V>
+ <id=1242><spl=Drain Health Other VI>
+ <id=1243><spl=Infuse Stamina Other I>
+ <id=1244><spl=Infuse Stamina Other II>
+ <id=1245><spl=Infuse Stamina Other III>
+ <id=1246><spl=Infuse Stamina Other IV>
+ <id=1247><spl=Infuse Stamina Other V>
+ <id=1248><spl=Infuse Stamina Other VI>
+ <id=1249><spl=Drain Stamina Other I>
+ <id=1250><spl=Drain Stamina Other II>
+ <id=1251><spl=Drain Stamina Other III>
+ <id=1252><spl=Drain Stamina Other IV>
+ <id=1253><spl=Drain Stamina Other V>
+ <id=1254><spl=Drain Stamina Other VI>
+ <id=1255><spl=Infuse Mana Other II>
+ <id=1256><spl=Infuse Mana Other III>
+ <id=1257><spl=Infuse Mana Other IV>
+ <id=1258><spl=Infuse Mana Other V>
+ <id=1259><spl=Infuse Mana Other VI>
+ <id=1260><spl=Drain Mana Other I>
+ <id=1261><spl=Drain Mana Other II>
+ <id=1262><spl=Drain Mana Other III>
+ <id=1263><spl=Drain Mana Other IV>
+ <id=1264><spl=Drain Mana Other V>
+ <id=1265><spl=Drain Mana Other VI>
+ <id=1266><spl=Health to Stamina Other I>
+ <id=1267><spl=Health to Stamina Other II>
+ <id=1268><spl=Health to Stamina Other III>
+ <id=1269><spl=Health to Stamina Other IV>
+ <id=1270><spl=Health to Stamina Other V>
+ <id=1271><spl=Health to Stamina Other VI>
+ <id=1272><spl=Health to Stamina Self I>
+ <id=1273><spl=Health to Stamina Self II>
+ <id=1274><spl=Health to Stamina Self III>
+ <id=1275><spl=Health to Stamina Self IV>
+ <id=1276><spl=Health to Stamina Self V>
+ <id=1277><spl=Health to Stamina Self VI>
+ <id=1278><spl=Health to Mana Self I>
+ <id=1279><spl=Health to Mana Self II>
+ <id=1280><spl=Health to Mana Self III>
+ <id=1281><spl=Health to Mana Other IV>
+ <id=1282><spl=Health to Mana Other V>
+ <id=1283><spl=Health to Mana Other VI>
+ <id=1284><spl=Mana to Health Other I>
+ <id=1285><spl=Mana to Health Other II>
+ <id=1286><spl=Mana to Health Other III>
+ <id=1287><spl=Mana to Health Other IV>
+ <id=1288><spl=Mana to Health Other V>
+ <id=1289><spl=Mana to Health Other VI>
+ <id=1290><spl=Mana to Health Self I>
+ <id=1291><spl=Mana to Health Self II>
+ <id=1292><spl=Mana to Health Self III>
+ <id=1293><spl=Mana to Health Self IV>
+ <id=1294><spl=Mana to Health Self V>
+ <id=1295><spl=Mana to Health Self VI>
+ <id=1296><spl=Mana to Stamina Self I>
+ <id=1297><spl=Mana to Stamina Self II>
+ <id=1298><spl=Mana to Stamina Self III>
+ <id=1299><spl=Mana to Stamina Self IV>
+ <id=1300><spl=Mana to Stamina Self V>
+ <id=1301><spl=Mana to Stamina Self VI>
+ <id=1302><spl=Mana to Stamina Other I>
+ <id=1303><spl=Mana to Stamina Other II>
+ <id=1304><spl=Mana to Stamina Other III>
+ <id=1305><spl=Mana to Stamina Other IV>
+ <id=1306><spl=Mana to Stamina Other V>
+ <id=1307><spl=Mana to Stamina Other VI>
+ <id=1308><spl=Armor Self II>
+ <id=1309><spl=Armor Self III>
+ <id=1310><spl=Armor Self IV>
+ <id=1311><spl=Armor Self V>
+ <id=1312><spl=Armor Self VI>
+ <id=1313><spl=Armor Other II>
+ <id=1314><spl=Armor Other III>
+ <id=1315><spl=Armor Other IV>
+ <id=1316><spl=Armor Other V>
+ <id=1317><spl=Armor Other VI>
+ <id=1318><spl=Imperil Self II>
+ <id=1319><spl=Imperil Self III>
+ <id=1320><spl=Imperil Self IV>
+ <id=1321><spl=Imperil Self V>
+ <id=1322><spl=Imperil Self VI>
+ <id=1323><spl=Imperil Other II>
+ <id=1324><spl=Imperil Other III>
+ <id=1325><spl=Imperil Other IV>
+ <id=1326><spl=Imperil Other V>
+ <id=1327><spl=Imperil Other VI>
+ <id=1328><spl=Strength Self II>
+ <id=1329><spl=Strength Self III>
+ <id=1330><spl=Strength Self IV>
+ <id=1331><spl=Strength Self V>
+ <id=1332><spl=Strength Self VI>
+ <id=1333><spl=Strength Other II>
+ <id=1334><spl=Strength Other III>
+ <id=1335><spl=Strength Other IV>
+ <id=1336><spl=Strength Other V>
+ <id=1337><spl=Strength Other VI>
+ <id=1339><spl=Weakness Other II>
+ <id=1340><spl=Weakness Other III>
+ <id=1341><spl=Weakness Other IV>
+ <id=1342><spl=Weakness Other V>
+ <id=1343><spl=Weakness Other VI>
+ <id=1344><spl=Weakness Self II>
+ <id=1345><spl=Weakness Self III>
+ <id=1346><spl=Weakness Self IV>
+ <id=1347><spl=Weakness Self V>
+ <id=1348><spl=Weakness Self VI>
+ <id=1349><spl=Endurance Self I>
+ <id=1350><spl=Endurance Self II>
+ <id=1351><spl=Endurance Self III>
+ <id=1352><spl=Endurance Self IV>
+ <id=1353><spl=Endurance Self V>
+ <id=1354><spl=Endurance Self VI>
+ <id=1355><spl=Endurance Other I>
+ <id=1356><spl=Endurance Other II>
+ <id=1357><spl=Endurance Other III>
+ <id=1358><spl=Endurance Other IV>
+ <id=1359><spl=Endurance Other V>
+ <id=1360><spl=Endurance Other VI>
+ <id=1361><spl=Frailty Self I>
+ <id=1362><spl=Frailty Self II>
+ <id=1363><spl=Frailty Self III>
+ <id=1364><spl=Frailty Self IV>
+ <id=1365><spl=Frailty Self V>
+ <id=1366><spl=Frailty Self VI>
+ <id=1367><spl=Frailty Other I>
+ <id=1368><spl=Frailty Other II>
+ <id=1369><spl=Frailty Other III>
+ <id=1370><spl=Frailty Other IV>
+ <id=1371><spl=Frailty Other V>
+ <id=1372><spl=Frailty Other VI>
+ <id=1373><spl=Coordination Self I>
+ <id=1374><spl=Coordination Self II>
+ <id=1375><spl=Coordination Self III>
+ <id=1376><spl=Coordination Self IV>
+ <id=1377><spl=Coordination Self V>
+ <id=1378><spl=Coordination Self VI>
+ <id=1379><spl=Coordination Other I>
+ <id=1380><spl=Coordination Other II>
+ <id=1381><spl=Coordination Other III>
+ <id=1382><spl=Coordination Other IV>
+ <id=1383><spl=Coordination Other V>
+ <id=1384><spl=Coordination Other VI>
+ <id=1385><spl=Clumsiness Self I>
+ <id=1386><spl=Clumsiness Self II>
+ <id=1387><spl=Clumsiness Self III>
+ <id=1388><spl=Clumsiness Self IV>
+ <id=1389><spl=Clumsiness Self V>
+ <id=1390><spl=Clumsiness Self VI>
+ <id=1391><spl=Clumsiness Other I>
+ <id=1392><spl=Clumsiness Other II>
+ <id=1393><spl=Clumsiness Other III>
+ <id=1394><spl=Clumsiness Other IV>
+ <id=1395><spl=Clumsiness Other V>
+ <id=1396><spl=Clumsiness Other VI>
+ <id=1397><spl=Quickness Self I>
+ <id=1398><spl=Quickness Self II>
+ <id=1399><spl=Quickness Self III>
+ <id=1400><spl=Quickness Self IV>
+ <id=1401><spl=Quickness Self V>
+ <id=1402><spl=Quickness Self VI>
+ <id=1403><spl=Quickness Other I>
+ <id=1404><spl=Quickness Other II>
+ <id=1405><spl=Quickness Other III>
+ <id=1406><spl=Quickness Other IV>
+ <id=1407><spl=Quickness Other V>
+ <id=1408><spl=Quickness Other VI>
+ <id=1409><spl=Slowness Self I>
+ <id=1410><spl=Slowness Self II>
+ <id=1411><spl=Slowness Self III>
+ <id=1412><spl=Slowness Self IV>
+ <id=1413><spl=Slowness Self V>
+ <id=1414><spl=Slowness Self VI>
+ <id=1415><spl=Slowness Other I>
+ <id=1416><spl=Slowness Other II>
+ <id=1417><spl=Slowness Other III>
+ <id=1418><spl=Slowness Other IV>
+ <id=1419><spl=Slowness Other V>
+ <id=1420><spl=Slowness Other VI>
+ <id=1421><spl=Focus Self I>
+ <id=1422><spl=Focus Self II>
+ <id=1423><spl=Focus Self III>
+ <id=1424><spl=Focus Self IV>
+ <id=1425><spl=Focus Self V>
+ <id=1426><spl=Focus Self VI>
+ <id=1427><spl=Focus Other I>
+ <id=1428><spl=Focus Other II>
+ <id=1429><spl=Focus Other III>
+ <id=1430><spl=Focus Other IV>
+ <id=1431><spl=Focus Other V>
+ <id=1432><spl=Focus Other VI>
+ <id=1433><spl=Bafflement Self I>
+ <id=1434><spl=Bafflement Self II>
+ <id=1435><spl=Bafflement Self III>
+ <id=1436><spl=Bafflement Self IV>
+ <id=1437><spl=Bafflement Self V>
+ <id=1438><spl=Bafflement Self VI>
+ <id=1439><spl=Bafflement Other I>
+ <id=1440><spl=Bafflement Other II>
+ <id=1441><spl=Bafflement Other III>
+ <id=1442><spl=Bafflement Other IV>
+ <id=1443><spl=Bafflement Other V>
+ <id=1444><spl=Bafflement Other VI>
+ <id=1445><spl=Willpower Self I>
+ <id=1446><spl=Willpower Self II>
+ <id=1447><spl=Willpower Self III>
+ <id=1448><spl=Willpower Self IV>
+ <id=1449><spl=Willpower Self V>
+ <id=1450><spl=Willpower Self VI>
+ <id=1451><spl=Willpower Other I>
+ <id=1452><spl=Willpower Other II>
+ <id=1453><spl=Willpower Other III>
+ <id=1454><spl=Willpower Other IV>
+ <id=1455><spl=Willpower Other V>
+ <id=1456><spl=Willpower Other VI>
+ <id=1457><spl=Feeblemind Self I>
+ <id=1458><spl=Feeblemind Self II>
+ <id=1459><spl=Feeblemind Self III>
+ <id=1460><spl=Feeblemind Self IV>
+ <id=1461><spl=Feeblemind Self V>
+ <id=1462><spl=Feeblemind Self VI>
+ <id=1463><spl=Feeblemind Other I>
+ <id=1464><spl=Feeblemind Other II>
+ <id=1465><spl=Feeblemind Other III>
+ <id=1466><spl=Feeblemind Other IV>
+ <id=1467><spl=Feeblemind Other V>
+ <id=1468><spl=Feeblemind Other VI>
+ <id=1469><spl=Hermetic Void I>
+ <id=1470><spl=Hermetic Void II>
+ <id=1471><spl=Hermetic Void III>
+ <id=1472><spl=Hermetic Void IV>
+ <id=1473><spl=Hermetic Void V>
+ <id=1474><spl=Hermetic Void VI>
+ <id=1475><spl=Hermetic Link I>
+ <id=1476><spl=Hermetic Link II>
+ <id=1477><spl=Hermetic Link III>
+ <id=1478><spl=Hermetic Link IV>
+ <id=1479><spl=Hermetic Link V>
+ <id=1480><spl=Hermetic Link VI>
+ <id=1481><spl=Flaming Missile Volley>
+ <id=1482><spl=Impenetrability II>
+ <id=1483><spl=Impenetrability III>
+ <id=1484><spl=Impenetrability IV>
+ <id=1485><spl=Impenetrability V>
+ <id=1486><spl=Impenetrability VI>
+ <id=1487><spl=Brittlemail I>
+ <id=1488><spl=Brittlemail II>
+ <id=1489><spl=Brittlemail III>
+ <id=1490><spl=Brittlemail IV>
+ <id=1491><spl=Brittlemail V>
+ <id=1492><spl=Brittlemail VI>
+ <id=1493><spl=Acid Bane I>
+ <id=1494><spl=Acid Bane II>
+ <id=1495><spl=Acid Bane III>
+ <id=1496><spl=Acid Bane IV>
+ <id=1497><spl=Acid Bane V>
+ <id=1498><spl=Acid Bane VI>
+ <id=1499><spl=Acid Lure I>
+ <id=1500><spl=Acid Lure II>
+ <id=1501><spl=Acid Lure III>
+ <id=1502><spl=Acid Lure IV>
+ <id=1503><spl=Acid Lure V>
+ <id=1504><spl=Acid Lure VI>
+ <id=1505><spl=Bludgeon Lure I>
+ <id=1506><spl=Bludgeon Lure II>
+ <id=1507><spl=Bludgeon Lure III>
+ <id=1508><spl=Bludgeon Lure IV>
+ <id=1509><spl=Bludgeon Lure V>
+ <id=1510><spl=Bludgeon Lure VI>
+ <id=1511><spl=Bludgeon Bane I>
+ <id=1512><spl=Bludgeon Bane II>
+ <id=1513><spl=Bludgeon Bane III>
+ <id=1514><spl=Bludgeon Bane IV>
+ <id=1515><spl=Bludgeon Bane V>
+ <id=1516><spl=Bludgeon Bane VI>
+ <id=1517><spl=Frost Lure I>
+ <id=1518><spl=Frost Lure II>
+ <id=1519><spl=Frost Lure III>
+ <id=1520><spl=Frost Lure IV>
+ <id=1521><spl=Frost Lure V>
+ <id=1522><spl=Frost Lure VI>
+ <id=1523><spl=Frost Bane I>
+ <id=1524><spl=Frost Bane II>
+ <id=1525><spl=Frost Bane III>
+ <id=1526><spl=Frost Bane IV>
+ <id=1527><spl=Frost Bane V>
+ <id=1528><spl=Frost Bane VI>
+ <id=1529><spl=Lightning Lure I>
+ <id=1530><spl=Lightning Lure II>
+ <id=1531><spl=Lightning Lure III>
+ <id=1532><spl=Lightning Lure IV>
+ <id=1533><spl=Lightning Lure V>
+ <id=1534><spl=Lightning Lure VI>
+ <id=1535><spl=Lightning Bane I>
+ <id=1536><spl=Lightning Bane II>
+ <id=1537><spl=Lightning Bane III>
+ <id=1538><spl=Lightning Bane IV>
+ <id=1539><spl=Lightning Bane V>
+ <id=1540><spl=Lightning Bane VI>
+ <id=1541><spl=Flame Lure I>
+ <id=1542><spl=Flame Lure II>
+ <id=1543><spl=Flame Lure III>
+ <id=1544><spl=Flame Lure IV>
+ <id=1545><spl=Flame Lure V>
+ <id=1546><spl=Flame Lure VI>
+ <id=1547><spl=Flame Bane I>
+ <id=1548><spl=Flame Bane II>
+ <id=1549><spl=Flame Bane III>
+ <id=1550><spl=Flame Bane IV>
+ <id=1551><spl=Flame Bane V>
+ <id=1552><spl=Flame Bane VI>
+ <id=1553><spl=Blade Lure II>
+ <id=1554><spl=Blade Lure III>
+ <id=1555><spl=Blade Lure IV>
+ <id=1556><spl=Blade Lure V>
+ <id=1557><spl=Blade Lure VI>
+ <id=1558><spl=Blade Bane II>
+ <id=1559><spl=Blade Bane III>
+ <id=1560><spl=Blade Bane IV>
+ <id=1561><spl=Blade Bane V>
+ <id=1562><spl=Blade Bane VI>
+ <id=1563><spl=Piercing Lure I>
+ <id=1564><spl=Piercing Lure II>
+ <id=1565><spl=Piercing Lure III>
+ <id=1566><spl=Piercing Lure IV>
+ <id=1567><spl=Piercing Lure V>
+ <id=1568><spl=Piercing Lure VI>
+ <id=1569><spl=Piercing Bane I>
+ <id=1570><spl=Piercing Bane II>
+ <id=1571><spl=Piercing Bane III>
+ <id=1572><spl=Piercing Bane IV>
+ <id=1573><spl=Piercing Bane V>
+ <id=1574><spl=Piercing Bane VI>
+ <id=1575><spl=Strengthen Lock I>
+ <id=1576><spl=Strengthen Lock II>
+ <id=1577><spl=Strengthen Lock III>
+ <id=1578><spl=Strengthen Lock IV>
+ <id=1579><spl=Strengthen Lock V>
+ <id=1580><spl=Strengthen Lock VI>
+ <id=1581><spl=Weaken Lock I>
+ <id=1582><spl=Weaken Lock II>
+ <id=1583><spl=Weaken Lock III>
+ <id=1584><spl=Weaken Lock IV>
+ <id=1585><spl=Weaken Lock V>
+ <id=1586><spl=Weaken Lock VI>
+ <id=1587><spl=Heart Seeker I>
+ <id=1588><spl=Heart Seeker II>
+ <id=1589><spl=Heart Seeker III>
+ <id=1590><spl=Heart Seeker IV>
+ <id=1591><spl=Heart Seeker V>
+ <id=1592><spl=Heart Seeker VI>
+ <id=1593><spl=Turn Blade I>
+ <id=1594><spl=Turn Blade II>
+ <id=1595><spl=Turn Blade III>
+ <id=1596><spl=Turn Blade IV>
+ <id=1597><spl=Turn Blade V>
+ <id=1598><spl=Turn Blade VI>
+ <id=1599><spl=Defender I>
+ <id=1601><spl=Defender II>
+ <id=1602><spl=Defender III>
+ <id=1603><spl=Defender IV>
+ <id=1604><spl=Defender V>
+ <id=1605><spl=Defender VI>
+ <id=1606><spl=Lure Blade I>
+ <id=1607><spl=Lure Blade II>
+ <id=1608><spl=Lure Blade III>
+ <id=1609><spl=Lure Blade IV>
+ <id=1610><spl=Lure Blade V>
+ <id=1611><spl=Lure Blade VI>
+ <id=1612><spl=Blood Drinker II>
+ <id=1613><spl=Blood Drinker III>
+ <id=1614><spl=Blood Drinker IV>
+ <id=1615><spl=Blood Drinker V>
+ <id=1616><spl=Blood Drinker VI>
+ <id=1617><spl=Blood Loather II>
+ <id=1618><spl=Blood Loather III>
+ <id=1619><spl=Blood Loather IV>
+ <id=1620><spl=Blood Loather V>
+ <id=1621><spl=Blood Loather VI>
+ <id=1623><spl=Swift Killer II>
+ <id=1624><spl=Swift Killer III>
+ <id=1625><spl=Swift Killer IV>
+ <id=1626><spl=Swift Killer V>
+ <id=1627><spl=Swift Killer VI>
+ <id=1629><spl=Leaden Weapon II>
+ <id=1630><spl=Leaden Weapon III>
+ <id=1631><spl=Leaden Weapon IV>
+ <id=1632><spl=Leaden Weapon V>
+ <id=1633><spl=Leaden Weapon VI>
+ <id=1634><spl=Portal Sending>
+ <id=1635><spl=Lifestone Recall>
+ <id=1636><spl=Lifestone Sending>
+ <id=1637><spl=Summon Primary Portal III>
+ <id=1638><spl=Defenselessness Self I>
+ <id=1639><spl=Defenselessness Self II>
+ <id=1640><spl=Defenselessness Self III>
+ <id=1641><spl=Defenselessness Self IV>
+ <id=1642><spl=Defenselessness Self V>
+ <id=1643><spl=Defenselessness Self VI>
+ <id=1644><spl=The Gift of Sarneho>
+ <id=1658><spl=Stamina to Health Other I>
+ <id=1659><spl=Stamina to Health Other II>
+ <id=1660><spl=Stamina to Health Other III>
+ <id=1661><spl=Stamina to Health Other IV>
+ <id=1662><spl=Stamina to Health Other V>
+ <id=1663><spl=Stamina to Health Other VI>
+ <id=1664><spl=Stamina to Health Self I>
+ <id=1665><spl=Stamina to Health Self II>
+ <id=1666><spl=Stamina to Health Self III>
+ <id=1667><spl=Stamina to Health Self IV>
+ <id=1668><spl=Stamina to Health Self V>
+ <id=1669><spl=Stamina to Health Self VI>
+ <id=1670><spl=Stamina to Mana Other I>
+ <id=1671><spl=Stamina to Mana Other II>
+ <id=1672><spl=Stamina to Mana Other III>
+ <id=1673><spl=Stamina to Mana Other IV>
+ <id=1674><spl=Stamina to Mana Other V>
+ <id=1675><spl=Stamina to Mana Other VI>
+ <id=1676><spl=Stamina to Mana Self I>
+ <id=1677><spl=Stamina to Mana Self II>
+ <id=1678><spl=Stamina to Mana Self III>
+ <id=1679><spl=Stamina to Mana Self IV>
+ <id=1680><spl=Stamina to Mana Self V>
+ <id=1681><spl=Stamina to Mana Self VI>
+ <id=1702><spl=Health to Mana Self IV>
+ <id=1703><spl=Health to Mana Self V>
+ <id=1704><spl=Health to Mana Self VI>
+ <id=1705><spl=Health to Mana Other I>
+ <id=1706><spl=Health to Mana Other II>
+ <id=1707><spl=Health to Mana Other III>
+ <id=1708><spl=Wedding Bliss>
+ <id=1709><spl=Cooking Mastery Other I>
+ <id=1710><spl=Cooking Mastery Other II>
+ <id=1711><spl=Cooking Mastery Other III>
+ <id=1712><spl=Cooking Mastery Other IV>
+ <id=1713><spl=Cooking Mastery Other V>
+ <id=1714><spl=Cooking Mastery Other VI>
+ <id=1715><spl=Cooking Mastery Self I>
+ <id=1716><spl=Cooking Mastery Self II>
+ <id=1717><spl=Cooking Mastery Self III>
+ <id=1718><spl=Cooking Mastery Self IV>
+ <id=1719><spl=Cooking Mastery Self V>
+ <id=1720><spl=Cooking Mastery Self VI>
+ <id=1721><spl=Cooking Ineptitude Other I>
+ <id=1722><spl=Cooking Ineptitude Other II>
+ <id=1723><spl=Cooking Ineptitude Other III>
+ <id=1724><spl=Cooking Ineptitude Other IV>
+ <id=1725><spl=Cooking Ineptitude Other V>
+ <id=1726><spl=Cooking Ineptitude Other VI>
+ <id=1727><spl=Cooking Ineptitude Self I>
+ <id=1728><spl=Cooking Ineptitude Self II>
+ <id=1729><spl=Cooking Ineptitude Self III>
+ <id=1730><spl=Cooking Ineptitude Self IV>
+ <id=1731><spl=Cooking Ineptitude Self V>
+ <id=1732><spl=Cooking Ineptitude Self VI>
+ <id=1733><spl=Fletching Mastery Other I>
+ <id=1734><spl=Fletching Mastery Other II>
+ <id=1735><spl=Fletching Mastery Other III>
+ <id=1736><spl=Fletching Mastery Other IV>
+ <id=1737><spl=Fletching Mastery Other V>
+ <id=1738><spl=Fletching Mastery Other VI>
+ <id=1739><spl=Fletching Mastery Self I>
+ <id=1740><spl=Fletching Mastery Self II>
+ <id=1741><spl=Fletching Mastery Self III>
+ <id=1742><spl=Fletching Mastery Self IV>
+ <id=1743><spl=Fletching Mastery Self V>
+ <id=1744><spl=Fletching Mastery Self VI>
+ <id=1745><spl=Fletching Ineptitude Other I>
+ <id=1746><spl=Fletching Ineptitude Other II>
+ <id=1747><spl=Fletching Ineptitude Other III>
+ <id=1748><spl=Fletching Ineptitude Other IV>
+ <id=1749><spl=Fletching Ineptitude Other V>
+ <id=1750><spl=Fletching Ineptitude Other VI>
+ <id=1751><spl=Fletching Ineptitude Self I>
+ <id=1752><spl=Fletching Ineptitude Self II>
+ <id=1753><spl=Fletching Ineptitude Self III>
+ <id=1754><spl=Fletching Ineptitude Self IV>
+ <id=1755><spl=Fletching Ineptitude Self V>
+ <id=1756><spl=Fletching Ineptitude Self VI>
+ <id=1757><spl=Alchemy Mastery Other I>
+ <id=1758><spl=Alchemy Mastery Other II>
+ <id=1759><spl=Alchemy Mastery Other III>
+ <id=1760><spl=Alchemy Mastery Other IV>
+ <id=1761><spl=Alchemy Mastery Other V>
+ <id=1762><spl=Alchemy Mastery Other VI>
+ <id=1763><spl=Alchemy Mastery Self I>
+ <id=1764><spl=Alchemy Mastery Self II>
+ <id=1765><spl=Alchemy Mastery Self III>
+ <id=1766><spl=Alchemy Mastery Self IV>
+ <id=1767><spl=Alchemy Mastery Self V>
+ <id=1768><spl=Alchemy Mastery Self VI>
+ <id=1769><spl=Alchemy Ineptitude Other I>
+ <id=1770><spl=Alchemy Ineptitude Other II>
+ <id=1771><spl=Alchemy Ineptitude Other III>
+ <id=1772><spl=Alchemy Ineptitude Other IV>
+ <id=1773><spl=Alchemy Ineptitude Other V>
+ <id=1774><spl=Alchemy Ineptitude Other VI>
+ <id=1775><spl=Alchemy Ineptitude Self I>
+ <id=1776><spl=Alchemy Ineptitude Self II>
+ <id=1777><spl=Alchemy Ineptitude Self III>
+ <id=1778><spl=Alchemy Ineptitude Self IV>
+ <id=1779><spl=Alchemy Ineptitude Self V>
+ <id=1780><spl=Alchemy Ineptitude Self VI>
+ <id=1781><spl=Exploding Magma>
+ <id=1782><spl=Gertarh's Curse>
+ <id=1783><spl=Searing Disc>
+ <id=1784><spl=Horizon's Blades>
+ <id=1785><spl=Cassius' Ring of Fire>
+ <id=1786><spl=Nuhmudira's Spines>
+ <id=1787><spl=Halo of Frost>
+ <id=1788><spl=Eye of the Storm>
+ <id=1789><spl=Tectonic Rifts>
+ <id=1790><spl=Acid Streak I>
+ <id=1791><spl=Acid Streak II>
+ <id=1792><spl=Acid Streak III>
+ <id=1793><spl=Acid Streak IV>
+ <id=1794><spl=Acid Streak V>
+ <id=1795><spl=Acid Streak VI>
+ <id=1796><spl=Flame Streak I>
+ <id=1797><spl=Flame Streak II>
+ <id=1798><spl=Flame Streak III>
+ <id=1799><spl=Flame Streak IV>
+ <id=1800><spl=Flame Streak V>
+ <id=1801><spl=Flame Streak VI>
+ <id=1802><spl=Force Streak I>
+ <id=1803><spl=Force Streak II>
+ <id=1804><spl=Force Streak III>
+ <id=1805><spl=Force Streak IV>
+ <id=1806><spl=Force Streak V>
+ <id=1807><spl=Force Streak VI>
+ <id=1808><spl=Frost Streak I>
+ <id=1809><spl=Frost Streak II>
+ <id=1810><spl=Frost Streak III>
+ <id=1811><spl=Frost Streak IV>
+ <id=1812><spl=Frost Streak V>
+ <id=1813><spl=Frost Streak VI>
+ <id=1814><spl=Lightning Streak I>
+ <id=1815><spl=Lightning Streak II>
+ <id=1816><spl=Lightning Streak III>
+ <id=1817><spl=Lightning Streak IV>
+ <id=1818><spl=Lightning Streak V>
+ <id=1819><spl=Lightning Streak VI>
+ <id=1820><spl=Shock Wave Streak I>
+ <id=1821><spl=Shock Wave Streak II>
+ <id=1822><spl=Shock Wave Streak III>
+ <id=1823><spl=Shock Wave Streak IV>
+ <id=1824><spl=Shock Wave Streak V>
+ <id=1825><spl=Shock Wave Streak VI>
+ <id=1826><spl=Whirling Blade Streak I>
+ <id=1827><spl=Whirling Blade Streak II>
+ <id=1828><spl=Whirling Blade Streak III>
+ <id=1829><spl=Whirling Blade Streak IV>
+ <id=1830><spl=Whirling Blade Streak V>
+ <id=1831><spl=Whirling Blade Streak VI>
+ <id=1832><spl=Torrential Acid>
+ <id=1833><spl=Squall of Swords>
+ <id=1834><spl=Firestorm>
+ <id=1835><spl=Splinterfall>
+ <id=1836><spl=Avalanche>
+ <id=1837><spl=Lightning Barrage>
+ <id=1838><spl=Stone Fists>
+ <id=1839><spl=Blistering Creeper>
+ <id=1840><spl=Bed of Blades>
+ <id=1841><spl=Slithering Flames>
+ <id=1842><spl=Spike Strafe>
+ <id=1843><spl=Foon-Ki's Glacial Floe>
+ <id=1844><spl=Os' Wall>
+ <id=1845><spl=Hammering Crawler>
+ <id=1846><spl=Curse of Black Fire>
+ <id=1847><spl=Evaporate All Magic Other>
+ <id=1848><spl=Evaporate All Magic Other>
+ <id=1849><spl=Evaporate All Magic Other>
+ <id=1850><spl=Evaporate All Magic Self>
+ <id=1851><spl=Evaporate All Magic Self>
+ <id=1852><spl=Evaporate All Magic Self>
+ <id=1853><spl=Extinguish All Magic Other>
+ <id=1854><spl=Extinguish All Magic Other>
+ <id=1855><spl=Extinguish All Magic Other>
+ <id=1856><spl=Extinguish All Magic Self>
+ <id=1857><spl=Extinguish All Magic Self>
+ <id=1858><spl=Extinguish All Magic Self>
+ <id=1859><spl=Cleanse All Magic Other>
+ <id=1860><spl=Cleanse All Magic Other>
+ <id=1861><spl=Cleanse All Magic Other>
+ <id=1862><spl=Cleanse All Magic Self>
+ <id=1863><spl=Cleanse All Magic Self>
+ <id=1864><spl=Cleanse All Magic Self>
+ <id=1865><spl=Devour All Magic Other>
+ <id=1866><spl=Devour All Magic Other>
+ <id=1867><spl=Devour All Magic Other>
+ <id=1868><spl=Devour All Magic Self>
+ <id=1869><spl=Devour All Magic Self>
+ <id=1870><spl=Devour All Magic Self>
+ <id=1871><spl=Purge All Magic Other>
+ <id=1872><spl=Purge All Magic Other>
+ <id=1873><spl=Purge All Magic Other>
+ <id=1874><spl=Purge All Magic Self>
+ <id=1875><spl=Purge All Magic Self>
+ <id=1876><spl=Purge All Magic Self>
+ <id=1877><spl=Nullify All Magic Other>
+ <id=1878><spl=Nullify All Magic Other>
+ <id=1879><spl=Nullify All Magic Other>
+ <id=1880><spl=Nullify All Magic Self>
+ <id=1881><spl=Nullify All Magic Self>
+ <id=1882><spl=Nullify All Magic Self>
+ <id=1883><spl=Evaporate Creature Magic Other>
+ <id=1884><spl=Evaporate Creature Magic Other>
+ <id=1885><spl=Evaporate Creature Magic Other>
+ <id=1886><spl=Evaporate Creature Magic Self>
+ <id=1887><spl=Evaporate Creature Magic Self>
+ <id=1888><spl=Evaporate Creature Magic Self>
+ <id=1889><spl=Extinguish Creature Magic Other>
+ <id=1890><spl=Extinguish Creature Magic Other>
+ <id=1891><spl=Extinguish Creature Magic Other>
+ <id=1892><spl=Extinguish Creature Magic Self>
+ <id=1893><spl=Extinguish Creature Magic Self>
+ <id=1894><spl=Extinguish Creature Magic Self>
+ <id=1895><spl=Cleanse Creature Magic Other>
+ <id=1896><spl=Cleanse Creature Magic Other>
+ <id=1897><spl=Cleanse Creature Magic Other>
+ <id=1898><spl=Cleanse Creature Magic Self>
+ <id=1899><spl=Cleanse Creature Magic Self>
+ <id=1900><spl=Cleanse Creature Magic Self>
+ <id=1901><spl=Devour Creature Magic Other>
+ <id=1902><spl=Devour Creature Magic Other>
+ <id=1903><spl=Devour Creature Magic Other>
+ <id=1904><spl=Devour Creature Magic Self>
+ <id=1905><spl=Devour Creature Magic Self>
+ <id=1906><spl=Devour Creature Magic Self>
+ <id=1907><spl=Purge Creature Magic Other>
+ <id=1908><spl=Purge Creature Magic Other>
+ <id=1909><spl=Purge Creature Magic Other>
+ <id=1910><spl=Purge Creature Magic Self>
+ <id=1911><spl=Purge Creature Magic Self>
+ <id=1912><spl=Purge Creature Magic Self>
+ <id=1913><spl=Nullify Creature Magic Other>
+ <id=1914><spl=Nullify Creature Magic Other>
+ <id=1915><spl=Nullify Creature Magic Other>
+ <id=1916><spl=Nullify Creature Magic Self>
+ <id=1917><spl=Nullify Creature Magic Self>
+ <id=1918><spl=Nullify Creature Magic Self>
+ <id=1919><spl=Evaporate Item Magic>
+ <id=1920><spl=Evaporate Item Magic>
+ <id=1921><spl=Evaporate Item Magic>
+ <id=1922><spl=Evaporate Item Magic>
+ <id=1923><spl=Evaporate Item Magic>
+ <id=1924><spl=Evaporate Item Magic>
+ <id=1925><spl=Extinguish Item Magic>
+ <id=1926><spl=Extinguish Item Magic>
+ <id=1927><spl=Extinguish Item Magic>
+ <id=1928><spl=Extinguish Item Magic>
+ <id=1929><spl=Extinguish Item Magic>
+ <id=1930><spl=Extinguish Item Magic>
+ <id=1931><spl=Cleanse Item Magic>
+ <id=1932><spl=Cleanse Item Magic>
+ <id=1933><spl=Cleanse Item Magic>
+ <id=1934><spl=Cleanse Item Magic>
+ <id=1935><spl=Cleanse Item Magic>
+ <id=1936><spl=Cleanse Item Magic>
+ <id=1937><spl=Devour Item Magic>
+ <id=1938><spl=Devour Item Magic>
+ <id=1939><spl=Devour Item Magic>
+ <id=1940><spl=Devour Item Magic>
+ <id=1941><spl=Devour Item Magic>
+ <id=1942><spl=Devour Item Magic>
+ <id=1943><spl=Purge Item Magic>
+ <id=1944><spl=Purge Item Magic>
+ <id=1945><spl=Purge Item Magic>
+ <id=1946><spl=Purge Item Magic>
+ <id=1947><spl=Purge Item Magic>
+ <id=1948><spl=Purge Item Magic>
+ <id=1949><spl=Nullify Item Magic>
+ <id=1950><spl=Nullify Item Magic>
+ <id=1951><spl=Nullify Item Magic>
+ <id=1952><spl=Nullify Item Magic>
+ <id=1953><spl=Nullify Item Magic>
+ <id=1954><spl=Nullify Item Magic>
+ <id=1955><spl=Evaporate Life Magic Other>
+ <id=1956><spl=Evaporate Life Magic Other>
+ <id=1957><spl=Evaporate Life Magic Other>
+ <id=1958><spl=Evaporate Life Magic Self>
+ <id=1959><spl=Evaporate Life Magic Self>
+ <id=1960><spl=Evaporate Life Magic Self>
+ <id=1961><spl=Extinguish Life Magic Other>
+ <id=1962><spl=Extinguish Life Magic Other>
+ <id=1963><spl=Extinguish Life Magic Other>
+ <id=1964><spl=Extinguish Life Magic Self>
+ <id=1965><spl=Extinguish Life Magic Self>
+ <id=1966><spl=Extinguish Life Magic Self>
+ <id=1967><spl=Cleanse Life Magic Other>
+ <id=1968><spl=Cleanse Life Magic Other>
+ <id=1969><spl=Cleanse Life Magic Other>
+ <id=1970><spl=Cleanse Life Magic Self>
+ <id=1971><spl=Cleanse Life Magic Self>
+ <id=1972><spl=Cleanse Life Magic Self>
+ <id=1973><spl=Devour Life Magic Other>
+ <id=1974><spl=Devour Life Magic Other>
+ <id=1975><spl=Devour Life Magic Other>
+ <id=1976><spl=Devour Life Magic Self>
+ <id=1977><spl=Devour Life Magic Self>
+ <id=1978><spl=Devour Life Magic Self>
+ <id=1979><spl=Purge Life Magic Other>
+ <id=1980><spl=Purge Life Magic Other>
+ <id=1981><spl=Purge Life Magic Other>
+ <id=1982><spl=Purge Life Magic Self>
+ <id=1983><spl=Purge Life Magic Self>
+ <id=1984><spl=Purge Life Magic Self>
+ <id=1985><spl=Nullify Life Magic Other>
+ <id=1986><spl=Nullify Life Magic Other>
+ <id=1987><spl=Nullify Life Magic Other>
+ <id=1988><spl=Nullify Life Magic Self>
+ <id=1989><spl=Nullify Life Magic Self>
+ <id=1990><spl=Nullify Life Magic Self>
+ <id=1991><spl=Mana Blight>
+ <id=1992><spl=Camping Mastery>
+ <id=1993><spl=Camping Ineptitude>
+ <id=1994><spl=Wound Twister>
+ <id=1995><spl=Alacrity>
+ <id=1996><spl=Soul Hunter>
+ <id=1997><spl=Life Giver>
+ <id=1998><spl=Stamina Giver>
+ <id=1999><spl=Mana Giver>
+ <id=2000><spl=Portal Sending>
+ <id=2001><spl=Portal Sending>
+ <id=2002><spl=Portal Sending>
+ <id=2003><spl=Warrior's Lesser Vitality>
+ <id=2004><spl=Warrior's Vitality>
+ <id=2005><spl=Warrior's Greater Vitality>
+ <id=2006><spl=Warrior's Ultimate Vitality>
+ <id=2007><spl=Warrior's Lesser Vigor>
+ <id=2008><spl=Warrior's Vigor>
+ <id=2009><spl=Warrior's Greater Vigor>
+ <id=2010><spl=Warrior's Ultimate Vigor>
+ <id=2011><spl=Wizard's Lesser Intellect>
+ <id=2012><spl=Wizard's Intellect>
+ <id=2013><spl=Wizard's Greater Intellect>
+ <id=2014><spl=Wizard's Ultimate Intellect>
+ <id=2015><spl=Aerfalle's Ward>
+ <id=2016><spl=Impulse>
+ <id=2017><spl=Bunny Smite>
+ <id=2018><spl=Tormenter of Flesh>
+ <id=2019><spl=The sundering of the crystal>
+ <id=2020><spl=Recall Asmolum 1>
+ <id=2021><spl=Thaumaturgic Shroud>
+ <id=2022><spl=Soul Shroud>
+ <id=2023><spl=Recall the Sanctuary>
+ <id=2024><spl=Recall Asmolum 2>
+ <id=2025><spl=RecallAsmolum 3>
+ <id=2026><spl=Nerve Burn>
+ <id=2027><spl=Martyr>
+ <id=2028><spl=The Path to Kelderam's Ward>
+ <id=2029><spl=Stamina Blight>
+ <id=2030><spl=Flaming Blaze>
+ <id=2031><spl=Steel Thorns>
+ <id=2032><spl=Electric Blaze>
+ <id=2033><spl=Acidic Spray>
+ <id=2034><spl=Exploding Fury>
+ <id=2035><spl=Electric Discharge>
+ <id=2036><spl=Fuming Acid>
+ <id=2037><spl=Flaming Irruption>
+ <id=2038><spl=Exploding Ice>
+ <id=2039><spl=Sparking Fury>
+ <id=2040><spl=The Path to Kelderam's Ward>
+ <id=2041><spl=Aerlinthe Recall>
+ <id=2042><spl=Demon's Tongues>
+ <id=2043><spl=Weight of Eternity>
+ <id=2044><spl=Item Befoulment>
+ <id=2045><spl=Demon Fists>
+ <id=2046><spl=Portal to Teth>
+ <id=2047><spl=Demonskin>
+ <id=2048><spl=Boon of the Demon>
+ <id=2049><spl=Bile of the Hopeslayer>
+ <id=2050><spl=Young Love>
+ <id=2051><spl=Young Love>
+ <id=2052><spl=Executor's Boon>
+ <id=2053><spl=Executor's Blessing>
+ <id=2054><spl=Synaptic Misfire>
+ <id=2055><spl=Bafflement Self VII>
+ <id=2056><spl=Ataxia>
+ <id=2057><spl=Clumsiness Self VII>
+ <id=2058><spl=Boon of Refinement>
+ <id=2059><spl=Honed Control>
+ <id=2060><spl=Temeritous Touch>
+ <id=2061><spl=Perseverance>
+ <id=2062><spl=Anemia>
+ <id=2063><spl=Enfeeble Self VII>
+ <id=2064><spl=Self Loathing>
+ <id=2065><spl=Feeblemind Self VII>
+ <id=2066><spl=Calming Gaze>
+ <id=2067><spl=Inner Calm>
+ <id=2068><spl=Brittle Bones>
+ <id=2069><spl=Frailty Self VII>
+ <id=2070><spl=Heart Rend>
+ <id=2071><spl=Harm Self VII>
+ <id=2072><spl=Adja's Gift>
+ <id=2073><spl=Adja's Intervention>
+ <id=2074><spl=Gossamer Flesh>
+ <id=2075><spl=Imperil Self VII>
+ <id=2076><spl=Mana Boost Other VII>
+ <id=2077><spl=Mana Boost Self VII>
+ <id=2078><spl=Void's Call>
+ <id=2079><spl=Mana Drain Self VII>
+ <id=2080><spl=Ogfoot>
+ <id=2081><spl=Hastening>
+ <id=2082><spl=Replenish>
+ <id=2083><spl=Robustification>
+ <id=2084><spl=Belly of Lead>
+ <id=2085><spl=Slowness Self VII>
+ <id=2086><spl=Might of the 5 Mules>
+ <id=2087><spl=Might of the Lugians>
+ <id=2088><spl=Senescence>
+ <id=2089><spl=Weakness Self VII>
+ <id=2090><spl=Bolstered Will>
+ <id=2091><spl=Mind Blossom>
+ <id=2092><spl=Olthoi's Bane>
+ <id=2093><spl=Olthoi Bait>
+ <id=2094><spl=Swordsman's Bane>
+ <id=2095><spl=Swordsman Bait>
+ <id=2096><spl=Infected Caress>
+ <id=2097><spl=Pacification>
+ <id=2098><spl=Tusker's Bane>
+ <id=2099><spl=Tusker Bait>
+ <id=2100><spl=Tattercoat>
+ <id=2101><spl=Cragstone's Will>
+ <id=2102><spl=Inferno's Bane>
+ <id=2103><spl=Inferno Bait>
+ <id=2104><spl=Gelidite's Bane>
+ <id=2105><spl=Geledite Bait>
+ <id=2106><spl=Elysa's Sight>
+ <id=2107><spl=Cabalistic Ostracism>
+ <id=2108><spl=Brogard's Defiance>
+ <id=2109><spl=Lugian's Speed>
+ <id=2110><spl=Astyrrian's Bane>
+ <id=2111><spl=Astyrrian Bait>
+ <id=2112><spl=Wi's Folly>
+ <id=2113><spl=Archer's Bane>
+ <id=2114><spl=Archer Bait>
+ <id=2115><spl=Fortified Lock>
+ <id=2116><spl=Atlan's Alacrity>
+ <id=2117><spl=Mystic's Blessing>
+ <id=2118><spl=Clouded Motives>
+ <id=2119><spl=Vagabond's Gift>
+ <id=2120><spl=Dissolving Vortex>
+ <id=2121><spl=Corrosive Flash>
+ <id=2122><spl=Disintegration>
+ <id=2123><spl=Celdiseth's Searing>
+ <id=2124><spl=Sau Kolin's Sword>
+ <id=2125><spl=Flensing Wings>
+ <id=2126><spl=Thousand Fists>
+ <id=2127><spl=Silencia's Scorn>
+ <id=2128><spl=Ilservian's Flame>
+ <id=2129><spl=Sizzling Fury>
+ <id=2130><spl=Infernae>
+ <id=2131><spl=Stinging Needles>
+ <id=2132><spl=The Spike>
+ <id=2133><spl=Outlander's Insolence>
+ <id=2134><spl=Fusillade>
+ <id=2135><spl=Winter's Embrace>
+ <id=2136><spl=Icy Torment>
+ <id=2137><spl=Sudden Frost>
+ <id=2138><spl=Blizzard>
+ <id=2139><spl=Luminous Wrath>
+ <id=2140><spl=Alset's Coil>
+ <id=2141><spl=Lhen's Flare>
+ <id=2142><spl=Tempest>
+ <id=2143><spl=Pummeling Storm>
+ <id=2144><spl=Crushing Shame>
+ <id=2145><spl=Cameron's Curse>
+ <id=2146><spl=Evisceration>
+ <id=2147><spl=Rending Wind>
+ <id=2148><spl=Caustic Boon>
+ <id=2149><spl=Caustic Blessing>
+ <id=2150><spl=Boon of the Blade Turner>
+ <id=2151><spl=Blessing of the Blade Turner>
+ <id=2152><spl=Boon of the Mace Turner>
+ <id=2153><spl=Blessing of the Mace Turner>
+ <id=2154><spl=Icy Boon>
+ <id=2155><spl=Icy Blessing>
+ <id=2156><spl=Fiery Boon>
+ <id=2157><spl=Fiery Blessing>
+ <id=2158><spl=Storm's Boon>
+ <id=2159><spl=Storm's Blessing>
+ <id=2160><spl=Boon of the Arrow Turner>
+ <id=2161><spl=Blessing of the Arrow Turner>
+ <id=2162><spl=Olthoi's Gift>
+ <id=2163><spl=Acid Vulnerability Self VII>
+ <id=2164><spl=Swordsman's Gift>
+ <id=2165><spl=Blade Vulnerability Self VII>
+ <id=2166><spl=Tusker's Gift>
+ <id=2167><spl=Bludgeoning Vulnerability Self VII>
+ <id=2168><spl=Gelidite's Gift>
+ <id=2169><spl=Cold Vulnerability Self VII>
+ <id=2170><spl=Inferno's Gift>
+ <id=2171><spl=Fire Vulnerability Self VII>
+ <id=2172><spl=Astyrrian's Gift>
+ <id=2173><spl=Lightning Vulnerability Self VII>
+ <id=2174><spl=Archer's Gift>
+ <id=2175><spl=Piercing Vulnerability Self VII>
+ <id=2176><spl=Enervation>
+ <id=2177><spl=Exhaustion Self VII>
+ <id=2178><spl=Decrepitude's Grasp>
+ <id=2179><spl=Fester Self VII>
+ <id=2180><spl=Energy Flux>
+ <id=2181><spl=Mana Depletion Self VII>
+ <id=2182><spl=Battlemage's Boon>
+ <id=2183><spl=Battlemage's Blessing>
+ <id=2184><spl=Hydra's Head>
+ <id=2185><spl=Robustify>
+ <id=2186><spl=Tenaciousness>
+ <id=2187><spl=Unflinching Persistence>
+ <id=2188><spl=Bottle Breaker>
+ <id=2189><spl=Alchemy Ineptitude Self VII>
+ <id=2190><spl=Silencia's Boon>
+ <id=2191><spl=Silencia's Blessing>
+ <id=2192><spl=Hands of Chorizite>
+ <id=2193><spl=Arcane Benightedness Self VII>
+ <id=2194><spl=Aliester's Boon>
+ <id=2195><spl=Aliester's Blessing>
+ <id=2196><spl=Jibril's Boon>
+ <id=2197><spl=Jibril's Blessing>
+ <id=2198><spl=Jibril's Vitae>
+ <id=2199><spl=Armor Tinkering Ignorance Self VII>
+ <id=2200><spl=S'retpirk's Delight>
+ <id=2201><spl=Axe Ineptitude Self VII>
+ <id=2202><spl=Reenigne's Boon>
+ <id=2203><spl=Reenigne's Blessing>
+ <id=2204><spl=Chronic Twitch>
+ <id=2205><spl=Bow Ineptitude Self VII>
+ <id=2206><spl=Strathelar's Boon>
+ <id=2207><spl=Strathelar's Blessing>
+ <id=2208><spl=Challenger's Legacy>
+ <id=2209><spl=Cooking Ineptitude Self VII>
+ <id=2210><spl=Morimoto's Boon>
+ <id=2211><spl=Morimoto's Blessing>
+ <id=2212><spl=Wrath of Adja>
+ <id=2213><spl=Creature Enchantment Ineptitude Self VII>
+ <id=2214><spl=Adja's Boon>
+ <id=2215><spl=Adja's Blessing>
+ <id=2216><spl=Itchy Finger>
+ <id=2217><spl=Crossbow Ineptitude Self VII>
+ <id=2218><spl=Barnar's Boon>
+ <id=2219><spl=Barnar's Blessing>
+ <id=2220><spl=Picking of the Teeth>
+ <id=2221><spl=Dagger Ineptitude Self VII>
+ <id=2222><spl=Gertarh's Boon>
+ <id=2223><spl=Gertarh's Blessing>
+ <id=2224><spl=Hearts on Sleeves>
+ <id=2225><spl=Deception Ineptitude Self VII>
+ <id=2226><spl=Ketnan's Boon>
+ <id=2227><spl=Ketnan's Blessing>
+ <id=2228><spl=Broadside of a Barn>
+ <id=2229><spl=Defenselessness Self VII>
+ <id=2230><spl=Sashi Mu's Kiss>
+ <id=2231><spl=Faithlessness Self VII>
+ <id=2232><spl=Odif's Boon>
+ <id=2233><spl=Odif's Blessing>
+ <id=2234><spl=Twisted Digits>
+ <id=2235><spl=Fletching Ineptitude Self VII>
+ <id=2236><spl=Lilitha's Boon>
+ <id=2237><spl=Lilitha's Blessing>
+ <id=2238><spl=Unsteady Hands>
+ <id=2239><spl=Healing Ineptitude Self VII>
+ <id=2240><spl=Avalenne's Boon>
+ <id=2241><spl=Avalenne's Blessing>
+ <id=2242><spl=Web of Deflection>
+ <id=2243><spl=Aura of Deflection>
+ <id=2244><spl=Web of Defense>
+ <id=2245><spl=Aura of Defense>
+ <id=2246><spl=Wrath of Celcynd>
+ <id=2247><spl=Item Enchantment Ineptitude Self VII>
+ <id=2248><spl=Celcynd's Boon>
+ <id=2249><spl=Celcynd's Blessing>
+ <id=2250><spl=Yoshi's Boon>
+ <id=2251><spl=Yoshi's Blessing>
+ <id=2252><spl=Unfortunate Appraisal>
+ <id=2253><spl=Item Tinkering Ignorance Self VII>
+ <id=2254><spl=Feat of Radaz>
+ <id=2255><spl=Jumping Ineptitude Self VII>
+ <id=2256><spl=Jahannan's Boon>
+ <id=2257><spl=Jahannan's Blessing>
+ <id=2258><spl=Gears Unwound>
+ <id=2259><spl=Leaden Feet Self VII>
+ <id=2260><spl=Kwipetian Vision>
+ <id=2261><spl=Leadership Ineptitude Self VII>
+ <id=2262><spl=Ar-Pei's Boon>
+ <id=2263><spl=Ar-Pei's Blessing>
+ <id=2264><spl=Wrath of Harlune>
+ <id=2265><spl=Life Magic Ineptitude Self VII>
+ <id=2266><spl=Harlune's Boon>
+ <id=2267><spl=Harlune's Blessing>
+ <id=2268><spl=Fat Fingers>
+ <id=2269><spl=Lockpick Ineptitude Self VII>
+ <id=2270><spl=Oswald's Boon>
+ <id=2271><spl=Oswald's Blessing>
+ <id=2272><spl=Top Heavy Swing>
+ <id=2273><spl=Mace Ineptitude Self VII>
+ <id=2274><spl=Mi-Krauli's Boon>
+ <id=2275><spl=Mi-Krauli's Blessing>
+ <id=2276><spl=Celdiseth's Boon>
+ <id=2277><spl=Celdiseth's Blessing>
+ <id=2278><spl=Eyes Clouded>
+ <id=2279><spl=Magic Item Tinkering Ignorance Self VII>
+ <id=2280><spl=Web of Resistance>
+ <id=2281><spl=Aura of Resistance>
+ <id=2282><spl=Futility>
+ <id=2283><spl=Magic Yield Self VII>
+ <id=2284><spl=Inefficient Investment>
+ <id=2285><spl=Mana Conversion Ineptitude Self VII>
+ <id=2286><spl=Nuhmudira's Boon>
+ <id=2287><spl=Nuhmudira's Blessing>
+ <id=2288><spl=Topheron's Boon>
+ <id=2289><spl=Topheron's Blessing>
+ <id=2290><spl=Ignorance's Bliss>
+ <id=2291><spl=Monster Unfamiliarity Self VII>
+ <id=2292><spl=Kaluhc's Boon>
+ <id=2293><spl=Kaluhc's Blessing>
+ <id=2294><spl=Introversion>
+ <id=2295><spl=Person Unfamiliarity Self VII>
+ <id=2296><spl=Headbreaker>
+ <id=2297><spl=Spear Ineptitude Self VII>
+ <id=2298><spl=Tibri's Boon>
+ <id=2299><spl=Tibri's Blessing>
+ <id=2300><spl=Saladur's Boon>
+ <id=2301><spl=Saladur's Blessing>
+ <id=2302><spl=The Shaft>
+ <id=2303><spl=Staff Ineptitude Self VII>
+ <id=2304><spl=Anadil's Boon>
+ <id=2305><spl=Anadil's Blessing>
+ <id=2306><spl=Metallophobia>
+ <id=2307><spl=Sword Ineptitude Self VII>
+ <id=2308><spl=MacNiall's Boon>
+ <id=2309><spl=MacNiall's Blessing>
+ <id=2310><spl=The Wrong Spell>
+ <id=2311><spl=Thrown Weapons Ineptitude Self VII>
+ <id=2312><spl=Asmolum's Boon>
+ <id=2313><spl=Asmolum's Blessing>
+ <id=2314><spl=Hamfistedness>
+ <id=2315><spl=Hamud's Boon>
+ <id=2316><spl=Hamud's Blessing>
+ <id=2317><spl=Unarmed Combat Ineptitude Self VII>
+ <id=2318><spl=Gravity Well>
+ <id=2319><spl=Vulnerability Self VII>
+ <id=2320><spl=Wrath of the Hieromancer>
+ <id=2321><spl=War Magic Ineptitude Self VII>
+ <id=2322><spl=Hieromancer's Boon>
+ <id=2323><spl=Hieromancer's Blessing>
+ <id=2324><spl=Koga's Boon>
+ <id=2325><spl=Koga's Blessing>
+ <id=2326><spl=Eye of the Grunt>
+ <id=2327><spl=Weapon Tinkering Ignorance Self VII>
+ <id=2328><spl=Vitality Siphon>
+ <id=2329><spl=Essence Void>
+ <id=2330><spl=Vigor Siphon>
+ <id=2331><spl=Health to Mana Other VII>
+ <id=2332><spl=Cannibalize>
+ <id=2333><spl=Health to Stamina Other VII>
+ <id=2334><spl=Self Sacrifice>
+ <id=2335><spl=Gift of Vitality>
+ <id=2336><spl=Gift of Essence>
+ <id=2337><spl=Gift of Vigor>
+ <id=2338><spl=Mana to Health Other VII>
+ <id=2339><spl=Energize Vitality>
+ <id=2340><spl=Mana to Stamina Other VII>
+ <id=2341><spl=Energize Vigor>
+ <id=2342><spl=Stamina to Health Other VII>
+ <id=2343><spl=Rushed Recovery>
+ <id=2344><spl=Stamina to Mana Other VII>
+ <id=2345><spl=Meditative Trance>
+ <id=2346><spl=Malediction>
+ <id=2347><spl=Concentration>
+ <id=2348><spl=Brilliance>
+ <id=2349><spl=Hieromancer's Ward>
+ <id=2350><spl=Greater Decay Durance>
+ <id=2351><spl=Greater Consumption Durance>
+ <id=2352><spl=Greater Stasis Durance>
+ <id=2353><spl=Greater Stimulation Durance>
+ <id=2354><spl=Lesser Piercing Durance>
+ <id=2355><spl=Lesser Slashing Durance>
+ <id=2356><spl=Lesser Bludgeoning Durance>
+ <id=2357><spl=Fauna Perlustration>
+ <id=2358><spl=Lyceum Recall>
+ <id=2359><spl=Portal Sending>
+ <id=2360><spl=Portal Sending>
+ <id=2361><spl=Portal Sending>
+ <id=2362><spl=Portal Sending>
+ <id=2363><spl=Portal Sending>
+ <id=2364><spl=Egress>
+ <id=2365><spl=something you're gonna fear for a long time>
+ <id=2366><spl=Bovine Intervention>
+ <id=2367><spl=Groovy Portal Sending>
+ <id=2368><spl=a powerful force>
+ <id=2369><spl=Expulsion>
+ <id=2370><spl=Gift of Rotting Flesh>
+ <id=2371><spl=Curse of Mortal Flesh>
+ <id=2372><spl=Price of Immortality>
+ <id=2373><spl=Enervation of the Heart>
+ <id=2374><spl=Enervation of the Limb>
+ <id=2375><spl=Enervation of the Mind>
+ <id=2376><spl=Glimpse of Annihilation>
+ <id=2377><spl=Vision of Annihilation>
+ <id=2378><spl=Beast Murmur>
+ <id=2379><spl=Beast Whisper>
+ <id=2380><spl=Grip of Instrumentality>
+ <id=2381><spl=Touch of Instrumentality>
+ <id=2382><spl=Unnatural Persistence>
+ <id=2383><spl=Dark Flame>
+ <id=2384><spl=Arcane Restoration>
+ <id=2385><spl=Vigilance>
+ <id=2386><spl=Indomitability>
+ <id=2387><spl=Determination>
+ <id=2388><spl=Caution>
+ <id=2389><spl=Vigor>
+ <id=2390><spl=Haste>
+ <id=2391><spl=Prowess>
+ <id=2392><spl=Serenity>
+ <id=2393><spl=Force Armor>
+ <id=2394><spl=Acid Shield>
+ <id=2395><spl=Electric Shield>
+ <id=2396><spl=Flame Shield>
+ <id=2397><spl=Ice Shield>
+ <id=2398><spl=Bludgeon Shield>
+ <id=2399><spl=Piercing Shield>
+ <id=2400><spl=Slashing Shield>
+ <id=2401><spl=Into the Garden>
+ <id=2402><spl=Essence Lull>
+ <id=2403><spl=Balanced breakfast>
+ <id=2404><spl=Collector Acid Protection>
+ <id=2405><spl=Collector Blade Protection>
+ <id=2406><spl=Collector Bludgeoning Protection>
+ <id=2407><spl=Collector Cold Protection>
+ <id=2408><spl=Collector Fire Protection>
+ <id=2409><spl=Collector Lightning Protection>
+ <id=2410><spl=Collector Piercing Protection>
+ <id=2411><spl=Discipline>
+ <id=2412><spl=Enduring Coordination>
+ <id=2413><spl=Enduring Focus>
+ <id=2414><spl=Enduring Stoicism>
+ <id=2415><spl=Eye of the Hunter>
+ <id=2416><spl=High Tension String>
+ <id=2417><spl=Obedience>
+ <id=2418><spl=Occult Potence>
+ <id=2419><spl=Panic Attack>
+ <id=2420><spl=Panoply of the Queenslayer>
+ <id=2421><spl=Paralyzing Fear>
+ <id=2422><spl=Send to Dryreach>
+ <id=2423><spl=Precise>
+ <id=2424><spl=Rabbit's Eye>
+ <id=2425><spl=Stone Wall>
+ <id=2426><spl=Strong Pull>
+ <id=2427><spl=Sugar Rush>
+ <id=2428><spl=Timaru's Shelter>
+ <id=2429><spl=Timaru's Shelter>
+ <id=2430><spl=Timaru's Shelter>
+ <id=2431><spl=Vivification>
+ <id=2432><spl=Acid Ward>
+ <id=2433><spl=Flame Ward>
+ <id=2434><spl=Frost Ward>
+ <id=2435><spl=Lightning Ward>
+ <id=2436><spl=Laying on of Hands>
+ <id=2437><spl=Greater Rockslide>
+ <id=2438><spl=Lesser Rockslide>
+ <id=2439><spl=Rockslide>
+ <id=2440><spl=Greater Stone Cliffs>
+ <id=2441><spl=Lesser Stone Cliffs>
+ <id=2442><spl=Stone Cliffs>
+ <id=2443><spl=Greater Strength of Earth>
+ <id=2444><spl=Lesser Strength of Earth>
+ <id=2445><spl=Strength of Earth>
+ <id=2446><spl=Greater Growth>
+ <id=2447><spl=Lesser Growth>
+ <id=2448><spl=Growth>
+ <id=2449><spl=Greater Hunter's Acumen>
+ <id=2450><spl=Lesser Hunter's Acumen>
+ <id=2451><spl=Hunter's Acumen>
+ <id=2452><spl=Greater Thorns>
+ <id=2453><spl=Lesser Thorns>
+ <id=2454><spl=Thorns>
+ <id=2455><spl=Greater Cascade>
+ <id=2456><spl=Lesser Cascade>
+ <id=2457><spl=Cascade>
+ <id=2458><spl=Greater Cascade>
+ <id=2459><spl=Lesser Cascade>
+ <id=2460><spl=Cascade>
+ <id=2461><spl=Greater Cascade>
+ <id=2462><spl=Lesser Cascade>
+ <id=2463><spl=Cascade>
+ <id=2464><spl=Greater Cascade>
+ <id=2465><spl=Lesser Cascade>
+ <id=2466><spl=Cascade>
+ <id=2467><spl=Greater Cascade>
+ <id=2468><spl=Lesser Cascade>
+ <id=2469><spl=Cascade>
+ <id=2470><spl=Greater Still Water>
+ <id=2471><spl=Lesser Still Water>
+ <id=2472><spl=Still Water>
+ <id=2473><spl=Greater Torrent>
+ <id=2474><spl=Lesser Torrent>
+ <id=2475><spl=Torrent>
+ <id=2476><spl=Safe Harbor>
+ <id=2477><spl=Free Trip to the Aluvian Casino>
+ <id=2478><spl=Cragstone Reinforcements camp recall>
+ <id=2479><spl=Advance Camp Recall>
+ <id=2480><spl=Free Trip to the Gharun'dim Casino>
+ <id=2481><spl=Zaikhal Reinforcement Camp Recall>
+ <id=2482><spl=Zaikhal Advance Camp Recall>
+ <id=2483><spl=Free Trip to the Sho Casino>
+ <id=2484><spl=Hebian-to Reinforcements Camp Portal>
+ <id=2485><spl=Hebian-to Advance Camp Recall>
+ <id=2486><spl=Blood Thirst>
+ <id=2487><spl=Spirit Strike>
+ <id=2488><spl=Weapon Familiarity>
+ <id=2489><spl=Free Ride to the Shoushi Southeast Outpost Portal>
+ <id=2490><spl=Free Ride to the Holtburg South Outpost>
+ <id=2491><spl=Free Ride to the Holtburg West Outpost>
+ <id=2492><spl=Free Ride to the Shoushi West Outpost>
+ <id=2493><spl=Free Ride to the Yaraq East Outpost>
+ <id=2494><spl=Free Ride to the Yaraq North Outpost>
+ <id=2495><spl=Send Reinforcements>
+ <id=2496><spl=Send Reinforcements>
+ <id=2497><spl=Send Reinforcements>
+ <id=2498><spl=Send Reinforcements>
+ <id=2499><spl=Send Reinforcements>
+ <id=2500><spl=Send Reinforcements>
+ <id=2501><spl=Major Alchemical Prowess>
+ <id=2502><spl=Major Arcane Prowess>
+ <id=2503><spl=Major Armor Tinkering Expertise>
+ <id=2504><spl=Major Axe Aptitude>
+ <id=2505><spl=Major Bow Aptitude>
+ <id=2506><spl=Major Cooking Prowess>
+ <id=2507><spl=Major Creature Enchantment Aptitude>
+ <id=2508><spl=Major Crossbow Aptitude>
+ <id=2509><spl=Major Dagger Aptitude>
+ <id=2510><spl=Major Deception Prowess>
+ <id=2511><spl=Major Fealty>
+ <id=2512><spl=Major Fletching Prowess>
+ <id=2513><spl=Major Healing Prowess>
+ <id=2514><spl=Major Impregnability>
+ <id=2515><spl=Major Invulnerability>
+ <id=2516><spl=Major Item Enchantment Aptitude>
+ <id=2517><spl=Major Item Tinkering Expertise>
+ <id=2518><spl=Major Jumping Prowess>
+ <id=2519><spl=Major Leadership>
+ <id=2520><spl=Major Life Magic Aptitude>
+ <id=2521><spl=Major Lockpick Prowess>
+ <id=2522><spl=Major Mace Aptitude>
+ <id=2523><spl=Major Magic Item Tinkering Expertise>
+ <id=2524><spl=Major Magic Resistance>
+ <id=2525><spl=Major Mana Conversion Prowess>
+ <id=2526><spl=Major Monster Attunement>
+ <id=2527><spl=Major Person Attunement>
+ <id=2528><spl=Major Spear Aptitude>
+ <id=2529><spl=Major Sprint>
+ <id=2530><spl=Major Staff Aptitude>
+ <id=2531><spl=Major Sword Aptitude>
+ <id=2532><spl=Major Thrown Aptitude>
+ <id=2533><spl=Major Unarmed Aptitude>
+ <id=2534><spl=Major War Magic Aptitude>
+ <id=2535><spl=Major Weapon Tinkering Expertise>
+ <id=2536><spl=Minor Alchemical Prowess>
+ <id=2537><spl=Minor Arcane Prowess>
+ <id=2538><spl=Minor Armor Tinkering Expertise>
+ <id=2539><spl=Minor Axe Aptitude>
+ <id=2540><spl=Minor Bow Aptitude>
+ <id=2541><spl=Minor Cooking Prowess>
+ <id=2542><spl=Minor Creature Enchantment Aptitude>
+ <id=2543><spl=Minor Crossbow Aptitude>
+ <id=2544><spl=Minor Dagger Aptitude>
+ <id=2545><spl=Minor Deception Prowess>
+ <id=2546><spl=Minor Fealty>
+ <id=2547><spl=Minor Fletching Prowess>
+ <id=2548><spl=Minor Healing Prowess>
+ <id=2549><spl=Minor Impregnability>
+ <id=2550><spl=Minor Invulnerability>
+ <id=2551><spl=Minor Item Enchantment Aptitude>
+ <id=2552><spl=Minor Item Tinkering Expertise>
+ <id=2553><spl=Minor Jumping Prowess>
+ <id=2554><spl=Minor Leadership>
+ <id=2555><spl=Minor Life Magic Aptitude>
+ <id=2556><spl=Minor Lockpick Prowess>
+ <id=2557><spl=Minor Mace Aptitude>
+ <id=2558><spl=Minor Magic Item Tinkering Expertise>
+ <id=2559><spl=Minor Magic Resistance>
+ <id=2560><spl=Minor Mana Conversion Prowess>
+ <id=2561><spl=Minor Monster Attunement>
+ <id=2562><spl=Minor Person Attunement>
+ <id=2563><spl=Minor Spear Aptitude>
+ <id=2564><spl=Minor Sprint>
+ <id=2565><spl=Minor Staff Aptitude>
+ <id=2566><spl=Minor Sword Aptitude>
+ <id=2567><spl=Minor Thrown Aptitude>
+ <id=2568><spl=Minor Unarmed Aptitude>
+ <id=2569><spl=Minor War Magic Aptitude>
+ <id=2570><spl=Minor Weapon Tinkering Expertise>
+ <id=2571><spl=Major Armor>
+ <id=2572><spl=Major Coordination>
+ <id=2573><spl=Major Endurance>
+ <id=2574><spl=Major Focus>
+ <id=2575><spl=Major Quickness>
+ <id=2576><spl=Major Strength>
+ <id=2577><spl=Major Willpower>
+ <id=2578><spl=Minor Armor>
+ <id=2579><spl=Minor Coordination>
+ <id=2580><spl=Minor Endurance>
+ <id=2581><spl=Minor Focus>
+ <id=2582><spl=Minor Quickness>
+ <id=2583><spl=Minor Strength>
+ <id=2584><spl=Minor Willpower>
+ <id=2585><spl=Major Acid Bane>
+ <id=2586><spl=Major Blood Thirst>
+ <id=2587><spl=Major Bludgeoning Bane>
+ <id=2588><spl=Major Defender>
+ <id=2589><spl=Major Flame Bane>
+ <id=2590><spl=Major Frost Bane>
+ <id=2591><spl=Major Heart Thirst>
+ <id=2592><spl=Major Impenetrability>
+ <id=2593><spl=Major Piercing Bane>
+ <id=2594><spl=Major Slashing Bane>
+ <id=2595><spl=Major Storm Bane>
+ <id=2596><spl=Major Swift Hunter>
+ <id=2597><spl=Minor Acid Bane>
+ <id=2598><spl=Minor Blood Thirst>
+ <id=2599><spl=Minor Bludgeoning Bane>
+ <id=2600><spl=Minor Defender>
+ <id=2601><spl=Minor Flame Bane>
+ <id=2602><spl=Minor Frost Bane>
+ <id=2603><spl=Minor Heart Thirst>
+ <id=2604><spl=Minor Impenetrability>
+ <id=2605><spl=Minor Piercing Bane>
+ <id=2606><spl=Minor Slashing Bane>
+ <id=2607><spl=Minor Storm Bane>
+ <id=2608><spl=Minor Swift Hunter>
+ <id=2609><spl=Major Acid Ward>
+ <id=2610><spl=Major Bludgeoning Ward>
+ <id=2611><spl=Major Flame Ward>
+ <id=2612><spl=Major Frost Ward>
+ <id=2613><spl=Major Piercing Ward>
+ <id=2614><spl=Major Slashing Ward>
+ <id=2615><spl=Major Storm Ward>
+ <id=2616><spl=Minor Acid Ward>
+ <id=2617><spl=Minor Bludgeoning Ward>
+ <id=2618><spl=Minor Flame Ward>
+ <id=2619><spl=Minor Frost Ward>
+ <id=2620><spl=Minor Piercing Ward>
+ <id=2621><spl=Minor Slashing Ward>
+ <id=2622><spl=Minor Storm Ward>
+ <id=2623><spl=Major Health Gain>
+ <id=2624><spl=Major Mana Gain>
+ <id=2625><spl=Major Stamina Gain>
+ <id=2626><spl=Minor Health Gain>
+ <id=2627><spl=Minor Mana Gain>
+ <id=2628><spl=Minor Stamina Gain>
+ <id=2629><spl=Huntress' Boon>
+ <id=2630><spl=Prey's Reflex>
+ <id=2631><spl=Secret Descent>
+ <id=2632><spl=Secret Ascent>
+ <id=2633><spl=Breaking and Entering>
+ <id=2634><spl=Cautious Egress>
+ <id=2635><spl=Witshire Passage>
+ <id=2636><spl=Karenua's Curse>
+ <id=2637><spl=Invoking Aun Tanua>
+ <id=2638><spl=Heart of Oak>
+ <id=2639><spl=Repulsion>
+ <id=2640><spl=Devourer>
+ <id=2641><spl=Force to Arms>
+ <id=2642><spl=Consumption>
+ <id=2643><spl=Stasis>
+ <id=2644><spl=Lifestone Tie>
+ <id=2645><spl=Portal Recall>
+ <id=2646><spl=Secondary Portal Tie>
+ <id=2647><spl=Secondary Portal Recall>
+ <id=2648><spl=Summon Secondary Portal I>
+ <id=2649><spl=Summon Secondary Portal II>
+ <id=2650><spl=Summon Secondary Portal III>
+ <id=2651><spl=Portal Sending Self Sacrifice>
+ <id=2652><spl=Portal Sending Merciless>
+ <id=2653><spl=Feeble Willpower>
+ <id=2654><spl=Feeble Endurance>
+ <id=2655><spl=Feeble Focus>
+ <id=2656><spl=Feeble Quickness>
+ <id=2657><spl=Feeble Strength>
+ <id=2658><spl=Feeble Coordination>
+ <id=2659><spl=Moderate Coordination>
+ <id=2660><spl=Moderate Endurance>
+ <id=2661><spl=Moderate Focus>
+ <id=2662><spl=Moderate Quickness>
+ <id=2663><spl=Moderate Strength>
+ <id=2664><spl=Moderate Willpower>
+ <id=2665><spl=Essence Sluice>
+ <id=2666><spl=Essence Glutton>
+ <id=2667><spl=Essence Spike>
+ <id=2668><spl=Nuhmudiras Benefaction>
+ <id=2669><spl=Nuhmudiras Bestowment>
+ <id=2670><spl=Nuhmudiras Endowment>
+ <id=2671><spl=Portal to the Callous Heart>
+ <id=2672><spl=Ring of True Pain>
+ <id=2673><spl=Ring of Unspeakable Agony>
+ <id=2674><spl=Vicious Rebuke>
+ <id=2675><spl=Feeble Axe Aptitude>
+ <id=2676><spl=Feeble Bow Aptitude>
+ <id=2677><spl=Feeble Crossbow Aptitude>
+ <id=2678><spl=Feeble Dagger Aptitude>
+ <id=2679><spl=Feeble Mace Aptitude>
+ <id=2680><spl=Feeble Mana Conversion Prowess>
+ <id=2681><spl=Feeble Spear Aptitude>
+ <id=2682><spl=Feeble Staff Aptitude>
+ <id=2683><spl=Feeble Sword Aptitude>
+ <id=2684><spl=Feeble Thrown Aptitude>
+ <id=2685><spl=Feeble Unarmed Aptitude>
+ <id=2686><spl=Moderate Axe Aptitude>
+ <id=2687><spl=Moderate Bow Aptitude>
+ <id=2688><spl=Moderate Crossbow Aptitude>
+ <id=2689><spl=Moderate Dagger Aptitude>
+ <id=2690><spl=Moderate Mace Aptitude>
+ <id=2691><spl=Moderate Mana Conversion Prowess>
+ <id=2692><spl=Moderate Spear Aptitude>
+ <id=2693><spl=Moderate Staff Aptitude>
+ <id=2694><spl=Moderate Sword Aptitude>
+ <id=2695><spl=Moderate Thrown Aptitude>
+ <id=2696><spl=Moderate Unarmed Aptitude>
+ <id=2697><spl=Aerfalle's Touch>
+ <id=2698><spl=Aerfalle's Embrace>
+ <id=2699><spl=Auroric Whip>
+ <id=2700><spl=Corrosive Cloud>
+ <id=2701><spl=Elemental Fury>
+ <id=2702><spl=Elemental Fury>
+ <id=2703><spl=Elemental Fury>
+ <id=2704><spl=Elemental Fury>
+ <id=2705><spl=Aerfalle's Enforcement>
+ <id=2706><spl=Aerfalle's Gaze>
+ <id=2707><spl=Elemental Pit>
+ <id=2708><spl=Stasis Field>
+ <id=2709><spl=Summon Primary Portal I>
+ <id=2710><spl=Volcanic Blast>
+ <id=2711><spl=Acid Arc I>
+ <id=2712><spl=Acid Arc II>
+ <id=2713><spl=Acid Arc III>
+ <id=2714><spl=Acid Arc IV>
+ <id=2715><spl=Acid Arc V>
+ <id=2716><spl=Acid Arc VI>
+ <id=2717><spl=Acid Arc VII>
+ <id=2718><spl=Force Arc I>
+ <id=2719><spl=Force Arc II>
+ <id=2720><spl=Force Arc III>
+ <id=2721><spl=Force Arc IV>
+ <id=2722><spl=Force Arc V>
+ <id=2723><spl=Force Arc VI>
+ <id=2724><spl=Force Arc VII>
+ <id=2725><spl=Frost Arc I>
+ <id=2726><spl=Frost Arc II>
+ <id=2727><spl=Frost Arc III>
+ <id=2728><spl=Frost Arc IV>
+ <id=2729><spl=Frost Arc V>
+ <id=2730><spl=Frost Arc VI>
+ <id=2731><spl=Frost Arc VII>
+ <id=2732><spl=Lightning Arc I>
+ <id=2733><spl=Lightning Arc II>
+ <id=2734><spl=Lightning Arc III>
+ <id=2735><spl=Lightning Arc IV>
+ <id=2736><spl=Lightning Arc V>
+ <id=2737><spl=Lightning Arc VI>
+ <id=2738><spl=Lightning Arc VII>
+ <id=2739><spl=Flame Arc I>
+ <id=2740><spl=Flame Arc II>
+ <id=2741><spl=Flame Arc III>
+ <id=2742><spl=Flame Arc IV>
+ <id=2743><spl=Flame Arc V>
+ <id=2744><spl=Flame Arc VI>
+ <id=2745><spl=Flame Arc VII>
+ <id=2746><spl=Shock Arc I>
+ <id=2747><spl=Shock Arc II>
+ <id=2748><spl=Shock Arc III>
+ <id=2749><spl=Shock Arc IV>
+ <id=2750><spl=Shock Arc V>
+ <id=2751><spl=Shock Arc VI>
+ <id=2752><spl=Shock Arc VII>
+ <id=2753><spl=Blade Arc I>
+ <id=2754><spl=Blade Arc II>
+ <id=2755><spl=Blade Arc III>
+ <id=2756><spl=Blade Arc IV>
+ <id=2757><spl=Blade Arc V>
+ <id=2758><spl=Blade Arc VI>
+ <id=2759><spl=Blade Arc VII>
+ <id=2760><spl=Martyr's Hecatomb I>
+ <id=2761><spl=Martyr's Hecatomb II>
+ <id=2762><spl=Martyr's Hecatomb III>
+ <id=2763><spl=Martyr's Hecatomb IV>
+ <id=2764><spl=Martyr's Hecatomb V>
+ <id=2765><spl=Martyr's Hecatomb VI>
+ <id=2766><spl=Martyr's Hecatomb VII>
+ <id=2767><spl=Martyr's Tenacity I>
+ <id=2768><spl=Martyr's Tenacity II>
+ <id=2769><spl=Martyr's Tenacity III>
+ <id=2770><spl=Martyr's Tenacity IV>
+ <id=2771><spl=Martyr's Tenacity V>
+ <id=2772><spl=Martyr's Tenacity VI>
+ <id=2773><spl=Martyr's Tenacity VII>
+ <id=2774><spl=Martyr's Blight I>
+ <id=2775><spl=Martyr's Blight II>
+ <id=2776><spl=Martyr's Blight III>
+ <id=2777><spl=Martyr's Blight IV>
+ <id=2778><spl=Martyr's Blight V>
+ <id=2779><spl=Martyr's Blight VI>
+ <id=2780><spl=Martyr's Blight VII>
+ <id=2781><spl=Lesser Elemental Fury>
+ <id=2782><spl=Lesser Elemental Fury>
+ <id=2783><spl=Lesser Elemental Fury>
+ <id=2784><spl=Lesser Elemental Fury>
+ <id=2785><spl=Lesser Stasis Field>
+ <id=2786><spl=Madness>
+ <id=2787><spl=Supremacy>
+ <id=2788><spl=Essence Blight>
+ <id=2789><spl=Elemental Destruction>
+ <id=2790><spl=Weight of the World>
+ <id=2791><spl=Rolling Death>
+ <id=2792><spl=Rolling Death>
+ <id=2793><spl=Rolling Death>
+ <id=2794><spl=Rolling Death>
+ <id=2795><spl=Citadel Library>
+ <id=2796><spl=Citadel Surface>
+ <id=2797><spl=Proving Grounds Rolling Death>
+ <id=2798><spl=Proving Grounds High>
+ <id=2799><spl=Proving Grounds Low>
+ <id=2800><spl=Proving Grounds Mid>
+ <id=2801><spl=Proving Grounds Extreme>
+ <id=2802><spl=Proving Grounds High>
+ <id=2803><spl=Proving Grounds Low>
+ <id=2804><spl=Proving Grounds Mid>
+ <id=2805><spl=Impudence>
+ <id=2806><spl=Impudence>
+ <id=2807><spl=Impudence>
+ <id=2808><spl=Impudence>
+ <id=2809><spl=Moderate Arcane Prowess>
+ <id=2810><spl=Moderate Life Magic Aptitude>
+ <id=2811><spl=Moderate Magic Resistance>
+ <id=2812><spl=Moderate War Magic Aptitude>
+ <id=2813><spl=Mount Lethe Recall>
+ <id=2814><spl=Priest's Curse>
+ <id=2815><spl=Boom Black Firework OUT>
+ <id=2816><spl=Big Boom Black Firework OUT>
+ <id=2817><spl=Shockwave Black Firework OUT>
+ <id=2818><spl=Spiral Black Firework OUT>
+ <id=2819><spl=Sparkle Black Firework OUT>
+ <id=2820><spl=Blossom Black Firework OUT>
+ <id=2821><spl=Ring Black Firework OUT>
+ <id=2822><spl=Boom Blue Firework OUT>
+ <id=2823><spl=Big Boom Blue Firework OUT>
+ <id=2824><spl=Shockwave Blue Firework OUT>
+ <id=2825><spl=Spiral Blue Firework OUT>
+ <id=2826><spl=Sparkle Blue Firework OUT>
+ <id=2827><spl=Blossom Blue Firework OUT>
+ <id=2828><spl=Ring Blue Firework OUT>
+ <id=2829><spl=Boom Green Firework OUT>
+ <id=2830><spl=Big Boom Green Firework OUT>
+ <id=2831><spl=Shockwave Green Firework OUT>
+ <id=2832><spl=Spiral Green Firework OUT>
+ <id=2833><spl=Sparkle Green Firework OUT>
+ <id=2834><spl=Blossom Green Firework OUT>
+ <id=2835><spl=Ring Green Firework OUT>
+ <id=2836><spl=Boom Orange Firework OUT>
+ <id=2837><spl=Big Boom Orange Firework OUT>
+ <id=2838><spl=Shockwave Orange Firework OUT>
+ <id=2839><spl=Spiral Orange Firework OUT>
+ <id=2840><spl=Sparkle Orange Firework OUT>
+ <id=2841><spl=Blossom Orange Firework OUT>
+ <id=2842><spl=Ring Orange Firework OUT>
+ <id=2843><spl=Boom Purple Firework OUT>
+ <id=2844><spl=Big Boom Purple Firework OUT>
+ <id=2845><spl=Shockwave Purple Firework OUT>
+ <id=2846><spl=Spiral Purple Firework OUT>
+ <id=2847><spl=Sparkle Purple Firework OUT>
+ <id=2848><spl=Blossom Purple Firework OUT>
+ <id=2849><spl=Ring Purple Firework OUT>
+ <id=2850><spl=Boom Red Firework OUT>
+ <id=2851><spl=Big Boom Red Firework OUT>
+ <id=2852><spl=Shockwave Red Firework OUT>
+ <id=2853><spl=Spiral Red Firework OUT>
+ <id=2854><spl=Sparkle Red Firework OUT>
+ <id=2855><spl=Blossom Red Firework OUT>
+ <id=2856><spl=Ring Red Firework OUT>
+ <id=2857><spl=Boom White Firework OUT>
+ <id=2858><spl=Big Boom White Firework OUT>
+ <id=2859><spl=Shockwave White Firework OUT>
+ <id=2860><spl=Spiral White Firework OUT>
+ <id=2861><spl=Sparkle White Firework OUT>
+ <id=2862><spl=Blossom White Firework OUT>
+ <id=2863><spl=Ring White Firework OUT>
+ <id=2864><spl=Boom Yellow Firework OUT>
+ <id=2865><spl=Big Boom Yellow Firework OUT>
+ <id=2866><spl=Shockwave Yellow Firework OUT>
+ <id=2867><spl=Spiral Yellow Firework OUT>
+ <id=2868><spl=Sparkle Yellow Firework OUT>
+ <id=2869><spl=Blossom Yellow Firework OUT>
+ <id=2870><spl=Ring Yellow Firework OUT>
+ <id=2871><spl=Boom Black Firework UP>
+ <id=2872><spl=Big Boom Black Firework UP>
+ <id=2873><spl=Shockwave Black Firework UP>
+ <id=2874><spl=Spiral Black Firework UP>
+ <id=2875><spl=Sparkle Black Firework UP>
+ <id=2876><spl=Blossom Black Firework UP>
+ <id=2877><spl=Ring Black Firework UP>
+ <id=2878><spl=Boom Blue Firework UP>
+ <id=2879><spl=Big Boom Blue Firework UP>
+ <id=2880><spl=Shockwave Blue Firework UP>
+ <id=2881><spl=Spiral Blue Firework UP>
+ <id=2882><spl=Sparkle Blue Firework UP>
+ <id=2883><spl=Blossom Blue Firework UP>
+ <id=2884><spl=Ring Blue Firework UP>
+ <id=2885><spl=Boom Green Firework UP>
+ <id=2886><spl=Big Boom Green Firework UP>
+ <id=2887><spl=Shockwave Green Firework UP>
+ <id=2888><spl=Spiral Green Firework UP>
+ <id=2889><spl=Sparkle Green Firework UP>
+ <id=2890><spl=Blossom Green Firework UP>
+ <id=2891><spl=Ring Green Firework UP>
+ <id=2892><spl=Boom Orange Firework UP>
+ <id=2893><spl=Big Boom Orange Firework UP>
+ <id=2894><spl=Shockwave Orange Firework UP>
+ <id=2895><spl=Spiral Orange Firework UP>
+ <id=2896><spl=Sparkle Orange Firework UP>
+ <id=2897><spl=Blossom Orange Firework UP>
+ <id=2898><spl=Ring Orange Firework UP>
+ <id=2899><spl=Boom Purple Firework UP>
+ <id=2900><spl=Big Boom Purple Firework UP>
+ <id=2901><spl=Shockwave Purple Firework UP>
+ <id=2902><spl=Spiral Purple Firework UP>
+ <id=2903><spl=Sparkle Purple Firework UP>
+ <id=2904><spl=Blossom Purple Firework UP>
+ <id=2905><spl=Ring Purple Firework UP>
+ <id=2906><spl=Boom Red Firework UP>
+ <id=2907><spl=Big Boom Red Firework UP>
+ <id=2908><spl=Shockwave Red Firework UP>
+ <id=2909><spl=Spiral Red Firework UP>
+ <id=2910><spl=Sparkle Red Firework UP>
+ <id=2911><spl=Blossom Red Firework UP>
+ <id=2912><spl=Ring Red Firework UP>
+ <id=2913><spl=Boom White Firework UP>
+ <id=2914><spl=Big Boom White Firework UP>
+ <id=2915><spl=Shockwave White Firework UP>
+ <id=2916><spl=Spiral White Firework UP>
+ <id=2917><spl=Sparkle White Firework UP>
+ <id=2918><spl=Blossom White Firework UP>
+ <id=2919><spl=Ring White Firework UP>
+ <id=2920><spl=Boom Yellow Firework UP>
+ <id=2921><spl=Big Boom Yellow Firework UP>
+ <id=2922><spl=Shockwave Yellow Firework UP>
+ <id=2923><spl=Spiral Yellow Firework UP>
+ <id=2924><spl=Sparkle Yellow Firework UP>
+ <id=2925><spl=Blossom Yellow Firework UP>
+ <id=2926><spl=Ring Yellow Firework UP>
+ <id=2927><spl=Old School Fireworks>
+ <id=2928><spl=Tusker Hide>
+ <id=2929><spl=Tusker Might>
+ <id=2930><spl=Tusker Skin>
+ <id=2931><spl=Recall Aphus Lassel>
+ <id=2932><spl=Tusker Leap>
+ <id=2933><spl=Tusker Sprint>
+ <id=2934><spl=Tusker Fists>
+ <id=2935><spl=Trial of the Tusker Hero>
+ <id=2936><spl=Entrance to Tusker Island>
+ <id=2937><spl=Moderate Impregnability>
+ <id=2938><spl=Moderate Invulnerability>
+ <id=2939><spl=Entering the Temple>
+ <id=2940><spl=Entering the Temple>
+ <id=2941><spl=Ulgrim's Recall>
+ <id=2942><spl=Free Ride to the Abandoned Mine>
+ <id=2943><spl=Recall to the Singularity Caul>
+ <id=2944><spl=Storage Warehouse>
+ <id=2945><spl=Storage Warehouse>
+ <id=2946><spl=Moderate Creature Magic Aptitude>
+ <id=2947><spl=Nullify All Magic Other>
+ <id=2948><spl=Hieromancer's Great Ward>
+ <id=2949><spl=Lightbringer's Way>
+ <id=2950><spl=Maiden's Kiss>
+ <id=2951><spl=Gates of Knorr>
+ <id=2952><spl=Courtyard of Knorr>
+ <id=2953><spl=Interior Gates of Knorr>
+ <id=2954><spl=Barracks Conveyance>
+ <id=2955><spl=Forge Conveyance>
+ <id=2956><spl=Research Chambers Conveyance>
+ <id=2957><spl=Seat of Knorr>
+ <id=2958><spl=Blessing of the Priestess>
+ <id=2959><spl=Mark of the Priestess>
+ <id=2960><spl=Greater Bludgeoning Durance>
+ <id=2961><spl=Greater Piercing Durance>
+ <id=2962><spl=Greater Slashing Durance>
+ <id=2963><spl=Cunning of the Hunter>
+ <id=2964><spl=Mark of the Hunter>
+ <id=2965><spl=Murderous Intent>
+ <id=2966><spl=Murderous Thirst>
+ <id=2967><spl=Speed of the Hunter>
+ <id=2968><spl=Vision of the Hunter>
+ <id=2969><spl=Mother's Blessing>
+ <id=2970><spl=Hunter's Lash>
+ <id=2971><spl=Bullseye>
+ <id=2972><spl=Oswald's Room>
+ <id=2973><spl=Access to the Secret Lair>
+ <id=2974><spl=Vagabond Passed>
+ <id=2975><spl=Moderate Item Enchantment Aptitude>
+ <id=2976><spl=Acid Spray>
+ <id=2977><spl=Portal spell to a hidden place>
+ <id=2978><spl=Nullify All Magic Other>
+ <id=2979><spl=Destiny's Wind>
+ <id=2980><spl=Endless Vigor>
+ <id=2981><spl=Fellowship Heal I>
+ <id=2982><spl=Fellowship Alchemy Mastery I>
+ <id=2983><spl=Fellowship Evaporate Life Magic Self>
+ <id=2984><spl=Lyceum of Kivik Lir>
+ <id=2985><spl=Ardence>
+ <id=2986><spl=Vim>
+ <id=2987><spl=Volition>
+ <id=2988><spl=Beaten into Submission>
+ <id=2989><spl=Portal to the Bandit Hideout.>
+ <id=2990><spl=Knocked Out>
+ <id=2991><spl=Winter's Kiss>
+ <id=2992><spl=Depletion>
+ <id=2993><spl=Grace of the Unicorn>
+ <id=2994><spl=Plague>
+ <id=2995><spl=Power of the Dragon>
+ <id=2996><spl=Scourge>
+ <id=2997><spl=Splendor of the Firebird>
+ <id=2998><spl=Wrath of the Puppeteer>
+ <id=2999><spl=Endurance of the Abyss>
+ <id=3000><spl=Ire of the Dark Prince>
+ <id=3001><spl=Puppet String>
+ <id=3002><spl=Will of the Quiddity>
+ <id=3003><spl=Dark Wave>
+ <id=3004><spl=Puppet Strings>
+ <id=3005><spl=Dispersion>
+ <id=3006><spl=Foresight>
+ <id=3007><spl=Uncanny Dodge>
+ <id=3008><spl=Finesse>
+ <id=3009><spl=Thew>
+ <id=3010><spl=Zeal>
+ <id=3011><spl=Endless Sight>
+ <id=3012><spl=Far Sight>
+ <id=3013><spl=Fruit of the Oasis>
+ <id=3014><spl=Water of the Oasis>
+ <id=3015><spl=Shade of the Oasis>
+ <id=3016><spl=Raptor's Sight>
+ <id=3017><spl=Greater Battle Dungeon Sending from Candeth Keep>
+ <id=3018><spl=Greater Battle Dungeon Sending from Fort Tethana>
+ <id=3019><spl=Greater Battle Dungeon Sending from Nanto>
+ <id=3020><spl=Greater Battle Dungeon Sending from Plateau>
+ <id=3021><spl=Greater Battle Dungeon Sending from Qalabar>
+ <id=3022><spl=Greater Battle Dungeon Sending from Tou-Tou>
+ <id=3023><spl=Greater Battle Dungeon Sending from Xarabydun>
+ <id=3024><spl=Greater Battle Dungeon Sending from Yaraq>
+ <id=3025><spl=Shriek>
+ <id=3026><spl=Lesser Battle Dungeon Sending from Candeth Keep>
+ <id=3027><spl=Lesser Battle Dungeon Sending from Fort Tethana>
+ <id=3028><spl=Lesser Battle Dungeon Sending from Nanto>
+ <id=3029><spl=Lesser Battle Dungeon Sending from Plateau>
+ <id=3030><spl=Lesser Battle Dungeon Sending from Qalabar>
+ <id=3031><spl=Lesser Battle Dungeon Sending from Tou-Tou>
+ <id=3032><spl=Lesser Battle Dungeon Sending from Xarabydun>
+ <id=3033><spl=Lesser Battle Dungeon Sending from Yaraq>
+ <id=3034><spl=Benediction of Immortality>
+ <id=3035><spl=Closing of the Great Divide>
+ <id=3036><spl=Cold Grip of the Grave>
+ <id=3037><spl=Death's Call>
+ <id=3038><spl=Death's Embrace>
+ <id=3039><spl=Death's Feast>
+ <id=3040><spl=Places Death's Kiss upon you.>
+ <id=3041><spl=Essence Dissolution>
+ <id=3042><spl=Grip of Death>
+ <id=3043><spl=Kiss of the Grave>
+ <id=3044><spl=Lesser Benediction of Immortality>
+ <id=3045><spl=Lesser Closing of the Great Divide>
+ <id=3046><spl=Lesser Mists of Bur>
+ <id=3047><spl=Matron's Barb>
+ <id=3048><spl=Minor Benediction of Immortality>
+ <id=3049><spl=Minor Closing of the Great Divide>
+ <id=3050><spl=Minor Mists of Bur>
+ <id=3051><spl=Mire Foot>
+ <id=3052><spl=Mists of Bur>
+ <id=3053><spl=Paralyzing Touch>
+ <id=3054><spl=Soul Dissolution>
+ <id=3055><spl=Asphyxiation>
+ <id=3056><spl=Death's Vice>
+ <id=3057><spl=Enervation>
+ <id=3058><spl=Asphyiaxtion>
+ <id=3059><spl=Enervation>
+ <id=3060><spl=Poison Blood>
+ <id=3061><spl=Taint Mana>
+ <id=3062><spl=Asphyxiation>
+ <id=3063><spl=Enervation>
+ <id=3064><spl=Poison Blood>
+ <id=3065><spl=Taint Mana>
+ <id=3066><spl=Lesser Ward of Rebirth>
+ <id=3067><spl=Matron's Curse>
+ <id=3068><spl=Minor Ward of Rebirth>
+ <id=3069><spl=Poison Blood>
+ <id=3070><spl=Taint Mana>
+ <id=3071><spl=Ward of Rebirth>
+ <id=3072><spl=Hall of the Temple Guardians>
+ <id=3073><spl=Matron's Outer Chamber>
+ <id=3074><spl=Bruised Flesh>
+ <id=3075><spl=Flesh of Cloth>
+ <id=3076><spl=Exposed Flesh>
+ <id=3077><spl=Flesh of Flint>
+ <id=3078><spl=Weaken Flesh>
+ <id=3079><spl=Thin Skin>
+ <id=3080><spl=Bruised Flesh>
+ <id=3081><spl=Flesh of Cloth>
+ <id=3082><spl=Exposed Flesh>
+ <id=3083><spl=Flesh of Flint>
+ <id=3084><spl=Weaken Flesh>
+ <id=3085><spl=Bruised Flesh>
+ <id=3086><spl=Flesh of Cloth>
+ <id=3087><spl=Exposed Flesh>
+ <id=3088><spl=Flesh of Flint>
+ <id=3089><spl=Weaken Flesh>
+ <id=3090><spl=Thin Skin>
+ <id=3091><spl=Thin Skin>
+ <id=3092><spl=Lesser Skin of the Fiazhat>
+ <id=3093><spl=Minor Skin of the Fiazhat>
+ <id=3094><spl=Skin of the Fiazhat>
+ <id=3095><spl=Crypt of Jexki Ki>
+ <id=3096><spl=Crypt of Ibrexi Jekti>
+ <id=3097><spl=Hall of the Guardians>
+ <id=3098><spl=Hall of the Greater Guardians>
+ <id=3099><spl=Hall of the Lesser Guardians>
+ <id=3100><spl=Antechamber of Ixir Zi's Temple>
+ <id=3101><spl=Crypt of Ixir Zi>
+ <id=3102><spl=Kivik Lir's Temple>
+ <id=3103><spl=Crypt of Kixkti Xri>
+ <id=3104><spl=Hall of the Arbiter>
+ <id=3105><spl=Hall of the Arbiter>
+ <id=3106><spl=Hall of the Arbiter>
+ <id=3107><spl=Flay Soul>
+ <id=3108><spl=Flay Soul>
+ <id=3109><spl=Liquefy Flesh>
+ <id=3110><spl=Sear Flesh>
+ <id=3111><spl=Soul Hammer>
+ <id=3112><spl=Soul Spike>
+ <id=3113><spl=Flay Soul>
+ <id=3114><spl=Liquefy Flesh>
+ <id=3115><spl=Sear Flesh>
+ <id=3116><spl=Soul Hammer>
+ <id=3117><spl=Soul Spike>
+ <id=3118><spl=Liquefy Flesh>
+ <id=3119><spl=Sear Flesh>
+ <id=3120><spl=Soul Hammer>
+ <id=3121><spl=Soul Spike>
+ <id=3122><spl=Sacrificial Edge>
+ <id=3123><spl=Sacrificial Edges>
+ <id=3124><spl=Blight Mana>
+ <id=3125><spl=EnervateBeing>
+ <id=3126><spl=Poison Health>
+ <id=3127><spl=Fell Wind>
+ <id=3128><spl=Infected Blood>
+ <id=3129><spl=Infirmed Mana>
+ <id=3130><spl=Halls of Liazk Itzi>
+ <id=3131><spl=Halls of Liazk Itzi>
+ <id=3132><spl=Halls of Liazk Itzi>
+ <id=3133><spl=Halls of Liazk Itzi>
+ <id=3134><spl=Halls of Liazk Itzi>
+ <id=3135><spl=Halls of Liazk Itzi>
+ <id=3136><spl=Halls of Liazk Itzi>
+ <id=3137><spl=Halls of Liazk Itzi>
+ <id=3138><spl=Antechamber of Liazk Itzi>
+ <id=3139><spl=Liazk Itzi's Crypt>
+ <id=3140><spl=Lair of Liazk Itzi>
+ <id=3141><spl=Lair of Liazk Itzi>
+ <id=3142><spl=Lair of Liazk Itzi>
+ <id=3143><spl=Lair of Liazk Itzi>
+ <id=3144><spl=Liazk Itzi Guardians>
+ <id=3145><spl=Liazk Itzi Guardians>
+ <id=3146><spl=Liazk Itzi Guardians>
+ <id=3147><spl=Liazk Itzi Guardians>
+ <id=3148><spl=Liazk Itzi's Offering Room>
+ <id=3149><spl=Liazk Itzi's Offering Room>
+ <id=3150><spl=Liazk Itzi's Offering Room>
+ <id=3151><spl=Liazk Itzi's Offering Room>
+ <id=3152><spl=Inferior Scythe Aegis>
+ <id=3153><spl=Lesser Scythe Aegis>
+ <id=3154><spl=Scythe Aegis>
+ <id=3155><spl=Lesser Alacrity of the Conclave>
+ <id=3156><spl=Alacrity of the Conclave>
+ <id=3157><spl=Greater Alacrity of the Conclave>
+ <id=3158><spl=Superior Alacrity of the Conclave>
+ <id=3159><spl=Lesser Vivify the Conclave>
+ <id=3160><spl=Vivify the Conclave>
+ <id=3161><spl=Greater Vivify the Conclave>
+ <id=3162><spl=Superior Vivify the Conclave>
+ <id=3163><spl=Lesser Acumen of the Conclave>
+ <id=3164><spl=Acumen of the Conclave>
+ <id=3165><spl=Greater Acumen of the Conclave>
+ <id=3166><spl=Superior Acumen of the Conclave>
+ <id=3167><spl=Lesser Speed the Conclave>
+ <id=3168><spl=Speed the Conclave>
+ <id=3169><spl=Greater Speed the Conclave>
+ <id=3170><spl=Superior Speed the Conclave>
+ <id=3171><spl=Lesser Volition of the Conclave>
+ <id=3172><spl=Volition of the Conclave>
+ <id=3173><spl=Greater Volition of the Conclave>
+ <id=3174><spl=Superior Volition of the Conclave>
+ <id=3175><spl=Lesser Empowering the Conclave>
+ <id=3176><spl=Empowering the Conclave>
+ <id=3177><spl=Greater Empowering the Conclave>
+ <id=3178><spl=Superior Empowering the Conclave>
+ <id=3179><spl=Eradicate All Magic Other>
+ <id=3180><spl=Eradicate All Magic Self>
+ <id=3181><spl=Nullify All Magic Other>
+ <id=3182><spl=Nullify All Magic Self>
+ <id=3183><spl=Nullify All Magic Self>
+ <id=3184><spl=Eradicate Creature Magic Other>
+ <id=3185><spl=Eradicate Creature Magic Self>
+ <id=3186><spl=Nullify Creature Magic Other>
+ <id=3187><spl=Nullify Creature Magic Self>
+ <id=3188><spl=Nullify Creature Magic Other>
+ <id=3189><spl=Nullify Creature Magic Self>
+ <id=3190><spl=Eradicate Item Magic>
+ <id=3191><spl=Nullify Item Magic>
+ <id=3192><spl=Nullify Item Magic>
+ <id=3193><spl=Eradicate Life Magic Other>
+ <id=3194><spl=Eradicate Life Magic Self>
+ <id=3195><spl=Nullify Life Magic Other>
+ <id=3196><spl=Nullify Life Magic Self>
+ <id=3197><spl=Nullify Life Magic Other>
+ <id=3198><spl=Nullify Life Magic Self>
+ <id=3199><spl=Minor Hermetic Link>
+ <id=3200><spl=Major Hermetic Link>
+ <id=3201><spl=Feeble Hermetic Link>
+ <id=3202><spl=Moderate Hermetic Link>
+ <id=3203><spl=Eradicate All Magic Other>
+ <id=3204><spl=Blazing Heart>
+ <id=3205><spl=Good Eating>
+ <id=3206><spl=Enliven>
+ <id=3207><spl=Ore Fire>
+ <id=3208><spl=Innervate>
+ <id=3209><spl=Refreshment>
+ <id=3210><spl=Agitate>
+ <id=3211><spl=Annoyance>
+ <id=3212><spl=Guilt Trip>
+ <id=3213><spl=Heart Ache>
+ <id=3214><spl=Sorrow>
+ <id=3215><spl=Underfoot>
+ <id=3216><spl=Transport to the Forbidden Catacombs>
+ <id=3217><spl=Cascade>
+ <id=3218><spl=Greater Cascade>
+ <id=3219><spl=Lesser Cascade>
+ <id=3220><spl=Cascade>
+ <id=3221><spl=Greater Cascade>
+ <id=3222><spl=Lesser Cascade>
+ <id=3223><spl=Cascade>
+ <id=3224><spl=Greater Cascade>
+ <id=3225><spl=Lesser Cascade>
+ <id=3226><spl=Cascade>
+ <id=3227><spl=Greater Cascade>
+ <id=3228><spl=Lesser Cascade>
+ <id=3229><spl=Cascade>
+ <id=3230><spl=Greater Cascade>
+ <id=3231><spl=Lesser Cascade>
+ <id=3232><spl=Cascade>
+ <id=3233><spl=Greater Cascade>
+ <id=3234><spl=Lesser Cascade>
+ <id=3235><spl=Dark Power>
+ <id=3236><spl=Restorative Draught>
+ <id=3237><spl=Fanaticism>
+ <id=3238><spl=Portal to Nanner Island>
+ <id=3239><spl=Insight of the Khe>
+ <id=3240><spl=Wisdom of the Khe>
+ <id=3241><spl=Flame Burst>
+ <id=3242><spl=Weave of Chorizite>
+ <id=3243><spl=Consecration>
+ <id=3244><spl=Divine Manipulation>
+ <id=3245><spl=Sacrosanct Touch>
+ <id=3246><spl=Adja's Benefaction>
+ <id=3247><spl=Adja's Favor>
+ <id=3248><spl=Adja's Grace>
+ <id=3249><spl=Ghostly Chorus>
+ <id=3250><spl=Major Spirit Thirst>
+ <id=3251><spl=Minor Spirit Thirst>
+ <id=3252><spl=Spirit Thirst>
+ <id=3253><spl=Spirit Drinker I>
+ <id=3254><spl=Spirit Drinker II>
+ <id=3255><spl=Spirit Drinker III>
+ <id=3256><spl=Spirit Drinker IV>
+ <id=3257><spl=Spirit Drinker V>
+ <id=3258><spl=Spirit Drinker VI>
+ <id=3259><spl=Infected Spirit Caress>
+ <id=3260><spl=Spirit Loather I>
+ <id=3261><spl=Spirit Loather II>
+ <id=3262><spl=Spirit Loather III>
+ <id=3263><spl=Spirit Loather IV>
+ <id=3264><spl=Spirit Loather V>
+ <id=3265><spl=Spirit Loather VI>
+ <id=3266><spl=Spirit Pacification>
+ <id=3267><spl=Bit Between Teeth>
+ <id=3268><spl=Biting Bonds>
+ <id=3269><spl=Under The Lash>
+ <id=3270><spl=Hezhit's Safety>
+ <id=3271><spl=Hezhit's Safety>
+ <id=3272><spl=Hezhit's Safety>
+ <id=3273><spl=Prison>
+ <id=3274><spl=Prison>
+ <id=3275><spl=Prison>
+ <id=3276><spl=Prison>
+ <id=3277><spl=Prison>
+ <id=3278><spl=Prison>
+ <id=3279><spl=Entrance to Hizk Ri's Temple>
+ <id=3280><spl=Return to the Corridor>
+ <id=3281><spl=Hizk Ri's Test>
+ <id=3282><spl=Hizk Ri's Test>
+ <id=3283><spl=Hizk Ri's Test>
+ <id=3284><spl=Consort Hezhit>
+ <id=3285><spl=Attendant Jrvik>
+ <id=3286><spl=Well of Tears>
+ <id=3287><spl=Well of Tears>
+ <id=3288><spl=Well of Tears>
+ <id=3289><spl=Patriarch Zixki>
+ <id=3290><spl=Jrvik's Safety>
+ <id=3291><spl=Jrvik's Safety>
+ <id=3292><spl=Jrvik's Safety>
+ <id=3293><spl=Prison>
+ <id=3294><spl=Prison>
+ <id=3295><spl=Prison>
+ <id=3296><spl=Prison>
+ <id=3297><spl=Prison>
+ <id=3298><spl=Prison>
+ <id=3299><spl=Zixk's Safety>
+ <id=3300><spl=Zixk's Safety>
+ <id=3301><spl=Zixk's Safety>
+ <id=3302><spl=Prison>
+ <id=3303><spl=Prison>
+ <id=3304><spl=Prison>
+ <id=3305><spl=Prison>
+ <id=3306><spl=Prison>
+ <id=3307><spl=Prison>
+ <id=3308><spl=Flange Aegis>
+ <id=3309><spl=Inferior Flange Aegis>
+ <id=3310><spl=Inferior Lance Aegis>
+ <id=3311><spl=Lance Aegis>
+ <id=3312><spl=Lesser Flange Aegis>
+ <id=3313><spl=Lesser Lance Aegis>
+ <id=3314><spl=Chained to the Wall>
+ <id=3315><spl=The Sewer>
+ <id=3316><spl=The Sewer>
+ <id=3317><spl=The Sewer>
+ <id=3318><spl=Hizk Ri's Crypt>
+ <id=3319><spl=Portal to Izji Qo's Temple>
+ <id=3320><spl=Lesser Corrosive Ward>
+ <id=3321><spl=Corrosive Ward>
+ <id=3322><spl=Greater Corrosive Ward>
+ <id=3323><spl=Superior Corrosive Ward>
+ <id=3324><spl=Lesser Scythe Ward>
+ <id=3325><spl=Scythe Ward>
+ <id=3326><spl=Greater Scythe Ward>
+ <id=3327><spl=Superior Scythe Ward>
+ <id=3328><spl=Lesser Flange Ward>
+ <id=3329><spl=Flange Ward>
+ <id=3330><spl=Greater Flange Ward>
+ <id=3331><spl=Superior Flange Ward>
+ <id=3332><spl=Lesser Frore Ward>
+ <id=3333><spl=Frore Ward>
+ <id=3334><spl=Greater Frore Ward>
+ <id=3335><spl=Superior Frore Ward>
+ <id=3336><spl=Lesser Inferno Ward>
+ <id=3337><spl=Inferno Ward>
+ <id=3338><spl=Greater Inferno Ward>
+ <id=3339><spl=Superior Inferno Ward>
+ <id=3340><spl=Lesser Voltaic Ward>
+ <id=3341><spl=Voltaic Ward>
+ <id=3342><spl=Greater Voltaic Ward>
+ <id=3343><spl=Superior Voltaic Ward>
+ <id=3344><spl=Lesser Lance Ward>
+ <id=3345><spl=Lance Ward>
+ <id=3346><spl=Greater Lance Ward>
+ <id=3347><spl=Superior Lance Ward>
+ <id=3348><spl=Lesser Warden of the Clutch>
+ <id=3349><spl=Inferior Warden of the Clutch>
+ <id=3350><spl=Warden of the Clutch>
+ <id=3351><spl=Potent Warden of the Clutch>
+ <id=3352><spl=Lesser Guardian of the Clutch>
+ <id=3353><spl=Inferior Guardian of the Clutch>
+ <id=3354><spl=Guardian of the Clutch>
+ <id=3355><spl=Potent Guardian of the Clutch>
+ <id=3356><spl=Lesser Sanctifier of the Clutch>
+ <id=3357><spl=Inferior Sanctifier of the Clutch>
+ <id=3358><spl=Sanctifier of the Clutch>
+ <id=3359><spl=Potent Sanctifier of the Clutch>
+ <id=3360><spl=Entrance to the Burun Shrine>
+ <id=3361><spl=The Art of Destruction>
+ <id=3362><spl=Blessing of the Horn>
+ <id=3363><spl=Blessing of the Scale>
+ <id=3364><spl=Blessing of the Wing>
+ <id=3365><spl=Gift of Enhancement>
+ <id=3366><spl=The Heart's Touch>
+ <id=3367><spl=Leaping Legs>
+ <id=3368><spl=Mage's Understanding>
+ <id=3369><spl=On the Run>
+ <id=3370><spl=Power of Enchantment>
+ <id=3371><spl=Greater Life Giver>
+ <id=3372><spl=Debilitating Spore>
+ <id=3373><spl=Diseased Air>
+ <id=3374><spl=Kivik Lir's Scorn>
+ <id=3375><spl=Fungal Bloom>
+ <id=3376><spl=Lesser Vision Beyond the Grave>
+ <id=3377><spl=Minor Vision Beyond the Grave>
+ <id=3378><spl=Vision Beyond the Grave>
+ <id=3379><spl=Vitae>
+ <id=3380><spl=Vitae>
+ <id=3381><spl=Debilitating Spore>
+ <id=3382><spl=Diseased Air>
+ <id=3383><spl=Fungal Bloom>
+ <id=3384><spl=Lesser Conjurant Chant>
+ <id=3385><spl=Conjurant Chant>
+ <id=3386><spl=Greater Conjurant Chant>
+ <id=3387><spl=Superior Conjurant Chant>
+ <id=3388><spl=Lesser Artificant Chant>
+ <id=3389><spl=Artificant Chant>
+ <id=3390><spl=Greater Artificant Chant>
+ <id=3391><spl=Superior Artificant Chant>
+ <id=3392><spl=Lesser Vitaeic Chant>
+ <id=3393><spl=Vitaeic Chant>
+ <id=3394><spl=Greater Vitaeic Chant>
+ <id=3395><spl=Superior Vitaeic Chant>
+ <id=3396><spl=Lesser Conveyic Chant>
+ <id=3397><spl=Conveyic Chant>
+ <id=3398><spl=Greater Conveyic Chant>
+ <id=3399><spl=Superior Conveyic Chant>
+ <id=3400><spl=Lesser Hieromantic Chant>
+ <id=3401><spl=Hieromantic Chant>
+ <id=3402><spl=Greater Hieromantic Chant>
+ <id=3403><spl=Superior Hieromantic Chant>
+ <id=3404><spl=Evil Thirst>
+ <id=3405><spl=Gift of the Fiazhat>
+ <id=3406><spl=Kivik Lir's Boon>
+ <id=3407><spl=Lesser Evil Thirst>
+ <id=3408><spl=Lesser Gift of the Fiazhat>
+ <id=3409><spl=Minor Evil Thirst>
+ <id=3410><spl=Minor Gift of the Fiazhat>
+ <id=3411><spl=Portal spell to a Hidden Chamber>
+ <id=3412><spl=Halls of Kivik Lir>
+ <id=3413><spl=Lesser Arena of Kivik Lir>
+ <id=3414><spl=Arena of Kivik Lir>
+ <id=3415><spl=Greater Arena of Kivik Lir>
+ <id=3416><spl=Gallery of Kivik Lir>
+ <id=3417><spl=Gallery of Kivik Lir>
+ <id=3418><spl=Gallery of Kivik Lir>
+ <id=3419><spl=Crypt of Kivik Lir>
+ <id=3420><spl=Lesser Haven of Kivik Lir>
+ <id=3421><spl=Haven of Kivik Lir>
+ <id=3422><spl=Greater Haven of Kivik Lir>
+ <id=3423><spl=Trials of Kivik Lir>
+ <id=3424><spl=Triumph Against the Trials>
+ <id=3425><spl=Lyceum of Kivik Lir>
+ <id=3426><spl=Greater Withering>
+ <id=3427><spl=Lesser Withering>
+ <id=3428><spl=Withering>
+ <id=3429><spl=Kivik Lir's Venom>
+ <id=3430><spl=Inferior Scourge Aegis>
+ <id=3431><spl=Lesser Scourge Aegis>
+ <id=3432><spl=Scourge Aegis>
+ <id=3433><spl=Decay>
+ <id=3434><spl=Eyes Beyond the Mist>
+ <id=3435><spl=Greater Mucor Blight>
+ <id=3436><spl=Lesser Eyes Beyond the Mist>
+ <id=3437><spl=Lesser Mucor Blight>
+ <id=3438><spl=Minor Eyes Beyond the Mist>
+ <id=3439><spl=Mucor Blight>
+ <id=3440><spl=Health of the Lugian>
+ <id=3441><spl=Insight of the Lugian>
+ <id=3442><spl=Stamina of the Lugian>
+ <id=3443><spl=Blight of the Swamp>
+ <id=3444><spl=Justice of The Sleeping One>
+ <id=3445><spl=The Sleeping One's Purge>
+ <id=3446><spl=Wrath of the Swamp>
+ <id=3447><spl=Asphyxiating Spore Cloud>
+ <id=3448><spl=Mass Blood Affliction>
+ <id=3449><spl=Mass Blood Disease>
+ <id=3450><spl=Cloud of Mold Spores>
+ <id=3451><spl=Concussive Belch>
+ <id=3452><spl=Concussive Wail>
+ <id=3453><spl=Feelun Blight>
+ <id=3454><spl=Wrath of the Feelun>
+ <id=3455><spl=Koruu Cloud>
+ <id=3456><spl=Koruu's Wrath>
+ <id=3457><spl=Mana Bolt>
+ <id=3458><spl=Mana Purge>
+ <id=3459><spl=Mucor Cloud>
+ <id=3460><spl=Dissolving Vortex>
+ <id=3461><spl=Batter Flesh>
+ <id=3462><spl=Canker Flesh>
+ <id=3463><spl=Char Flesh>
+ <id=3464><spl=Numb Flesh>
+ <id=3465><spl=Blood Affliction>
+ <id=3466><spl=Blood Disease>
+ <id=3467><spl=Choking Spores>
+ <id=3468><spl=Mold Spores>
+ <id=3469><spl=Parasitic Affliction>
+ <id=3470><spl=Lesser Endless Well>
+ <id=3471><spl=The Endless Well>
+ <id=3472><spl=Greater Endless Well>
+ <id=3473><spl=Superior Endless Well>
+ <id=3474><spl=Lesser Soothing Wind>
+ <id=3475><spl=The Soothing Wind>
+ <id=3476><spl=Greater Soothing Wind>
+ <id=3477><spl=Superior Soothing Wind>
+ <id=3478><spl=Lesser Golden Wind>
+ <id=3479><spl=The Golden Wind>
+ <id=3480><spl=Greater Golden Wind>
+ <id=3481><spl=Superior Golden Wind>
+ <id=3482><spl=Izji Qo's Antechamber>
+ <id=3483><spl=Izji Qo's Defenders>
+ <id=3484><spl=Izji Qo's Defenders>
+ <id=3485><spl=Izji Qo's Defenders>
+ <id=3486><spl=Into the Receiving Chamber>
+ <id=3487><spl=Into the Receiving Chamber>
+ <id=3488><spl=Into the Receiving Chamber>
+ <id=3489><spl=Into the Receiving Chamber>
+ <id=3490><spl=Into the Receiving Chamber>
+ <id=3491><spl=Into the Receiving Chamber>
+ <id=3492><spl=Into the Receiving Chamber>
+ <id=3493><spl=Into the Receiving Chamber>
+ <id=3494><spl=Izji Qo's Crypt>
+ <id=3495><spl=Izji Qo's Test>
+ <id=3496><spl=Inzji Qo's Test>
+ <id=3497><spl=Izji Qo's Test>
+ <id=3498><spl=Disintegrated>
+ <id=3499><spl=Arcanum Salvaging Self I>
+ <id=3500><spl=Arcanum Salvaging Self II>
+ <id=3501><spl=Arcanum Salvaging Self III>
+ <id=3502><spl=Arcanum Salvaging Self IV>
+ <id=3503><spl=Arcanum Salvaging Self V>
+ <id=3504><spl=Arcanum Salvaging Self VI>
+ <id=3505><spl=Arcanum Salvaging VII>
+ <id=3506><spl=Arcanum Enlightenment I>
+ <id=3507><spl=Arcanum Enlightenment II>
+ <id=3508><spl=Arcanum Enlightenment III>
+ <id=3509><spl=Arcanum Enlightenment IV>
+ <id=3510><spl=Arcanum Enlightenment V>
+ <id=3511><spl=Arcanum Enlightenment VI>
+ <id=3512><spl=Arcanum Enlightenment VII>
+ <id=3513><spl=Nuhmudira's Wisdom I>
+ <id=3514><spl=Nuhmudira's Wisdom II>
+ <id=3515><spl=Nuhmudira's Wisdom III>
+ <id=3516><spl=Nuhmudira's Wisdom IV>
+ <id=3517><spl=Nuhmudira's Wisdom V>
+ <id=3518><spl=Nuhmudira's Wisdom VI>
+ <id=3519><spl=Nuhmudira's Wisdom VII>
+ <id=3520><spl=Nuhmudira's Enlightenment I>
+ <id=3521><spl=Nuhmudira's Enlightenment II>
+ <id=3522><spl=Nuhmudira's Enlightenment III>
+ <id=3523><spl=Nuhmudira's Enlightenment IV>
+ <id=3524><spl=Nuhmudira's Enlightenment V>
+ <id=3525><spl=Nuhmudira Enlightenment VI>
+ <id=3526><spl=Nuhmudira's Enlightenment>
+ <id=3527><spl=Intoxication I>
+ <id=3528><spl=Intoxication II>
+ <id=3529><spl=Intoxication III>
+ <id=3530><spl=Ketnan's Eye>
+ <id=3531><spl=Bobo's Quickening>
+ <id=3532><spl=Bobo's Focused Blessing>
+ <id=3533><spl=Brighteyes' Favor>
+ <id=3534><spl=Free Ride to the K'nath Lair>
+ <id=3535><spl=Free Ride to Sanamar>
+ <id=3536><spl=Portal Sending>
+ <id=3537><spl=Portal Sending>
+ <id=3538><spl=Portal Sending>
+ <id=3539><spl=Portal Sending>
+ <id=3540><spl=Portal Sending>
+ <id=3541><spl=Portal Sending>
+ <id=3542><spl=Portal Sending>
+ <id=3543><spl=Portal Sending>
+ <id=3544><spl=Portal Sending>
+ <id=3545><spl=Portal Sending>
+ <id=3546><spl=Portal Sending>
+ <id=3547><spl=Portal Sending>
+ <id=3548><spl=Portal Sending>
+ <id=3549><spl=Portal Sending>
+ <id=3550><spl=Portal Sending>
+ <id=3551><spl=Portal Sending>
+ <id=3552><spl=Portal Sending>
+ <id=3553><spl=Portal Sending>
+ <id=3554><spl=Portal Sending>
+ <id=3555><spl=Portal Sending>
+ <id=3556><spl=Portal Sending>
+ <id=3557><spl=Portal Sending>
+ <id=3558><spl=Portal Sending>
+ <id=3559><spl=Portal Sending>
+ <id=3560><spl=Portal Sending>
+ <id=3561><spl=Portal Sending>
+ <id=3562><spl=Portal Sending>
+ <id=3563><spl=Portal Sending>
+ <id=3564><spl=Portal Sending>
+ <id=3565><spl=Portal Sending>
+ <id=3566><spl=Portal Sending>
+ <id=3567><spl=Fiun Flee>
+ <id=3568><spl=Fiun Efficiency>
+ <id=3569><spl=Mana Boost>
+ <id=3570><spl=Stamina Boost>
+ <id=3571><spl=Health Boost>
+ <id=3572><spl=Inner Brilliance>
+ <id=3573><spl=Inner Might>
+ <id=3574><spl=Inner Will>
+ <id=3575><spl=Perfect Balance>
+ <id=3576><spl=Perfect Health>
+ <id=3577><spl=Perfect Speed>
+ <id=3578><spl=Depths of Liazk Itzi's Temple>
+ <id=3579><spl=Underpassage of Liazk Itzi's Temple>
+ <id=3580><spl=Center of Liazk Itzi's Temple>
+ <id=3581><spl=Secrets of Liazk Itzi's Temple>
+ <id=3582><spl=Eaten!>
+ <id=3583><spl=Regurgitated>
+ <id=3584><spl=Qin Xikit's Receiving Chamber>
+ <id=3585><spl=Eaten!>
+ <id=3586><spl=Qin Xikit's Antechamber>
+ <id=3587><spl=Portal Sending>
+ <id=3588><spl=Secrets of Qin Xikit's Temple>
+ <id=3589><spl=Qin Xikit's Tomb>
+ <id=3590><spl=Regurgitated!>
+ <id=3591><spl=Access to Xi Ru's Font>
+ <id=3592><spl=Qin Xikit's Island>
+ <id=3593><spl=Eaten!>
+ <id=3594><spl=Underpassage of Hizk Ri's Temple>
+ <id=3595><spl=Underpassage of Hizk Ri's Temple>
+ <id=3596><spl=Center of Hizk Ri's Temple>
+ <id=3597><spl=Secrets of Hizk Ri's Temple>
+ <id=3598><spl=Regurgitated>
+ <id=3599><spl=Eaten!>
+ <id=3600><spl=Depths of Ixir Zi's Temple>
+ <id=3601><spl=Underpassage of Ixir Zi's Temple>
+ <id=3602><spl=Center of Ixir Zi's Temple>
+ <id=3603><spl=Secrets of Ixir Zi's Temple>
+ <id=3604><spl=Regurgitated>
+ <id=3605><spl=Portal to Cragstone>
+ <id=3606><spl=Eaten!>
+ <id=3607><spl=Depth's of Izji Qo's Temple>
+ <id=3608><spl=Underpassage of Izji Qo's Temple>
+ <id=3609><spl=Center of Izji Qo's Temple>
+ <id=3610><spl=Secrets of Izji Qo's Temple>
+ <id=3611><spl=Regurgitated>
+ <id=3612><spl=Eaten!>
+ <id=3613><spl=Regurgitated>
+ <id=3614><spl=Underpassage of Kivik Lir's Temple>
+ <id=3615><spl=Center of Kivik Lir's Temple>
+ <id=3616><spl=Secrets of Kivik Lir's Temple>
+ <id=3617><spl=Depths of Kivik Lir's Temple>
+ <id=3618><spl=Portal to Western Aphus Lassel>
+ <id=3619><spl=Portal to the Black Death Catacombs>
+ <id=3620><spl=Portal to Black Spawn Den>
+ <id=3621><spl=Portal to Black Spawn Den>
+ <id=3622><spl=Portal to Black Spawn Den>
+ <id=3623><spl=Portal to Center of the Obsidian Plains>
+ <id=3624><spl=Portal to Hills Citadel>
+ <id=3625><spl=Portal to the Kara Wetlands>
+ <id=3626><spl=Portal to the Marescent Plateau Base>
+ <id=3627><spl=Portal to Neydisa Castle>
+ <id=3628><spl=Portal to the Northern Landbridge>
+ <id=3629><spl=Portal to the Olthoi Horde Nest>
+ <id=3630><spl=Portal to the Olthoi North>
+ <id=3631><spl=Portal to the Renegade Fortress>
+ <id=3632><spl=Portal to Ridge Citadel>
+ <id=3633><spl=Portal to the Southern Landbridge>
+ <id=3634><spl=Portal To Valley of Death>
+ <id=3635><spl=Portal to Wilderness Citadel>
+ <id=3636><spl=Axeman's Boon>
+ <id=3637><spl=Bowman's Boon>
+ <id=3638><spl=Chucker's Boon>
+ <id=3639><spl=Crossbowman's Boon>
+ <id=3640><spl=Enchanter's Boon>
+ <id=3641><spl=Hieromancer's Boon>
+ <id=3642><spl=Knifer's Boon>
+ <id=3643><spl=Life Giver's Boon>
+ <id=3644><spl=Macer's Boon>
+ <id=3645><spl=Pugilist's Boon>
+ <id=3646><spl=Spearman's Boon>
+ <id=3647><spl=Staffer's Boon>
+ <id=3648><spl=Swordsman's Boon>
+ <id=3649><spl=Aerfalle's Embrace>
+ <id=3650><spl=Aerfalle's Enforcement>
+ <id=3651><spl=Aerfalle's Gaze>
+ <id=3652><spl=Aerfalle's Touch>
+ <id=3653><spl=Acid Blast III>
+ <id=3654><spl=Acid Volley I>
+ <id=3655><spl=Acid Volley II>
+ <id=3656><spl=Blade Blast III>
+ <id=3657><spl=Blade Blast IV>
+ <id=3658><spl=Blade Volley I>
+ <id=3659><spl=Blade Volley II>
+ <id=3660><spl=Bludgeoning Volley I>
+ <id=3661><spl=Bludgeoning Volley II>
+ <id=3662><spl=Flame Blast I>
+ <id=3663><spl=Flame Volley III>
+ <id=3664><spl=Flame Volley IV>
+ <id=3665><spl=Force Blast III>
+ <id=3666><spl=Force Blast IV>
+ <id=3667><spl=Force Volley III>
+ <id=3668><spl=Force Volley IV>
+ <id=3669><spl=Frost Blast III>
+ <id=3670><spl=Frost Blast IV>
+ <id=3671><spl=Frost Volley III>
+ <id=3672><spl=Frost Volley IV>
+ <id=3673><spl=Lightning Blast III>
+ <id=3674><spl=Lightning Blast IV>
+ <id=3675><spl=Lightning Volley III>
+ <id=3676><spl=Lightning Volley IV>
+ <id=3677><spl=Shock Blast III>
+ <id=3678><spl=Shock Blast IV>
+ <id=3679><spl=Prodigal Acid Bane>
+ <id=3680><spl=Prodigal Acid Protection>
+ <id=3681><spl=Prodigal Alchemy Mastery>
+ <id=3682><spl=Prodigal Arcane Enlightenment>
+ <id=3683><spl=Prodigal Armor Expertise>
+ <id=3684><spl=Prodigal Armor>
+ <id=3685><spl=Prodigal Axe Mastery>
+ <id=3686><spl=Prodigal Blade Bane>
+ <id=3687><spl=Prodigal Blade Protection>
+ <id=3688><spl=Prodigal Blood Drinker>
+ <id=3689><spl=Prodigal Bludgeon Bane>
+ <id=3690><spl=Prodigal Bludgeon Protection>
+ <id=3691><spl=Prodigal Bow Mastery>
+ <id=3692><spl=Prodigal Cold Protection>
+ <id=3693><spl=Prodigal Cooking Mastery>
+ <id=3694><spl=Prodigal Coordination>
+ <id=3695><spl=Prodigal Creature Enchantment Mastery>
+ <id=3696><spl=Prodigal Crossbow Mastery>
+ <id=3697><spl=Prodigal Dagger Mastery>
+ <id=3698><spl=Prodigal Deception Mastery>
+ <id=3699><spl=Prodigal Defender>
+ <id=3700><spl=Prodigal Endurance>
+ <id=3701><spl=Prodigal Fealty>
+ <id=3702><spl=Prodigal Fire Protection>
+ <id=3703><spl=Prodigal Flame Bane>
+ <id=3704><spl=Prodigal Fletching Mastery>
+ <id=3705><spl=Prodigal Focus>
+ <id=3706><spl=Prodigal Frost Bane>
+ <id=3707><spl=Prodigal Healing Mastery>
+ <id=3708><spl=Prodigal Heart Seeker>
+ <id=3709><spl=Prodigal Hermetic Link>
+ <id=3710><spl=Prodigal Impenetrability>
+ <id=3711><spl=Prodigal Impregnability>
+ <id=3712><spl=Prodigal Invulnerability>
+ <id=3713><spl=Prodigal Item Enchantment Mastery>
+ <id=3714><spl=Prodigal Item Expertise>
+ <id=3715><spl=Prodigal Jumping Mastery>
+ <id=3716><spl=Prodigal Leadership Mastery>
+ <id=3717><spl=Prodigal Life Magic Mastery>
+ <id=3718><spl=Prodigal Lightning Bane>
+ <id=3719><spl=Prodigal Lightning Protection>
+ <id=3720><spl=Prodigal Lockpick Mastery>
+ <id=3721><spl=Prodigal Mace Mastery>
+ <id=3722><spl=Prodigal Magic Item Expertise>
+ <id=3723><spl=Prodigal Magic Resistance>
+ <id=3724><spl=Prodigal Mana Conversion Mastery>
+ <id=3725><spl=Prodigal Mana Renewal>
+ <id=3726><spl=Prodigal Monster Attunement>
+ <id=3727><spl=Prodigal Person Attunement>
+ <id=3728><spl=Prodigal Piercing Bane>
+ <id=3729><spl=Prodigal Piercing Protection>
+ <id=3730><spl=Prodigal Quickness>
+ <id=3731><spl=Prodigal Regeneration>
+ <id=3732><spl=Prodigal Rejuvenation>
+ <id=3733><spl=Prodigal Willpower>
+ <id=3734><spl=Prodigal Spear Mastery>
+ <id=3735><spl=Prodigal Spirit Drinker>
+ <id=3736><spl=Prodigal Sprint>
+ <id=3737><spl=Prodigal Staff Mastery>
+ <id=3738><spl=Prodigal Strength>
+ <id=3739><spl=Prodigal Swift Killer>
+ <id=3740><spl=Prodigal Sword Mastery>
+ <id=3741><spl=Prodigal Thrown Weapon Mastery>
+ <id=3742><spl=Prodigal Unarmed Combat Mastery>
+ <id=3743><spl=Prodigal War Magic Mastery>
+ <id=3744><spl=Prodigal Weapon Expertise>
+ <id=3745><spl=Inferior Inferno Aegis>
+ <id=3746><spl=Inferno Aegis>
+ <id=3747><spl=Lesser Inferno Aegis>
+ <id=3748><spl=Master Salvager's Greater Boon>
+ <id=3749><spl=Master Alchemist's Boon>
+ <id=3750><spl=Master Alchemist's Greater Boon>
+ <id=3751><spl=Master Chef's Boon>
+ <id=3752><spl=Master Chef's Greater Boon>
+ <id=3753><spl=Fletching Master's Boon>
+ <id=3754><spl=Fletching Master's Greater Boon>
+ <id=3755><spl=Master Lockpicker's Boon>
+ <id=3756><spl=Master Lockpicker's Greater Boon>
+ <id=3757><spl=Master Salvager's Boon>
+ <id=3758><spl=Inky Armor>
+ <id=3759><spl=Mana Giver>
+ <id=3760><spl=Culinary Ecstasy>
+ <id=3761><spl=Fiun Resistance>
+ <id=3762><spl=Defiled Temple Portal Sending>
+ <id=3763><spl=Balloon Ride>
+ <id=3764><spl=Summons a portal to the Banderling Shrine>
+ <id=3765><spl=Entry to the Mausoleum of Bitterness>
+ <id=3766><spl=Entry to the Mausoleum of Bitterness>
+ <id=3767><spl=Entry to the Mausoleum of Bitterness>
+ <id=3768><spl=Bitter Punishment>
+ <id=3769><spl=Entry to the Mausoleum of Anger>
+ <id=3770><spl=Entry to the Mausoleum of Anger>
+ <id=3771><spl=Entry to the Mausoleum of Anger>
+ <id=3772><spl=Entry to the Mausoleum of Anger>
+ <id=3773><spl=Entry to the Mausoleum of Anger>
+ <id=3774><spl=Entry to the Mausoleum of Anger>
+ <id=3775><spl=Angry Punishment>
+ <id=3776><spl=Entry to the Mausoleum of Cruelty>
+ <id=3777><spl=Entry to the Mausoleum of Cruelty>
+ <id=3778><spl=Entry to the Mausoleum of Cruelty>
+ <id=3779><spl=Entry to the Mausoleum of Cruelty>
+ <id=3780><spl=Entry to the Mausoleum of Cruelty>
+ <id=3781><spl=Entry to the Mausoleum of Cruelty>
+ <id=3782><spl=Cruel Punishment>
+ <id=3783><spl=Entry to the Accursed Mausoleum of Bitterness>
+ <id=3784><spl=Entry to the Accursed Mausoleum of Bitterness>
+ <id=3785><spl=Entry to the Accursed Mausoleum of Bitterness>
+ <id=3786><spl=Entry to the Accursed Mausoleum of Bitterness>
+ <id=3787><spl=Entry to the Accursed Mausoleum of Bitterness>
+ <id=3788><spl=Entry to the Accursed Mausoleum of Bitterness>
+ <id=3789><spl=Slaughter Punishment>
+ <id=3790><spl=Entry to the Unholy Mausoleum of Bitterness>
+ <id=3791><spl=Entry to the Unholy Mausoleum of Bitterness>
+ <id=3792><spl=Entry to the Unholy Mausoleum of Bitterness>
+ <id=3793><spl=Entry to the Unholy Mausoleum of Bitterness>
+ <id=3794><spl=Entry to the Unholy Mausoleum of Bitterness>
+ <id=3795><spl=Entry to the Unholy Mausoleum of Bitterness>
+ <id=3796><spl=Entry to the Mausoleum of Bitterness>
+ <id=3797><spl=Entry to the Mausoleum of Bitterness>
+ <id=3798><spl=Entry to the Mausoleum of Bitterness>
+ <id=3799><spl=Black Marrow Bliss>
+ <id=3800><spl=Burning Spirit>
+ <id=3801><spl=Shadow Touch>
+ <id=3802><spl=Shadow Reek>
+ <id=3803><spl=Shadow Shot>
+ <id=3804><spl=Shadow Cross>
+ <id=3805><spl=Acid Ring>
+ <id=3806><spl=Flame Ring>
+ <id=3807><spl=Force Ring>
+ <id=3808><spl=Lightning Ring>
+ <id=3809><spl=Minor Salvaging Aptitude>
+ <id=3810><spl=Asheron’s Benediction>
+ <id=3811><spl=Blackmoor’s Favor>
+ <id=3812><spl=Tursh's Lair>
+ <id=3813><spl=Free Ride to Shoushi>
+ <id=3814><spl=Free Ride to Yaraq>
+ <id=3815><spl=Free Ride to Holtburg>
+ <id=3816><spl=Eyeshot>
+ <id=3817><spl=Hunter's Ward>
+ <id=3818><spl=Curse of Raven Fury>
+ <id=3819><spl=Conscript's Might>
+ <id=3820><spl=Conscript's Ward>
+ <id=3821><spl=Augur's Will>
+ <id=3822><spl=Augur's Glare>
+ <id=3823><spl=Augur's Ward>
+ <id=3824><spl=Marksman's Ken>
+ <id=3825><spl=Arbalester's Intuition>
+ <id=3826><spl=a powerful force>
+ <id=3827><spl=Lunnum's Embrace>
+ <id=3828><spl=Rage of Grael>
+ <id=3829><spl=Blessing of the Sundew>
+ <id=3830><spl=Blessing of the Fly Trap>
+ <id=3831><spl=Blessing of the Pitcher Plant>
+ <id=3832><spl=Master's Voice>
+ <id=3833><spl=Minor Salvaging Aptitude>
+ <id=3834><spl=Major Salvaging Aptitude>
+ <id=3835><spl=Leviathan's Curse>
+ <id=3836><spl=Breath of the Deep>
+ <id=3837><spl=Water Island Access>
+ <id=3838><spl=Abandoned Mines Portal Sending>
+ <id=3839><spl=Brilliant Access>
+ <id=3840><spl=Dazzling Access>
+ <id=3841><spl=Devastated Access>
+ <id=3842><spl=Northeast Coast Portal Sending>
+ <id=3843><spl=Fire Island Access>
+ <id=3844><spl=Gatekeeper Access>
+ <id=3845><spl=Radiant Access>
+ <id=3846><spl=Ruined Access>
+ <id=3847><spl=Cataracts of Xik Minru>
+ <id=3848><spl=Combat Medication>
+ <id=3849><spl=Night Runner>
+ <id=3850><spl=Selflessness>

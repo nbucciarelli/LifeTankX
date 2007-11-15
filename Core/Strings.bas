@@ -1,0 +1,56 @@
+Attribute VB_Name = "Strings"
+Option Explicit
+
+'### STRINGS BEGIN ###
+Public Const STRING_ALLOWED_TO_USE_MACRO = ", you are allowed to use this macro."
+Public Const STRING_AS_A_MEMBER_OF = "As a member of"
+Public Const STRING_AS_A_VASSAL_OF = "As a vassal of"
+Public Const STRING_AUTH_FUNCTION_ERROR = "sAllowedToUseMacro - ERROR :"
+Public Const STRING_AUTOLOOT_ENABLED = "Auto-Loot Feature : Activated"
+Public Const STRING_AUTOSALVAGER_DISABLED = "Auto-Salvager Feature Unavailable"
+Public Const STRING_AUTOSALVAGER_ENABLED = "Auto-Salvager Feature Available"
+Public Const STRING_BAD_LIFETANK = "Corrupted LifeTank detected - Please download an official release"
+Public Const STRING_BANNED = "This account is currently not allowed to use LifeTank - Reason :"
+Public Const STRING_CRC = "val5"
+Public Const STRING_CRC_FILE = "Params.ini"
+Public Const STRING_CRC_PREFIX = "val"
+Public Const STRING_CRC_SMARTFILTER = "val7"
+Public Const STRING_DARKSIDE_AUTH_FILE = "com/macroauth.php?server="
+Public Const STRING_DARKSIDE_IP = "207.44.168.35"
+Public Const STRING_DARKSIDE_SERVER = "www.darkside-online.com"
+Public Const STRING_DBG_ALT_CHECKSUM_FAIL = "Alternative Checksum Test Failed"
+Public Const STRING_ERROR_GETLISTFROMNET = "clsAuthList.GetListFromNet"
+Public Const STRING_EXPIRATION = "Macro expiration date reached. Please download the new Lifetank version"
+Public Const STRING_HTTP = "http://"
+Public Const STRING_HTTP_ERROR = "Http Error"
+Public Const STRING_INVALID_AUTHSERVER_IP = "The authorization server seems to have an invalid IP address."
+Public Const STRING_LT_DLL = "lifetank.dll"
+Public Const STRING_LT2_FILE = "lifetank2.dll"
+Public Const STRING_LTAUTH_PVAL_TYPE_ACCOUNT = "acnt"
+Public Const STRING_LTAUTH_PVAL_TYPE_ALLEG = "alleg"
+Public Const STRING_LTAUTH_PVAL_TYPE_PATRON = "ptron"
+Public Const STRING_LTAUTH_TAG_ACNAME = "acname"
+Public Const STRING_LTAUTH_TAG_AUTHSTATUS = "authstatus"
+Public Const STRING_LTAUTH_TAG_AUTOSALVAGER = "autosalv"
+Public Const STRING_LTAUTH_TAG_EXPIRATION = "expire"
+Public Const STRING_LTAUTH_TAG_TYPE = "type"
+Public Const STRING_LTAUTH_TAG_USERNAME = "usrname"
+Public Const STRING_NET_KEY = "sF8od4ati5np7u"
+Public Const STRING_NETAUTH_ERROR = "Net Authorization Error"
+Public Const STRING_NETAUTH_NOSERVER = "Unable to connect to the authorization server. The web server must be down or rebooting."
+Public Const STRING_NOT_ALLOWED = "You are not allowed to use this macro."
+Public Const STRING_PARSENET_UNSUPPORTED_TYPE = "ParseNetData - Unsupported type :"
+Public Const STRING_REQUEST_TIMEDOUT = "The request timed out"
+Public Const STRING_TRIAL_END = "Your trial will end on"
+Public Const STRING_TRIAL_OVER = "Your trial period is over"
+Public Const STRING_TRYING_AGAIN = "Trying again..."
+Public Const STRING_WELCOME = "Welcome,"
+Public Const STRING_WELCOME_ADMIN = "Welcome, Admin"
+Public Const STRING_WINSOCK_INIT_FAILED = "Winsock initialization failed"
+'### STRINGS END ###
+
+Public Function myString(strCryp As String) As String
+    'SPK - changed this since LT is now public and no longer requires encrypting of strings
+    'TODO: clean this up and replace calls to myString by the string istelf
+    myString = strCryp 'Encode(strCryp, LT_CRYPT_KEY)
+End Function

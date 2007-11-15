@@ -1,0 +1,1125 @@
+<?xml version="1.0"?>
+<view icon="7525" title="LifeTankX" width="300" height="360">
+	<control progid="DecalControls.Notebook" name="nbMain">
+	<page label="Main">
+		<control progid="DecalControls.FixedLayout" clipped="">
+			<control progid="DecalControls.Checkbox" name="chkEnable" left="12" top="9" width="95" height="16"  fontstyle="bold" text="Run Macro"/>
+			<control progid="DecalControls.StaticText" name="Label1" left="5" top="70" width="85" height="12"  fontstyle="bold" text="Macro Profile :"/>
+			<control progid="DecalControls.Choice" name="chMacroProfile" left="5" top="85" width="90" height="19">
+				<option text="(Default)" data=""/>
+			</control>
+			<control progid="DecalControls.StaticText" name="Label11" left="5" top="30" width="40" height="12"  fontstyle="bold" text="Mode"/>
+			<control progid="DecalControls.Choice" name="chMacroMode" left="5" top="45" width="140" height="19">
+				<option text="Normal" data=""/>
+			</control>
+			<control progid="DecalControls.Notebook" name="nbSubMain" left="0" top="140" width="360" height="440">
+			<page label="Info">
+				<control progid="DecalControls.FixedLayout" clipped="">
+					<control progid="DecalControls.PushButton" name="btnResetXp" left="240" top="130" width="55" height="20" text="Reset Xp"/>
+					<control progid="DecalControls.Progress" name="progBuffs" left="5" top="130" width="230" height="20" value="0" maxvalue="100" facecolor="1593996" fillcolor="0" textcolor="8124407" bordercolor="65535" border="1" align="Center" pretext="" posttext="" drawtext="0"/>
+					<control progid="DecalControls.StaticText" name="lblStatus" left="50" top="5" width="180" height="15" textcolor="12582912"  fontstyle="bold" text="Off"/>
+					<control progid="DecalControls.StaticText" name="Label2" left="5" top="5" width="44" height="15"  fontstyle="bold" text="Status :"/>
+					<control progid="DecalControls.StaticText" name="Label26" left="5" top="60" width="65" height="15"  fontstyle="bold" text="Total Xp :"/>
+					<control progid="DecalControls.StaticText" name="lblTotalXp" left="5" top="75" width="95" height="15" text="n/a"/>
+					<control progid="DecalControls.StaticText" name="Label261" left="205" top="60" width="65" height="15"  fontstyle="bold" text="Xp Earned :"/>
+					<control progid="DecalControls.StaticText" name="Label2611" left="110" top="60" width="65" height="15" textcolor="128"  fontstyle="bold" text="Xp/Hour :"/>
+					<control progid="DecalControls.StaticText" name="lblXpEarned" left="205" top="75" width="90" height="15" text="n/a"/>
+					<control progid="DecalControls.StaticText" name="lblXpHour" left="110" top="75" width="85" height="15" textcolor="12582912"  fontstyle="bold" text="n/a"/>
+					<control progid="DecalControls.StaticText" name="Label262" left="5" top="25" width="70" height="15"  fontstyle="bold" text="Elapsed Time :"/>
+					<control progid="DecalControls.StaticText" name="lblElapsed" left="5" top="40" width="70" height="15" text="n/a"/>
+					<control progid="DecalControls.StaticText" name="Label2621" left="110" top="25" width="70" height="15"  fontstyle="bold" text="Next Rebuff :"/>
+					<control progid="DecalControls.StaticText" name="lblNextRebuff" left="110" top="40" width="70" height="15" text="n/a"/>
+					<control progid="DecalControls.StaticText" name="Label26111" left="205" top="25" width="65" height="15"  fontstyle="bold" text="Tapers/Hour :"/>
+					<control progid="DecalControls.StaticText" name="lblTapersHour" left="205" top="40" width="85" height="15" text="n/a"/>
+					<control progid="DecalControls.StaticText" name="Label27" left="5" top="95" width="95" height="15"  fontstyle="bold" text="ETA on next level :"/>
+					<control progid="DecalControls.StaticText" name="lblNextLevel" left="5" top="110" width="140" height="15" text="n/a"/>
+				</control>
+
+			</page>
+			<page label="Coms">
+				<control progid="DecalControls.FixedLayout" clipped="">
+					<control progid="DecalControls.Checkbox" name="chkAnswerChanCmd" left="10" top="78" width="280" height="15" text="Answer commands from the IRC channel"/>
+					<control progid="DecalControls.Checkbox" name="chkCmdWhere" left="10" top="30" width="130" height="15" text="Macro location :"/>
+					<control progid="DecalControls.Edit" name="txtLocation" left="40" top="50" width="225" height="20" imageportalsrc="19519" textcolor="8716155" text="You wished you knew my crazy Xp macro place !"/>
+					<control progid="DecalControls.Checkbox" name="chkReportToIrcOnly" left="10" top="9" width="240" height="15" text="Report Xp/Comps to IRC only"/>
+					<control progid="DecalControls.Checkbox" name="chkAnswerIngameCmd" left="10" top="100" width="280" height="15" text="Answer in-game LT commands"/>
+				</control>
+
+			</page>
+			<page label="Alerts">
+				<control progid="DecalControls.FixedLayout" clipped="">
+					<control progid="DecalControls.StaticText" name="Label21" left="10" top="10" width="135" height="15"  fontstyle="bold" text="Play Sound When..."/>
+					<control progid="DecalControls.Checkbox" name="chkAlertAdmin" left="15" top="30" width="160" height="15" text="Detecting an admin"/>
+					<control progid="DecalControls.Checkbox" name="chkAlertUnfriendly" left="15" top="50" width="160" height="15" text="Detecting unfriendly player(s)"/>
+					<control progid="DecalControls.Checkbox" name="chkAlertTell" left="15" top="70" width="160" height="15" text="Recieving a tell"/>
+					<control progid="DecalControls.Checkbox" name="chkAlertOpenChat" left="115" top="70" width="160" height="15" justify="Right" text="Talking in open chat"/>
+					<control progid="DecalControls.Checkbox" name="chkAlertFellowDead" left="15" top="90" width="160" height="15" text="Fellow member dies"/>
+					<control progid="DecalControls.Checkbox" name="chkAlertDeath" left="15" top="110" width="100" height="15" text="Dying"/>
+					<control progid="DecalControls.Checkbox" name="chkAlertRare" left="115" top="110" width="100" height="15" justify="Right" text="Finding a Rare"/>
+				</control>
+
+			</page>
+			<page label="Fellow">
+				<control progid="DecalControls.FixedLayout" clipped="">
+					<control progid="DecalControls.Checkbox" name="chkEnableAutoFellow" left="10" top="11" width="140" height="15" text="Auto-Fellow on password :"/>
+					<control progid="DecalControls.Edit" name="txtFellowPassword" left="170" top="10" width="120" height="15" imageportalsrc="19519" textcolor="14737632" text="xp"/>
+					<control progid="DecalControls.Checkbox" name="chkAutoFellowList" left="10" top="30" width="120" height="15" text="Auto Add to List"/>
+					<control progid="DecalControls.List" name="FellowList" left="5" top="50" width="225" height="60">
+						<column progid="DecalControls.IconColumn" textcolor="14079587" />
+						<column progid="DecalControls.TextColumn" fixedwidth="130" textcolor="14079587"/>
+						<column progid="DecalControls.IconColumn" textcolor="14079587" />
+						<column progid="DecalControls.IconColumn" textcolor="14079587" />
+					</control>
+				</control>
+
+			</page>
+			<page label="Logs">
+				<control progid="DecalControls.FixedLayout" clipped="">
+					<control progid="DecalControls.List" name="lstMessageLog" left="5" top="5" width="290" height="105">
+						<column progid="DecalControls.TextColumn" name="Time" fixedwidth="50"/>
+						<column progid="DecalControls.TextColumn" name="From" fixedwidth="60"/>
+						<column progid="DecalControls.TextColumn" name="Message" fixedwidth="250"/>
+					</control>
+					<control progid="DecalControls.PushButton" name="btnClearMessageLog" left="225" top="115" width="70" height="15" text="Clear Logs"/>
+					<control progid="DecalControls.Checkbox" name="chkMonitorTells" left="10" top="115" width="65" height="15" text="Log tells"/>
+					<control progid="DecalControls.Checkbox" name="chkMonitorPublic" left="10" top="130" width="245" height="15" text="Log public messages mentioning my name"/>
+					<control progid="DecalControls.Checkbox" name="chkMonitorFellowship" left="80" top="115" width="140" height="15" text="Log fellowship messages"/>
+				</control>
+
+			</page>
+			<page label="Buy/Sell">
+				<control progid="DecalControls.FixedLayout" clipped="">
+					<control progid="DecalControls.PushButton" name="btnSetBuy" left="10" top="15" width="80" height="15" text="Set Buy Target"/>
+					<control progid="DecalControls.StaticText" name="lblBuyTarget" left="100" top="15" width="120" height="15" text="None"/>
+					<control progid="DecalControls.PushButton" name="btnSetSell" left="10" top="40" width="80" height="15" text="Set Sell Target"/>
+					<control progid="DecalControls.StaticText" name="lblSellTarget" left="100" top="40" width="120" height="15" text="None"/>
+					<control progid="DecalControls.PushButton" name="btnStartSell" left="10" top="100" width="80" height="15" text="Start / Stop"/>
+					<control progid="DecalControls.Checkbox" name="chkSellAll" left="150" top="100" width="100" height="15" text="sell All of type"/>
+				</control>
+			</page>
+			<page label="Profiles">
+				<control progid="DecalControls.FixedLayout" clipped="">
+					<control progid="DecalControls.StaticText" name="Label24" left="10" top="10" width="215" height="15"  fontstyle="bold" text="Save Current Macro Profile As :"/>
+					<control progid="DecalControls.Edit" name="txtMacroProfile" left="10" top="25" width="175" height="15" imageportalsrc="19519" textcolor="14737632" text=""/>
+					<control progid="DecalControls.PushButton" name="cmdSaveMacroProfile" left="190" top="25" width="100" height="15" text="Save Macro"/>
+					<control progid="DecalControls.StaticText" name="Label241" left="10" top="55" width="215" height="15"  fontstyle="bold" text="Save Current Buffs Profile As :"/>
+					<control progid="DecalControls.Edit" name="txtBuffsProfile" left="10" top="70" width="175" height="15" imageportalsrc="19519" textcolor="14737632" text=""/>
+					<control progid="DecalControls.PushButton" name="cmdSaveBuffsProfile" left="190" top="70" width="100" height="15" text="Save Buffs"/>
+					<control progid="DecalControls.StaticText" name="Label22" left="10" top="100" width="180" height="15"  fontstyle="bold" text="Save Current Loot Profile As :"/>
+					<control progid="DecalControls.Edit" name="txtLootProfile" left="10" top="116" width="175" height="15" imageportalsrc="19519" textcolor="14737632" text=""/>
+					<control progid="DecalControls.PushButton" name="cmdSaveLootProfile" left="190" top="116" width="100" height="15" text="Save Loot"/>
+				</control>
+
+			</page>
+			</control>
+
+			<control progid="DecalControls.PushButton" name="btnPause" left="210" top="5" width="85" height="20"  fontstyle="bold" text="Pause"/>
+			<control progid="DecalControls.PushButton" name="btnRebuff" left="120" top="5" width="85" height="20" text="Force Rebuff"/>
+			<control progid="DecalControls.PushButton" name="btnSendXpHour" left="5" top="110" width="90" height="20" text="Report Xp/Hour"/>
+			<control progid="DecalControls.PushButton" name="btnSendComps" left="100" top="110" width="95" height="20" text="Report Comps"/>
+			<control progid="DecalControls.PushButton" name="btnDebug" left="200" top="110" width="95" height="20" text="Debug Mode"/>
+			<control progid="DecalControls.Choice" name="chCombatType" left="155" top="45" width="140" height="19">
+				<option text="Mage" data=""/>
+				<option text="Archer" data=""/>
+				<option text="Melee" data=""/>
+			</control>
+			<control progid="DecalControls.StaticText" name="Label111" left="155" top="30" width="80" height="12"  fontstyle="bold" text="Type :"/>
+			<control progid="DecalControls.StaticText" name="Label110" left="100" top="70" width="90" height="12"  fontstyle="bold" text="Buffs Profile :"/>
+			<control progid="DecalControls.Choice" name="chBuffsProfile" left="100" top="85" width="95" height="19"/>
+			<control progid="DecalControls.Choice" name="chLootProfile" left="200" top="85" width="95" height="19"/>
+			<control progid="DecalControls.StaticText" name="Label1101" left="200" top="70" width="85" height="12"  fontstyle="bold" text="Loot Profile :"/>
+		</control>
+
+	</page>
+	<page label="Macro">
+		<control progid="DecalControls.Notebook" name="nbMacroOpt">
+		<page label="Settings">
+			<control progid="DecalControls.FixedLayout" clipped="">
+				<control progid="DecalControls.StaticText" name="Label9" left="50" top="10" width="45" height="15" justify="Right" text="Wand :"/>
+				<control progid="DecalControls.StaticText" name="lblWand" left="105" top="10" width="95" height="15" textcolor="16384" text="Not found"/>
+				<control progid="DecalControls.PushButton" name="cmdSetWand" left="5" top="10" width="35" height="15" text="Set"/>
+				<control progid="DecalControls.Notebook" name="Notebook2" left="5" top="35" width="275" height="250">
+				<page label="Mage">
+					<control progid="DecalControls.FixedLayout" clipped="">
+						<control progid="DecalControls.StaticText" name="Label6" left="5" top="10" width="115" height="15"  fontstyle="bold" text="Range Settings"/>
+						<control progid="DecalControls.Edit" name="txtMageRadius" left="50" top="30" width="20" height="15" imageportalsrc="19519" textcolor="8716155" vertical="0"/>
+						<control progid="DecalControls.StaticText" name="LabeRadiusRng" left="5" top="30" width="40" height="15" justify="Right" text="Attack :"/>
+						<control progid="DecalControls.Edit" name="txtVulnRange" left="50" top="50" width="20" height="15" imageportalsrc="19519" textcolor="8716155" vertical="0"/>
+						<control progid="DecalControls.StaticText" name="LabelVulnRng" left="5" top="50" width="40" height="15" justify="Right" text="Vuln :"/>
+						<control progid="DecalControls.Edit" name="txtArcRange" left="50" top="70" width="20" height="15" imageportalsrc="19519" textcolor="8716155" vertical="0"/>
+						<control progid="DecalControls.StaticText" name="LabeArcRng" left="5" top="70" width="40" height="15" justify="Right" text="Arc :"/>
+
+						<control progid="DecalControls.StaticText" name="Label61" left="5" top="115" width="115" height="15"  fontstyle="bold" text="Combat Options"/>
+						<control progid="DecalControls.Checkbox" name="chkVuln" left="10" top="175" width="40" height="15" text="Vuln"/>
+						<control progid="DecalControls.Checkbox" name="chkYield" left="10" top="195" width="45" height="15" text="Yield"/>
+						<control progid="DecalControls.Checkbox" name="chkImperil" left="65" top="195" width="60" height="15" text="Imperil"/>
+						<control progid="DecalControls.Checkbox" name="chkDebuffFirst" left="10" top="135" width="140" height="15" text="Debuff All Targets First"/>
+						<control progid="DecalControls.Checkbox" name="chkUseArcs" left="65" top="175" width="40" height="15" text="Arcs"/>
+						<control progid="DecalControls.Checkbox" name="chkNoWar" left="10" top="155" width="120" height="15" text="Don't shoot war spells"/>
+						<control progid="DecalControls.Checkbox" name="chkUseRings" left="10" top="215" width="60" height="15" text="Rings"/>
+						<control progid="DecalControls.Checkbox" name="chkUseVolleys" left="65" top="215" width="70" height="15" text="(Volleys)"/>
+						
+						<control progid="DecalControls.StaticText" name="Label62" left="155" top="10" width="105" height="15"  fontstyle="bold" text="Spells Levels"/>
+						<control progid="DecalControls.StaticText" name="Label14" left="140" top="30" width="50" height="15" justify="Right" text="Wars :"/>
+						<control progid="DecalControls.Choice" name="chWarLevel" left="200" top="30" width="65" height="19">
+							<option text="1" data=""/>
+							<option text="2" data=""/>
+							<option text="3" data=""/>
+							<option text="4" data=""/>
+							<option text="5" data=""/>
+							<option text="6" data=""/>
+							<option text="7" data=""/>
+						</control>
+						<control progid="DecalControls.StaticText" name="Label15" left="145" top="55" width="45" height="15" justify="Right" text="Vulns :"/>
+						<control progid="DecalControls.Choice" name="chVulnLevel" left="200" top="55" width="65" height="19">
+							<option text="1" data=""/>
+							<option text="2" data=""/>
+							<option text="3" data=""/>
+							<option text="4" data=""/>
+							<option text="5" data=""/>
+							<option text="6" data=""/>
+							<option text="7" data=""/>
+						</control>
+						<control progid="DecalControls.StaticText" name="Label621" left="155" top="90" width="105" height="15"  fontstyle="bold" text="Default Damage"/>
+						<control progid="DecalControls.Choice" name="chDefaultDmg" left="165" top="110" width="100" height="19"/>
+						<control progid="DecalControls.Checkbox" name="chkForceDefaultDmg" left="165" top="135" width="110" height="15" text="Force default dmg"/>
+						<control progid="DecalControls.Checkbox" name="chkEnableBlacklist" left="165" top="175" width="110" height="15" text="Blacklist bad targets"/>
+					</control>
+
+				</page>
+				<page label="Archer">
+					<control progid="DecalControls.FixedLayout" clipped="">
+						<control progid="DecalControls.StaticText" name="Label16" left="5" top="15" width="75" height="15" text="Attack Radius :"/>
+						<control progid="DecalControls.Edit" name="txtArcherRadius" left="80" top="15" width="20" height="15" imageportalsrc="19519" textcolor="8716155" vertical="0"/>
+						<control progid="DecalControls.StaticText" name="Label17" left="50" top="40" width="60" height="15" justify="Right" text="Bow :"/>
+						<control progid="DecalControls.StaticText" name="lblBow" left="120" top="40" width="160" height="15" textcolor="16384" text="Not Found"/>
+						<control progid="DecalControls.PushButton" name="cmdSetBow" left="5" top="40" width="25" height="15" text="Set"/>
+						<control progid="DecalControls.PushButton" name="cmdSetArrow" left="5" top="60" width="25" height="15" text="Set"/>
+						<control progid="DecalControls.StaticText" name="Label18" left="45" top="60" width="65" height="15" justify="Right" text="Arrows :"/>
+						<control progid="DecalControls.StaticText" name="lblArrows" left="120" top="60" width="160" height="15" textcolor="16384" text="Not Found"/>
+						<control progid="DecalControls.PushButton" name="cmdSetHead" left="5" top="80" width="25" height="15" text="Set"/>
+						<control progid="DecalControls.StaticText" name="Label181" left="45" top="80" width="65" height="15" justify="Right" text="Arrow Head :"/>
+						<control progid="DecalControls.StaticText" name="lblArrowHead" left="120" top="80" width="160" height="15" textcolor="16384" text="Not Found"/>
+						<control progid="DecalControls.PushButton" name="cmdSetShaft" left="5" top="100" width="25" height="15" text="Set"/>
+						<control progid="DecalControls.StaticText" name="Label1811" left="45" top="100" width="65" height="15" justify="Right" text="Arrow Shaft :"/>
+						<control progid="DecalControls.StaticText" name="lblArrowShaft" left="120" top="100" width="160" height="15" textcolor="16384" text="Not Found"/>
+						<control progid="DecalControls.Checkbox" name="chkEnableFletching" left="10" top="130" width="180" height="15" text="Enable Fletching"/>
+						<control progid="DecalControls.Checkbox" name="chkEnableArcherBlacklist" left="10" top="150" width="210" height="15" text="Blacklist bad targets"/>
+					</control>
+
+				</page>
+				<page label="Melee">
+					<control progid="DecalControls.FixedLayout" clipped="">
+						<control progid="DecalControls.StaticText" name="Label161" left="5" top="15" width="75" height="15" text="Attack Radius :"/>
+						<control progid="DecalControls.Edit" name="txtMeleeRadius" left="80" top="15" width="20" height="15" imageportalsrc="19519" textcolor="8716155" vertical="0"/>
+						<control progid="DecalControls.PushButton" name="cmdSetWeapon" left="5" top="40" width="25" height="15" text="Set"/>
+						<control progid="DecalControls.StaticText" name="Label171" left="45" top="40" width="60" height="15" justify="Right" text="Weapon :"/>
+						<control progid="DecalControls.StaticText" name="lblWeapon" left="110" top="40" width="160" height="15" textcolor="16384" text="Not Found"/>
+						<control progid="DecalControls.PushButton" name="cmdSetShield" left="5" top="60" width="25" height="15" text="Set"/>
+						<control progid="DecalControls.StaticText" name="Label19" left="40" top="60" width="65" height="15" justify="Right" text="Shield :"/>
+						<control progid="DecalControls.StaticText" name="lblShield" left="110" top="60" width="160" height="15" textcolor="16384" text="Not Found"/>
+					</control>
+
+				</page>
+				<page label="Targetting">
+					<control progid="DecalControls.FixedLayout" clipped="">
+						<control progid="DecalControls.Checkbox" name="chkAttackGroundOnly" left="5" top="30" width="230" height="15" text="Only target monsters on same ground level"/>
+						<control progid="DecalControls.Checkbox" name="chkAttackVulnedOnly" left="5" top="50" width="136" height="15" text="Attack vulned targets first"/>
+						<control progid="DecalControls.Checkbox" name="chkAttackAny" left="5" top="10" width="108" height="15" text="Attack anything"/>
+						<control progid="DecalControls.Checkbox" name="chkSwitchIfBetterTarget" left="5" top="70" width="250" height="15" text="Auto-switch to best available target during combat"/>
+						<control progid="DecalControls.Checkbox" name="chkAttackPK" left="5" top="90" width="245" height="15" text="Attack Enemy PKs"/>
+						<control progid="DecalControls.Checkbox" name="chkDangerZone" left="5" top="110" width="250" height="15" text="Enable Danger Zone"/>
+						<control progid="DecalControls.StaticText" name="lblDzoneRad" left="40" top="130" width="70" height="15" text="Radius: "/>
+						<control progid="DecalControls.Edit" name="txtDangerZone" left="75" top="130" width="20" height="15" imageportalsrc="19519" textcolor="8716155" vertical="0"/>
+
+						<control progid="DecalControls.StaticText" name="LabelRingRng" left="4" top="160" width="90" height="15" justify="Right" text="Ring spell Radius:"/>
+						<control progid="DecalControls.Edit" name="txtRingRange" left="95" top="160" width="20" height="15" imageportalsrc="19519" textcolor="8716155" vertical="0"/>
+						<control progid="DecalControls.StaticText" name="lblRingRad" left="4" top="180" width="90" height="15" justify="Right" text="Min # in Radius: "/>
+						<control progid="DecalControls.Edit" name="txtRingNum" left="95" top="180" width="20" height="15" imageportalsrc="19519" textcolor="8716155" vertical="0"/>
+					</control>
+
+				</page>
+				<page label="Vitals">
+					<control progid="DecalControls.Notebook" name="VitalsNB" left="5" top="1">
+
+					<page label="Settings">
+						<control progid="DecalControls.FixedLayout" clipped="">
+							<control progid="DecalControls.StaticText" name="lblHealingOpt" left="5" top="10" width="200" height="16"  fontstyle="bold" text="Regen Methods Supported"/>
+							<control progid="DecalControls.Checkbox" name="chkUseHealingKits" left="10" top="30" width="85" height="15" text="Healing Kits"/>
+							<control progid="DecalControls.Checkbox" name="chkUseHealSpell" left="10" top="50" width="80" height="15" text="Spells"/>
+							<control progid="DecalControls.Checkbox" name="chkUseHealthPotion" left="115" top="30" width="115" height="15" text="Health Elixirs"/>
+							<control progid="DecalControls.Checkbox" name="chkUseStamPotion" left="115" top="50" width="115" height="15" text="Stamina Elixirs"/>
+
+							<control progid="DecalControls.StaticText" name="LabelVitT" left="5" top="80" width="104" height="16"  fontstyle="bold" text="Vitals Thresholds (% of max)"/>
+							<control progid="DecalControls.StaticText" name="LabelMana" left="10" top="100" width="40" height="15" justify="Right" text="Mana :"/>
+							<control progid="DecalControls.StaticText" name="LabelStam" left="5" top="120" width="45" height="15" justify="Right" text="Stam :"/>
+							<control progid="DecalControls.StaticText" name="LabelStam1" left="10" top="140" width="40" height="15" justify="Right" text="HP :"/>
+							<control progid="DecalControls.StaticText" name="LabelCrit1" left="0" top="160" width="50" height="15" justify="Right" text="Critical :"/>
+							<control progid="DecalControls.Slider" name="sldMana" left="60" top="100" width="135" height="15" minimum="1" maximum="100" textcolor="0" vertical="0"/>
+							<control progid="DecalControls.Slider" name="sldStam" left="60" top="120" width="135" height="15" minimum="1" maximum="100" textcolor="0" vertical="0"/>
+							<control progid="DecalControls.Slider" name="sldHealth" left="60" top="140" width="135" height="15" minimum="1" maximum="100" textcolor="0" vertical="0"/>
+							<control progid="DecalControls.Slider" name="sldCritHealth" left="60" top="160" width="135" height="15" minimum="1" maximum="100" textcolor="0" vertical="0"/>
+						</control>
+					</page>
+					<page label="Heal Items">
+						<control progid="DecalControls.FixedLayout" clipped="">
+							<control progid="DecalControls.List" name="lstHealItems" left="5" top="10" width="225" height="100">
+								<column progid="DecalControls.CheckColumn" fixedwidth="20"/>
+								<column progid="DecalControls.TextColumn" fixedwidth="130" textcolor="14079587"/>
+								<column progid="DecalControls.IconColumn" textcolor="14079587" />
+								<column progid="DecalControls.IconColumn" textcolor="14079587" />
+							</control>
+							<control progid="DecalControls.PushButton" name="btnAddHealItem" left="5" top="120" width="128" height="16" textcolor="0" text="Add Selected Healing Item"/>
+						</control>
+					</page>
+					<page label="Stam Items">
+						<control progid="DecalControls.FixedLayout" clipped="">
+							<control progid="DecalControls.List" name="lstStamItems" left="5" top="10" width="225" height="100">
+								<column progid="DecalControls.CheckColumn" fixedwidth="20" />
+								<column progid="DecalControls.TextColumn" fixedwidth="130" textcolor="14079587" />
+								<column progid="DecalControls.IconColumn" textcolor="14079587" />
+								<column progid="DecalControls.IconColumn" textcolor="14079587" />
+							</control>
+							<control progid="DecalControls.PushButton" name="btnAddStamItem" left="5" top="120" width="128" height="16" textcolor="0" text="Add Selected Stamina Item"/>
+						</control>
+					</page>
+
+					</control>
+				</page>
+				<page label="Misc">
+					<control progid="DecalControls.FixedLayout" clipped="">
+						<control progid="DecalControls.StaticText" name="Label25" left="8" top="12" width="132" height="16" text="Revitalization Spells Level :"/>
+						<control progid="DecalControls.Choice" name="chMacroSpellsLevel" left="160" top="8" width="56" height="20">
+							<option text="1" data=""/>
+							<option text="2" data=""/>
+							<option text="3" data=""/>
+							<option text="4" data=""/>
+							<option text="5" data=""/>
+							<option text="6" data=""/>
+							<option text="7" data=""/>
+						</control>
+						<control progid="DecalControls.StaticText" name="Label45" left="8" top="40" width="132" height="16" text="Healing Spell Level :"/>
+						<control progid="DecalControls.Choice" name="chHealSpellsLevel" left="160" top="36" width="56" height="20">
+							<option text="1" data=""/>
+							<option text="2" data=""/>
+							<option text="3" data=""/>
+							<option text="4" data=""/>
+							<option text="5" data=""/>
+							<option text="6" data=""/>
+							<option text="7" data=""/>
+						</control>
+						<control progid="DecalControls.StaticText" name="Label451" left="8" top="68" width="132" height="16" text="Emergency Spells Level :"/>
+						<control progid="DecalControls.Choice" name="chEmergencySpellsLevel" left="160" top="64" width="56" height="20">
+							<option text="1" data=""/>
+							<option text="2" data=""/>
+							<option text="3" data=""/>
+							<option text="4" data=""/>
+							<option text="5" data=""/>
+							<option text="6" data=""/>
+							<option text="7" data=""/>
+						</control>
+						<control progid="DecalControls.StaticText" name="Label46" left="8" top="96" width="116" height="16" text="Attack height :"/>
+						<control progid="DecalControls.Choice" name="chAttackHeight" left="160" top="92" width="85" height="19">
+							<option text="High" data=""/>
+							<option text="Medium" data=""/>
+							<option text="Low" data=""/>
+						</control>
+						<control progid="DecalControls.Checkbox" name="chkUseManaCharge" left="9" top="125" width="250" height="20" text="Use Mana Charges when Mana Low"/>
+						<control progid="DecalControls.Checkbox" name="chkUseManaStone" left="16" top="145" width="250" height="20" text="Use Mana Stones before Charges"/>
+
+					</control>
+
+				</page>
+				</control>
+
+			</control>
+
+		</page>
+		<page label="Loot">
+			<control progid="DecalControls.Notebook" name="">
+			<page label="Settings">
+				<control progid="DecalControls.FixedLayout" clipped="">
+					<control progid="DecalControls.Checkbox" name="chkEnableLooting" left="8" top="28" width="112" height="20" text="Enable Looting"/>
+					<control progid="DecalControls.Checkbox" name="chkEnableSalvage" left="8" top="153" width="140" height="20" text="Enable Auto-Salvager"/>
+					<control progid="DecalControls.Checkbox" name="chkLootFellowshipKills" left="8" top="48" width="136" height="20" text="Loot Fellowship Kills"/>
+					<control progid="DecalControls.Checkbox" name="chkLootGround" left="8" top="68" width="144" height="20" text="Loot Items Off Ground"/>
+					<control progid="DecalControls.StaticText" name="" left="140" top="28" width="80" height="20" justify="Center" text="Loot Radius:"/>
+					<control progid="DecalControls.Edit" name="txtPickupRange" left="215" top="28" width="20" height="15" imageportalsrc="19519" textcolor="8716155" vertical="0"/>
+					<control progid="DecalControls.StaticText" name="Label47" left="7" top="9" width="88" height="16" fontface="Tahoma" fontstyle="bold" text="Auto-Looter"/>
+					<control progid="DecalControls.StaticText" name="Label471" left="7" top="135" width="88" height="16" fontface="Tahoma" fontstyle="bold" text="Auto-Salvager"/>
+					<control progid="DecalControls.Checkbox" name="chkSalvageFrequency" left="8" top="173" width="116" height="20" text="Salvage Frequency :"/>
+					<control progid="DecalControls.Edit" name="txtSalvageFrequency" left="123" top="173" width="20" height="15" imageportalsrc="19519" textcolor="8716155" vertical="0"/>
+					<control progid="DecalControls.StaticText" name="Label49" left="12" top="228" width="276" height="36" justify="Center"  fontstyle=" italic" text="Salvage Frequency tells the macro to trigger the Auto-Salvager every X items picked up"/>
+					<control progid="DecalControls.Checkbox" name="chkLootForcePeaceMode" left="8" top="88" width="129" height="20" text="Loot In Peace Mode"/>
+					<control progid="DecalControls.Checkbox" name="chkEnableMultipleSalvage" left="8" top="195" width="240" height="20" text="Multiple Salvages At Once"/>
+				</control>
+
+			</page>
+			<page label="Filters">
+				<control progid="DecalControls.Notebook" name="nbLootFilters">
+				<page label="Global">
+					<control progid="DecalControls.FixedLayout" clipped="">
+						<control progid="DecalControls.Checkbox" name="chkLootAny" left="5" top="10" width="124" height="16"  fontstyle="bold" text="Loot ANY item with :"/>
+						<control progid="DecalControls.Checkbox" name="chkPickupValuable" left="28" top="36" width="64" height="15" text="Value >="/>
+						<control progid="DecalControls.Edit" name="txtPickupMinValue" left="92" top="36" width="40" height="16" imageportalsrc="19519" textcolor="14737632" text=""/>
+						<control progid="DecalControls.Checkbox" name="chkBurdenRatio" left="44" top="60" width="172" height="15" text="Having a Value/Burden Ratio  >= "/>
+						<control progid="DecalControls.Edit" name="txtBurdenRatio" left="216" top="60" width="48" height="16" imageportalsrc="19519" textcolor="14737632" text=""/>
+						<control progid="DecalControls.Checkbox" name="chkPickupMinors" left="28" top="88" width="140" height="15" text="Minor Cantrips"/>
+						<control progid="DecalControls.Checkbox" name="chkMinorWard" left="45" top="111" width="141" height="15" text="If it's a Minor Ward"/>
+						<control progid="DecalControls.Checkbox" name="chkMinorAttribute" left="45" top="132" width="156" height="15" text="If it's a Minor Attribute"/>
+						<control progid="DecalControls.Checkbox" name="chkMinorMastery" left="45" top="153" width="180" height="15" text="If it's a Minor Mastery"/>
+						<control progid="DecalControls.Checkbox" name="chkPickupMajors" left="28" top="180" width="156" height="15" text="Major Cantrips"/>
+						<control progid="DecalControls.Checkbox" name="chkMajorIgnoreBane" left="45" top="201" width="117" height="15" text="Ignore Major Banes"/>
+						<control progid="DecalControls.Checkbox" name="chkUnknownScrolls" left="28" top="220" width="156" height="15" text="Unknown Scrolls"/>
+					</control>
+
+				</page>
+				<page label="Salvages">
+					<control progid="DecalControls.FixedLayout" clipped="">
+						<control progid="DecalControls.Checkbox" name="chkLootSalvages" left="5" top="10" width="136" height="15" text="Enable Salvage Looting"/>
+
+						<control progid="DecalControls.PushButton" name="cmdAddSalvage" left="207" top="10" width="84" height="18" text="Add Salvage"/>
+						
+						<control progid="DecalControls.StaticText" name="Label33" left="9" top="36" width="126" height="15" justify="Center" text="Salvage Kind"/>
+						<control progid="DecalControls.Choice" name="chSalvage" left="3" top="51" width="135" height="19">
+							<option text="Steel" data=""/>
+							<option text="Mahogany" data=""/>
+						</control>
+						<control progid="DecalControls.StaticText" name="Label30" left="147" top="36" width="51" height="16" justify="Center" text="Min Work"/>
+						<control progid="DecalControls.Choice" name="chSalvageMinWork" left="144" top="51" width="57" height="19">
+							<option text="1" data=""/>
+							<option text="2" data=""/>
+							<option text="3" data=""/>
+							<option text="4" data=""/>
+							<option text="5" data=""/>
+							<option text="6" data=""/>
+							<option text="7" data=""/>
+							<option text="8" data=""/>
+							<option text="9" data=""/>
+							<option text="10" data=""/>
+						</control>
+						<control progid="DecalControls.StaticText" name="LabelSortSalv" left="203" top="36" width="90" height="15" justify="Center" text="Combine below"/>
+						<control progid="DecalControls.Choice" name="chSalvageSortWork" left="213" top="51" width="57" height="19">
+							<option text="1" data=""/>
+							<option text="2" data=""/>
+							<option text="3" data=""/>
+							<option text="4" data=""/>
+							<option text="5" data=""/>
+							<option text="6" data=""/>
+							<option text="7" data=""/>
+							<option text="8" data=""/>
+							<option text="9" data=""/>
+							<option text="10" data=""/>
+						</control>
+
+						<control progid="DecalControls.List" name="lstLootSalvages" left="3" top="75" width="291" height="183">
+							<column progid="DecalControls.CheckColumn" name="Enabled"/>
+							<column progid="DecalControls.TextColumn" name="SalvageName" fixedwidth="145"/>
+							<column progid="DecalControls.TextColumn" name="MinWork" fixedwidth="70"/>
+							<column progid="DecalControls.CheckColumn" name="Combine"/>
+						</control>
+					</control>
+
+				</page>
+				<page label="Armors">
+					<control progid="DecalControls.FixedLayout" clipped="">
+						<control progid="DecalControls.Checkbox" name="chkLootArmors" left="5" top="10" width="132" height="15" text="Enable Armor Looting"/>
+						<control progid="DecalControls.StaticText" name="Label371" left="144" top="10" width="150" height="15" justify="Center" fontstyle="italic" text="Click on type to remove filter"/>
+
+						<control progid="DecalControls.PushButton" name="ab1" left="5" top="30" width="100" height="15"  text="Enabled" fontstyle="italic" justify="Right" imageportalsrc="4518" textcolor="14737632" />
+						<control progid="DecalControls.PushButton" name="ab2" left="105" top="30" width="70" height="15" text="Coverage" fontstyle="italic" justify="Right" imageportalsrc="4518" textcolor="14737632" />
+						<control progid="DecalControls.PushButton" name="ab3" left="175" top="30" width="30" height="15" text="AL"  fontstyle="italic" justify="Right" imageportalsrc="4518" textcolor="14737632"/>
+						<control progid="DecalControls.PushButton" name="ab4" left="205" top="30" width="20" height="15" text="Wk"  fontstyle="italic" justify="Right" imageportalsrc="4518" textcolor="14737632"/>
+						<control progid="DecalControls.PushButton" name="ab7" left="225" top="30" width="65" height="15" text="Value"  fontstyle="italic" justify="Right" imageportalsrc="4518" textcolor="14737632"/>
+
+						<control progid="DecalControls.List" name="lstLootArmors" left="5" top="45" width="290" height="100">
+							<column progid="DecalControls.CheckColumn" name="Enabled" fixedwidth="20" />
+							<column progid="DecalControls.TextColumn" name="ArmorType" fixedwidth="80" />
+							<column progid="DecalControls.TextColumn" name="ArmorCoverage" fixedwidth="70" />
+							<column progid="DecalControls.TextColumn" name="MinAl" fixedwidth="30" />
+							<column progid="DecalControls.TextColumn" name="MaxWork" fixedwidth="20" />
+							<column progid="DecalControls.TextColumn" name="MaxValue" fixedwidth="40" />
+						</control>
+						<control progid="DecalControls.StaticText" name="Label112" left="8" top="145" width="127" height="15" justify="Center" text="Type :"/>
+						<control progid="DecalControls.Choice" name="chArmorType" left="4" top="160" width="136" height="19">
+							<option text="Amuli" data=""/>
+							<option text="Celdon" data=""/>
+						</control>
+						<control progid="DecalControls.StaticText" name="Label23" left="160" top="145" width="125" height="15" justify="Center" text="Coverage :"/>
+						<control progid="DecalControls.Choice" name="chCoverage" left="155" top="160" width="139" height="19">
+							<option text="Head" data=""/>
+							<option text="Top" data=""/>
+							<option text="Bottom" data=""/>
+						</control>
+						<control progid="DecalControls.StaticText" name="Label3" left="105" top="190" width="90" height="16" justify="Center" text="Min AL :"/>
+						<control progid="DecalControls.StaticText" name="Label41" left="10" top="190" width="85" height="15" justify="Center" text="Max Work :"/>
+						<control progid="DecalControls.Choice" name="chMaxArmorWork" left="5" top="205" width="85" height="19">
+							<option text="10" data=""/>
+							<option text="9" data=""/>
+							<option text="8" data=""/>
+							<option text="7" data=""/>
+							<option text="6" data=""/>
+							<option text="5" data=""/>
+							<option text="4" data=""/>
+							<option text="3" data=""/>
+							<option text="2" data=""/>
+							<option text="1" data=""/>
+						</control>
+						<control progid="DecalControls.StaticText" name="Label51" left="210" top="190" width="85" height="12" justify="Center" text="Max Value :"/>
+						<control progid="DecalControls.PushButton" name="cmdAddArmor" left="70" top="240" width="160" height="20" text="Add Armor"/>
+						<control progid="DecalControls.Edit" name="txtArmorMaxValue" left="210" top="205" width="84" height="18" imageportalsrc="19519" textcolor="14737632" text=""/>
+						<control progid="DecalControls.Edit" name="txtArmorMinAL" left="108" top="205" width="84" height="18" imageportalsrc="19519" textcolor="14737632" text="200"/>
+					</control>
+
+				</page>
+				<page label="Weapons">
+					<control progid="DecalControls.FixedLayout" clipped="">
+						<control progid="DecalControls.Checkbox" name="chkLootWeapons" left="5" top="10" width="184" height="15" text="Enable Weapon Looting"/>
+						<control progid="DecalControls.List" name="lstLootWeapons" left="5" top="27" width="290" height="117">
+							<column progid="DecalControls.CheckColumn" name="Enabled"/>
+							<column progid="DecalControls.TextColumn" name="WeaponType" fixedwidth="45"/>
+							<column progid="DecalControls.TextColumn" name="WeaponElem" fixedwidth="38"/>
+							<column progid="DecalControls.TextColumn" name="Dmg" fixedwidth="44"/>
+							<column progid="DecalControls.TextColumn" name="MinAttBonus" fixedwidth="25"/>
+							<column progid="DecalControls.TextColumn" name="MinDefBonus" fixedwidth="25"/>
+							<column progid="DecalControls.TextColumn" name="MaxWork" fixedwidth="15"/>
+							<column progid="DecalControls.TextColumn" name="MinWieldReq" fixedwidth="25"/>
+							<column progid="DecalControls.TextColumn" name="MaxValue" fixedwidth="40"/>
+						</control>
+						<control progid="DecalControls.StaticText" name="Label71" left="174" top="174" width="60" height="15" justify="Right" text="Max Work"/>
+						<control progid="DecalControls.Choice" name="chWeaponMaxWork" left="240" top="171" width="56" height="19">
+							<option text="10" data=""/>
+							<option text="9" data=""/>
+							<option text="8" data=""/>
+							<option text="7" data=""/>
+							<option text="6" data=""/>
+							<option text="5" data=""/>
+							<option text="4" data=""/>
+							<option text="3" data=""/>
+							<option text="2" data=""/>
+							<option text="1" data=""/>
+						</control>
+						<control progid="DecalControls.StaticText" name="Label911" left="180" top="153" width="54" height="16" justify="Right" text="Min def%"/>
+						<control progid="DecalControls.Edit" name="txtWeaponMinDef" left="240" top="150" width="25" height="18" imageportalsrc="19519" textcolor="14737632" text=""/>
+						<control progid="DecalControls.StaticText" name="Label10" left="177" top="216" width="60" height="16" justify="Right" text="Max Value"/>
+						<control progid="DecalControls.Edit" name="txtWeaponMaxValue" left="240" top="213" width="54" height="20" imageportalsrc="19519" textcolor="14737632" text=""/>
+						<control progid="DecalControls.StaticText" name="Label113" left="159" top="195" width="75" height="16" justify="Right" text="Max Wield Req"/>
+						<control progid="DecalControls.Choice" name="chMaxWieldReq" left="240" top="192" width="56" height="20">
+							<option text="999" data=""/>
+							<option text="400" data=""/>
+							<option text="370" data=""/>
+							<option text="350" data=""/>
+							<option text="325" data=""/>
+							<option text="315" data=""/>
+							<option text="300" data=""/>
+							<option text="290" data=""/>
+							<option text="250" data=""/>
+							<option text="0" data=""/>
+						</control>
+						<control progid="DecalControls.PushButton" name="cmdAddWeapon" left="162" top="237" width="135" height="20" text="Add Weapon"/>
+						<control progid="DecalControls.Notebook" name="nbWeaponKind" left="3" top="147" width="150" height="111">
+
+						<page label="Melee">
+							<control progid="DecalControls.FixedLayout" clipped="">
+								<control progid="DecalControls.StaticText" name="Label91" left="6" top="75" width="48" height="16" text="Min att%"/>
+								<control progid="DecalControls.Edit" name="txtWeaponMinAtt" left="57" top="72" width="25" height="18" imageportalsrc="19519" textcolor="14737632" text="0"/>
+								<control progid="DecalControls.StaticText" name="Label34" left="6" top="54" width="51" height="15" text="Min Dmg"/>
+								<control progid="DecalControls.StaticText" name="Label35" left="6" top="33" width="33" height="15" text="Elemt"/>
+								<control progid="DecalControls.Choice" name="chWeaponElement" left="45" top="29" width="102" height="19">
+									<option text="Any" data=""/>
+									<option text="Slash" data=""/>
+									<option text="Pierce..." data=""/>
+								</control>
+								<control progid="DecalControls.Edit" name="txtWeaponMinLowDmg" left="57" top="51" width="25" height="18" imageportalsrc="19519" textcolor="14737632" text="0"/>
+								<control progid="DecalControls.StaticText" name="Label36" left="87" top="48" width="9" height="16" justify="Center"  fontsize="20,25" fontstyle="bold" text="-"/>
+								<control progid="DecalControls.Edit" name="txtWeaponMinHighDmg" left="102" top="51" width="25" height="18" imageportalsrc="19519" textcolor="14737632" text="1"/>
+								<control progid="DecalControls.Choice" name="chMeleeWeapons" left="3" top="6" width="144" height="19">
+									<option text="Sword" data=""/>
+									<option text="UA..." data=""/>
+								</control>
+							</control>
+
+						</page>
+
+						<page label="Missile">
+							<control progid="DecalControls.FixedLayout" clipped="">
+								<control progid="DecalControls.Choice" name="chMissileWeapons" left="3" top="6" width="144" height="19">
+									<option text="Bows" data=""/>
+									<option text="Xbows..." data=""/>
+								</control>
+								<control progid="DecalControls.StaticText" name="Label3WE" left="6" top="33" width="33" height="15" text="Elemt"/>
+								<control progid="DecalControls.Choice" name="chMissileWeaponElement" left="45" top="29" width="102" height="19">
+									<option text="Any" data=""/>
+									<option text="Slash" data=""/>
+									<option text="Pierce..." data=""/>
+								</control>
+
+								<control progid="DecalControls.StaticText" name="Label81" left="9" top="50" width="80" height="16" text="Min Dmg Mod"/>
+								<control progid="DecalControls.Edit" name="txtWeaponMinMod" left="84" top="51" width="40" height="18" imageportalsrc="19519" textcolor="14737632" text=""/>
+								<control progid="DecalControls.StaticText" name="LabelMDmgBonus" left="9" top="72" width="80" height="16" justify="Right" text="Min Dmg Bonus"/>
+								<control progid="DecalControls.Choice" name="chMinDamageBonus" left="90" top="72" width="56" height="20">
+									<option text="12" data=""/>
+									<option text="11" data=""/>
+									<option text="10" data=""/>
+									<option text="9" data=""/>
+									<option text="8" data=""/>
+									<option text="7" data=""/>
+									<option text="6" data=""/>
+									<option text="5" data=""/>
+									<option text="4" data=""/>
+									<option text="3" data=""/>
+									<option text="2" data=""/>
+									<option text="1" data=""/>
+									<option text="0" data=""/>
+								</control>
+
+							</control>
+
+						</page>
+						</control>
+
+						<control progid="DecalControls.StaticText" name="Label3711" left="144" top="10" width="147" height="15" justify="Center"  fontstyle="italic" text="Click on type to remove filter"/>
+					</control>
+
+				</page>
+				<page label="Magicals">
+					<control progid="DecalControls.FixedLayout" clipped="">
+						<control progid="DecalControls.Checkbox" name="chkLootWands" left="6" top="6" width="140" height="16" text="Enable Wand Looting"/>
+
+						<control progid="DecalControls.PushButton" name="hb1" left="5" top="22" width="70" height="15" fontstyle="italic" justify="Right" imageportalsrc="4518" textcolor="14737632" text="Enabled" />
+						<control progid="DecalControls.PushButton" name="hb2" left="75" top="22" width="30" height="15" fontstyle="italic" justify="Right" imageportalsrc="4518" textcolor="14737632" text="MC" />
+						<control progid="DecalControls.PushButton" name="hb3" left="105" top="22" width="30" height="15" fontstyle="italic" justify="Right" imageportalsrc="4518" textcolor="14737632" text="MD" />
+						<control progid="DecalControls.PushButton" name="hb4" left="135" top="22" width="30" height="15" fontstyle="italic" justify="Right" imageportalsrc="4518" textcolor="14737632" text="MgcD" />
+						<control progid="DecalControls.PushButton" name="hb5" left="165" top="22" width="30" height="15" fontstyle="italic" justify="Right" imageportalsrc="4518" textcolor="14737632" text="PvM"/>
+						<control progid="DecalControls.PushButton" name="hb6" left="195" top="22" width="30" height="15" fontstyle="italic" justify="Right" imageportalsrc="4518" textcolor="14737632" text="Wield" />
+						<control progid="DecalControls.PushButton" name="hb7" left="225" top="22" width="65" height="15" fontstyle="italic" justify="Left" imageportalsrc="4518" textcolor="14737632" text="Work" />
+
+						<control progid="DecalControls.List" name="lstLootWands" left="5" top="37" width="290" height="104">
+							<column progid="DecalControls.CheckColumn" name="Enabled" fixedwidth="20"/>
+							<column progid="DecalControls.TextColumn" name="WandType" fixedwidth="50"/>
+							<column progid="DecalControls.TextColumn" name="ManaC" fixedwidth="30"/>
+							<column progid="DecalControls.TextColumn" name="MeleeD" fixedwidth="30"/>
+							<column progid="DecalControls.TextColumn" name="MagicD" fixedwidth="30"/>
+							<column progid="DecalControls.TextColumn" name="PVM" fixedwidth="30"/>
+							<column progid="DecalControls.TextColumn" name="WieldReq" fixedwidth="30"/>
+							<column progid="DecalControls.TextColumn" name="MaxWork" fixedwidth="30"/>
+						</control>
+
+						<control progid="DecalControls.StaticText" name="Label131" left="24" top="140" width="64" height="16" justify="Center" text="Min ManaC."/>
+						<control progid="DecalControls.Choice" name="chWandMinManaC" left="24" top="156" width="60" height="19">
+							<option text="0" data=""/>
+							<option text="1" data=""/>
+							<option text="2" data=""/>
+							<option text="3" data=""/>
+							<option text="4" data=""/>
+							<option text="5" data=""/>
+							<option text="6" data=""/>
+							<option text="7" data=""/>
+							<option text="8" data=""/>
+							<option text="9" data=""/>
+							<option text="10" data=""/>
+						</control>
+						<control progid="DecalControls.StaticText" name="Label50" left="111" top="140" width="84" height="20" justify="Center" text="Min Melee Def"/>
+						<control progid="DecalControls.Choice" name="chWandMinMeleeDef" left="120" top="156" width="60" height="19">
+							<option text="0" data=""/>
+							<option text="1" data=""/>
+							<option text="2" data=""/>
+							<option text="3" data=""/>
+							<option text="4" data=""/>
+							<option text="5" data=""/>
+							<option text="6" data=""/>
+							<option text="7" data=""/>
+							<option text="8" data=""/>
+							<option text="9" data=""/>
+							<option text="10" data=""/>
+							<option text="11" data=""/>
+							<option text="12" data=""/>
+							<option text="13" data=""/>
+							<option text="14" data=""/>
+							<option text="15" data=""/>
+						</control>
+						<control progid="DecalControls.StaticText" name="LabelMinMagicD" left="207" top="140" width="84" height="20" justify="Center" text="Min Magic Def"/>
+						<control progid="DecalControls.Choice" name="chWandMinMagicDef" left="210" top="156" width="60" height="19">
+							<option text="0" data=""/>
+							<option text="1" data=""/>
+							<option text="2" data=""/>
+							<option text="3" data=""/>
+							<option text="4" data=""/>
+							<option text="5" data=""/>
+						</control>
+						<control progid="DecalControls.StaticText" name="LabelPvMBonus" left="24" top="180" width="84" height="20" justify="Center" text="Min Dmg Bonus"/>
+						<control progid="DecalControls.Choice" name="chWandMinPvMBonus" left="24" top="196" width="60" height="19">
+							<option text="10" data=""/>
+							<option text="9" data=""/>
+							<option text="8" data=""/>
+							<option text="7" data=""/>
+							<option text="6" data=""/>
+							<option text="5" data=""/>
+							<option text="4" data=""/>
+							<option text="3" data=""/>
+							<option text="2" data=""/>
+							<option text="1" data=""/>
+							<option text="0" data=""/>
+						</control>
+						<control progid="DecalControls.StaticText" name="LabelMaxWieldReq" left="111" top="180" width="84" height="20" justify="Center" text="Max Wield Req"/>
+						<control progid="DecalControls.Choice" name="chWandMaxWieldReq" left="120" top="196" width="60" height="19">
+							<option text="0" data=""/>
+							<option text="290" data=""/>
+							<option text="310" data=""/>
+							<option text="330" data=""/>
+							<option text="355" data=""/>
+						</control>
+						<control progid="DecalControls.StaticText" name="Label151" left="207" top="180" width="60" height="16" justify="Center" text="Max Work"/>
+						<control progid="DecalControls.Choice" name="chWandMaxWork" left="210" top="196" width="60" height="19">
+							<option text="10" data=""/>
+							<option text="9" data=""/>
+							<option text="8" data=""/>
+							<option text="7" data=""/>
+							<option text="6" data=""/>
+							<option text="5" data=""/>
+							<option text="4" data=""/>
+							<option text="3" data=""/>
+							<option text="2" data=""/>
+							<option text="1" data=""/>
+						</control>
+
+						<control progid="DecalControls.PushButton" name="cmdAddWand" left="110" top="235" width="80" height="20" text="Add Wand"/>
+
+					</control>
+
+				</page>
+				<page label="Specials">
+					<control progid="DecalControls.FixedLayout" clipped="">
+						<control progid="DecalControls.Edit" name="txtAddItemToPickup" left="5" top="5" width="200" height="20" imageportalsrc="19519" textcolor="8716155" text="Enter Name of Item to Pickup"/>
+						<control progid="DecalControls.PushButton" name="btnAddItemToPickup" left="210" top="5" width="60" height="20" text="Add"/>
+						<control progid="DecalControls.PushButton" name="btnPickupSetSelection" left="275" top="5" width="20" height="20" text="S"/>
+						<control progid="DecalControls.List" name="lstPickup" left="5" top="30" width="290" height="120">
+							<column progid="DecalControls.CheckColumn" name="Enabled"/>
+							<column progid="DecalControls.TextColumn" name="Item name" fixedwidth="230"/>
+							<column progid="DecalControls.CheckColumn" name="ExactMatch"/>
+						</control>
+						<control progid="DecalControls.Edit" name="txtAddItemToIgnore" left="5" top="160" width="200" height="20" imageportalsrc="19519" textcolor="8716155" text="Enter Name of Item to Ignore"/>
+						<control progid="DecalControls.PushButton" name="btnAddItemToIgnore" left="210" top="160" width="60" height="20" text="Add"/>
+						<control progid="DecalControls.PushButton" name="btnIgnoreSetSelection" left="275" top="160" width="20" height="20" text="S"/>
+						<control progid="DecalControls.List" name="lstIgnore" left="5" top="185" width="290" height="75">
+							<column progid="DecalControls.CheckColumn" name="Enabled"/>
+							<column progid="DecalControls.TextColumn" name="Item name" fixedwidth="230"/>
+							<column progid="DecalControls.CheckColumn" name="ExactMatch"/>
+						</control>
+					</control>
+
+				</page>
+				</control>
+
+			</page>
+			<page label="Corpses">
+				<control progid="DecalControls.FixedLayout" clipped="">
+					<control progid="DecalControls.Checkbox" name="chkFilterCorpses" left="5" top="5" width="250" height="20" text="Only loot the following corpses :"/>
+					<control progid="DecalControls.Edit" name="txtAddCorpse" left="5" top="30" width="200" height="20" imageportalsrc="19519" textcolor="8716155" text="Enter Corpse Name Here"/>
+					<control progid="DecalControls.PushButton" name="btnAddCorpse" left="210" top="30" width="60" height="20" text="Add"/>
+					<control progid="DecalControls.PushButton" name="btnCorpseSetSelection" left="275" top="30" width="20" height="20" text="S"/>
+					<control progid="DecalControls.List" name="lstCorpse" left="5" top="55" width="290" height="220">
+						<column progid="DecalControls.CheckColumn" name="Enabled"/>
+						<column progid="DecalControls.TextColumn" name="Corpse Name" fixedwidth="230"/>
+						<column progid="DecalControls.CheckColumn" name="ExactMatch"/>
+					</control>
+				</control>
+			</page>
+			<page label="Exceptions">
+				<control progid="DecalControls.FixedLayout" clipped="">
+					<control progid="DecalControls.StaticText" name="Label48" left="16" top="8" width="260" height="32" justify="Center" text="List of items which must not be salvaged, usted or sold by LifeTank - Click name to remove, or icon to select"/>
+					<control progid="DecalControls.List" name="lstExceptions" left="16" top="44" width="268" height="192">
+						<column progid="DecalControls.IconColumn"/>
+						<column progid="DecalControls.TextColumn" name="Item Name" fixedwidth="900"/>
+						<column progid="DecalControls.TextColumn" name="GUID" fixedwidth="5"/>
+					</control>
+					<control progid="DecalControls.PushButton" name="cmdAddException" left="16" top="240" width="268" height="24" text="Add Current Selection To Exceptions List"/>
+				</control>
+
+			</page>
+			</control>
+
+		</page>
+		<page label="Nav">
+			<control progid="DecalControls.FixedLayout" clipped="">
+				<control progid="DecalControls.Checkbox" name="chkEnableNav" left="10" top="10" width="175" height="15" text="Enable Navigation"/>
+				<control progid="DecalControls.PushButton" name="cmdShowNavEditor" left="60" top="40" width="130" height="30" text="Show Route Editor"/>
+				<control progid="DecalControls.Checkbox" name="chkEnableSticky" left="10" top="95" width="175" height="15" text="Stick to Position"/>
+				<control progid="DecalControls.PushButton" name="cmdSetSticky" left="60" top="125" width="130" height="30" text="Set sticky position"/>
+			</control>
+
+		</page>
+		<page label="Mobs">
+			<control progid="DecalControls.FixedLayout" clipped="">
+				<control progid="DecalControls.Edit" name="txtAddMonster" left="5" top="5" width="180" height="20" imageportalsrc="19519" textcolor="8716155" text="Monster Name"/>
+				<control progid="DecalControls.PushButton" name="btnAddMonster" left="190" top="5" width="105" height="20"  fontstyle="bold" text="Add Monster"/>
+				<control progid="DecalControls.Checkbox" name="chkAutoAddMonster" left="195" top="30" width="105" height="15" text="Auto-Add"/>
+				<control progid="DecalControls.Choice" name="chMonsterVulnerability" left="5" top="30" width="180" height="20">
+					<option text="Vulnerable to Slashing" data=""/>
+					<option text="Vulnerable to Bludgeoning" data=""/>
+					<option text="Vulnerable to Piercing" data=""/>
+					<option text="Vulnerable to Fire" data=""/>
+					<option text="Vulnerable to Cold" data=""/>
+					<option text="Vulnerable to Acid" data=""/>
+					<option text="Vulnerable to Lightning" data=""/>
+				</control>
+				<control progid="DecalControls.PushButton" name="btnSearchMonster" left="5" top="52" width="90" height="26" text="Search | Next"/>
+				<control progid="DecalControls.PushButton" name="btnDeleteMonster" left="95" top="52" width="90" height="26" text="Delete"/>
+				<control progid="DecalControls.StaticText" name="" left="207" top="60" width="20" height="20"  fontstyle="bold" text="Y"/>
+				<control progid="DecalControls.StaticText" name="" left="226" top="60" width="20" height="20"  fontstyle="bold" text="I"/>
+				<control progid="DecalControls.StaticText" name="" left="244" top="60" width="20" height="20"  fontstyle="bold" text="V"/>
+				<control progid="DecalControls.StaticText" name="" left="262" top="60" width="20" height="20"  fontstyle="bold" text="P"/>
+				<control progid="DecalControls.List" name="lstMonsters" left="5" top="85" width="290" height="205">
+					<column progid="DecalControls.CheckColumn" name="Attack"/>
+					<column progid="DecalControls.TextColumn" name="Mob Name" fixedwidth="110"/>
+					<column progid="DecalControls.TextColumn" name="Blank" fixedwidth="10"/>
+					<column progid="DecalControls.TextColumn" name="Mob Vulnerability" fixedwidth="60"/>
+					<column progid="DecalControls.CheckColumn" name="Yield"/>
+					<column progid="DecalControls.CheckColumn" name="Imperil"/>
+					<column progid="DecalControls.CheckColumn" name="Vuln"/>
+					<column progid="DecalControls.TextColumn" name="Priority"/>
+				</control>
+			</control>
+
+		</page>
+		<page label="Helper">
+			<control progid="DecalControls.FixedLayout" clipped="">
+				<control progid="DecalControls.Checkbox" name="chkHealFellow" left="10" top="10" width="220" height="15" text="Enable Healing of Fellow members"/>
+				<control progid="DecalControls.Checkbox" name="chkStamFellow" left="10" top="30" width="220" height="15" text="Enable Restam of Fellow members"/>
+				<control progid="DecalControls.StaticText" name="LabelAssist" left="10" top="50" width="70" height="15" justify="Left" text="Assist Range:"/>
+				<control progid="DecalControls.Edit" name="txtAssistRange" left="80" top="50" width="20" height="15" imageportalsrc="19519" textcolor="8716155" vertical="0"/>
+				<control progid="DecalControls.StaticText" name="LblFlheal" left="10" top="85" width="220" height="15"  text="Vital % to help at"/>
+				<control progid="DecalControls.StaticText" name="LblFlHeal1" left="10" top="105" width="40" height="15" justify="Right" text="Health:"/>
+				<control progid="DecalControls.Slider" name="sldFellowHealth" left="60" top="105" width="135" height="15" minimum="1" maximum="100" textcolor="0" vertical="0"/>
+				<control progid="DecalControls.StaticText" name="LblFlStam1" left="10" top="125" width="40" height="15" justify="Right" text="Stam:"/>
+				<control progid="DecalControls.Slider" name="sldFellowStam" left="60" top="125" width="135" height="15" minimum="1" maximum="100" textcolor="0" vertical="0"/>
+				<control progid="DecalControls.StaticText" name="LblHelpNote" left="10" top="175" width="220" height="15" justify="Left" text="NOTE: Fellowship panel must be open for helper to work"/>
+			</control>
+		</page>
+		<page label="Options">
+			<control progid="DecalControls.FixedLayout" clipped="">
+				<control progid="DecalControls.StaticText" name="Label29" left="10" top="10" width="125" height="15"  fontstyle="bold" text="Logout Conditions"/>
+				<control progid="DecalControls.Checkbox" name="chkLogoutOnDeath" left="20" top="35" width="125" height="15" text="Macro dies"/>
+				<control progid="DecalControls.Checkbox" name="chkLogoutOnTapers" left="20" top="55" width="130" height="15" text="Tapers drop under 50"/>
+				<control progid="DecalControls.Checkbox" name="chkLogoutOnKits" left="20" top="75" width="150" height="15" text="Out of Healing Kits"/>
+				<control progid="DecalControls.Checkbox" name="chkLogoutOnScarabs" left="20" top="95" width="188" height="15" text="Pyreal/Plat Scarabs drop under 5"/>
+				<control progid="DecalControls.Checkbox" name="chkLogoutOnArrows" left="20" top="115" width="188" height="15" text="Out of Arrows/Fletching comps"/>
+				<control progid="DecalControls.StaticText" name="Label291" left="12" top="140" width="125" height="15"  fontstyle="bold" text="Macro Performances"/>
+				<control progid="DecalControls.Checkbox" name="chkEnableTurbo" left="21" top="160" width="87" height="15" text="Enable Turbo"/>
+				<control progid="DecalControls.Checkbox" name="chkEnableDOT" left="21" top="180" width="160" height="15" text="Enable DOT stats"/>
+
+			</control>
+
+		</page>
+		</control>
+
+	</page>
+	<page label="Buffs">
+		<control progid="DecalControls.Notebook" name="">
+		<page label="Settings">
+			<control progid="DecalControls.FixedLayout" clipped="">
+				<control progid="DecalControls.Checkbox" name="chkEnableBuffing" left="10" top="10" width="175" height="15" text="Enable Buffing"/>
+				<control progid="DecalControls.Checkbox" name="chkRebuffOnStart" left="10" top="30" width="175" height="15" text="Rebuff right from the start"/>
+				<control progid="DecalControls.Checkbox" name="chkContinuousBuffing" left="10" top="50" width="175" height="15" text="Enable Continuous Buffing Mode"/>
+				<control progid="DecalControls.StaticText" name="" left="10" top="95" width="210" height="20" text="Buff Cycle Length (in minutes) :"/>
+				<control progid="DecalControls.Edit" name="txtRebuffInterval" left="190" top="95" width="25" height="15" imageportalsrc="19519" textcolor="8716155" vertical="0"/>
+				<control progid="DecalControls.StaticText" name="Lblcbc1" left="10" top="120" width="210" height="15" text="Number of consecutive buffs to cast:"/>
+				<control progid="DecalControls.StaticText" name="Lblcbc2" left="10" top="135" width="210" height="15" text="(for Continuous Buff Mode)"/>
+				<control progid="DecalControls.Edit" name="txtNumContinuousBuffs" left="190" top="120" width="25" height="15" imageportalsrc="19519" textcolor="8716155" vertical="0"/>
+
+				<control progid="DecalControls.StaticText" name="" left="225" top="10" width="60" height="15" justify="Center" text="Buffs LVL"/>
+				<control progid="DecalControls.Choice" name="chMaxBuffSpellLevel" left="230" top="30" width="55" height="20">
+					<option text="1" data=""/>
+					<option text="2" data=""/>
+					<option text="3" data=""/>
+					<option text="4" data=""/>
+					<option text="5" data=""/>
+					<option text="6" data=""/>
+					<option text="7" data=""/>
+				</control>
+				<control progid="DecalControls.Checkbox" name="chkEnableBuffBuddy" left="10" top="170" width="175" height="15" text="Enable Buff Buddy"/>
+				<control progid="DecalControls.PushButton" name="btnSetBuffBuddy" left="5" top="190" width="80" height="20" text="Set Buff Buddy"/>
+				<control progid="DecalControls.PushButton" name="btnForceBuffBuddy" left="140" top="190" width="90" height="20" text="Force Buddy Buff"/>
+				<control progid="DecalControls.StaticText" name="txtBuffBuddy" left="15" top="212" width="120" height="15" justify="Left" text="NONE"/>
+				<control progid="DecalControls.StaticText" name="Label28" left="15" top="235" width="250" height="45" textcolor="192" justify="Center"  fontstyle="bold" text="WARNING : you will have to restart the macro to apply buff cycle length or consecutive buffs count changes"/>
+			</control>
+
+		</page>
+		<page label="Creature/Life">
+			<control progid="DecalControls.FixedLayout" clipped="">
+				<control progid="DecalControls.List" name="lstCreature" left="5" top="30" width="290" height="130">
+					<column progid="DecalControls.IconColumn" name="SpellIcon"/>
+					<column progid="DecalControls.TextColumn" name="Spell Name" fixedwidth="220"/>
+					<column progid="DecalControls.CheckColumn" name="Enable"/>
+				</control>
+				<control progid="DecalControls.List" name="lstLifePros" left="5" top="185" width="290" height="105">
+					<column progid="DecalControls.IconColumn" name="SpellIcon"/>
+					<column progid="DecalControls.TextColumn" name="Spell Name" fixedwidth="220"/>
+					<column progid="DecalControls.CheckColumn" name="Enable"/>
+				</control>
+				<control progid="DecalControls.Checkbox" name="chkEnableCreatureBuffs" left="10" top="10" width="190" height="15" text="Enable Creature Buffs"/>
+				<control progid="DecalControls.Checkbox" name="chkEnableLifeBuffs" left="10" top="165" width="265" height="15" text="Enable Life Buffs"/>
+			</control>
+
+		</page>
+		<page label="Item">
+			<control progid="DecalControls.Notebook" name="">
+			<page label="Main">
+				<control progid="DecalControls.FixedLayout" clipped="">
+					<control progid="DecalControls.StaticText" name="" left="5" top="5" width="100" height="15"  fontstyle="bold" text="Armor Parts"/>
+					<control progid="DecalControls.Checkbox" name="chkItmArmorHead" left="5" top="20" width="140" height="20" text="Head"/>
+					<control progid="DecalControls.Checkbox" name="chkItmArmorHands" left="5" top="35" width="140" height="20" text="Hands"/>
+					<control progid="DecalControls.Checkbox" name="chkItmArmorTop" left="5" top="50" width="140" height="20" text="Top"/>
+					<control progid="DecalControls.Checkbox" name="chkItmArmorBottom" left="5" top="65" width="140" height="20" text="Bottom"/>
+					<control progid="DecalControls.Checkbox" name="chkItmArmorFeet" left="5" top="80" width="140" height="20" text="Feet"/>
+					<control progid="DecalControls.Checkbox" name="chkItmArmorTopUndie" left="5" top="95" width="140" height="20" text="Top Underwear"/>
+					<control progid="DecalControls.Checkbox" name="chkItmArmorBottomUndie" left="5" top="110" width="140" height="20" text="Bottom Underwear"/>
+					<control progid="DecalControls.Checkbox" name="chkItmArmorShield" left="5" top="125" width="140" height="20" text="Shield"/>
+					<control progid="DecalControls.StaticText" name="" left="160" top="5" width="100" height="15"  fontstyle="bold" text="Banes"/>
+					<control progid="DecalControls.Checkbox" name="chkItmBaneImpen" left="160" top="20" width="140" height="20" text="Impen"/>
+					<control progid="DecalControls.Checkbox" name="chkItmBaneSlash" left="160" top="35" width="140" height="20" text="Slash"/>
+					<control progid="DecalControls.Checkbox" name="chkItmBanePierce" left="160" top="50" width="140" height="20" text="Pierce"/>
+					<control progid="DecalControls.Checkbox" name="chkItmBaneBludg" left="160" top="65" width="140" height="20" text="Bludgeon"/>
+					<control progid="DecalControls.Checkbox" name="chkItmBaneFire" left="160" top="80" width="140" height="20" text="Fire"/>
+					<control progid="DecalControls.Checkbox" name="chkItmBaneAcid" left="160" top="95" width="140" height="20" text="Acid"/>
+					<control progid="DecalControls.Checkbox" name="chkItmBaneFrost" left="160" top="110" width="140" height="20" text="Frost"/>
+					<control progid="DecalControls.Checkbox" name="chkItmBaneLightning" left="160" top="125" width="140" height="20" text="Lightning"/>
+					<control progid="DecalControls.StaticText" name="" left="5" top="150" width="100" height="15"  fontstyle="bold" text="Weapon"/>
+					<control progid="DecalControls.Checkbox" name="chkItmWeapBD" left="5" top="165" width="140" height="20" text="Blood Drinker"/>
+					<control progid="DecalControls.Checkbox" name="chkItmWeapHS" left="5" top="180" width="140" height="20" text="Heart Seeker"/>
+					<control progid="DecalControls.Checkbox" name="chkItmWeapSK" left="5" top="195" width="140" height="20" text="Swift Killer"/>
+					<control progid="DecalControls.Checkbox" name="chkItmWeapDE" left="5" top="210" width="140" height="20" text="Defender"/>
+					<control progid="DecalControls.StaticText" name="" left="160" top="150" width="100" height="15"  fontstyle="bold" text="Wand"/>
+					<control progid="DecalControls.Checkbox" name="chkItmWandHL" left="160" top="165" width="140" height="20" text="Hermetic Link"/>
+					<control progid="DecalControls.Checkbox" name="chkItmWandDef" left="160" top="180" width="140" height="20" text="Defender"/>
+					<control progid="DecalControls.Checkbox" name="chkItmWandSD" left="160" top="195" width="140" height="20" text="Spirit Drinker"/>
+					<control progid="DecalControls.Checkbox" name="chkItmSelectSelf" left="72" top="244" width="148" height="20" textcolor="16711680"  fontsize="18" fontstyle="bold" text="Select Self to Bane"/>
+				</control>
+
+			</page>
+			<page label="Extra - N/A">
+				<control progid="DecalControls.FixedLayout" clipped="">
+					<control progid="DecalControls.StaticText" name="stItemName" left="5" top="10" width="235" height="15"  fontstyle="bold" text="Item Name"/>
+					<control progid="DecalControls.PushButton" name="btnSetItemGUID" left="245" top="5" width="50" height="20" text="Set"/>
+					<control progid="DecalControls.PushButton" name="btnAddItem" left="315" top="5" width="40" height="20" text="Add"/>
+					<control progid="DecalControls.List" name="lstItems" left="5" top="30" width="290" height="100">
+						<column progid="DecalControls.CheckColumn" name="Enabled"/>
+						<column progid="DecalControls.IconColumn" name="Delete"/>
+						<column progid="DecalControls.IconColumn" name="Item Icon"/>
+						<column progid="DecalControls.TextColumn" name="Item Name" fixedwidth="155"/>
+					</control>
+					<control progid="DecalControls.Choice" name="chItemSpell" left="5" top="135" width="235" height="20">
+						<option text="Spell List" data=""/>
+					</control>
+					<control progid="DecalControls.PushButton" name="btnAddSpellToItem" left="245" top="135" width="50" height="20" text="Add"/>
+					<control progid="DecalControls.List" name="lstItemSpells" left="5" top="160" width="290" height="115">
+						<column progid="DecalControls.CheckColumn" name="Enabled"/>
+						<column progid="DecalControls.IconColumn" name="Delete"/>
+						<column progid="DecalControls.TextColumn" name="Spell Name" fixedwidth="140"/>
+					</control>
+				</control>
+
+			</page>
+			</control>
+
+		</page>
+		<page label="Buff Other">
+			<control progid="DecalControls.Notebook" name="">
+
+			<page label="Buddy Creature/Life">
+				<control progid="DecalControls.FixedLayout" clipped="">
+					<control progid="DecalControls.Checkbox" name="chkEnableOtherCreatureBuffs" left="10" top="10" width="190" height="15" text="Buff Other Creature"/>
+					<control progid="DecalControls.Checkbox" name="chkEnableOtherLifeBuffs" left="10" top="160" width="265" height="15" text="Buff Other Life"/>
+					<control progid="DecalControls.List" name="lstOtherCreature" left="5" top="30" width="290" height="120">
+						<column progid="DecalControls.IconColumn" name="SpellIcon"/>
+						<column progid="DecalControls.TextColumn" name="Spell Name" fixedwidth="220"/>
+						<column progid="DecalControls.CheckColumn" name="Enable"/>
+					</control>
+					<control progid="DecalControls.List" name="lstOtherLifePros" left="5" top="175" width="290" height="100">
+						<column progid="DecalControls.IconColumn" name="SpellIcon"/>
+						<column progid="DecalControls.TextColumn" name="Spell Name" fixedwidth="220"/>
+						<column progid="DecalControls.CheckColumn" name="Enable"/>
+					</control>
+				</control>
+			</page>
+
+			<page label="Buddy Items">
+				<control progid="DecalControls.FixedLayout" clipped="">
+					<control progid="DecalControls.StaticText" name="" left="5" top="5" width="100" height="15"  fontstyle="bold" text="Armor Parts"/>
+					<control progid="DecalControls.Checkbox" name="chkOtherItmArmorShield" left="5" top="25" width="140" height="20" text="Shield"/>
+					<control progid="DecalControls.StaticText" name="" left="5" top="50" width="100" height="15"  fontstyle="bold" text="Weapon"/>
+					<control progid="DecalControls.Checkbox" name="chkOtherItmWeapBD" left="5" top="65" width="140" height="20" text="Blood Drinker"/>
+					<control progid="DecalControls.Checkbox" name="chkOtherItmWeapHS" left="5" top="80" width="140" height="20" text="Heart Seeker"/>
+					<control progid="DecalControls.Checkbox" name="chkOtherItmWeapSK" left="5" top="95" width="140" height="20" text="Swift Killer"/>
+					<control progid="DecalControls.Checkbox" name="chkOtherItmWeapDE" left="5" top="110" width="140" height="20" text="Defender"/>
+					<control progid="DecalControls.StaticText" name="" left="160" top="50" width="100" height="15"  fontstyle="bold" text="Wand"/>
+					<control progid="DecalControls.Checkbox" name="chkOtherItmWandHL" left="160" top="65" width="140" height="20" text="Hermetic Link"/>
+					<control progid="DecalControls.Checkbox" name="chkOtherItmWandDef" left="160" top="80" width="140" height="20" text="Defender"/>
+					<control progid="DecalControls.Checkbox" name="chkOtherItmWandSD" left="160" top="95" width="140" height="20" text="Spirit Drinker"/>
+				</control>
+			</page>
+
+			</control>
+		</page>
+
+		</control>
+
+	</page>
+	<page label="IRC">
+		<control progid="DecalControls.Notebook" name="Notebook1">
+		<page label="Connection">
+			<control progid="DecalControls.FixedLayout" clipped="">
+				<control progid="DecalControls.Edit" name="txtIRCServer" left="5" top="5" width="135" height="18" imageportalsrc="19519" textcolor="8716155" text="irc.sorcery.net"/>
+				<control progid="DecalControls.Edit" name="txtIRCPort" left="5" top="25" width="135" height="18" imageportalsrc="19519" textcolor="8716155" text="6667"/>
+				<control progid="DecalControls.Edit" name="txtIRCChan" left="5" top="45" width="135" height="18" imageportalsrc="19519" textcolor="8716155" text="#lifetank"/>
+				<control progid="DecalControls.StaticText" name="lblPass" left="9" top="66" width="33" height="18" text="Pass:"/>
+				<control progid="DecalControls.Edit" name="txtIRCChanPassword" left="45" top="65" width="95" height="18" imageportalsrc="19519" textcolor="8716155" text=""/>
+				<control progid="DecalControls.PushButton" name="btnIRCConnect" left="6" top="177" width="135" height="29"  fontstyle="bold" text="Connect"/>
+				<control progid="DecalControls.Checkbox" name="chkIrcAutoConnect" left="9" top="114" width="135" height="15" text="Auto-Connect at startup"/>
+				<control progid="DecalControls.Checkbox" name="chkIrcAutoReconnectOnKick" left="9" top="135" width="115" height="15" text="Reconnect if kicked"/>
+				<control progid="DecalControls.Checkbox" name="chkIrcAutoReconnectOnConnLost" left="9" top="156" width="130" height="15" text="Reconnect if conn lost"/>
+				<control progid="DecalControls.List" name="lstIrcUsers" left="145" top="5" width="150" height="202">
+					<column progid="DecalControls.TextColumn" name="Name" fixedwidth="140"/>
+				</control>
+				<control progid="DecalControls.List" name="lstIrcConsole" left="5" top="210" width="290" height="80">
+					<column progid="DecalControls.TextColumn" name="Time" fixedwidth="45"/>
+					<column progid="DecalControls.TextColumn" name="message" fixedwidth="250"/>
+				</control>
+				<control progid="DecalControls.Edit" name="txtIRCPrefix" left="102" top="87" width="39" height="18" imageportalsrc="19519" textcolor="8716155" text=""/>
+				<control progid="DecalControls.StaticText" name="Label44" left="6" top="89" width="93" height="15" text="Nickname Prefix :"/>
+			</control>
+
+		</page>
+		<page label="Remote Control">
+			<control progid="DecalControls.FixedLayout" clipped="">
+				<control progid="DecalControls.StaticText" name="" left="5" top="5" width="250" height="20"  fontstyle="bold" text="Remote IRC Commands"/>
+				<control progid="DecalControls.StaticText" name="" left="10" top="20" width="280" height="15" text="#cmdmacro takecontrol [password] : grants remote access"/>
+				<control progid="DecalControls.StaticText" name="" left="10" top="35" width="250" height="20" text="#cmdmacro send [text] : sends [text] to the AC console"/>
+				<control progid="DecalControls.StaticText" name="" left="10" top="50" width="250" height="20" text="#cmdmacro dropcontrol : abandon remote control"/>
+				<control progid="DecalControls.Checkbox" name="chkEnableRemoteControl" left="10" top="80" width="170" height="15" text="Enable Remote IRC Access"/>
+				<control progid="DecalControls.PushButton" name="btnDropCurrentRemoteAccess" left="170" top="75" width="110" height="20" text="Drop Current Access"/>
+				<control progid="DecalControls.StaticText" name="" left="5" top="110" width="250" height="20"  fontstyle="bold" text="Remote Password"/>
+				<control progid="DecalControls.Edit" name="txtRemotePassword" left="15" top="130" width="150" height="20" imageportalsrc="19519" textcolor="8716155" text="gimp"/>
+				<control progid="DecalControls.Checkbox" name="chkNoPasswordOnAdmin" left="20" top="155" width="250" height="15" text="Don't prompt for password if admin alert"/>
+				<control progid="DecalControls.StaticText" name="" left="5" top="190" width="250" height="20"  fontstyle="bold" text="Filter"/>
+				<control progid="DecalControls.Checkbox" name="chkIrcFilterMelee" left="15" top="210" width="250" height="15" text="Melee combat messages"/>
+				<control progid="DecalControls.Checkbox" name="chkIrcFilterSpellCasting" left="15" top="230" width="250" height="15" text="Spell casting messages"/>
+			</control>
+
+		</page>
+		</control>
+
+	</page>
+	<page label="Options">
+		<control progid="DecalControls.Notebook" name="Notebook3">
+		<page label="Filters">
+			<control progid="DecalControls.FixedLayout" clipped="">
+				<control progid="DecalControls.Checkbox" name="chkFilterSpellcasting" left="10" top="10" width="250" height="15" text="Spell Casting (blue)"/>
+				<control progid="DecalControls.Checkbox" name="chkFilterDeathMsg" left="10" top="30" width="250" height="15" text="Death messages (green)"/>
+				<control progid="DecalControls.Checkbox" name="chkFilterMelee" left="10" top="50" width="250" height="15" text="Melee damage messages (red)"/>
+				<control progid="DecalControls.Checkbox" name="chkFilterMeleeEvade" left="10" top="70" width="250" height="15" text="Melee evade messages (red)"/>
+				<control progid="DecalControls.Checkbox" name="chkFilterGlobalChat" left="10" top="90" width="250" height="15" text="Global General Chat channel"/>
+				<control progid="DecalControls.Checkbox" name="chkFilterGlobalTrade" left="10" top="110" width="250" height="15" text="Global Trade Chat channel"/>
+				<control progid="DecalControls.Checkbox" name="chkFilterGlobalLFG" left="10" top="130" width="250" height="15" text="Global LFG Chat channel"/>
+				<control progid="DecalControls.StaticText" name="LabelLTmsgs" left="10" top="160" width="250" height="15" fontstyle="bold" text="LTx Generated messages to Filter"/>
+				<control progid="DecalControls.Checkbox" name="chkFilterLTMsg" left="10" top="180" width="250" height="15" text="LifeTank casting messages"/>
+				<control progid="DecalControls.Checkbox" name="chkFilterLootMsg" left="10" top="200" width="250" height="15" text="LTx Looting messages"/>
+				<control progid="DecalControls.Checkbox" name="chkFilterSalvageMsg" left="10" top="220" width="250" height="15" text="LTx Salvaging messages"/>
+				<control progid="DecalControls.Checkbox" name="chkFilterIdMsg" left="10" top="240" width="250" height="15" text="LTx Identify messages"/>
+			</control>
+
+		</page>
+		<page label="Anti-Ban">
+			<control progid="DecalControls.Notebook" name="">
+			<page label="Options">
+				<control progid="DecalControls.FixedLayout" clipped="">
+					<control progid="DecalControls.StaticText" name="Label32" left="10" top="10" width="150" height="15"  fontstyle="bold" text="Anti Admin"/>
+					<control progid="DecalControls.PushButton" name="btnStopAlarm" left="200" top="5" width="90" height="20" text="Stop Alert"/>
+					<control progid="DecalControls.Checkbox" name="chkEnableAdminDetection" left="20" top="30" width="160" height="15" text="Enable Admin Detection"/>
+					<control progid="DecalControls.Checkbox" name="chkEnableAutoResponse" left="40" top="47" width="160" height="15" text="Auto Respond to Admins"/>
+					<control progid="DecalControls.Checkbox" name="chkEnableUnfriendlyDetect" left="20" top="70" width="220" height="15" text="Enable Unfriendly Players Detection"/>
+					<control progid="DecalControls.Checkbox" name="chkLogoutOnDetect" left="40" top="87" width="191" height="15" text="Logout On Detection"/>
+					<control progid="DecalControls.StaticText" name="Label101" left="18" top="216" width="270" height="55" justify="Center"  fontstyle="italic" text="You can also trigger sound alerts for admin and unfriendly player detection in the Alerts tab of the Main panel"/>
+				</control>
+			</page>
+			<page label="IRC">
+				<control progid="DecalControls.FixedLayout" clipped="">
+					<control progid="DecalControls.StaticText" name="Label321" left="10" top="10" width="150" height="15"  fontstyle="bold" text="Anti Report"/>
+					<control progid="DecalControls.Checkbox" name="chkAlertOnIRC" left="20" top="30" width="205" height="15" text="Send Admin Alert message to IRC"/>
+					<control progid="DecalControls.Checkbox" name="chkReportUnfriendly" left="20" top="50" width="220" height="15" text="Report Unfriendly Players  to IRC"/>
+					<control progid="DecalControls.Checkbox" name="chkReportOpenChat" left="20" top="70" width="230" height="15" text="Report Open Chat Messages to IRC"/>
+					<control progid="DecalControls.Checkbox" name="chkReportTells" left="20" top="90" width="241" height="15" text="Report Private Tells to IRC"/>
+				</control>
+
+			</page>
+			</control>
+
+		</page>
+		<page label="HUD">
+			<control progid="DecalControls.FixedLayout" clipped="">
+				<control progid="DecalControls.Checkbox" name="chkEnableHUD" left="10" top="10" width="95" height="15" text="Enable HUD"/>
+				<control progid="DecalControls.Checkbox" name="chkHUDMacro" left="30" top="30" width="170" height="15" text="Display Macro Settings HUD"/>
+				<control progid="DecalControls.Checkbox" name="chkHUDStats" left="30" top="50" width="150" height="15" text="Display Stats HUD"/>
+				<control progid="DecalControls.Checkbox" name="chkHUDInventory" left="30" top="70" width="190" height="15" text="Display Inventory HUD"/>
+				<control progid="DecalControls.Checkbox" name="chkHUDDebug" left="30" top="90" width="160" height="15" text="Display Debug HUD"/>
+				<control progid="DecalControls.Checkbox" name="chkHUDDOT" left="30" top="110" width="150" height="15" text="Display Damage HUD"/>
+				<control progid="DecalControls.Checkbox" name="chkLockHuds" left="10" top="140" width="160" height="15" text="Lock HUD Positions"/>
+			</control>
+		</page>
+		<page label="Friends">
+			<control progid="DecalControls.FixedLayout" clipped="">
+				<control progid="DecalControls.Checkbox" name="chkOnlyFriendsList" left="5" top="5" width="250" height="20" text="Only use this list for checking friends"/>
+				<control progid="DecalControls.Edit" name="txtAddFriend" left="5" top="30" width="200" height="20" imageportalsrc="19519" textcolor="8716155" text="Enter Toon Name Here"/>
+				<control progid="DecalControls.PushButton" name="btnAddFriend" left="210" top="30" width="60" height="20" text="Add"/>
+				<control progid="DecalControls.List" name="lstFriends" left="5" top="55" width="290" height="190">
+					<column progid="DecalControls.CheckColumn" name="Enabled"/>
+					<column progid="DecalControls.TextColumn" name="Friend Name" fixedwidth="230"/>
+					<column progid="DecalControls.CheckColumn" name="ExactMatch"/>
+				</control>
+			</control>
+		</page>
+
+		</control>
+
+	</page>
+	<page label="eXtra">
+		<control progid="DecalControls.Notebook" name="NotebookX">
+		<page label="Stuff">
+			<control progid="DecalControls.FixedLayout" clipped="">
+				<control progid="DecalControls.StaticText" name="stVersion" left="10" top="10" width="280" height="20"  fontsize="18" fontstyle="bold" text="LifeTank X"/>
+				<control progid="DecalControls.StaticText" name="" left="15" top="30" width="280" height="20"  fontsize="15" fontstyle="bold" text="Original code By Spax/SpK of Wintersebb"/>
+				<control progid="DecalControls.StaticText" name="" left="15" top="50" width="280" height="20"  fontsize="15" fontstyle="bold" text="Now developed by Xeon Xarid"/>
+
+				<control progid="DecalControls.PushButton" name="btnStopSounds" left="20" top="90" width="90" height="20" text="Stop Alert"/>
+				<control progid="DecalControls.PushButton" name="btnResetHUD" left="20" top="120" width="110" height="20" text="Reset HUD Position"/>
+				<control progid="DecalControls.PushButton" name="btnExportInv" left="20" top="150" width="110" height="20" text="Export Inventory"/>
+
+				<control progid="DecalControls.Checkbox" name="chkDisableLogs" left="20" top="200" width="160" height="20" text="Disable All Log Files"/>
+			</control>
+		</page>
+		<page label="Detect">
+			<control progid="DecalControls.FixedLayout" clipped="">
+				<control progid="DecalControls.Checkbox" name="chkDetectList" left="5" top="5" width="250" height="20" text="Enable Detect on Name"/>
+				<control progid="DecalControls.Edit" name="txtAddDetect" left="5" top="30" width="200" height="20" imageportalsrc="19519" textcolor="8716155" text="Enter Text Here"/>
+				<control progid="DecalControls.PushButton" name="btnAddDetect" left="210" top="30" width="60" height="20" text="Add"/>
+				<control progid="DecalControls.PushButton" name="btnSetDetect" left="275" top="30" width="20" height="20" text="S"/>
+
+				<control progid="DecalControls.PushButton" name="db1" left="5" top="55" width="50" height="15" fontstyle="italic" align="Left" imageportalsrc="4518" textcolor="14737632" text="Enabled" />
+				<control progid="DecalControls.PushButton" name="db2" left="55" top="55" width="160" height="15" fontstyle="italic" align="Center" imageportalsrc="4518" textcolor="14737632" text="Name" />
+				<control progid="DecalControls.PushButton" name="db3" left="215" top="55" width="70" height="15" fontstyle="italic" align="Right" imageportalsrc="4518" textcolor="14737632" text="Critter Only" />
+
+				<control progid="DecalControls.List" name="lstDetect" left="5" top="70" width="290" height="190">
+					<column progid="DecalControls.CheckColumn" name="Enabled"/>
+					<column progid="DecalControls.TextColumn" name="Detect Name" fixedwidth="230"/>
+					<column progid="DecalControls.CheckColumn" name="ExactMatch"/>
+				</control>
+			</control>
+		</page>
+
+		</control>
+
+	</page>
+
+	</control>
+
+</view>
