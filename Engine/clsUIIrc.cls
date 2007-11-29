@@ -224,7 +224,8 @@ On Error GoTo Error_Handler
     Set IrcSession = Nothing
     
     Set txtIRCPrefix = Nothing
- 
+    
+    Set chkIrcAutoConnect = Nothing
     Set chkIrcAutoReconnectOnKick = Nothing
     Set chkIrcAutoReconnectOnConnLost = Nothing
     

@@ -28,10 +28,11 @@ End Enum
 Public Enum eRestamMethod
     RESTAM_SPELL
     RESTAM_ITEM
+    NO_RESTAM
 End Enum
 
-Private Const TRANSITION_DELAY = 0.25    'seconds
-Private Const SECURE_TIME = 5            'seconds
+Private Const TRANSITION_DELAY = 0.1    'seconds
+Private Const SECURE_TIME = 0.7         'seconds
 
 Private WithEvents m_tmrTransition As clsTimer
 Attribute m_tmrTransition.VB_VarHelpID = -1
@@ -40,6 +41,7 @@ Attribute m_tmrSecure.VB_VarHelpID = -1
 
 Private m_RestamMethod As eRestamMethod
 Private m_State As eSubStates
+Private m_tmrNextTime As clsTimer
 
 Public Event OnRestamComplete()
 
@@ -53,6 +55,7 @@ Public Event OnRestamComplete()
 Private Sub Class_Initialize()
     Set m_tmrTransition = CreateTimer
     Set m_tmrSecure = CreateTimer
+    Set m_tmrNextTime = CreateTimer
     Call Reset
 End Sub
 
@@ -61,11 +64,13 @@ Public Sub Reset()
     m_State = STATE_RESTAM_READY
     Call m_tmrSecure.Reset
     Call m_tmrTransition.Reset
+    Call m_tmrNextTime.Reset
 End Sub
 
 Private Sub Class_Terminate()
     Set m_tmrTransition = Nothing
     Set m_tmrSecure = Nothing
+    Set m_tmrNextTime = Nothing
 End Sub
 
 
@@ -86,23 +91,6 @@ End Property
 '
 '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
-Private Sub ChooseBestRestamMethod()
-On Error GoTo ErrorMessage
-    
-    If Vitals.CanUseStamItem Then
-        m_RestamMethod = RESTAM_ITEM
-    Else
-        m_RestamMethod = RESTAM_SPELL
-    End If
-    
-Fin:
-    Exit Sub
-ErrorMessage:
-    PrintErrorMessage "clsMacroRestam.RunState - " & Err.Description
-    Resume Fin
-End Sub
-
-
 Private Sub m_tmrTransition_OnTimeout()
     If m_State = STATE_DONE Then
         MyDebug "clsMacroRestam.m_tmrTransition_OnTimeout: calling OnRestamComplete"
@@ -115,6 +103,28 @@ End Sub
 '                           Public Methods
 '
 '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+Public Sub ChooseBestRestamMethod()
+On Error GoTo ErrorMessage
+    
+    If Vitals.CanUseStamItem Then
+        m_RestamMethod = RESTAM_ITEM
+    Else
+        If g_ui.Macro.chkUseHealSpell.Checked Then
+            m_RestamMethod = RESTAM_SPELL
+        Else
+            PrintWarning "Trying to restam, but no stamina items left! Doing nothing... Either enable spells or restock!"
+            m_RestamMethod = NO_RESTAM
+            Exit Sub
+        End If
+    End If
+    
+Fin:
+    Exit Sub
+ErrorMessage:
+    PrintErrorMessage "clsMacroRestam.RunState - " & Err.Description
+    Resume Fin
+End Sub
 
 Public Function StartRestam() As Boolean
 On Error GoTo ErrorMessage
@@ -184,22 +194,25 @@ On Error GoTo ErrorMessage
                     Case RESTAM_ITEM
                         If (g_bFindingItem) Then GoTo Fin
                         Set objPotion = Vitals.findStamItem
-                        If Valid(objPotion) Then
+                        If Valid(objPotion) And m_tmrNextTime.Expired Then
                             MyDebug "clsMacroRestam.RunState: Using " & objPotion.Name
                             Call g_Service.UseItem(objPotion) ' UseItemOnSelf
-                            'move to "restaming state", and wait for the EV_READY netecho message to fire OnRestamReady
-                            m_State = STATE_RESTAMING
+                            Call m_tmrNextTime.SetNextTime(0.5)
+                            GoTo Fin
                         Else
-                            PrintMessage "Could not find any valid Stamina Items"
-                            Call StopRestam
+                            MyDebug "clsMacroRestam.RunState: Stamina timer not expired!"
                             GoTo Fin
                         End If
-                                                
-                    Case Else   'spell
-                        'put ourself in casting mode with a wand
+                        
+                    Case RESTAM_SPELL   'spell
+                        ' Make sure we're ready to cast.
+                        If g_Macro.m_bOKToCast = False Then
+                            GoTo Fin
+                        End If
+                        
                         If g_Macro.ValidState(TYPE_CASTER) Then
                             If Not Vitals.CastManaStamRegen Then    'Juggle mana
-                                MyDebug "clsMacroRestam.RunState: Casting Revitalize"
+                                'MyDebug "clsMacroRestam.RunState: Casting Revitalize"
                                 Call g_Spells.Cast_Revitalize
                                 'move to "restaming state"
                                 m_State = STATE_RESTAMING
@@ -210,11 +223,20 @@ On Error GoTo ErrorMessage
                             GoTo Fin
                         End If
                         
+                    Case Else 'No restam.
+                        Call StopRestam("STATE_DONE")
+                        
                 End Select
              
         Case STATE_RESTAMING
             'do nothing
             If m_RestamMethod = RESTAM_SPELL And Not (g_Spells.Casting) Then
+                
+                ' Make sure we're ready to cast.
+                If g_Macro.m_bOKToCast = False Then
+                    GoTo Fin
+                End If
+                
                 MyDebug "clsMacroRestam.RunState:STATE_RESTAMING: spamming the spell"
                 Call g_Spells.Cast_Revitalize
             End If

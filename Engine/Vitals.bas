@@ -185,6 +185,62 @@ ErrorMessage:
     Exit Sub
 End Sub
 
+' Returns the number of mana stones in the inventory. Used for auto mana stone and charge items looter.
+'Public Function countManaStones() As Integer
+    'Dim objItem As acObject
+    'Dim stoneCounter As Long
+    'Dim lngSelectedManaChoice As Long
+    'lngSelectedManaChoice = g_ui.Loot.chStoneType.Selected
+    
+    'MyDebug "Counting Mana Stones..."
+    
+    'MyDebug "Looking for " & g_ui.Loot.chStoneType.Text(lngSelectedManaChoice) & " ..."
+    
+    'stoneCounter = g_Objects.Items.InvCntByName(g_ui.Loot.chStoneType.Text(lngSelectedManaChoice), True)
+    
+    'MyDebug "Counting Finished!"
+    
+    'MyDebug "Object List: " & g_Objects.Items.Inv.GetObjectsList
+            
+    'For Each objItem In g_Objects.Items.Inv
+        'MyDebug "In for loop..."
+        
+        'If Valid(objItem) Then
+                'MyDebug "In if loop..."
+                'MyDebug "Item: " & objItem.Name
+                'MyDebug "Type: " & objItem.itemType
+                'MyDebug "Mana: " & objItem.Mana
+                
+            'If (objItem.itemType = ITEM_MANA_STONES) And (objItem.Mana > 1) And (objItem.Name Like "*Stone*") Then
+                'If (objItem.Mana < 1000000) Then
+                    'MyDebug "In if loop #2..."
+                   ' stoneCounter = stoneCounter + 1
+               ' End If
+            'End If
+            
+           ' MyDebug "Going to next item..."
+        'End If
+    'Next objItem
+    
+    'MyDebug "Found " + CStr(stoneCounter) + " mana stones!"
+    
+    'countManaStones = CInt(stoneCounter)
+'End Function
+
+' Returns the number charge items in the inventory. Used for auto mana stone and charge items looter.
+'Public Function countChargeItems() As Integer
+'On Error GoTo ErrorMessage
+    'MyDebug "Found " + CStr(g_Macro.m_colChargeItems.Count) + " charge items!"
+    
+    'MyDebug "Items: " + CStr(g_Macro.m_colChargeItems.GetObjectsList)
+    
+    'countChargeItems = CInt(g_Macro.m_colChargeItems.Count)
+    
+    'MyDebug "Charge Items: " & countChargeItems
+'ErrorMessage:
+    'PrintErrorMessage "Error in Vitals.countChargeItems: " & Err.Description & " - " & Err.Source & " - " & Erl
+'End Function
+
 ' Returns the Mana Charge to use if chkUseManaCharge is enabled and
 ' have Mana Charges in inventory
 Public Function findManaCharge() As Boolean
@@ -223,14 +279,24 @@ On Error GoTo ErrorMessage
     If found Then GoTo Fin
     
     'Loop through inventory items, looking for Mana Charges
-    'However, don't use Massive mana charges As peeps use them as DI's
+    'However, don't use Massive mana charges unless enabled as peeps use them as DI's
     For Each objItem In g_Objects.Items.Inv
         
         If Valid(objItem) Then
-            If (objItem.Name Like STR_ITEM_MANA_CHARGE) And Not (objItem.Name Like "*Massive*") Then
-                Set g_manaItem = objItem
-                found = True
-                GoTo Fin
+            If g_ui.Macro.chkUseMassiveCharges.Checked Then ' Use Massive Charges if it's enabled.
+                MyDebug "Using Massive Mana Charge"
+                If (objItem.Name Like STR_ITEM_MANA_CHARGE) Then
+                    Set g_manaItem = objItem
+                    found = True
+                    GoTo Fin
+                End If
+            Else
+                If (objItem.Name Like STR_ITEM_MANA_CHARGE) And Not (objItem.Name Like "*Massive*") Then ' Don't use massive charges.
+                    MyDebug "Not using a Massive Charge..."
+                    Set g_manaItem = objItem
+                    found = True
+                    GoTo Fin
+                End If
             End If
         End If
 

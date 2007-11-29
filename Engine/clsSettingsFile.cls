@@ -30,6 +30,7 @@ End Sub
 
 Private Sub Class_Terminate()
     Set m_cfgFile = Nothing
+    m_bLoaded = False
 End Sub
 
 '#####################################################################################

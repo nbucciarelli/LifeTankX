@@ -18,6 +18,7 @@ Public Index As Long
 
 Public SpellSchool As Integer
 Public SpellFamily As String
+Public SpellID As Long
 Public SpellType As Integer
 Public SpellElement As Integer
 Public LevelWanted As Integer

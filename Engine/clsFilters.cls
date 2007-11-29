@@ -49,6 +49,7 @@ Private Sub Class_Terminate()
     Set g_worldFilter = Nothing
     Set m_netEcho = Nothing
     Set m_DSFilter = Nothing
+    Set m_spellFilter = Nothing
 End Sub
 
 '#####################################################################################

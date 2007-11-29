@@ -54,6 +54,7 @@ On Error GoTo ErrorHandler
     Call ClearRoute
     Set m_Last = Nothing
     Set m_Head = Nothing
+    Set m_db = Nothing
     
 Fin:
     Exit Sub

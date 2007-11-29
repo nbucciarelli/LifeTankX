@@ -21,7 +21,7 @@ Private Enum eSubStates
 End Enum
 
 Private Const TRANSITION_DELAY = 1  'seconds
-Private Const SECURE_TIMER = 5      'seconds
+Private Const SECURE_TIMER = 2      'seconds
 
 Private m_newCombatState As eCombatStates    'the combat mode wanted
 Private m_State As eSubStates
@@ -144,7 +144,7 @@ On Error GoTo ErrorMessage
             Case ST_START_MODE_CHANGE
                 Call ToggleCombatMode(m_newCombatState)
                 m_tmrSecure.SetNextTime SECURE_TIMER
-                m_tmrNextThink.SetNextTime 1
+                m_tmrNextThink.SetNextTime 0.75
                 m_State = ST_CHECK_MODE_CHANGE
                 
             Case ST_CHECK_MODE_CHANGE
@@ -153,7 +153,7 @@ On Error GoTo ErrorMessage
                 Else
                     MyDebug "clsMacroChangeCM.RunState - ST_CHECK_MODE_CHANGE - Combat mode not changed yet, toggling again."
                     Call ToggleCombatMode(m_newCombatState)
-                    m_tmrNextThink.SetNextTime 2
+                    m_tmrNextThink.SetNextTime 0.75
                 End If
         End Select
     End If

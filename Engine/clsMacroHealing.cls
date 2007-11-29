@@ -30,8 +30,11 @@ Public Enum eHealMethods
     MET_POTION
 End Enum
 
-Private Const TRANSITION_DELAY = 0.25    'seconds
-Private Const SECURE_TIME = 5            'seconds
+'Length of time between seeing you need healing, and actually starting to heal
+Private Const TRANSITION_DELAY = 0.5    'seconds
+
+'length of time between heals before the loop ends to start combat again
+Private Const SECURE_TIME = 2.5          'seconds
 
 Private WithEvents m_tmrTransition As clsTimer
 Attribute m_tmrTransition.VB_VarHelpID = -1
@@ -72,6 +75,7 @@ Public Sub Reset()
     Call m_tmrSecure.Reset
     Call m_tmrTransition.Reset
     Call m_tmrNextTime.Reset
+    Call m_tmrNextTime.ExpireNow
 End Sub
 
 Private Sub Class_Terminate()
@@ -197,7 +201,10 @@ On Error GoTo ErrorMessage
 
     MyDebug "clsMacroHealing.StopHealing(" & sSource & ")"
     m_bHealing = False
+    
+    Call m_tmrTransition.SetNextTime(TRANSITION_DELAY)
     Call m_tmrSecure.Reset
+    Call m_tmrNextTime.Reset
     If m_HealMethod <> MET_SPELL Then
        m_tmrTransition.SetNextTime TRANSITION_DELAY
     Else
@@ -221,14 +228,14 @@ On Error GoTo ErrorMessage
 
     If m_tmrTransition.Enabled Then Exit Sub
     
-    If Not NeedHealing Then
-        Call StopHealing("All Healed up!")
-        Exit Sub
-    End If
+    'If Not NeedHealing Then
+        'Call StopHealing("All Healed up!")
+        'Exit Sub
+    'End If
     
     If m_tmrSecure.Expired Then
-        'PrintWarning "clsMacroHealing.m_tmrSecure_OnTimeout - Secure Healing Timer expired : exiting state."
-        'PrintWarning "Busy Timeout - Reseting Healing flags"
+        MyDebug "clsMacroHealing.m_tmrSecure_OnTimeout - Secure Healing Timer expired : exiting state."
+        MyDebug "Busy Timeout - Reseting Healing flags"
         Call StopHealing("Secure Healing Timer Expired")
         Exit Sub
     End If
@@ -242,6 +249,8 @@ On Error GoTo ErrorMessage
         '---------------------
         Case MET_HEALING_KIT
             If Not m_bHealing Then
+                MyDebug "Healing started..."
+                
                 If ACBusy Then GoTo Fin
                 
                 If (g_bFindingItem) Then GoTo Fin
@@ -249,10 +258,31 @@ On Error GoTo ErrorMessage
                 
                 'If we found a valid Healing Kit
                 If Valid(m_objHealingKit) Then
+                    If Not NeedHealing Then
+                        MyDebug "clsMacroHealing.RunState.NeedHealing.Check - No healing necessary."
+                        Exit Sub
+                    End If
+                    
                     MyDebug "MET_HEALING_KIT: STATE_HEAL_APPLY_KIT: " & m_objHealingKit.Name & " found, using it on self"
                     m_bHealing = True
+                    
+                    'If heal in peace mode checked then..
+                    If g_ui.Macro.chkUsePeaceHeal.Checked Then
+                        If g_Hooks.CombatMode <> COMBATSTATE_PEACE Then
+                            MyDebug "Healing: Changing to peace mode..."
+                            Call g_Macro.RequestCombatStateChange(COMBATSTATE_PEACE)
+                            m_bHealing = False
+                            MyDebug "Healing: We're in peace mode. Using Kit..."
+                            GoTo Fin
+                        End If
+                    End If
+                    
+                    'MyDebug "Healing: We're in peace mode. Using Kit..."
                     Call g_Service.UseItemOnSelf(m_objHealingKit)
-                    Call m_tmrNextTime.SetNextTime(3)
+                    MyDebug "Used Kit..."
+                    Call StopHealing("Finished Healing!")
+                    'Call m_tmrSecure.SetNextTime(SECURE_TIME)
+                    Exit Sub
                 Else
                     MyDebug "MET_HEALING_KIT: STATE_HEAL_APPLY_KIT: Cant find healing kit in inventory. Logging out."
                     If g_ui.Macro.chkLogoutOnKits.Checked Then
@@ -274,6 +304,11 @@ On Error GoTo ErrorMessage
                 If Not g_Macro.ValidState(TYPE_CASTER) Then       'make sure we're in casting mode
                    MyDebug "MET_SPELL: not in mage mode yet"
                    GoTo Fin
+                End If
+                
+                ' Make sure we're ready to cast.
+                If g_Macro.m_bOKToCast = False Then
+                    GoTo Fin
                 End If
                 
                 'If we're too low on mana, get some back quickly with S2M
@@ -331,7 +366,7 @@ On Error GoTo ErrorMessage
                 If Valid(m_objPotion) Then
                     MyDebug "ST_HEALING: MET_POTION: " & m_objPotion.Name & " Found, using it"
                     Call g_Service.UseItem(m_objPotion) 'UseItemOnSelf
-                    Call m_tmrNextTime.SetNextTime(1)
+                    Call m_tmrNextTime.SetNextTime(0.75)
                     Call m_tmrSecure.SetNextTime(SECURE_TIME)
                     m_bHealing = True
                 Else
@@ -356,9 +391,9 @@ On Error GoTo ErrorHandler
     NeedHealing = (g_Filters.Health <= GetPercent(g_Filters.MaxHealth, g_Data.MinHealthThreshold))
     
     'debug
-    'If NeedHealing Then
-    '    MyDebug "NeedHealing(" & sSource & ") : True - Hp:" & g_Filters.Health & " - MinTreshold : " & GetPercent(g_Filters.MaxHealth, g_Data.MinHealthThreshold)
-    'End If
+    If NeedHealing Then
+        MyDebug "NeedHealing(" & sSource & ") : True - Hp:" & g_Filters.Health & " - MinTreshold : " & GetPercent(g_Filters.MaxHealth, g_Data.MinHealthThreshold)
+    End If
     
 Fin:
     Exit Function
@@ -394,14 +429,14 @@ Public Sub OnHealingReady(Optional ByVal bSuccess As Boolean = True)
             
             'if we still need another healing, make sure we select the best healing method
             If NeedHealing("clsMacroHealing.OnHealingReady") Then
-                'MyDebug "Need more Healing..."
+                MyDebug "Need more Healing..."
                 Call m_tmrSecure.SetNextTime(SECURE_TIME)
                 Call ChooseBestHealingMethod
                 If Not m_tmrNextTime.Expired Then
-                    Call m_tmrNextTime.SetNextTime(0.2)
+                    Call m_tmrNextTime.SetNextTime(1)
                 End If
             Else
-                'MyDebug "Healing complete."
+                MyDebug "Healing complete."
                 Call StopHealing("clsMacroHealing.OnHealingReady")
             End If
         End If

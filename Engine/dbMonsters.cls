@@ -50,6 +50,7 @@ End Sub
 
 Private Sub Class_Terminate()
     Set m_db = Nothing
+    Set m_colMonsters = Nothing
 End Sub
 
 '#####################################################################################

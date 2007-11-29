@@ -40,8 +40,8 @@ Private Const FOLLOW_RANGE = 5              'stay within 5 units of the object w
 Private Const FOLLOW_STICK_DISTANCE = 3     'minimum distance between us and the object we're following
 Private Const FOLLOW_DISTANCE_LOST = 90     'if distance to objToFollow > this, then we've lost our target
 Private Const RUN_ENFORCER_INTERVAL = 5     'trigger autorun ON every x seconds
-Private Const NAV_INTERVAL = 5              'recheck heading every x seconds if moving
-Private Const MIN_CORRECTION_DISTANCE = 30  'minimum distance to require a route correction when current distance to waypoint is equal to m_fLastDistToWP / 2
+Private Const NAV_INTERVAL = 3              'recheck heading every x seconds if moving
+Private Const MIN_CORRECTION_DISTANCE = 5   'minimum distance to require a route correction when current distance to waypoint is equal to m_fLastDistToWP / 2
 Private Const MAX_STICKY_RANGE = 20         'maximum distance to be from sticky point, otherwise disable sticky
 Private Const MAX_WP_RANGE = 5              'maximum distance to require a route recheck
 Private Const MAX_STICKY_RUN = 5            'maximum time allowed to run back to sticky point
@@ -130,6 +130,7 @@ Private Sub Class_Terminate()
     Set m_tmrTurnDelay = Nothing
     Set m_tmrStickyRun = Nothing
     Set m_tmrRunPause = Nothing
+    Set m_tmrNextHeadingCheck = Nothing
 End Sub
 
 Public Property Get CurrentWP() As clsNavWaypoint
@@ -853,7 +854,7 @@ On Error GoTo ErrorHandler
     If m_iNavType = NAVTYPE_STICKY Then GoTo Fin
     
     If m_Route.NumWP < 1 Then
-        locDebug "ResumeRoute : Empty route, ignoring"
+        PrintErrorMessage "ResumeRoute : Empty route, ignoring"
         GoTo Fin
     End If
     

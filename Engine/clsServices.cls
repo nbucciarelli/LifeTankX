@@ -102,3 +102,18 @@ ErrorHandler:
     PrintErrorMessage "clsService.AddToUst - " & Err.Description
     Resume Fin
 End Sub
+
+
+Public Sub UnloadPlugin()
+On Error GoTo ErrorHandler
+    
+    g_Macro.StopMacro
+    Set g_MainView = Nothing
+    
+Fin:
+    Exit Sub
+ErrorHandler:
+    PrintErrorMessage "clsService.UnloadPlugin - " & Err.Description
+    Resume Fin
+End Sub
+

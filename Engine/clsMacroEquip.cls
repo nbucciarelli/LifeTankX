@@ -18,9 +18,9 @@ Private Enum eSubStates
     ST_EQUIP_RUNNING
 End Enum
 
-Private Const TRANSITION_DELAY = 0.25    'seconds
+Private Const TRANSITION_DELAY = 0.5    'seconds
 Private Const SECURE_TIME = 5            'seconds
-Private Const RETRY_DELAY = 1            'seconds
+Private Const RETRY_DELAY = 2            'seconds
 
 Private m_State As eSubStates
 Private m_ItemToEquip As acObject
@@ -59,6 +59,7 @@ Private Sub Class_Terminate()
     Set m_ItemToEquip = Nothing
     Set m_tmrTransition = Nothing
     Set m_tmrSecure = Nothing
+    Set m_tmrRetry = Nothing
 End Sub
 
 

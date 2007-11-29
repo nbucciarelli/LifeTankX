@@ -17,7 +17,7 @@ Private m_lIndex As Long
 Private m_dTimerValue As Double     'time in seconds
 Private m_bEnabled As Boolean       'flag to check if the OnTimeout event will be triggered
 Private m_bPause As Boolean
-Private m_dTimeLeft As Double   'for pause (save time remaining)
+Private m_dTimeLeft As Double       'for pause (save time remaining)
 
 Public Event OnTimeout()
 

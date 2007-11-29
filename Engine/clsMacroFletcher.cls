@@ -64,6 +64,7 @@ End Sub
 
 Private Sub Class_Terminate()
     Set m_tmrSecure = Nothing
+    Set m_tmrNextTime = Nothing
 End Sub
 
 

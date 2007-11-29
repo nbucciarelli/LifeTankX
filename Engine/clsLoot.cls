@@ -71,6 +71,8 @@ Private m_idCount As Integer
 Private WithEvents m_tmrExportInv As clsTimer
 Attribute m_tmrExportInv.VB_VarHelpID = -1
 
+Private m_NavHold As Long
+
 Public Event OnItemLooted(objItem As acObject)
 Public Event OnLootingComplete()
 
@@ -113,6 +115,8 @@ On Error GoTo ErrorHandler
     Set m_ItemsIdQueue = New colObjects
   
     Set m_dicCorpseToIgnore = New Dictionary
+    
+    m_NavHold = 0
 
     Call Reset
 
@@ -130,6 +134,15 @@ Private Sub Class_Terminate()
     Set m_ItemsIdQueue = Nothing
     Set m_ItemsPending = Nothing
     Set m_ItemsOnCorpse = Nothing
+    Set m_tmrExportInv = Nothing
+    Set m_rareCorpse = Nothing
+    Set m_ItemsToLoot = Nothing
+    Set m_corpseList = Nothing
+    Set m_dicCorpseToIgnore = Nothing
+    
+    Set m_tmrSecure = Nothing
+    Set m_tmrTransition = Nothing
+    Set m_tmrNextTime = Nothing
     Set m_tmrExportInv = Nothing
 End Sub
 
@@ -171,6 +184,28 @@ ErrorHandler:
     PrintErrorMessage "clsLoot.canLoot - " & Err.Description
     Resume Fin
 End Function
+
+Public Sub incNavHold()
+    'PrintErrorMessage ("inc'd")
+    m_NavHold = m_NavHold + 1
+End Sub
+
+Public Sub decNavHold()
+    'PrintErrorMessage ("dec'd")
+    If m_NavHold > 0 Then
+       m_NavHold = m_NavHold - 1
+    Else
+       m_NavHold = 0
+    End If
+End Sub
+
+Public Function getNavHold()
+    getNavHold = m_NavHold
+End Function
+
+Public Sub resetNavHold()
+    m_NavHold = 0
+End Sub
 
 Public Function StartLooting(Optional bLootCorpse As Boolean = True, Optional bLootGround As Boolean = False) As Boolean
 On Error GoTo ErrorHandler
@@ -216,6 +251,7 @@ End Sub
 Public Sub StopLooting(Optional sSrc As String = "", Optional dTransitionTime As Double = DEFAULT_TRANSITION_TIME)
 On Error GoTo ErrorHandler
     
+    MyDebug "clsLoot.StopLooting - From: " & sSrc
     locDebug "clsLoot.StopLooting - From: " & sSrc
     Call m_tmrTransition.SetNextTime(dTransitionTime)
     g_bLootRare = False
@@ -500,6 +536,15 @@ On Error GoTo Error_Handler
         GoTo Fin
     End If
     
+    'Send rare stats.
+    If g_ui.Loot.chkSendRares.Checked And objItem.IsRare Then
+        MyDebug "Getting ready to send rare stats..."
+        Dim lowDmg As Long
+        lowDmg = objItem.GetLowDamage
+        
+        Call g_RareTracker.SendStats(objItem.Name, objItem.RareNumber, objItem.ActivateSkill, objItem.ActivateSkillVal, objItem.ArmorLevel, objItem.ArmorType, objItem.AssociatedSpellId, objItem.AttackBonus, objItem.Burden, objItem.Coverage3, objItem.DamageFlags, objItem.DamageModifier, objItem.DefenseBonus, objItem.Description, objItem.ElementBonusDamage, lowDmg, objItem.HighDamage, objItem.Imbue, objItem.LoreReq, objItem.MagicDefense, objItem.MaxMana, objItem.ManaConvMod, objItem.MaterialType, objItem.MissileDefense, objItem.PvMBonus, objItem.RaceReq, objItem.RankReq, objItem.SkillReqID, objItem.SkillUsed, objItem.Spells, objItem.Spellcraft, objItem.TotalUses, objItem.UsesLeft, objItem.Value, objItem.Variance, objItem.WieldReqID, objItem.WieldReqType, objItem.WieldReqVal, objItem.Workmanship, objItem.BitingStrike, objItem.CrushingBlow, objItem.ShortDesc, objItem.UsageInstructions)
+    End If
+        
     If Not g_ui.Options.chkFilterIdMsg.Checked And _
         ((g_Hooks.CurrentSelection = objItem.Guid) Or (objItem.Wielder <> 0)) Then
             MyDebug "ID'ing selected item"
@@ -519,6 +564,8 @@ On Error GoTo Error_Handler
             Set m_rareCorpse = objItem
             MyDebug "clsLoot.OnIdentifyObject: found corpse containing a rare"
         End If
+        
+        'Call incNavHold
     End If
     
     If m_ItemsIdQueue.Count > 0 Then
@@ -573,7 +620,9 @@ On Error GoTo Error_Handler
     Dim iPos As Integer
     Dim aRegex As New RegExp
     Dim colMatches As MatchCollection
-    
+    Dim objRareFinder As acObject
+    Dim NewPlayerGUID As String
+            
     aRegex.Pattern = "has discovered the (.+)"
     aRegex.Global = True
     aRegex.IgnoreCase = True
@@ -590,17 +639,49 @@ On Error GoTo Error_Handler
         End If
         
         MyDebug "OnRareFound: rare name: " & aName
-
-        If Not g_ui.Loot.ItemInPickupList(aName) Then
-            Call g_ui.Loot.AddItemToList(g_ui.Loot.lstPickup, aName, True, True)
-            PrintMessage "Adding rare to pickup list: " & aName
+        
+        MyDebug "Checking to see who found the rare..."
+        
+        If InStr(aMessage, g_ds.Player.Name) = 0 Then 'Someone else found the rare.
+            Dim HadDiscTextStartPos As Integer
+            Dim playerName As String
+            
+            HadDiscTextStartPos = InStr(aMessage, "has discovered the") ' Position of has discovered text.
+                        
+            playerName = Left(aMessage, HadDiscTextStartPos - 1) 'Get the player name.
+            
+            MyDebug "Someone else (" & playerName & ") found the rare."
+            
+            Set objRareFinder = g_Objects.FindPlayerByName(playerName)
+            
+            NewPlayerGUID = objRareFinder.Guid
+            
+            MyDebug "Checking to see if RareTracker is enabled..."
+            
+            If g_ui.Loot.chkSendRares.Checked Then
+                MyDebug "RareTracker Enabled. Sending rare information."
+                Call g_RareTracker.SendData(aName, playerName, NewPlayerGUID)
+            End If
+        Else 'We found the rare.
+            MyDebug "We found the rare."
+            MyDebug "Checking to see if RareTracker is enabled..."
+            
+            If g_ui.Loot.chkSendRares.Checked Then
+                MyDebug "RareTracker Enabled. Sending rare information."
+                Call g_RareTracker.SendData(aName, g_ds.Player.Name, "0")
+            End If
         End If
+
+        'If Not g_ui.Loot.ItemInPickupList(aName) Then
+        '    Call g_ui.Loot.AddItemToList(g_ui.Loot.lstPickup, aName, True, True)
+        '    PrintMessage "Adding rare to pickup list: " & aName
+        'End If
     End If
     
 Fin:
     Exit Sub
 Error_Handler:
-    PrintErrorMessage "clsLoot.OnRareFound - " & Err.Description
+    PrintErrorMessage "clsLoot.OnRareFound - " & Err.Description & " " & Erl
     Resume Fin
 End Sub
 
@@ -651,7 +732,8 @@ On Error GoTo Error_Handler
    
     'Staying alive is more important than looting.
     'However, still keep this body on the list of corpses to loot
-3    If g_Macro.NeedHealing("clsLoot.RunState") Then
+3    If g_Macro.NeedHealing("clsLoot.RunState") And g_bLootRare = False Then
+        MyDebug "RunState - Healing..."
         Call StopLooting("RunState - Need Healing")
         GoTo Fin
     End If
@@ -840,7 +922,7 @@ Private Function SetSubState(ByVal iNewState As Integer)
             m_tmrSecure.SetNextTime LOOT_MAX_PICKUP_TIME
         
         Case Else
-            m_tmrSecure.SetNextTime 5
+            m_tmrSecure.SetNextTime 8
     End Select
     
 End Function
@@ -1033,7 +1115,7 @@ On Error GoTo ErrorHandler
     'Only Assess if ID time expired
     'If bRet Then bRet = ((g_ds.Time - objItem.LastIDTime) > ID_EXPIRATION_TIME)
     If IsWorthAssessing(objItem.itemType) Then
-        bRet = ((g_ds.Time - objItem.LastIdTime) > ID_EXPIRATION_TIME)
+        bRet = ((g_ds.Time - objItem.LastIDTime) > ID_EXPIRATION_TIME)
         If Not bRet Then
             locDebug "CanAssess(" & objItem.Name & ") : ID Time Not Expired - Not assessing item"
         End If
@@ -1223,6 +1305,7 @@ End Function
 
 Private Function DoOpenCorpse() As Boolean
 On Error GoTo Error_Handler
+    MyDebug "Opening corpse..."
     
     Dim bRet As Boolean
     
@@ -1292,6 +1375,15 @@ On Error GoTo ErrorHandler
         Call m_curCorpse.SetUserData(B_LOOTED, bLooted)
         g_TotalLooted = g_TotalLooted + 1
         MyDebug "clsLoot.SetBodyLooted:  TotalKilled: " & g_TotalKilled & "  TotalLooted: " & g_TotalLooted
+        
+        'Decrement the waypoint hold.
+        Call decNavHold
+        
+        If g_bLootRare = True Then
+            MyDebug "A rare still needs to be looted!"
+        End If
+        
+        'Call cleanCorpseList
         
         'Remove it from the corpse list
         'If m_corpseList.Remove(m_curCorpse.Guid) Then locDebug "SetBodyLooted: removing: " & m_curCorpse.Name & " : " & m_curCorpse.Guid
@@ -1464,45 +1556,147 @@ On Error GoTo ErrorHandler
             bPrint = True
             
         Case ITEM_MELEE_WEAPON
+            MyDebug "Found a melee weapon."
             'aName, 24.6-41 +11m/+13a, <spells>, Diff. 200, UA 370+ to wield, Value 6,000, 110BU
-            If (aObj.TinkCount > 0) Then id = id & ", " & aObj.TinkCount & " tinks"
+            'If (aObj.TinkCount > 0) Then id = id & ", " & aObj.TinkCount & " tinks"
+            'If (aObj.TinkCount > 0) Then
+                If (Len(aObj.Imbue) > 1) Then id = id & ", (" & aObj.Imbue
+                
+                If aObj.CrushingBlow = True And (Len(aObj.Imbue) > 1) Then
+                    id = id & ", Crushing Blow"
+                ElseIf aObj.CrushingBlow = True And (Len(aObj.Imbue) < 1) Then
+                    'MyDebug "Crushing Blow found and no imbue string."
+                    id = id & ", (Crushing Blow"
+                End If
+                
+                If aObj.BitingStrike = True And (Len(aObj.Imbue) > 1 Or aObj.CrushingBlow = True) Then
+                    id = id & ", Biting Strike"
+                ElseIf aObj.BitingStrike = True And (Len(aObj.Imbue) < 1 Or aObj.CrushingBlow = False) Then
+                    'MyDebug "Biting Strike found and no imbue string."
+                    If aObj.CrushingBlow = False Then
+                        id = id & ", (Biting Strike"
+                    End If
+                End If
+
+                If (Len(aObj.ResistanceCleaving) > 1) Then
+                    If ((Len(aObj.ResistanceCleaving) > 1) Or aObj.CrushingBlow = True Or aObj.BitingStrike = True) Then
+                        id = id & ", " & aObj.ResistanceCleaving & aObj.ResistanceCleavingType & ")"
+                    Else
+                        id = id & "(" & aObj.ResistanceCleaving & aObj.ResistanceCleavingType & ")"
+                    End If
+                ElseIf (Len(aObj.Imbue) > 1) Then
+                    id = id & ")"
+                ElseIf aObj.BitingStrike = True Then
+                    id = id & ")"
+                ElseIf aObj.CrushingBlow = True Then
+                    id = id & ")"
+                End If
+                
+                id = id & ", " & aObj.TinkCount & " tinks"
+            'End If
             id = id & ", work " & aObj.Workmanship
             id = id & ", dmg " & aObj.GetLowDamage & "-" & aObj.HighDamage
             id = id & ", +" & aObj.AttackBonus & " atk"
             If (aObj.DefenseBonus > 0) Then id = id & "/+" & aObj.DefenseBonus & " MeleeD"
             If (aObj.MagicDefense > 0) Then id = id & "/+" & aObj.MagicDefense & " MagicD"
             If (aObj.ElementBonusDamage > 0) Then id = id & "/+" & aObj.ElementBonusDamage & " DMG"
-            If (aObj.WieldReqVal > 0) Then
-                id = id & ", " & g_ACConst.GetWeaponSkillName(aObj.WieldReqId)
+            If (aObj.WieldReqVal > 0) And (aObj.WieldReqType = 2) Then
+                id = id & ", " & g_ACConst.GetWeaponSkillName(aObj.WieldReqID)
+                id = id & " " & aObj.WieldReqVal & "+ to wield"
+            ElseIf (aObj.WieldReqVal > 0) And (aObj.WieldReqType = 7) Then
+                id = id & ", " & g_ACConst.GetLevelName(aObj.WieldReqID)
                 id = id & " " & aObj.WieldReqVal & "+ to wield"
             End If
             
             bPrint = True
             
         Case ITEM_MISSILE_WEAPON
+            MyDebug "Found a missile weapon."
             'FIXME
             'Ruby Chalice, (8) craft, +0% +0m, Value 24,365, 50BU
-            If (aObj.TinkCount > 0) Then id = id & ", " & aObj.TinkCount & " tinks"
+            'If (aObj.TinkCount > 0) Then id = id & ", " & aObj.TinkCount & " tinks"
+            'If (aObj.TinkCount > 0) Then
+                If (Len(aObj.Imbue) > 1) Then id = id & ", (" & aObj.Imbue
+                
+                If aObj.CrushingBlow = True And Len(aObj.Imbue) > 1 Then
+                    id = id & ", Crushing Blow"
+                ElseIf aObj.CrushingBlow = True And (Len(aObj.Imbue) < 1) Then
+                    'MyDebug "Crushing Blow found and no imbue string."
+                    id = id & ", (Crushing Blow"
+                End If
+                
+                If aObj.BitingStrike = True And (Len(aObj.Imbue) > 1 Or aObj.CrushingBlow = True) Then
+                    id = id & ", Biting Strike"
+                ElseIf aObj.BitingStrike = True And (Len(aObj.Imbue) < 1 Or aObj.CrushingBlow = False) Then
+                    'MyDebug "Biting Strike found and no imbue string."
+                    If aObj.CrushingBlow = False Then
+                        id = id & ", (Biting Strike"
+                    End If
+                End If
+
+                If (Len(aObj.ResistanceCleaving) > 1) Then
+                    id = id & aObj.ResistanceCleaving & aObj.ResistanceCleavingType & ")"
+                ElseIf (Len(aObj.Imbue) > 1) Then
+                    id = id & ")"
+                ElseIf aObj.BitingStrike = True Then
+                    id = id & ")"
+                ElseIf aObj.CrushingBlow = True Then
+                    id = id & ")"
+                End If
+                
+                id = id & ", " & aObj.TinkCount & " tinks"
+            'End If
             id = id & ", work " & aObj.Workmanship
             id = id & ", +" & aObj.DamageModifier & "% "
             id = id & " +" & aObj.DefenseBonus & " MeleeD"
             If (aObj.MagicDefense > 0) Then id = id & "/+" & aObj.MagicDefense & " MagicD"
             If (aObj.ElementBonusDamage > 0) Then id = id & "/+" & aObj.ElementBonusDamage & " DMG"
-            If (aObj.WieldReqVal > 0) Then
-                id = id & ", " & g_ACConst.GetWeaponSkillName(aObj.WieldReqId)
+           If (aObj.WieldReqVal > 0) And (aObj.WieldReqType = 2) Then
+                id = id & ", " & g_ACConst.GetWeaponSkillName(aObj.WieldReqID)
+                id = id & " " & aObj.WieldReqVal & "+ to wield"
+            ElseIf (aObj.WieldReqVal > 0) And (aObj.WieldReqType = 7) Then
+                id = id & ", " & g_ACConst.GetLevelName(aObj.WieldReqID)
                 id = id & " " & aObj.WieldReqVal & "+ to wield"
             End If
             
             bPrint = True
             
         Case ITEM_WAND
+            MyDebug "Found a magic weapon."
             'Ruby Staff, 6 tinks, (7) craft, +9mc/+15m,
             'Major Item Enchantment Aptitude, War Self VI, Diff. 248, Value 22,593, 50BU
             
-            If (aObj.TinkCount > 0) Then
-                If (Len(aObj.Imbue) > 1) Then id = id & ", (" & aObj.Imbue & ")"
+            'If (aObj.TinkCount > 0) Then
+                If (Len(aObj.Imbue) > 1) Then id = id & ", (" & aObj.Imbue
+                
+                If aObj.CrushingBlow = True And Len(aObj.Imbue) > 1 Then
+                    id = id & ", Crushing Blow"
+                ElseIf aObj.CrushingBlow = True And (Len(aObj.Imbue) < 1) Then
+                    'MyDebug "Crushing Blow found and no imbue string."
+                    id = id & ", (Crushing Blow"
+                End If
+                
+                If aObj.BitingStrike = True And (Len(aObj.Imbue) > 1 Or aObj.CrushingBlow = True) Then
+                    id = id & ", Biting Strike"
+                ElseIf aObj.BitingStrike = True And (Len(aObj.Imbue) < 1 Or aObj.CrushingBlow = False) Then
+                    'MyDebug "Biting Strike found and no imbue string."
+                    If aObj.CrushingBlow = False Then
+                        id = id & ", (Biting Strike"
+                    End If
+                End If
+
+                If (Len(aObj.ResistanceCleaving) > 1) Then
+                    id = id & ", " & aObj.ResistanceCleaving & aObj.ResistanceCleavingType & ")"
+                ElseIf (Len(aObj.Imbue) > 1) Then
+                    id = id & ")"
+                ElseIf aObj.BitingStrike = True Then
+                    id = id & ")"
+                ElseIf aObj.CrushingBlow = True Then
+                    id = id & ")"
+                End If
+                
                 id = id & ", " & aObj.TinkCount & " tinks"
-            End If
+            'End If
             id = id & ", work " & aObj.Workmanship
             If (aObj.ManaConvMod > 0) Then id = id & ", +" & aObj.ManaConvMod & " ManaC"
             If (aObj.DefenseBonus > 0) Then id = id & "/+" & aObj.DefenseBonus & " MeleeD"
@@ -1514,7 +1708,35 @@ On Error GoTo ErrorHandler
         Case Else
             'Only output if it's something interesting, like a major
             If aObj.HasMajors Or aObj.HasMinors Or aObj.IsRare Then
-            
+                
+                If (Len(aObj.Imbue) > 1) Then id = id & ", (" & aObj.Imbue
+                
+                If aObj.CrushingBlow = True And Len(aObj.Imbue) > 1 Then
+                    id = id & ", Crushing Blow"
+                ElseIf aObj.CrushingBlow = True And (Len(aObj.Imbue) < 1) Then
+                    MyDebug "Crushing Blow found and no imbue string."
+                    id = id & ", (Crushing Blow"
+                End If
+                
+                If aObj.BitingStrike = True And (Len(aObj.Imbue) > 1 Or aObj.CrushingBlow = True) Then
+                    id = id & ", Biting Strike"
+                ElseIf aObj.BitingStrike = True And (Len(aObj.Imbue) < 1 Or aObj.CrushingBlow = False) Then
+                    MyDebug "Biting Strike found and no imbue string."
+                    If aObj.CrushingBlow = False Then
+                        id = id & ", (Biting Strike"
+                    End If
+                End If
+
+                If (Len(aObj.ResistanceCleaving) > 1) Then
+                    id = id & aObj.ResistanceCleaving & aObj.ResistanceCleavingType & ")"
+                ElseIf (Len(aObj.Imbue) > 1) Then
+                    id = id & ")"
+                ElseIf aObj.BitingStrike = True Then
+                    id = id & ")"
+                ElseIf aObj.CrushingBlow = True Then
+                    id = id & ")"
+                End If
+                
                 If (aObj.TinkCount > 0) Then id = id & ", " & aObj.TinkCount & " tinks"
                 If (aObj.Workmanship > 0) Then id = id & ", work " & aObj.Workmanship
                 If (aObj.ArmorLevel > 0) Then id = id & ", AL " & aObj.ArmorLevel
@@ -1541,17 +1763,30 @@ On Error GoTo ErrorHandler
         If (aObj.RankReq > 0) Then id = id & ", Rank " & aObj.RankReq
         If (aObj.ActivateSkillVal > 0) Then id = id & ", " & aObj.ActivateSkill & " " & aObj.ActivateSkillVal
         
-        If ((aObj.itemType = ITEM_ARMOR) Or (aObj.itemType = ITEM_WAND)) And (aObj.WieldReqVal > 0) Then
-            id = id & ", " & g_ACConst.GetSkillName(aObj.WieldReqId)
+        'Wield Req ID #2 is ATTRIBUTE required to wield (Sword, Axe, Bow, etc)
+        If (((aObj.WieldReqVal > 0) And (aObj.WieldReqType = 2)) And ((aObj.itemType = ITEM_ARMOR) Or (aObj.itemType = ITEM_WAND))) Then
+            id = id & ", " & g_ACConst.GetSkillName(aObj.WieldReqID)
             id = id & " " & aObj.WieldReqVal & "+ to wield"
         End If
+        
+        'Wield Req ID #7 is the TYPE required to wield (Level, so far only one found) Added for version 11.7.0
+        If (((aObj.WieldReqVal > 0) And (aObj.WieldReqType = 7)) And ((aObj.itemType = ITEM_ARMOR) Or (aObj.itemType = ITEM_WAND))) Then
+            id = id & ", " & g_ACConst.GetLevelName(aObj.WieldReqID)
+            id = id & " " & aObj.WieldReqVal & "+ to wield"
+        End If
+        
+        'If ((aObj.itemType = ITEM_ARMOR) Or (aObj.itemType = ITEM_WAND) Or (aObj.itemType = ITEM_MELEE_WEAPON) Or (aObj.itemType = ITEM_MISSILE_WEAPON)) And (aObj.WieldReqVal > 0) Then
+        '    id = id & ", " & g_ACConst.GetSkillName(aObj.WieldReqID)
+        '    id = id & " " & aObj.WieldReqVal & "+ to wield"
+        'End If
         
         If (Len(aObj.RaceReq) > 1) Then id = id & ", " & aObj.RaceReq
         id = id & ", Value " & aObj.Value
         id = id & ", " & aObj.Burden & " BU"
                 
         getIdString = id
-    
+        MyDebug getIdString
+        
     End If
 
 

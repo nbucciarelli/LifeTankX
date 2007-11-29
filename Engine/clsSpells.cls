@@ -25,6 +25,8 @@ Private Const DEBUG_ME = False
 Private Const MODULE_DESCRIPTION = "Spells"
 Private Const SECURE_CASTING_TIME = 5
 
+Public c_SpellQueue As clsSpellQueueSimple
+
 Private m_bCasting As Boolean
 'Private m_bReadyToCast As Boolean       'in turbo mode, bReadyToCast will move back to true after m_bCasting resets
                                         'this is used to tell if the spell cast is complete (EV_READY), even
@@ -75,6 +77,8 @@ Private Sub Class_Initialize()
     
     Set m_dicSpellNames = New Dictionary
     
+    Set c_SpellQueue = New clsSpellQueueSimple
+
     Call Reset
     
 End Sub
@@ -112,6 +116,7 @@ Public Sub Reset()
 End Sub
 
 Private Sub Class_Terminate()
+    Set c_SpellQueue = Nothing
     
     Set m_Vitals = Nothing
     Set m_sBuffs = Nothing
@@ -277,7 +282,7 @@ End Sub
 Public Sub OnSpellCastComplete(Optional ByVal bSuccess As Boolean = True, Optional ByVal sSource As String = "")
 On Error GoTo ErrorHandler
 
-    locDebug "clsSpells.OnSpellCastComplete : " & CStr(bSuccess) & " - " & sSource
+    MyDebug "clsSpells.OnSpellCastComplete : " & CStr(bSuccess) & " - " & sSource
     
     'reset casting flag
     Call ResetCastingFlag(sSource, Not bSuccess)    'reset the ReadyToCast flag too if spell cast failed/got interupted
@@ -302,7 +307,13 @@ End Sub
 
 Public Function CastSpellAlt(ByVal objSpell As clsSpell, ByVal lTargetId As Long) As Boolean
 On Error GoTo ErrorHandler
-
+    
+    ' Make sure we're ready to cast.
+    ' TODO: This can be moved once we check that LTxi is "well behaved" with spell calls.
+    If g_Macro.m_bOKToCast = False Then
+        GoTo Fin
+    End If
+    
     CastSpellAlt = False
         
     If Not Valid(objSpell) Then
@@ -313,7 +324,7 @@ On Error GoTo ErrorHandler
     'remember when we tryed to cast our last spell
     m_dLastCastAttempt = g_Core.Time
     
-    Call myCastSpell(objSpell.spellID, lTargetId)
+    Call myCastSpell(objSpell.SpellID, lTargetId)
     
     CastSpellAlt = True
     
@@ -327,6 +338,12 @@ End Function
 Public Function CastSpell(ByRef spellList As clsSpellList, ByVal sSpellFamily As String, ByVal TargetId As Long, Optional ByVal iLevelWanted As Integer = 7) As Boolean
 On Error GoTo ErrorHandler
 
+    ' Make sure we're ready to cast.
+    ' TODO: This can be moved once we check that LTxi is "well behaved" with spell calls.
+    If g_Macro.m_bOKToCast = False Then
+        GoTo Fin
+    End If
+                
     Dim objSpell As clsSpell
  
     'default return value
@@ -395,6 +412,7 @@ Public Sub ResetCastingFlag(Optional sSource As String = "", Optional ByVal bRes
 End Sub
 
 Public Function CastVitalSpell(ByVal SpellBaseName As String, Optional ByVal SpellLevelWanted As Integer = 7, Optional ByVal TargetId As Long = 0) As Boolean
+    Call g_Spells.c_SpellQueue.Clear
     CastVitalSpell = CastSpell(m_Vitals, SpellBaseName, TargetId, SpellLevelWanted)
 End Function
 
@@ -738,12 +756,18 @@ End Function
 '
 '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
-Private Sub myCastSpell(ByVal spellID As Long, ByVal TargetGUID As Long)
+Private Sub myCastSpell(ByVal SpellID As Long, ByVal TargetGUID As Long)
 On Error GoTo ErrorHandler
 
 1    If Not Valid(g_Data) Then
         PrintWarning "myCastSpell : invalid g_Data"
         Exit Sub
+    End If
+    
+    ' Make sure we're ready to cast.
+    ' TODO: This can be moved once we check that LTxi is "well behaved" with spell calls.
+    If g_Macro.m_bOKToCast = False Then
+        GoTo Fin
     End If
     
     'Make sure we are in combat mode with a Wand
@@ -753,16 +777,26 @@ On Error GoTo ErrorHandler
     
     'make sure we're able to cast
 3    If IsBusy(TurboMode) Then
-        locDebug "myCastSpell: trying to cast while busy - IsBusy()"
-4    ElseIf Not m_tmrPrecastDelay.Expired Then
-        locDebug "myCastSpell: tmrPrecastDelay not expired yet"
-    Else
-        locDebug "myCastSpell: casting " & spellID & " at " & TargetGUID
-5        Call m_tmrPrecastDelay.SetNextTime(0.5)
-6        Call m_tmrSecureCasting.SetNextTime(SECURE_CASTING_TIME)
+        MyDebug "myCastSpell: trying to cast while busy - IsBusy()"
+4    'ElseIf Not m_tmrPrecastDelay.Expired Then
+     '   MyDebug "myCastSpell: tmrPrecastDelay not expired yet"
+     Else
+        'PrintErrorMessage "myCastSpell: casting " & SpellID & " at " & TargetGUID
+5       Call m_tmrPrecastDelay.SetNextTime(0.5)
+6       Call m_tmrSecureCasting.SetNextTime(SECURE_CASTING_TIME)
         'Call CastSpellfunctions.myCastSpell(g_Data.memCurrentItem1, g_Data.memCurrentItem2, g_Data.memCastSpell, SpellID, TargetGUID)
-7        Call g_Hooks.CastSpell(spellID, TargetGUID)
-        locDebug "myCastSpell: g_Hooks.CastSpell: " & spellID & " : " & TargetGUID
+        
+7       Dim objSpell As New clsSpellQueueItemSimple
+                        
+        With objSpell
+            .SpellID = SpellID
+            .TargetGUID = TargetGUID
+        End With
+            
+8       Call c_SpellQueue.Add(objSpell)
+        
+        'Call g_Hooks.CastSpell(spellID, TargetGUID)
+        'MyDebug "myCastSpell: g_Hooks.CastSpell: " & SpellID & " : " & TargetGUID
     End If
     
 Fin:
@@ -824,14 +858,17 @@ End Sub
 
 Private Sub m_tmrCastBreaker_OnTimeout()
     If m_bCasting Then
-        locDebug "--- Cast Breaker ! ---"
+        MyDebug "--- Cast Breaker ! ---"
+        'Call g_Core.SendKeyHold(g_Keys.KeyJump)
         Call OnSpellCastComplete(, "CastBreak_OnTimeout")
+        'Call g_Core.SendKeyRelease(g_Keys.KeyJump)
     End If
 End Sub
 
 Private Sub m_tmrSecureCasting_OnTimeout()
     If m_bCasting Then
-        PrintWarning "Secure casting timer expired. Resetting casting flags."
+        Call g_Hooks.FaceHeading(g_Hooks.HeadingDegrees + 30, False)
+        'PrintWarning "Secure casting timer expired. Resetting casting flags."
         Call ResetCastingFlag(, True)
     End If
 End Sub

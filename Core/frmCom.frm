@@ -11,23 +11,23 @@ Begin VB.Form frmCom
    ScaleHeight     =   1020
    ScaleWidth      =   2115
    StartUpPosition =   3  'Windows Default
-   Begin InetCtlsObjects.Inet myInet 
+   Begin VB.PictureBox myInet 
+      Height          =   480
       Left            =   960
+      ScaleHeight     =   420
+      ScaleWidth      =   1140
+      TabIndex        =   0
       Top             =   120
-      _ExtentX        =   1005
-      _ExtentY        =   1005
-      _Version        =   393216
-      Protocol        =   5
-      RemotePort      =   443
-      URL             =   "https://"
-      RequestTimeout  =   5
+      Width           =   1200
    End
-   Begin MSWinsockLib.Winsock wsock 
+   Begin VB.PictureBox wsock 
+      Height          =   480
       Left            =   240
+      ScaleHeight     =   420
+      ScaleWidth      =   1140
+      TabIndex        =   1
       Top             =   120
-      _ExtentX        =   741
-      _ExtentY        =   741
-      _Version        =   393216
+      Width           =   1200
    End
 End
 Attribute VB_Name = "frmCom"

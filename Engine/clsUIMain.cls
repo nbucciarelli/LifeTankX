@@ -72,6 +72,7 @@ Public lblNextRebuff As DecalControls.StaticText
 Public lblTapersHour As DecalControls.StaticText
 Public lblTotalXp As DecalControls.StaticText
 Public lblXpHour As DecalControls.StaticText
+Public lbl5minXp As DecalControls.StaticText
 Public lblXpEarned As DecalControls.StaticText
 Public lblNextLevel As DecalControls.StaticText
 
@@ -122,6 +123,7 @@ On Error GoTo Error_Handler
     Set lblTapersHour = g_MainView.Control("lblTapersHour")
     Set lblTotalXp = g_MainView.Control("lblTotalXp")
     Set lblXpHour = g_MainView.Control("lblXpHour")
+    Set lbl5minXp = g_MainView.Control("lbl5minXp")
     Set lblXpEarned = g_MainView.Control("lblXpEarned")
     Set lblNextLevel = g_MainView.Control("lblNextLevel")
    
@@ -241,6 +243,7 @@ On Error GoTo Error_Handler
     Set lblTapersHour = Nothing
     Set lblTotalXp = Nothing
     Set lblXpHour = Nothing
+    Set lbl5minXp = Nothing
     Set lblXpEarned = Nothing
     Set lblNextLevel = Nothing
     
@@ -249,6 +252,9 @@ On Error GoTo Error_Handler
     Set btnSendXpHour = Nothing
     Set btnSendComps = Nothing
     Set btnDebug = Nothing
+    
+    Set chCombatType = Nothing
+    Set progBuffs = Nothing
     
     Unload = True
     MyDebug InterfaceName & ".Unload() -- End"
@@ -290,8 +296,8 @@ End Sub
 Private Sub btnSendComps_Accepted(ByVal nID As Long)
 On Error GoTo Error_Handler
     Dim sMsg As String
-
-    sMsg = g_RemoteCmd.CmdCompsString
+    
+    sMsg = g_Macro.CmdCompsString
 
     PrintMessage sMsg
 
@@ -313,9 +319,9 @@ End Sub
 Private Sub btnSendXpHour_Accepted(ByVal nID As Long)
 On Error GoTo Error_Handler
     Dim sMsg As String
-
-    sMsg = g_RemoteCmd.CmdReportString
-
+    
+    sMsg = g_Macro.CmdReportString
+    
     PrintMessage sMsg
 
     If (Not g_ui.Options.chkReportToIrcOnly.Checked) And (g_Objects.Fellowship.NumMembers > 0) Then
@@ -390,6 +396,7 @@ On Error GoTo ErrorHandler
     'Update other stats fields
     lblTotalXp.Text = g_Macro.TotalXpString
     lblXpHour.Text = g_Macro.XpHourString
+    lbl5minXp.Text = g_Macro.FiveMinXpHourString
     lblXpEarned.Text = g_Macro.XpEarnedString
     lblNextLevel.Text = g_Macro.TimeUntilNextLevelString
     lblTapersHour.Text = g_Macro.TapersHourString

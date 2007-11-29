@@ -34,6 +34,7 @@ Public chkUseHealthPotion As DecalControls.CheckBox
 Public chkUseStamPotion As DecalControls.CheckBox
 Public chkHealFellow As DecalControls.CheckBox
 Public chkStamFellow As DecalControls.CheckBox
+Public chkUsePeaceHeal As DecalControls.CheckBox
 
 Public WithEvents sldMana As DecalControls.Slider
 Attribute sldMana.VB_VarHelpID = -1
@@ -173,6 +174,7 @@ Public WithEvents chAttackHeight As DecalControls.Choice
 Attribute chAttackHeight.VB_VarHelpID = -1
 Public chkUseManaCharge As DecalControls.CheckBox
 Public chkUseManaStone As DecalControls.CheckBox
+Public chkUseMassiveCharges As DecalControls.CheckBox
 'Public headerButton As DecalControls.PushButton
 Public WithEvents btnStopSounds As DecalControls.PushButton
 Attribute btnStopSounds.VB_VarHelpID = -1
@@ -204,6 +206,7 @@ On Error GoTo ErrorHandler
     Set chkUseHealingKits = g_MainView.Control("chkUseHealingKits")
     Set chkUseHealthPotion = g_MainView.Control("chkUseHealthPotion")
     Set chkUseStamPotion = g_MainView.Control("chkUseStamPotion")
+    Set chkUsePeaceHeal = g_MainView.Control("chkUsePeaceHeal")
     
     Set sldMana = g_MainView.Control("sldMana")
     Set sldStam = g_MainView.Control("sldStam")
@@ -296,6 +299,7 @@ On Error GoTo ErrorHandler
     'Misc
     Set chkUseManaCharge = g_MainView.Control("chkUseManaCharge")
     Set chkUseManaStone = g_MainView.Control("chkUseManaStone")
+    Set chkUseMassiveCharges = g_MainView.Control("chkUseMassiveCharges")
     
     Set btnStopSounds = g_MainView.Control("btnStopSounds")
     Set btnResetHUD = g_MainView.Control("btnResetHUD")
@@ -422,6 +426,8 @@ On Error GoTo Error_Handler
         chkUseHealingKits.Checked = g_Settings.GetValue("chkUseHealingKits", True)
         chkUseHealthPotion.Checked = g_Settings.GetValue("chkUseHealthPotion", True)
         chkUseStamPotion.Checked = g_Settings.GetValue("chkUseStamPotion", False)
+        chkUsePeaceHeal.Checked = g_Settings.GetValue("chkUsePeaceHeal", True)
+        'chkUsePeaceHeal.Unchecked = g_Settings.GetValue("chkUsePeaceHeal", False)
         chkHealFellow.Checked = g_Settings.GetValue("chkHealFellow", False)
         chkStamFellow.Checked = g_Settings.GetValue("chkStamFellow", False)
     
@@ -444,6 +450,7 @@ On Error GoTo Error_Handler
         
         chkUseManaCharge.Checked = g_Settings.GetValue("chkUseManaCharge", True)
         chkUseManaStone.Checked = g_Settings.GetValue("chkUseManaStone", True)
+        chkUseMassiveCharges.Checked = g_Settings.GetValue("chkUseMassiveCharges", False)
                 
     End With
     
@@ -474,6 +481,7 @@ On Error GoTo Error_Handler
         .SaveCheckbox chkUseHealingKits, "chkUseHealingKits"
         .SaveCheckbox chkUseHealthPotion, "chkUseHealthPotion"
         .SaveCheckbox chkUseStamPotion, "chkUseStamPotion"
+        .SaveCheckbox chkUsePeaceHeal, "chkUsePeaceHeal"
         .SaveCheckbox chkHealFellow, "chkHealFellow"
         .SaveCheckbox chkStamFellow, "chkStamFellow"
         
@@ -501,6 +509,7 @@ On Error GoTo Error_Handler
         
         .SaveCheckbox chkUseManaCharge, "chkUseManaCharge"
         .SaveCheckbox chkUseManaStone, "chkUseManaStone"
+        .SaveCheckbox chkUseMassiveCharges, "chkUseMassiveCharges"
         
     End With
         
@@ -608,6 +617,7 @@ On Error GoTo Error_Handler
     Set chkUseHealingKits = Nothing
     Set chkUseHealthPotion = Nothing
     Set chkUseStamPotion = Nothing
+    Set chkUsePeaceHeal = Nothing
     Set chkHealFellow = Nothing
     Set chkStamFellow = Nothing
     
@@ -620,10 +630,13 @@ On Error GoTo Error_Handler
     
     Set lstHealItems = Nothing
     Set lstStamItems = Nothing
-    
-    Set chkLogoutOnDeath = Nothing
+    Set btnAddHealItem = Nothing
+    Set btnAddStamItem = Nothing
+ 
     Set cmdSetWand = Nothing
     Set lblWand = Nothing
+    
+    Set chkLogoutOnDeath = Nothing
     
     'Mage tab
     Set txtMageRadius = Nothing
@@ -689,13 +702,18 @@ On Error GoTo Error_Handler
     Set chkEnableAutoFellow = Nothing
     Set txtFellowPassword = Nothing
     Set chkAutoFellowList = Nothing
+    Set FellowList = Nothing
     
     'Misc
     Set chAttackHeight = Nothing
     Set chkUseManaCharge = Nothing
     Set chkUseManaStone = Nothing
+    Set chkUseMassiveCharges = Nothing
     'Set headerButton = Nothing
-        
+    Set btnStopSounds = Nothing
+    Set btnResetHUD = Nothing
+    Set btnExportInv = Nothing
+            
     Unload = True
     MyDebug InterfaceName & ".Unload() -- End"
     
@@ -1376,7 +1394,7 @@ On Error GoTo ErrorMessage
     Next i
   
     If Not Valid(aObj) Then
-        MyDebug "clsUIMacro.findObjectFromList: Using Default: " & STR_ITEM_HEALTH_POTION
+        'MyDebug "clsUIMacro.findObjectFromList: Using Default: " & STR_ITEM_HEALTH_POTION
         Set aObj = g_Objects.Items.InvFindByName(STR_ITEM_HEALTH_POTION, False)
     End If
         

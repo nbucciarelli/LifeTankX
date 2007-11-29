@@ -20,6 +20,7 @@ Public mWindowObj As Decal.tagRECT   'window position
 'New'd in CreateEngineObjects
 Public g_Timers As clsTimers
 Public g_Filters As clsFilters
+Public g_Web As clsAsyncWeb
 Public g_Data As clsDatas
 Public g_Service As clsServices
 Public g_Events As clsACEvents
@@ -35,6 +36,7 @@ Public g_AntiBan As clsAntiBan
 Public g_RemoteCmd As clsRemoteCmd
 Public g_Keys As clsACKeys
 Public g_FellowList As clsFellowList
+Public g_RareTracker As clsRareTracker
 
 Public g_Window As clsACWindow
 Public g_ui As clsPluginInterface
@@ -64,6 +66,7 @@ On Error GoTo ErrorHandler
     Set g_Timers = New clsTimers
     Set g_Filters = New clsFilters
     Set g_Data = New clsDatas
+    Set g_Web = New clsAsyncWeb
     Set g_Service = New clsServices
     Set g_Events = New clsACEvents
     Set g_Settings = New clsSettings
@@ -79,7 +82,8 @@ On Error GoTo ErrorHandler
     Set g_Window = New clsACWindow
     Set g_ui = New clsPluginInterface
     Set g_FellowList = New clsFellowList
-    Set g_buffBuddy = Nothing
+    Set g_RareTracker = New clsRareTracker
+    'Set g_buffBuddy = Nothing
     
     MyDebug "CreateEngineObjects - End"
     
@@ -108,6 +112,7 @@ On Error GoTo ErrorHandler
     Set g_Service = Nothing
     Set g_Spells = Nothing
     Set g_Data = Nothing
+    Set g_Web = Nothing
     Set g_Settings = Nothing
     Set g_Buffer = Nothing
     Set g_BuddyBuffer = Nothing
@@ -123,7 +128,11 @@ On Error GoTo ErrorHandler
     Set g_Filters = Nothing
     Set g_Timers = Nothing
     Set g_FellowList = Nothing
-        
+    Set g_RareTracker = Nothing
+    
+    Set g_manaItem = Nothing
+    Set g_buffBuddy = Nothing
+            
     DeleteEngineObjects = True
     
     MyDebug "DeleteEngineObjects - End"

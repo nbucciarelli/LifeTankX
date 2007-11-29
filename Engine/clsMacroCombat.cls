@@ -20,7 +20,7 @@ Option Explicit
 ' [[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
 
 Private Const DEBUG_ME = False
-Private Const SECURE_TIMER = 5  'seconds
+Private Const SECURE_TIMER = 3  'seconds
 
 Public Enum eSubStates
     ST_COMBAT_NEXTTHINK         'Prepare the next attack action to perform
@@ -75,6 +75,7 @@ Private Sub Class_Terminate()
     Set m_tmrAttackCheck = Nothing
     Set m_tmrSecure = Nothing
     Set tmrDanger = Nothing
+    Set m_tmrBusyCombat = Nothing
 End Sub
 
 '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -161,17 +162,17 @@ On Error GoTo ErrorHandler
     locDebug "EndCombat - Src: " & sSource
     
     'DS Filter hack to deal with no getting OnDelete messages
-    If Valid(m_objTarget) Then
-        Dim i As Integer
-        i = m_objTarget.UserData(INT_DELETE) + 1
-        Call m_objTarget.SetUserData(INT_DELETE, i)
-        'MyDebug "clsMacroCombat.StopCombat: INT_DELETE: (" & i & ") " & m_objTarget.Guid & " : " & m_objTarget.Name
-        If (m_objTarget.UserData(INT_DELETE) > 3) Then
-            m_objTarget.canDelete = True
-            MyDebug "clsMacroCombat.StopCombat: canDelete: " & m_objTarget.Guid & " : " & m_objTarget.Name
-            PrintErrorMessage "StopCombat: fighting non-existant creature, setting canDelete"
-        End If
-    End If
+    'If Valid(m_objTarget) Then
+    '    Dim i As Integer
+    '    i = m_objTarget.UserData(INT_DELETE) + 1
+    '    Call m_objTarget.SetUserData(INT_DELETE, i)
+    '    'MyDebug "clsMacroCombat.StopCombat: INT_DELETE: (" & i & ") " & m_objTarget.Guid & " : " & m_objTarget.Name
+    '    If (m_objTarget.UserData(INT_DELETE) > 3) Then
+    '        m_objTarget.canDelete = True
+    '        MyDebug "clsMacroCombat.StopCombat: canDelete: " & m_objTarget.Guid & " : " & m_objTarget.Name
+    '        PrintErrorMessage "StopCombat: fighting non-existant creature, setting canDelete"
+    '    End If
+    'End If
     
     Call ReleaseTarget
     Call m_tmrSecure.Reset

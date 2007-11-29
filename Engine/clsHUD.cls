@@ -155,28 +155,28 @@ Public Function getHUDAt(ByVal x As Long, ByVal y As Long) As Boolean
     
     bRet = False
     
-    If (y > m_HUDMacro.Region.Top) And ((m_HUDMacro.Region.Top + 20) > y) And _
-       (x > m_HUDMacro.Region.Left) And ((m_HUDMacro.Region.Left + 20) > x) Then
+    If (y > m_HUDMacro.Region.Top) And ((m_HUDMacro.Region.Top + 100) > y) And _
+       (x > m_HUDMacro.Region.Left) And ((m_HUDMacro.Region.Left + 80) > x) Then
             PrintMessage "Found Macro Hud at: x: " & x & "  y: " & y
             m_MoveTarget = MOVE_MACRO
             bRet = True
-    ElseIf (y > m_HUDStats.Region.Top) And ((m_HUDStats.Region.Top + 20) > y) And _
-           (x > m_HUDStats.Region.Left) And ((m_HUDStats.Region.Left + 20) > x) Then
+    ElseIf (y > m_HUDStats.Region.Top) And ((m_HUDStats.Region.Top + 110) > y) And _
+           (x > m_HUDStats.Region.Left) And ((m_HUDStats.Region.Left + 75) > x) Then
             PrintMessage "Found Stats Hud at: x: " & x & "  y: " & y
             m_MoveTarget = MOVE_STATS
             bRet = True
-    ElseIf (y > m_HUDInv.Region.Top) And ((m_HUDInv.Region.Top + 20) > y) And _
-           (x > m_HUDInv.Region.Left) And ((m_HUDInv.Region.Left + 20) > x) Then
+    ElseIf (y > m_HUDInv.Region.Top) And ((m_HUDInv.Region.Top + 50) > y) And _
+           (x > m_HUDInv.Region.Left) And ((m_HUDInv.Region.Left + 50) > x) Then
             PrintMessage "Found Inv Hud at: x: " & x & "  y: " & y
             m_MoveTarget = MOVE_INV
             bRet = True
-    ElseIf (y > m_HUDDebug.Region.Top) And ((m_HUDDebug.Region.Top + 20) > y) And _
-           (x > m_HUDDebug.Region.Left) And ((m_HUDDebug.Region.Left + 20) > x) Then
+    ElseIf (y > m_HUDDebug.Region.Top) And ((m_HUDDebug.Region.Top + 270) > y) And _
+           (x > m_HUDDebug.Region.Left) And ((m_HUDDebug.Region.Left + 60) > x) Then
             PrintMessage "Found Debug Hud at: x: " & x & "  y: " & y
             m_MoveTarget = MOVE_DEBUG
             bRet = True
-    ElseIf (y > m_HUDDOT.Region.Top) And ((m_HUDDOT.Region.Top + 20) > y) And _
-           (x > m_HUDDOT.Region.Left) And ((m_HUDDOT.Region.Left + 20) > x) Then
+    ElseIf (y > m_HUDDOT.Region.Top) And ((m_HUDDOT.Region.Top + 100) > y) And _
+           (x > m_HUDDOT.Region.Left) And ((m_HUDDOT.Region.Left + 150) > x) Then
             PrintMessage "Found DOT Hud at: x: " & x & "  y: " & y
             m_MoveTarget = MOVE_DOT
             bRet = True
@@ -362,6 +362,13 @@ Private Sub Class_Terminate()
         Call m_Render.RemoveHUD(m_HUDDOT)
     End If
     
+    Set m_HUDView = Nothing
+    Set m_HUDMacro = Nothing
+    Set m_HUDStats = Nothing
+    Set m_HUDInv = Nothing
+    Set m_HUDDebug = Nothing
+    Set m_HUDDOT = Nothing
+    Set m_Render = Nothing
 End Sub
 
 
@@ -432,7 +439,7 @@ On Error GoTo ErrorHandler
 3        m_macroRect.Top = 10
 4        m_macroRect.Bottom = 30
 5        m_macroRect.Left = 10
-6        m_macroRect.Right = 110
+6        m_macroRect.Right = 300
     
         'Next create the HUD
 7        Set m_HUDMacro = m_Render.CreateHUD(m_macroRect)
@@ -489,7 +496,7 @@ Private Sub createStatsHud()
         m_statsRect.Top = 10
         m_statsRect.Bottom = 30
         m_statsRect.Left = 10
-        m_statsRect.Right = 110
+        m_statsRect.Right = 300
     
         'Next create the HUD
         Set m_HUDStats = m_Render.CreateHUD(m_statsRect)
@@ -520,7 +527,7 @@ Private Sub createInvHud()
         m_invRect.Top = 10
         m_invRect.Bottom = 30
         m_invRect.Left = 10
-        m_invRect.Right = 110
+        m_invRect.Right = 300
     
         'Next create the HUD
         Set m_HUDInv = m_Render.CreateHUD(m_invRect)
@@ -551,7 +558,7 @@ Public Sub createDebugHud()
         m_debugRect.Top = 10
         m_debugRect.Bottom = 30
         m_debugRect.Left = 10
-        m_debugRect.Right = 110
+        m_debugRect.Right = 300
 
         'Next create the HUD
         Set m_HUDDebug = m_Render.CreateHUD(m_debugRect)
@@ -582,7 +589,7 @@ Public Sub createDOTHUD()
         m_dotRect.Top = 10
         m_dotRect.Bottom = 30
         m_dotRect.Left = 10
-        m_dotRect.Right = 110
+        m_dotRect.Right = 300
     
         'Next create the HUD
         Set m_HUDDOT = m_Render.CreateHUD(m_dotRect)
@@ -759,7 +766,7 @@ Fin:
     DrawData = txtSize.cy * 1.1
     Exit Function
 ErrorHandler:
-    PrintErrorMessage "clsHUD.DrawData - " & Err.Description
+    'PrintErrorMessage "clsHUD.DrawData - " & Err.Description
     Resume Fin
 End Function
 
@@ -791,8 +798,8 @@ On Error GoTo ErrorHandler
 8        Call m_HUDMacro.BeginRender
 9        Call m_HUDMacro.BeginText("Arial", FONT_SIZE, FW_NORMAL)
 
-10        y = y + DrawData(m_HUDMacro, d_macroRect, lWidth, x, y, "LifeTank X", "", cRED)
-        If g_RemoteCmd.RemoteAccessON Then y = y + DrawData(m_HUDMacro, d_macroRect, lWidth, x, y, "Remote User : ", g_RemoteCmd.RemoteUserName, cYELLOW, cYELLOW)
+10        y = y + DrawData(m_HUDMacro, d_macroRect, lWidth, x, y, "LifeTank XI", "", cRED)
+        'If g_RemoteCmd.RemoteAccessON Then y = y + DrawData(m_HUDMacro, d_macroRect, lWidth, x, y, "Remote User : ", g_RemoteCmd.RemoteUserName, cYELLOW, cYELLOW)
         y = y + DrawData(m_HUDMacro, d_macroRect, lWidth, x, y, "State : ", g_Macro.GetStateString)
 
         If g_Objects.Items.BackpackFull Then
@@ -911,7 +918,7 @@ On Error GoTo ErrorHandler
     
     If Not Valid(m_HUDStats) Then Exit Sub
     
-    If g_ui.Options.chkHUDStats.Checked And m_bStatsHud Then
+    If g_ui.Options.chkEnableHUD.Checked And g_ui.Options.chkHUDStats.Checked And m_bStatsHud Then
         Dim x, y, m_height, m_width, lWidth As Long
         
         'MyDebug "drawStatsHUD: Top: " & m_statsRect.Top & "  Left: " & m_statsRect.Left
@@ -949,7 +956,7 @@ On Error GoTo ErrorHandler
             y = y + DrawData(m_HUDStats, d_statsRect, lWidth, x, y, "Tapers/Plats Hr : ", g_Macro.TapersHourString & " / " & g_Macro.PlatsHourString)
             y = y + DrawData(m_HUDStats, d_statsRect, lWidth, x, y, "Xp Earned : ", g_Macro.XpEarnedString)
             y = y + DrawData(m_HUDStats, d_statsRect, lWidth, x, y, "Xp/Hour : ", g_Macro.XpHourString, cYELLOW)
-            'y = y + DrawData(m_HUDStats, d_statsRect, lWidth, x, y, "5Min Xp: ", g_Macro.FiveMinXpHourString)
+            y = y + DrawData(m_HUDStats, d_statsRect, lWidth, x, y, "5Min Xp: ", g_Macro.FiveMinXpHourString)
             y = y + DrawData(m_HUDStats, d_statsRect, lWidth, x, y, "Current Level : ", g_ds.XpTracker.Level)
             y = y + DrawData(m_HUDStats, d_statsRect, lWidth, x, y, "Next Level In : ", g_Macro.TimeUntilNextLevelString)
         '------------------------------------------------------------------------------
@@ -990,7 +997,7 @@ On Error GoTo ErrorHandler
     
     If Not Valid(m_HUDInv) Then Exit Sub
     
-    If g_ui.Options.chkHUDInventory.Checked And m_bInvHud Then
+    If g_ui.Options.chkEnableHUD.Checked And g_ui.Options.chkHUDInventory.Checked And m_bInvHud Then
         Dim x, y, m_height, m_width, lWidth As Long
         
         'MyDebug "drawInvHUD: Top: " & m_invRect.Top & "  Left: " & m_invRect.Left
@@ -1064,7 +1071,7 @@ On Error GoTo ErrorHandler
     
     If Not Valid(m_HUDDebug) Then Exit Sub
     
-    If g_ui.Options.chkHUDDebug.Checked And m_bDebugHud Then
+    If g_ui.Options.chkEnableHUD.Checked And g_ui.Options.chkHUDDebug.Checked And m_bDebugHud Then
         Dim x, y, m_height, m_width, lWidth As Long
         
         'init
@@ -1154,7 +1161,7 @@ On Error GoTo ErrorHandler
     
     If Not Valid(m_HUDDOT) Then Exit Sub
     
-    If g_ui.Options.chkHUDDOT.Checked And m_bDOTHud Then
+    If g_ui.Options.chkEnableHUD.Checked And g_ui.Options.chkHUDDOT.Checked And m_bDOTHud Then
         Dim x, y, m_height, m_width, lWidth As Long
         Dim dObj, ddObj As clsDOTobj
         Dim i, ii As Integer

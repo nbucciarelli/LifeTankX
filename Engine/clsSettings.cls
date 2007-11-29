@@ -38,6 +38,8 @@ End Sub
 
 Private Sub Class_Terminate()
     Set m_SharedConfig = Nothing
+    Set m_Profile = Nothing
+    m_bSharedCfgLoaded = False
 End Sub
 
 '#####################################################################################

@@ -329,6 +329,7 @@ On Error GoTo ErrorHandler
         'm_bEngineObjectsLoaded = False
     End If
     
+    mAuth.LoadSettingsAuth
     MyDebug "IEngine_OnLogin all done"
 
     

@@ -21,14 +21,17 @@ Option Explicit
 
 Private Const DEBUG_ME = False
 
-Private Const DEFAULT_MACRO_TIMER_INTERVAL = 200   'msec
-Private Const WAYPOINT_DELAY = 1.5      'seconds
+Private Const DEFAULT_MACRO_TIMER_INTERVAL = 300   'msec
+Private Const WAYPOINT_DELAY = 2                   'seconds
+Private Const CAST_TIMER = 0.1                     'seconds
 
-Private Const LOGOUT_CHECK_INTERVAL = 5     'check every X seconds
-Private Const LOOT_CHECK_INTERVAL = 4       'check for loot every 4 seconds in idle mode
-Private Const TARGET_SCAN_INTERVAL = 1      'check for targets every X seconds when in idle mode unless
+Private Const LOGOUT_CHECK_INTERVAL = 2     'check every X seconds
+Private Const LOOT_CHECK_INTERVAL = 2       'check for loot every 2 seconds in idle mode
+Private Const TARGET_SCAN_INTERVAL = 2      'check for targets every X seconds when in idle mode unless
                                             'timer gets reset when creatures are spawning nearby
 Private Const SALVAGER_CHECK_INTERVAL = 5   'check if we need to autosalvage every 5 seconds
+
+Private Const MAX_NAV_FAIL = 200            'maximum number of navigation/loot failures before reset.
 
 Public Enum eMacroStates
     ST_IDLE = 0
@@ -97,6 +100,8 @@ Private WithEvents m_tmrWaypointDelay As clsTimer
 Attribute m_tmrWaypointDelay.VB_VarHelpID = -1
 Private WithEvents m_tmr5MinTimer As clsTimer
 Attribute m_tmr5MinTimer.VB_VarHelpID = -1
+Private WithEvents m_tmrCastSpell As clsTimer
+Attribute m_tmrCastSpell.VB_VarHelpID = -1
 
 Private m_iState As eMacroStates
 Private m_iSubState As eMacroSubStates
@@ -107,6 +112,7 @@ Private m_bPaused As Boolean
 Private m_adminPaused As Boolean
 Private m_fellowNeedsHealing As Boolean
 Private m_fellowNeedsStam As Boolean
+Public m_bOKToCast As Boolean ' Triggered by m_tmrCastSpell
 
 'Timers / display / Stats
 Private m_dStartTime As Double
@@ -115,7 +121,7 @@ Private m_dLastResetTime As Double
 Private m_dTimeSpent As Double      'Time since last reset
 
 Private m_sTimeSpent As String      'formated string of the time since last reset
-Private m_sElapsedTime As String    'formated string of the elapsed time
+'Private m_sElapsedTime As String    'formated string of the elapsed time
 Private m_sNextRebuff As String     'formated string of the time remaining until next rebuff
 
 Private m_dXpAtStart As Double
@@ -169,6 +175,8 @@ Private m_FellowCollection As Dictionary
 
 'Looting
 Private m_tmrNextLootCheck As clsTimer
+Public m_colChargeItems As colObjects 'List of all the charge items.
+Private m_NavFails As Integer
 
 'Salvager
 Private m_tmrNextSalvageTime As clsTimer
@@ -190,7 +198,7 @@ Private WithEvents m_Nav As clsNav
 Attribute m_Nav.VB_VarHelpID = -1
 Private WithEvents m_Restam As clsMacroRestam
 Attribute m_Restam.VB_VarHelpID = -1
-Private WithEvents m_FellowCmd As clsFellowCmd
+Public WithEvents m_FellowCmd As clsFellowCmd
 Attribute m_FellowCmd.VB_VarHelpID = -1
 Private WithEvents m_Loot As clsLoot
 Attribute m_Loot.VB_VarHelpID = -1
@@ -217,7 +225,9 @@ Private Sub Class_Initialize()
     Set m_tmrFellowHealTimer = CreateTimer
     Set m_tmrManaChargeTimer = CreateTimer
     Set m_tmr5MinTimer = CreateTimer
+    Set m_tmrCastSpell = CreateTimer
     
+    Call m_tmrCastSpell.Reset
     Call m_tmrWaypointDelay.Reset
     Call m_tmrBusyDelay.Reset
     Call PostCastDelayTimer.Reset
@@ -225,6 +235,8 @@ Private Sub Class_Initialize()
     Call m_tmrManaChargeTimer.Reset
     Call m_tmr5MinTimer.Reset
     Call ResetTargetScanTimer
+    
+    m_tmrCastSpell.SetNextTime (CAST_TIMER)
     
     g_Core.TimerInterval = DEFAULT_MACRO_TIMER_INTERVAL
     
@@ -270,6 +282,8 @@ Private Sub Class_Initialize()
     Call UpdateNextRebuffDisplay(0)
     Call UpdateTimeUntilLevelDisplay(0)
     
+    Set m_colChargeItems = New colObjects
+    
     'Stats
     m_dLastResetTime = 0
     m_dStartTime = 0
@@ -287,6 +301,8 @@ Private Sub Class_Initialize()
     m_dPlatsHour = 0
     m_dArrowsCount = 0
     m_dArrowsHour = 0
+    
+    m_NavFails = 0
     
     FiveMinXPCounter.Count = 30
     FiveMinXPCounter.Position = 0
@@ -306,6 +322,7 @@ End Sub
 
 Private Sub Class_Terminate()
 
+    Set m_tmrCastSpell = Nothing
     Set m_tmrBusyDelay = Nothing
     Set PostCastDelayTimer = Nothing
     Set m_tmrWaypointDelay = Nothing
@@ -314,6 +331,9 @@ Private Sub Class_Terminate()
     Set m_tmrFellowHealTimer = Nothing
     Set m_tmrNextSalvageTime = Nothing
     Set m_tmr5MinTimer = Nothing
+    Set m_tmrManaChargeTimer = Nothing
+    Set m_tmrNextStatsUpdate = Nothing
+    Set m_tmrNextTargetScan = Nothing
     
     Set m_CombatMode = Nothing
     Set m_Equip = Nothing
@@ -321,6 +341,8 @@ Private Sub Class_Terminate()
     Set m_Combat = Nothing
     Set m_Fletcher = Nothing
     Set m_Restam = Nothing
+    Set m_Nav = Nothing
+    Set g_Nav = Nothing
     Set m_FellowCmd = Nothing
     Set m_Loot = Nothing
     Set m_Salvager = Nothing
@@ -328,7 +350,7 @@ Private Sub Class_Terminate()
     Set m_objFellowTarget = Nothing
     
     Set m_FellowCollection = Nothing
-    
+    Set m_colChargeItems = Nothing
 End Sub
 
 Private Sub ResetFellowAction()
@@ -563,7 +585,10 @@ Friend Sub OnMacroTick()
 On Error GoTo ErrorHandler
 
     'increase elapsed time
-1    Call SetElapsedTime(g_Core.Time - m_dStartTime)
+     If (g_Core.Time - m_dStartTime > 0) Then
+1        Call SetElapsedTime(g_Core.Time - m_dStartTime)
+     End If
+     
 2    Call UpdateNextRebuffDisplay
     
     'perform state-independant task(s)
@@ -578,7 +603,7 @@ On Error GoTo ErrorHandler
 Fin:
     Exit Sub
 ErrorHandler:
-    PrintErrorMessage "clsMacro.OnMacroTick() - " & Err.Description & " - line : " & Erl
+    'PrintErrorMessage "clsMacro.OnMacroTick() - " & Err.Description & " - line : " & Erl
     Resume Fin
 End Sub
 
@@ -587,7 +612,12 @@ Private Sub m_CombatMode_OnCombatModeChanged()
         locDebug "Macro : combat state changed."
         Call ResetSubState
     Else
-        PrintWarning "m_CombatMode_OnCombatModeChanged fired, but SubState != SUBST_CHANGE_COMBATMODE"
+        If m_Healing.NeedHealing Then
+            locDebug "Macro : combat state changed."
+            Call ResetSubState
+        Else
+            MyDebug "m_CombatMode_OnCombatModeChanged fired, but SubState != SUBST_CHANGE_COMBATMODE"
+        End If
     End If
 End Sub
 
@@ -712,6 +742,8 @@ End Sub
 
 Private Sub GoNav()
 On Error GoTo ErrorHandler
+
+    'PrintErrorMessage ("Nav")
 
     'fixme : force to loop?
     If g_Nav.NavType = NAVTYPE_NONE Then
@@ -1170,6 +1202,8 @@ End Sub
 '***************************************
 Private Sub RunState()
 On Error GoTo ErrorHandler
+
+    If m_PluginEnabled = False Then GoTo Fin
     
     Dim objTarget As acObject
     
@@ -1184,6 +1218,10 @@ On Error GoTo ErrorHandler
     
     'Check if we need to logout
     If m_tmrNextLogoutCheck.Expired Then
+        'If (g_AntiBan.m_bLogOut) Then
+        '    Call g_Hooks.CastSpell(2023, 0)
+        'End If
+    
         Dim sReason As String
         If MustLogOut(sReason) Then
             MyDebug "RunState - MustLogOut returned true !"
@@ -1202,6 +1240,26 @@ On Error GoTo ErrorHandler
     
     'make sure we're not moving if we are not in ST_NAV state
     If (m_iState <> ST_NAV) And (m_iState <> ST_STICK_NAV) Then Call CheckStopNav
+    
+    ' Check for queued spells
+    If g_Spells.c_SpellQueue.Count > 0 And m_bOKToCast Then
+        'PrintErrorMessage "Displaying " & g_Spells.c_SpellQueue.Count & " spells"
+        'Call g_Spells.c_SpellQueue.Display
+        Dim o_Spell As clsSpellQueueItemSimple
+        
+        Set o_Spell = g_Spells.c_SpellQueue.ReadTop
+                
+        'PrintErrorMessage "Casting..."
+        Call g_Hooks.CastSpell(o_Spell.SpellID, o_Spell.TargetGUID)
+        
+        Call g_Spells.c_SpellQueue.Pop ' Pop the spell off the queue
+        
+        ' Reset casting state
+        m_bOKToCast = False
+        m_tmrCastSpell.SetNextTime (CAST_TIMER)
+        
+        GoTo Fin
+    End If
     
     'Handle sub states first
     If m_iSubState <> SUBST_NONE Then
@@ -1222,6 +1280,17 @@ On Error GoTo ErrorHandler
         Select Case m_iState
             Case ST_IDLE
                 If ACBusy Then GoTo Fin
+                
+                'PrintErrorMessage ("Debug: Idle")
+                                
+                'check to see if we need to loot a rare
+                If g_bLootRare Then
+                    locDebug "ST_IDLE : Looting Rare..."
+                    If GoLooting Then
+                        locDebug "ST_IDLE : Starting Looting..."
+                        GoTo Fin
+                    End If
+                End If
                 
                 'check if we need healing
                 If m_Healing.NeedHealing("ST_IDLE") Then
@@ -1261,7 +1330,7 @@ On Error GoTo ErrorHandler
                 End If
                 
                 'check if we need to buff
-                If (g_ui.Buffs.chkEnableBuffing.Checked Or m_bForceRebuff) And (g_Buffer.BuffQueue.Count > 0) Then
+                If (g_ui.Buffs.chkEnableBuffing.Checked Or m_bForceRebuff) And (g_Buffer.BuffQueue.Count > 0) And (m_bOKToCast = True) Then
                     If ValidState(TYPE_CASTER) Then
                         Call GoRebuff
                     End If
@@ -1278,15 +1347,24 @@ On Error GoTo ErrorHandler
                     Call ReloadArrows
                     GoTo Fin
                 End If
+            
+                'Need stam?
+                'Check to make sure that restam method has not changed.
+                Call m_Restam.ChooseBestRestamMethod 'Get new Restam Method.
                 
-                'Need stam (for melee/archer only) ?
-                If IsMelee And Vitals.NeedStamina(True) Then
+                If (m_Restam.RestamMethod <> NO_RESTAM) And Vitals.NeedStamina(True) Then
                     If Not IsBusy Then
                         Call GoRestam
                     Else
                         MyDebug "ST_IDLE - Macro need stam but currently busy - waiting still..."
                     End If
                     GoTo Fin
+                End If
+                
+                'Check if we need mana.
+                If IsCaster Then
+                    'MyDebug "Checking if we need more stamina..."
+                    Call Vitals.CastManaStamRegen(False, m_RegenManaAction, m_RegenStamAction)
                 End If
                 
                 ' See if we need to change our Items with a Mana Charge
@@ -1302,6 +1380,21 @@ On Error GoTo ErrorHandler
                         GoTo Fin
                     End If
                 End If
+                
+                'Check if loot priority is boosted.
+                If g_ui.Loot.chkBoostLootPriority.Checked _
+                And g_ui.Loot.chkEnableLooting.Checked _
+                And (Not g_Objects.Items.BackpackFull) _
+                And m_tmrNextLootCheck.Expired Then
+                    'locDebug "ST_IDLE : Checking Loot..."
+                    If GoLooting Then
+                        locDebug "ST_IDLE : Starting Looting..."
+                        GoTo Fin
+                    End If
+                    Call m_tmrNextLootCheck.SetNextTime(LOOT_CHECK_INTERVAL)
+                End If
+                
+                'PrintErrorMessage ("Debug: Idle 3")
                     
                 'Look up for targets
                 If m_Combat.Target Is Nothing Then
@@ -1353,15 +1446,48 @@ On Error GoTo ErrorHandler
                         Call m_tmrNextLootCheck.SetNextTime(LOOT_CHECK_INTERVAL)
                     End If
                         
-                    'Check if we can move to next waypoint
-                    If g_ui.Macro.chkEnableNav.Checked _
-                    And (g_Nav.Route.NumWP > 0) _
-                    And m_tmrWaypointDelay.Expired Then
-                        locDebug "ST_IDLE : resuming route"
-                        Call GoNav
-                        GoTo Fin
-                    End If
+                    'Check if we can move to next waypoint. Don't interrupt looting for this.
+                    'PrintErrorMessage ("Checking waypoint...")
+                    
+                    If m_iState = ST_LOOT Or m_Loot.getNavHold > 0 Then
                         
+                        m_NavFails = m_NavFails + 1
+                        
+                        If m_NavFails >= MAX_NAV_FAIL Then ' Don't get stuck.
+                            'Call PrintErrorMessage("Resetting nav timer.")
+                            m_NavFails = 0
+                            Call m_Loot.resetNavHold
+                            
+                            If g_ui.Macro.chkEnableNav.Checked _
+                            And (g_Nav.Route.NumWP >= 0) _
+                            And m_tmrWaypointDelay.Expired Then
+                                locDebug "ST_IDLE : resuming route"
+                                Call GoNav
+                                GoTo Fin
+                            End If
+                        End If
+                        
+                        'PrintErrorMessage ("Looting not done.")
+                        
+                        'If (m_iState = ST_LOOT) Then
+                        '    PrintErrorMessage ("State.")
+                        'Else
+                        '    PrintErrorMessage ("navHold")
+                        'End If
+                    Else
+                        m_NavFails = 0
+                        Call m_Loot.resetNavHold
+                        
+                        'PrintErrorMessage ("Looting done.")
+                        
+                        If g_ui.Macro.chkEnableNav.Checked _
+                        And (g_Nav.Route.NumWP > 0) _
+                        And m_tmrWaypointDelay.Expired Then
+                            locDebug "ST_IDLE : resuming route"
+                            Call GoNav
+                            GoTo Fin
+                        End If
+                    End If
                 Else
                     Call GoCombat(m_Combat.Target)  'resume combat
                 End If
@@ -1378,7 +1504,9 @@ On Error GoTo ErrorHandler
                 End If
                 
                 'Need stam ?
-                If Vitals.NeedStamina(IsMelee) Then
+                Call m_Restam.ChooseBestRestamMethod 'Get new Restam Method.
+                
+                If Vitals.NeedStamina(IsMelee) And (m_Restam.RestamMethod <> NO_RESTAM) Then
                     Call GoRestam
                     GoTo Fin
                 End If
@@ -1396,7 +1524,9 @@ On Error GoTo ErrorHandler
                 End If
                 
                 'Need stam ?
-                If Vitals.NeedStamina(IsMelee) Then
+                Call m_Restam.ChooseBestRestamMethod 'Get new Restam Method.
+                
+                If Vitals.NeedStamina(IsMelee) And (m_Restam.RestamMethod <> NO_RESTAM) Then
                     Call GoRestam
                     GoTo Fin
                 End If
@@ -1425,13 +1555,40 @@ On Error GoTo ErrorHandler
                 End If
                 
                 'Need stam (for melee/archer only) ?
-                If Vitals.NeedStamina(IsMelee) Then
+                Call m_Restam.ChooseBestRestamMethod 'Get new Restam Method.
+                
+                If Vitals.NeedStamina(IsMelee) And (m_Restam.RestamMethod <> NO_RESTAM) Then
                     Call GoRestam
                     GoTo Fin
                 End If
                 
+                'check to see if fellow members nearby need healing
+                If g_ui.Macro.chkHealFellow.Checked And g_Objects.Fellowship.Active And m_fellowNeedsHealing Then
+                    locDebug "ST_IDLE: checking for fellow members in need of healing"
+                    If GoFellowHeal Then GoTo Fin
+                End If
+                
+                'check to see if fellow members nearby need Staming
+                If g_ui.Macro.chkStamFellow.Checked And g_Objects.Fellowship.Active And m_fellowNeedsStam Then
+                    locDebug "ST_IDLE: checking for fellow members in need of Staming"
+                    If GoFellowHeal(True) Then GoTo Fin
+                End If
+                
                 If ValidState Then
                     Call m_Combat.RunState
+                End If
+                
+                'Check if loot priority is boosted.
+                If g_ui.Loot.chkBoostLootPriority.Checked _
+                And g_ui.Loot.chkEnableLooting.Checked _
+                And (Not g_Objects.Items.BackpackFull) _
+                And m_tmrNextLootCheck.Expired Then
+                    'locDebug "ST_IDLE : Checking Loot..."
+                    If GoLooting Then
+                        locDebug "ST_IDLE : Starting Looting..."
+                        GoTo Fin
+                    End If
+                    Call m_tmrNextLootCheck.SetNextTime(LOOT_CHECK_INTERVAL)
                 End If
                 
             Case ST_RESTAM
@@ -1455,7 +1612,7 @@ On Error GoTo ErrorHandler
                         If GoHealing Then GoTo Fin
                     End If
                     
-                    If isReadyToCast(TurboMode) Then
+                    If (isReadyToCast(TurboMode)) And (m_bOKToCast = True) Then
                         locDebug "clsMacro.RunState:ST_BUDDYREBUFF: isReadyToCast true, CastNextSpell"
                         Call g_BuddyBuffer.CastNextSpell
                     Else
@@ -1475,7 +1632,7 @@ On Error GoTo ErrorHandler
                         If GoHealing Then GoTo Fin
                     End If
                     
-                    If isReadyToCast(TurboMode) Then
+                    If (isReadyToCast(TurboMode)) And (m_bOKToCast = True) Then
                         locDebug "clsMacro.RunState:ST_REBUFF: isReadyToCast true, CastNextSpell"
                         Call g_Buffer.CastNextSpell
                     Else
@@ -1497,6 +1654,18 @@ On Error GoTo ErrorHandler
                 End If
                 
             Case ST_LOOT
+                'check to see if fellow members nearby need healing
+                If g_ui.Macro.chkHealFellow.Checked And g_Objects.Fellowship.Active And m_fellowNeedsHealing Then
+                    locDebug "ST_IDLE: checking for fellow members in need of healing"
+                    If GoFellowHeal Then GoTo Fin
+                End If
+                
+                'check to see if fellow members nearby need Staming
+                If g_ui.Macro.chkStamFellow.Checked And g_Objects.Fellowship.Active And m_fellowNeedsStam Then
+                    locDebug "ST_IDLE: checking for fellow members in need of Staming"
+                    If GoFellowHeal(True) Then GoTo Fin
+                End If
+                
                 If Not ACBusy Then
                     If g_ui.Loot.chkLootForcePeaceMode.Checked And (g_Hooks.CombatMode <> COMBATSTATE_PEACE) Then
                         Call g_Macro.RequestCombatStateChange(COMBATSTATE_PEACE)
@@ -1505,6 +1674,18 @@ On Error GoTo ErrorHandler
                 End If
                 
             Case ST_SALVAGE
+                'check to see if fellow members nearby need healing
+                If g_ui.Macro.chkHealFellow.Checked And g_Objects.Fellowship.Active And m_fellowNeedsHealing Then
+                    locDebug "ST_IDLE: checking for fellow members in need of healing"
+                    If GoFellowHeal Then GoTo Fin
+                End If
+                
+                'check to see if fellow members nearby need Staming
+                If g_ui.Macro.chkStamFellow.Checked And g_Objects.Fellowship.Active And m_fellowNeedsStam Then
+                    locDebug "ST_IDLE: checking for fellow members in need of Staming"
+                    If GoFellowHeal(True) Then GoTo Fin
+                End If
+                
                 If Not ACBusy Then
                     Call m_Salvager.RunState
                 End If
@@ -1592,7 +1773,7 @@ On Error GoTo ErrorHandler
     m_sPlatsHour = "0"
     m_sArrowsHour = "0"
     m_sTimeSpent = "0"
-    m_sElapsedTime = "0"
+    'm_sElapsedTime = "0"
     m_sNextRebuff = "0"
 
 2    'turn on the macro timer
@@ -1617,7 +1798,7 @@ On Error GoTo ErrorHandler
 11    Call m_tmrFellowHealTimer.SetNextTime(15)
     
     'Start 5 Min XP timer
-12    'Call m_tmr5MinTimer.SetNextTime(10)
+12    Call m_tmr5MinTimer.SetNextTime(10)
 
 13    Call Vitals.idManaStones
     
@@ -1673,6 +1854,12 @@ On Error GoTo ErrorHandler
 
 1    g_Core.TimerInterval = DEFAULT_MACRO_TIMER_INTERVAL
 2    m_iCombatType = iCombatType
+
+    If mAuth.m_PluginEnabled = False Then
+        PrintMessage g_String(mStrings.e_strUnableToAuth)
+        bRet = False
+        GoTo Fin
+    End If
     
     'Security - Check Auth
     If MustLogOut(sReason) Then
@@ -1757,6 +1944,10 @@ End Sub
 
 Public Sub ResumeMacro()
     If Not Active Then
+        If mAuth.m_PluginEnabled = False Then
+            PrintMessage g_String(mStrings.e_strUnableToAuth)
+            Exit Sub
+        End If
         m_bPaused = False
         PrintMessage "Macro resumed."
     End If
@@ -1857,7 +2048,7 @@ On Error GoTo Error_Handler
                 Call RequestEquipItem(g_Data.Shield)
                 GoTo Fin
             Else
-                If m_CombatMode.CurrentCombatState <> COMBATSTATE_MELEE Then
+                If m_CombatMode.CurrentCombatState <> COMBATSTATE_MELEE And m_Healing.NeedHealing = False Then
                     MyDebug "ValidState: TYPE_MELEE: invalid combat state. Switching now"
                     Call RequestCombatStateChange(COMBATSTATE_MELEE)
                     GoTo Fin
@@ -1875,7 +2066,7 @@ On Error GoTo Error_Handler
                 Call RequestEquipItem(g_Data.Bow)
                 GoTo Fin
             Else
-                If m_CombatMode.CurrentCombatState <> COMBATSTATE_ARCHER Then
+                If m_CombatMode.CurrentCombatState <> COMBATSTATE_ARCHER And m_Healing.NeedHealing = False Then
                     MyDebug "ValidState: TYPE_ARCHER: invalid combat state. Switching now"
                     Call RequestCombatStateChange(COMBATSTATE_ARCHER)
                     GoTo Fin
@@ -1982,10 +2173,18 @@ On Error GoTo ErrorHandler
     Select Case iFailureId
         Case FAIL_TOO_BUSY, FAIL_BUSY
             ' Do nothing
-            locDebug "-- Fail: Busy --"
+            MyDebug "-- Fail: Busy --"
+            If m_iState <> ST_COMBAT Then
+                'Call g_Core.SendKeyHold(g_Keys.KeyJump)
+                Call ResetSubState
+                'Call g_Core.SendKeyRelease(g_Keys.KeyJump)
+            Else
+                Call ResetSubState
+            End If
+            
             
         Case FAIL_NOT_READY, FAIL_UNPREPARED_TO_CAST
-            locDebug "-- Fail: Not Ready/Unprepared --"
+            MyDebug "-- Fail: Not Ready/Unprepared --"
             
             If m_tmrBusyDelay.Expired Then
                 Call m_tmrBusyDelay.SetNextTime(0.5)    '0.5 secondes pause
@@ -1996,7 +2195,7 @@ On Error GoTo ErrorHandler
             End If
             
             'Don't force OnReady if in spell casting mode
-            If g_Hooks.CombatMode <> COMBATSTATE_MAGIC Then
+            If g_Hooks.CombatMode <> COMBATSTATE_MAGIC Or m_Healing.NeedHealing = False Then
                 Call OnReady(False)
             End If
             
@@ -2100,7 +2299,7 @@ On Error GoTo ErrorHandler
                 End If
             
             Case SUBST_CHANGE_COMBATMODE
-                If Not bSuccess Then
+                If Not bSuccess And m_Healing.NeedHealing = False Then 'Don't force change if healing.
                     MyDebug "OnReady - ChangeCM Action Failed - Retrying"
                     Call m_CombatMode.Restart
                 End If
@@ -2388,6 +2587,11 @@ On Error GoTo ErrorHandler
         End If
     End If
     
+    If (g_AntiBan.m_bLogOut) Then
+        Call g_Service.Logout(g_AntiBan.m_sReason)
+        bRet = True
+    End If
+    
 Fin:
     MustLogOut = bRet
     Exit Function
@@ -2439,7 +2643,7 @@ On Error GoTo Error_Handler
     If m_dXpHour <= 0 Then
         GetSecondsUntilLevel = 0
     Else
-        fXpToNextLvl = g_ds.XpTracker.XPToNextLevel
+        fXpToNextLvl = g_ds.XpTracker.XpToNextLevel
         GetSecondsUntilLevel = (CDbl(fXpToNextLvl) * CDbl(3600)) / m_dXpHour
     End If
         
@@ -2454,7 +2658,7 @@ Private Sub UpdateTimeUntilLevelDisplay(Optional ByVal dTime As Double = -1)
 On Error GoTo ErrorHandler
 
     If (dTime = -1) Then dTime = GetSecondsUntilLevel
-    If dTime < 0 Then dTime = 0
+    If dTime <= 0 Then dTime = 0
     m_sTimeUntilLevel = myFormatTime(dTime, TF_LETTERS)
     
 Fin:
@@ -2626,6 +2830,10 @@ ErrorHandler:
     Resume Fin
 End Function
 
+Public Sub incLoot()
+    Call m_Loot.incNavHold
+End Sub
+
 Public Sub SetState(ByVal iState As Integer)
     Call ResetSubState
     m_iState = iState
@@ -2657,6 +2865,10 @@ Private Sub m_tmrManaChargeTimer_OnTimeout()
     Call GoIdle
 End Sub
 
+Private Sub m_tmrCastSpell_OnTimeout()
+    m_bOKToCast = True
+End Sub
+
 Private Sub m_tmr5MinTimer_OnTimeout()
 On Error GoTo ErrorHandler
   
@@ -2669,18 +2881,19 @@ On Error GoTo ErrorHandler
     Else
         MyDebug "5Min Timer: pos: " & FiveMinXPCounter.Position & " T: " & g_ds.XpTracker.TotalXp & " S: " & FiveMinXPCounter.startXP(FiveMinXPCounter.Position)
         ' Calculate the diff between the Current XP and XP from 5 mins ago
-        FiveMinXPCounter.XP(FiveMinXPCounter.Position) = g_ds.XpTracker.TotalXp - FiveMinXPCounter.startXP(FiveMinXPCounter.Position)
+        FiveMinXPCounter.XP(FiveMinXPCounter.Position) = g_ds.XpTracker.TotalXp
     End If
   
     MyDebug "5Min Timer: pos: " & FiveMinXPCounter.Position & " : " & FiveMinXPCounter.XP(FiveMinXPCounter.Position)
   
     prevCounter = FiveMinXPCounter.Position
   
+    m_dFiveMinXPAvg = FiveMinXPCounter.XP(FiveMinXPCounter.Position) - FiveMinXPCounter.startXP(FiveMinXPCounter.Position)
     'm_dFiveMinXPAvg = m_dFiveMinXPAvg + FiveMinXPCounter.XP(prevCounter) - FiveMinXPCounter.XP(FiveMinXPCounter.Position)
-    m_dFiveMinXPAvg = CDbl(m_dFiveMinXPAvg + (FiveMinXPCounter.XP(FiveMinXPCounter.Position) * 12) / 2)
-    'm_dFiveMinXpHour = CDbl((m_dFiveMinXPAvg / 300) * 3600)
-    m_dFiveMinXpHour = CDbl(FiveMinXPCounter.XP(FiveMinXPCounter.Position) * 12)
-
+    'm_dFiveMinXPAvg = CDbl(m_dFiveMinXPAvg + (FiveMinXPCounter.XP(FiveMinXPCounter.Position) * 12) / 2)
+    m_dFiveMinXpHour = CDbl(m_dFiveMinXPAvg * 12)
+    'm_dFiveMinXpHour = CDbl(FiveMinXPCounter.XP(FiveMinXPCounter.Position) * 12)
+    
     'Move to next counter position
     FiveMinXPCounter.Position = (FiveMinXPCounter.Position + 1) Mod (FiveMinXPCounter.Count + 1)
     

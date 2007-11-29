@@ -167,7 +167,10 @@ On Error GoTo ErrorHandler
             ' number of slots each item sold takes up
             minPackSpace = CDbl(m_sellCost / 10000)
             freePackSpace = 95 - g_Objects.Items.CountMainInventory
-            computeDouble = CDbl(freePackSpace / minPackSpace)
+            
+            If minPackSpace > 0 Then
+                computeDouble = CDbl(freePackSpace / minPackSpace)
+            End If
             
             splitNumber = IntRoundDown(computeDouble)
             
@@ -392,6 +395,8 @@ End Sub
 Public Sub StartSell()
 On Error GoTo ErrorHandler
 
+    PrintMessage "In StartSell"
+
     Dim objItem As acObject
     Dim stackCount As Long
     
@@ -405,10 +410,10 @@ On Error GoTo ErrorHandler
     
     stackCount = m_sellTarget.stackCount
 
-    If Valid(m_Vendor) Then
+    If Valid(m_Vendor) And m_Vendor.VendorFractBuy > 0 And stackCount > 0 Then
         MyDebug "vendor FractBuy: " & m_Vendor.VendorFractBuy
         m_sellCost = (m_sellTarget.Value / m_Vendor.VendorFractBuy) / stackCount
-    Else
+    ElseIf stackCount > 0 Then
         m_sellCost = m_sellTarget.Value / stackCount
     End If
     

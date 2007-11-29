@@ -403,7 +403,6 @@ On Error GoTo Error_Handler
     Set chkItmArmorTop = Nothing
     Set chkItmArmorBottom = Nothing
     Set chkItmArmorFeet = Nothing
-    Set chkItmArmorFeet = Nothing
     Set chkItmArmorTopUndie = Nothing
     Set chkItmArmorBottomUndie = Nothing
     Set chkItmArmorShield = Nothing
@@ -424,6 +423,7 @@ On Error GoTo Error_Handler
     Set chkItmWandSD = Nothing
     Set chkItmSelectSelf = Nothing
     Set chMaxBuffSpellLevel = Nothing
+    Set txtNumContinuousBuffs = Nothing
     
     Set chkOtherItmArmorShield = Nothing
     Set chkOtherItmWeapBD = Nothing

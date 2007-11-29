@@ -72,6 +72,9 @@ End Sub
 Private Sub Class_Terminate()
     Set m_BuffQueue = Nothing
     Set m_colBuffs = Nothing
+    Set m_tmrNextRebuff = Nothing
+    Set m_HeldItem = Nothing
+    Set m_HeldShield = Nothing
 End Sub
 
 '#####################################################################################
@@ -291,7 +294,11 @@ On Error GoTo ErrorHandler
             If m_iNumBuffs < 1 Then m_iNumBuffs = 1
         
             iBuffsInLastPack = cnt Mod m_iNumBuffs
-            iNumPacks = (cnt + (m_iNumBuffs - iBuffsInLastPack)) / m_iNumBuffs
+            
+            If m_iNumBuffs > 0 Then
+                iNumPacks = (cnt + (m_iNumBuffs - iBuffsInLastPack)) / m_iNumBuffs
+            End If
+            
             If iNumPacks < 1 Then iNumPacks = 1
     
             'compute the continuous rebuff interval
@@ -607,18 +614,19 @@ On Error GoTo ErrorHandler
         Call m_BuffQueue.Pop    'remove the bad buff from queue
         GoTo Fin
     Else
-        If Not (g_ui.Options.chkFilterLTMsg.Checked) Then
-            If lTargetGUID = g_Objects.Player.Guid Or lTargetGUID = 0 Then
-                PrintMessage "[Rebuff] Casting " & objSpell.SpellName
-            Else
-                PrintMessage "[Rebuff] Casting " & objSpell.SpellName & " on " & sTargetName
-            End If
-        End If
-        
         m_sCurSpellName = objSpell.SpellName
         
-        If Not (IsBusy) Then    ' Prevent spell spamming
+        If Not (IsBusy) And (g_Macro.m_bOKToCast = True) Then    ' Prevent spell spamming
             'MyDebug "clsBuddyBuffer.CastNextSpell: Not (IsBusy), casting: " & objSpell.SpellName
+            
+            If (g_Macro.m_bOKToCast = True) And Not (g_ui.Options.chkFilterLTMsg.Checked) Then
+                If lTargetGUID = g_Objects.Player.Guid Or lTargetGUID = 0 Then
+                    PrintMessage "[Rebuff] Casting " & objSpell.SpellName
+                Else
+                    PrintMessage "[Rebuff] Casting " & objSpell.SpellName & " on " & sTargetName
+                End If
+            End If
+            
             Call g_Spells.CastSpellAlt(objSpell, lTargetGUID)
         Else
             'MyDebug "clsBuddyBuffer.CastNextSpell: IsBusy, _not_ casting: " & objSpell.SpellName

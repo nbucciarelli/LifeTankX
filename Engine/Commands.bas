@@ -11,7 +11,7 @@ On Error GoTo ErrorHandler
     Dim objItem As acObject
     
     Dim Args() As String
-    Dim Arg1 As String, Arg2 As String, Arg3 As String
+    Dim Arg1 As String, Arg2 As String, Arg3 As String, Arg4 As String
     Dim iNumArgs As Integer
     
     sCmdLine = Trim(bstrMsg)
@@ -30,6 +30,8 @@ On Error GoTo ErrorHandler
     sCmd = LCase(Args(0))
     If iNumArgs >= 1 Then Arg1 = LCase(Args(1))
     If iNumArgs >= 2 Then Arg2 = LCase(Args(2))
+    If iNumArgs >= 3 Then Arg3 = LCase(Args(3))
+    If iNumArgs >= 4 Then Arg4 = LCase(Args(4))
     
     Select Case LCase(sCmd)
         Case "hr"
@@ -56,12 +58,67 @@ On Error GoTo ErrorHandler
             MyDebug "Commands: Got /fc -> /fillcomps"
             Call g_Core.SendTextToConsole("/fillcomps", True)
             
-        Case "fo"
-            MyDebug "Commands: Got /fo -> /friends online"
-            Call g_Core.SendTextToConsole("/friends online", True)
+        Case "pka"
+            MyDebug "Commands: Got /pka -> /pkarena"
+            Call g_Core.SendTextToConsole("/pkarena", True)
+        
+        Case "pkla"
+            MyDebug "Commands: Got /pkla -> /pklarena"
+            Call g_Core.SendTextToConsole("/pklarena", True)
+            
+        Case "pkl"
+            MyDebug "Commands: Got /pkl -> /pklite"
+            Call g_Core.SendTextToConsole("/pklite", True)
+        
+        Case "sw"
+            Dim nsString As String
+            Args = Split(sCmdLine, "sw")
+            nsString = Args(1)
+            MyDebug "Commands: Got /sw " & nsString & " -> /search" & nsString
+            
+            Call g_Core.SendTextToConsole("/search" & nsString, True)
+        
+        Case "rares"
+            MyDebug ("Command Recieved: rares. Downloading data!")
+            Download ("http://raretracker.acvault.ign.com/upload/release_1_latestrares.php")
+            
+        Case "myrares"
+            MyDebug ("Command Recieved: myrares. Downloading data!")
+            Download ("http://raretracker.acvault.ign.com/upload/release_1_myrares.php?guid=" & CStr(g_Filters.PlayerGUID))
+        
+        'Case "rares"
+            'Call OnRareFound("Con has discovered the Test Rare!")
+        
+        'Case "rareself"
+            'Call OnRareFound("Paraduck has discovered the Eternal Health Kit!")
+            
+        'Case "ltrare2"
+            'PrintMessage "Testing Rare Tracker Stats..."
+                        '
+            'Call g_RareTracker.SendStats("Uber Rare", 1337, "1337N3$$", 10, 1337, 1, 666, 1000, 1, 1, 1, 1, 1, "Replex Pwns All in This Stuff", 1, 1, 99999, "All Rending", 1, 9, 40000, 100, 1, 1, 3422, "Replex", 9, 9, "Replex", "Pwnage Bolt X, Flame Bolt XI", 5, 12345, 12345, 1337, 1337, 1, 1, 1, 1, True, True, "Bwar", "Bwar2")
+'
+        'Case "ltrare1"
+            'PrintMessage "Testing Rare Tracker..."
+            'Call g_RareTracker.SendData("Uber Rare", "Replex")
         
         Case "lt"
             Select Case Arg1
+                Case "shortcuts"
+                    PrintMessage "--- LifeTank Shortcuts ---"
+                    PrintMessage "Housing"
+                    PrintMessage "House Recall: /hr"
+                    PrintMessage "Mansion Recall: /mr"
+                    PrintMessage "Locations"
+                    PrintMessage "Allegiance Hometown: /ah"
+                    PrintMessage "Lifestone: /ls"
+                    PrintMessage "Marketpace: /mp"
+                    PrintMessage "PK Arena: /pka"
+                    PrintMessage "PKL Arena: /pkla"
+                    PrintMessage "Miscellaneous"
+                    PrintMessage "Fill Comps: /fc"
+                    PrintMessage "Friends Online: /fo"
+                    PrintMessage "PKLite: /pkl"
+                    
                 Case "hotkeys"
                     PrintMessage "--- LifeTank Hotkeys ---"
                     PrintMessage "CTRL+F1 : Start/Stop Macro"
@@ -71,6 +128,31 @@ On Error GoTo ErrorHandler
                     PrintMessage "CTRL+F5 : Quick-Sell at Vendor"
                     PrintMessage "CTRL+F6 : Quick-Ust Selection"
                     PrintMessage "CTRL+F7 : Show/Hide Route Editor"
+                
+                Case "auth"
+                    Select Case Arg2
+                        
+                        Case "server"
+                            Select Case Arg3
+                                
+                                Case ""
+                                    m_Auth (1)
+                                    
+                                Case "1"
+                                    m_Auth (1)
+                                    
+                                Case "2"
+                                    m_Auth (2)
+                                    
+                                Case "3"
+                                    m_Auth (3)
+                                     
+                            End Select
+                
+                        Case ""
+                            m_Auth (1)
+                            
+                    End Select
                     
                 Case "ar:"
                     Dim nString As String
@@ -240,6 +322,10 @@ On Error GoTo ErrorHandler
                 Case "debug"
                     Select Case Arg2
                     
+                        'Case "countmcitems"
+                            'Call Vitals.countChargeItems
+                            'Call Vitals.countManaStones
+                                                
                         Case "corpsetoignore"
                             Call g_Macro.Loot.DebugIgnoreCorpseList
                             
@@ -437,6 +523,7 @@ On Error GoTo ErrorHandler
                     
                 Case Else
                     PrintMessage "LifeTank Commands : /lt <cmd> [<arg1>, ... <argN>]"
+                    PrintMessage "- shortcuts : prints out list of shortcuts"
                     PrintMessage "- coords : print out current coords and dungeon location"
                     PrintMessage "- debug : lifetank debug commands"
                     PrintMessage "- hotkeys : list of LifeTank hotkeys"

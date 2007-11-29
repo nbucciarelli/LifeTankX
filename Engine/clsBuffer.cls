@@ -66,6 +66,7 @@ End Sub
 Private Sub Class_Terminate()
     Set m_BuffQueue = Nothing
     Set m_colBuffs = Nothing
+    Set m_tmrNextRebuff = Nothing
 End Sub
 
 '#####################################################################################
@@ -594,7 +595,7 @@ On Error GoTo ErrorHandler
         Call m_BuffQueue.Pop    'remove the bad buff from queue
         GoTo Fin
     Else
-        If Not (g_ui.Options.chkFilterLTMsg.Checked) Then
+        If (g_Macro.m_bOKToCast = True) And Not (g_ui.Options.chkFilterLTMsg.Checked) Then
             If lTargetGUID = g_Objects.Player.Guid Or lTargetGUID = 0 Then
                 PrintMessage "[Rebuff] Casting " & objSpell.SpellName
             Else
@@ -604,7 +605,7 @@ On Error GoTo ErrorHandler
         
         m_sCurSpellName = objSpell.SpellName
         
-        If Not (IsBusy) Then    ' Prevent spell spamming
+        If Not (IsBusy) And (g_Macro.m_bOKToCast = True) Then ' Prevent spell spamming
             'MyDebug "clsBuffer.CastNextSpell: Not (IsBusy), casting: " & objSpell.SpellName
             Call g_Spells.CastSpellAlt(objSpell, lTargetGUID)
         Else

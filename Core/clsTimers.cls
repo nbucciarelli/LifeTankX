@@ -22,6 +22,7 @@ Private Sub Class_Initialize()
 End Sub
 
 Private Sub Class_Terminate()
+    m_lIndexCounter = 0
     Set m_colTimers = Nothing
 End Sub
 

@@ -412,11 +412,11 @@ On Error GoTo ErrorHandler
         Select Case Command
             Case "report" 'Can be triggered from Chan message
                 'If NumArgs > 2 Then 'ex: #macro report health
-                strReply = CmdReportString
+                strReply = g_Macro.CmdReportString
                 Call MacroAnswerCommand(strReply, SourceName, bIrc, bChanCommand)
             
             Case "comps" 'Can be triggered from Chan message
-                strReply = CmdCompsString
+                strReply = g_Macro.CmdCompsString
                 Call MacroAnswerCommand(strReply, SourceName, bIrc, bChanCommand)
             
             Case "count"

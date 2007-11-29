@@ -13,7 +13,7 @@ Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 Option Explicit
 
-Private WithEvents m_wsock As Winsock
+Private WithEvents m_wsock As MSWinsockLib.Winsock
 Attribute m_wsock.VB_VarHelpID = -1
 Private Const REGISTER_TAG = "lifetank2"
 

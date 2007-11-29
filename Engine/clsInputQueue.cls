@@ -117,7 +117,7 @@ Public Sub OnInputTimerTick()
         End If
         
         'Update internal timer
-        m_Time = m_Time + CDbl(m_InputTimer.Interval) / 1000#        'timer in seconds
+        m_Time = m_Time + CDbl(m_InputTimer.Interval) / 1000        'timer in seconds
     Else
         m_Time = 0
         m_Delay = 0
@@ -182,7 +182,7 @@ On Error GoTo Error_Handler
     
     'Check if we need to add a litlle delay after processing this event
     If CurInput.Delay > 0 Then
-        m_Delay = m_Time + CurInput.Delay / 1000#   '.Delay is in msec
+        m_Delay = m_Time + CurInput.Delay / 1000   '.Delay is in msec
     End If
         
     

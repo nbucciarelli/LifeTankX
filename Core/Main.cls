@@ -158,6 +158,11 @@ On Error GoTo ErrorHandler
     
     ' Close all the log files
     Call xCloseLogFiles
+    
+    Set g_debugLog = Nothing
+    Set g_errorLog = Nothing
+    Set g_chatLog = Nothing
+    Set g_eventLog = Nothing
 
 Fin:
     Exit Sub

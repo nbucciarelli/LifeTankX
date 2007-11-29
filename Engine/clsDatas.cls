@@ -86,7 +86,6 @@ Private Sub Class_Terminate()
     Set m_objWeapon = Nothing
     Set m_objShield = Nothing
     Set m_objBow = Nothing
-    Set m_objShield = Nothing
     Set m_Exceptions = Nothing
     Set m_LootFilters = Nothing
     Set m_AutoResponse = Nothing

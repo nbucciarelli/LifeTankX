@@ -27,7 +27,7 @@ Private Const FELLOW_QUIT_YOFF = 140
 Private Const COMBAT_BAR_HEIGHT = 100
 Private Const VITALS_BAR_HEIGHT = 30
 
-Private Const MAX_RECRUIT_RANGE = 9
+Private Const MAX_RECRUIT_RANGE = 15
 
 Private Const MAX_FELLOW = 9
 
@@ -71,9 +71,10 @@ End Sub
 Private Sub Class_Terminate()
     Set m_tmrNext = Nothing
     Set m_tmrSecure = Nothing
+    Set m_objTarget = Nothing
 End Sub
 
-Private Sub Reset()
+Public Sub Reset()
     Call m_tmrNext.Reset
     Call m_tmrSecure.Reset
     Set m_objTarget = Nothing

@@ -85,6 +85,13 @@ Attribute chkLootGround.VB_VarHelpID = -1
 Public WithEvents chkLootForcePeaceMode As DecalControls.CheckBox
 Attribute chkLootForcePeaceMode.VB_VarHelpID = -1
 
+Public WithEvents chkSendRares As DecalControls.CheckBox
+Attribute chkSendRares.VB_VarHelpID = -1
+Public WithEvents chkSendName As DecalControls.CheckBox
+Attribute chkSendName.VB_VarHelpID = -1
+
+Public WithEvents chkBoostLootPriority As DecalControls.CheckBox
+Attribute chkBoostLootPriority.VB_VarHelpID = -1
 
 'Global filters
 Public chkLootAny As DecalControls.CheckBox
@@ -215,6 +222,13 @@ Attribute lstExceptions.VB_VarHelpID = -1
 Public WithEvents cmdAddException As DecalControls.PushButton
 Attribute cmdAddException.VB_VarHelpID = -1
 
+'Mana Stones tab--------------------------------------------------------
+'Public chkEnableManaStoneRecharge As DecalControls.CheckBox
+'Public chStoneType As DecalControls.Choice
+'Public txtMinMana As DecalControls.Edit
+'Public txtMaxStone As DecalControls.Edit
+'Public txtMaxCharge As DecalControls.Edit
+
 Private Enum eExceptionListColumns
     EX_COL_ICON = 0
     EX_COL_NAME
@@ -284,6 +298,9 @@ On Error GoTo Error_Handler
     Set chkFilterCorpses = g_MainView.Control("chkFilterCorpses")
     Set chkLootGround = g_MainView.Control("chkLootGround")
     Set chkLootForcePeaceMode = g_MainView.Control("chkLootForcePeaceMode")
+    Set chkSendRares = g_MainView.Control("chkSendRares")
+    Set chkSendName = g_MainView.Control("chkSendName")
+    Set chkBoostLootPriority = g_MainView.Control("chkBoostLootPriority")
     
     Set txtAddCorpse = g_MainView.Control("txtAddCorpse")
     Set btnAddCorpse = g_MainView.Control("btnAddCorpse")
@@ -348,6 +365,12 @@ On Error GoTo Error_Handler
     Set chkMinorMastery = g_MainView.Control("chkMinorMastery")
     Set chkMajorIgnoreBane = g_MainView.Control("chkMajorIgnoreBane")
     
+    'Set chkEnableManaStoneRecharge = g_MainView.Control("chkEnableManaStoneRecharge")
+    'Set chStoneType = g_MainView.Control("chStoneType")
+    'Set txtMinMana = g_MainView.Control("txtMinMana")
+    'Set txtMaxStone = g_MainView.Control("txtMaxStone")
+    'Set txtMaxCharge = g_MainView.Control("txtMaxCharge")
+    
     Init = True
     MyDebug INTERFACE_NAME & ".Init() -- End"
     
@@ -390,6 +413,9 @@ On Error GoTo Error_Handler
         chkFilterCorpses.Checked = .GetValue("chkFilterCorpses", False)
         chkLootGround.Checked = .GetValue("chkLootGround", False)
         chkLootForcePeaceMode.Checked = .GetValue("chkLootForcePeaceMode", True)
+        chkSendRares.Checked = .GetValue("chkSendRares", True)
+        chkSendName.Checked = .GetValue("chkSendName", False)
+        chkBoostLootPriority.Checked = .GetValue("chkBoostLootPriority", False)
         
         'Filters
         chkLootSalvages.Checked = .GetValue("chkLootSalvages", False)
@@ -433,6 +459,12 @@ On Error GoTo Error_Handler
         chkMinorAttribute.Checked = .GetValue("chkMinorAttribute", False)
         chkMinorMastery.Checked = .GetValue("chkMinorMastery", False)
         chkMajorIgnoreBane.Checked = .GetValue("chkMajorIgnoreBane", False)
+        
+        'chkEnableManaStoneRecharge.Checked = .GetValue("chkEnableManaStoneRecharge", True)
+        'chStoneType.Selected = 0
+        'txtMinMana.Text = .GetValue("txtMinMana", 1000)
+        'txtMaxStone.Text = .GetValue("txtMaxStone", 3)
+        'txtMaxCharge.Text = .GetValue("txtMaxCharge", 3)
     
     End With
     
@@ -483,6 +515,9 @@ On Error GoTo Error_Handler
         .SaveCheckbox chkFilterCorpses, "chkFilterCorpses"
         .SaveCheckbox chkLootGround, "chkLootGround"
         .SaveCheckbox chkLootForcePeaceMode, "chkLootForcePeaceMode"
+        .SaveCheckbox chkSendRares, "chkSendRares"
+        .SaveCheckbox chkSendName, "chkSendName"
+        .SaveCheckbox chkBoostLootPriority, "chkBoostLootPriority"
         
         .SaveCheckbox chkLootAny, "chkLootAny"
         .SaveCheckbox chkPickupValuable, "chkPickupValuable"
@@ -508,7 +543,11 @@ On Error GoTo Error_Handler
         .SaveCheckbox chkMinorAttribute, "chkMinorAttribute"
         .SaveCheckbox chkMinorMastery, "chkMinorMastery"
         .SaveCheckbox chkMajorIgnoreBane, "chkMajorIgnoreBane"
-        
+        '.SaveCheckbox chkEnableManaStoneRecharge, "chkEnableManaStoneRecharge"
+        '.SaveChoice chStoneType, "chStoneType"
+        '.SaveTextbox txtMinMana, "txtMinMana"
+        '.SaveTextbox txtMaxStone, "txtMaxStone"
+        '.SaveTextbox txtMaxCharge, "txtMaxCharge"
     End With
     
     'Save the items lists
@@ -562,6 +601,9 @@ On Error GoTo Error_Handler
     Set chkFilterCorpses = Nothing
     Set chkLootGround = Nothing
     Set chkLootForcePeaceMode = Nothing
+    Set chkSendRares = Nothing
+    Set chkSendName = Nothing
+    Set chkBoostLootPriority = Nothing
     
     Set txtAddCorpse = Nothing
     Set btnAddCorpse = Nothing
@@ -611,6 +653,7 @@ On Error GoTo Error_Handler
     Set chWandMinPvMBonus = Nothing
     Set chWandMaxWieldReq = Nothing
     Set chWandMaxWork = Nothing
+    Set cmdAddWand = Nothing
     
     Set lstExceptions = Nothing
     Set cmdAddException = Nothing
@@ -623,6 +666,12 @@ On Error GoTo Error_Handler
     Set chkMinorAttribute = Nothing
     Set chkMinorMastery = Nothing
     Set chkMajorIgnoreBane = Nothing
+    
+    'Set chkEnableManaStoneRecharge = Nothing
+    'Set chStoneType = Nothing
+    'Set txtMinMana = Nothing
+    'Set txtMaxStone = Nothing
+    'Set txtMaxCharge = Nothing
     
     'Unload complete
     Unload = True
