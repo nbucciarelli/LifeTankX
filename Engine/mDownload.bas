@@ -130,7 +130,7 @@ If Len(strWebPage) = 0 Then Exit Function
             
             If m_Variable("type", vbLf) = "AuthServer" Then
                 m_Content = Replace(m_Content, "type»AuthServer" & vbLf, "")
-                m_Content = Decrypt(m_Content)
+                m_Content = mCrypt.Decrypt(m_Content)
                 'frmCom.Text2.Text = m_Content
             
                 Select Case m_sHost

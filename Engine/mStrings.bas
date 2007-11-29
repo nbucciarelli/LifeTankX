@@ -5,6 +5,6 @@ Public Const e_strBanned = "­æŞŒÊÙÍ”–¢¼¢¼­ŒÏÙ×átÖá½åĞŒµĞÎÙÈÂÜ¿—Áµ•‡ÜÜ½Ô·æŞØÍ‡ÊÙ
 Public Const e_strInquire = "¨æ‰Õ×ØİİÆÆµÙØáİ‡ÜÜ¹áÈØİÑ‰ÖÎ”ÈÉ×Ç—ËÍ×“ˆäÀÆÏÇÜ‰ÜØÚÜ”ÈÉÓtİØØÕÖßİÂÈÈæ‰ÛŞÙˆÇÉÑŞÃéİŒÏÖÚéÁÔµë‰ÔİÛØ®ƒåËî—ØÒÍÍèµÏÙÌà—ÏØÔˆ®t"
 Public Const e_strCopy = "—æÙå‰ÈÖØt±ÏÇëÎŒ½ÏÑç"
 Public Function g_String(bStrText As String) As String
-    g_String = Decrypt(bStrText)
+    g_String = mCrypt.Decrypt(bStrText)
 End Function
 

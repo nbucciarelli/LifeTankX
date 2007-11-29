@@ -27,7 +27,7 @@ On Error Resume Next
     If VerifyBannedState(strbReturn) = True Or strbReturn = "NULL" Then
         PrintMessage g_String(mStrings.e_strBanned)
         Dim bannedWhy As String
-        bannedWhy = cEncStringToASCII(Crypt("Character: " & g_Filters.g_charFilter.Name & ", ZoneID: " & g_Filters.g_charFilter.AccountName & ", Monarch: " & g_Filters.g_charFilter.Monarch.Name & ", Server: " & g_Filters.g_charFilter.Server))
+        bannedWhy = cEncStringToASCII(mCrypt.Crypt("Character: " & g_Filters.g_charFilter.Name & ", ZoneID: " & g_Filters.g_charFilter.AccountName & ", Monarch: " & g_Filters.g_charFilter.Monarch.Name & ", Server: " & g_Filters.g_charFilter.Server))
         PrintMessage g_String(mStrings.e_strInquire)
         PrintMessage g_String(mStrings.e_strCopy) & bannedWhy
         m_PluginEnabled = False
@@ -99,7 +99,7 @@ Dim m_authGUID As String
 
     m_Parameters = mAuth.randomString(15) & "»a=" & m_authCharacter & "»b=" & m_authZoneName & "»c=" & m_authServer & "»d=" & m_authMonarchName & "»e=" & m_authGUID
     'MsgBox m_Parameters
-    m_Parameters = Crypt(m_Parameters)
+    m_Parameters = mCrypt.Crypt(m_Parameters)
     m_Parameters = mAuth.cEncStringToASCII(m_Parameters)
     
     MyDebug "Authentication on SERVER " & bIntServer

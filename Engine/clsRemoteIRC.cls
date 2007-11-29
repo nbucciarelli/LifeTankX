@@ -8,9 +8,9 @@ BEGIN
 END
 Attribute VB_Name = "clsRemoteCmd"
 Attribute VB_GlobalNameSpace = False
-Attribute VB_Creatable = False
+Attribute VB_Creatable = True
 Attribute VB_PredeclaredId = False
-Attribute VB_Exposed = False
+Attribute VB_Exposed = True
 'Class module for the remote IRC part of Lifetank (remote commands)
 Option Explicit
 
@@ -412,11 +412,11 @@ On Error GoTo ErrorHandler
         Select Case Command
             Case "report" 'Can be triggered from Chan message
                 'If NumArgs > 2 Then 'ex: #macro report health
-                strReply = g_Macro.CmdReportString
+                strReply = CmdReportString
                 Call MacroAnswerCommand(strReply, SourceName, bIrc, bChanCommand)
             
             Case "comps" 'Can be triggered from Chan message
-                strReply = g_Macro.CmdCompsString
+                strReply = CmdCompsString
                 Call MacroAnswerCommand(strReply, SourceName, bIrc, bChanCommand)
             
             Case "count"

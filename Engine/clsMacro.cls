@@ -2587,10 +2587,10 @@ On Error GoTo ErrorHandler
         End If
     End If
     
-    If (g_AntiBan.m_bLogOut) Then
-        Call g_Service.Logout(g_AntiBan.m_sReason)
-        bRet = True
-    End If
+    'If (g_AntiBan.m_bLogOut) Then
+    '    Call g_Service.Logout(g_AntiBan.m_sReason)
+    '    bRet = True
+    'End If
     
 Fin:
     MustLogOut = bRet
@@ -2643,7 +2643,7 @@ On Error GoTo Error_Handler
     If m_dXpHour <= 0 Then
         GetSecondsUntilLevel = 0
     Else
-        fXpToNextLvl = g_ds.XpTracker.XpToNextLevel
+        fXpToNextLvl = g_ds.XpTracker.XPToNextLevel
         GetSecondsUntilLevel = (CDbl(fXpToNextLvl) * CDbl(3600)) / m_dXpHour
     End If
         

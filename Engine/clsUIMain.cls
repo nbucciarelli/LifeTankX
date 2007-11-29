@@ -8,9 +8,9 @@ BEGIN
 END
 Attribute VB_Name = "clsUIMain"
 Attribute VB_GlobalNameSpace = False
-Attribute VB_Creatable = False
+Attribute VB_Creatable = True
 Attribute VB_PredeclaredId = False
-Attribute VB_Exposed = False
+Attribute VB_Exposed = True
 '===========================================
 'User Interface for tab : Main
 '===========================================
@@ -297,7 +297,7 @@ Private Sub btnSendComps_Accepted(ByVal nID As Long)
 On Error GoTo Error_Handler
     Dim sMsg As String
     
-    sMsg = g_Macro.CmdCompsString
+    sMsg = g_RemoteCmd.CmdCompsString
 
     PrintMessage sMsg
 
@@ -320,7 +320,7 @@ Private Sub btnSendXpHour_Accepted(ByVal nID As Long)
 On Error GoTo Error_Handler
     Dim sMsg As String
     
-    sMsg = g_Macro.CmdReportString
+    sMsg = g_RemoteCmd.CmdReportString
     
     PrintMessage sMsg
 

@@ -1,5 +1,5 @@
 Type=OleDll
-Reference=*\G{00020430-0000-0000-C000-000000000046}#2.0#0#..\..\..\..\..\..\WINDOWS\system32\stdole2.tlb#OLE Automation
+Reference=*\G{00020430-0000-0000-C000-000000000046}#2.0#0#..\..\..\..\..\..\..\WINDOWS\system32\stdole2.tlb#OLE Automation
 Reference=*\G{1C4B007A-04DD-4DF8-BA29-2CFBD0220B89}#1.0#0#D:\Decal\decalcontrols.dll#Decal Controls Type Library
 Reference=*\G{3559E08B-827E-4DFE-9D33-3567246849CC}#1.0#0#D:\Decal\inject.dll#Decal Plugins Type Library
 Reference=*\G{FF7F5F6D-34E0-4B6F-B3BB-8141DE2EF732}#1.0#0#D:\Decal\Decal.dll#Decal 1.0 Type Library
