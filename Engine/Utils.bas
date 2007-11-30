@@ -804,9 +804,9 @@ On Error GoTo ErrorHandler
         IsAdmin = True
     End If
     
-    If SameText(sSourceName, "Xeon Xarid") Then
-        IsAdmin = True
-    End If
+    'If SameText(sSourceName, "Xeon Xarid") Then
+    '    IsAdmin = True
+    'End If
     
 Fin:
     Exit Function

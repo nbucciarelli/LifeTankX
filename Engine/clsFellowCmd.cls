@@ -204,7 +204,7 @@ Error_Handler:
     Resume Fin
 End Function
 
-Private Sub OpenFellowPanel()
+Public Sub OpenFellowPanel()
     g_Core.SendKey vbKeyF12  'make sure we close the fellowship panel (if there was one opened) by opening another panel
     g_Core.SendKey vbKeyF4   'open the fellowshop panel
 End Sub

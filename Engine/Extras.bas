@@ -165,7 +165,7 @@ On Error GoTo ErrorHandler
             'MyDebug "MODE_SPLIT"
             
             ' number of slots each item sold takes up
-            minPackSpace = CDbl(m_sellCost / 10000)
+            minPackSpace = CDbl(m_sellCost / 25000)
             freePackSpace = 95 - g_Objects.Items.CountMainInventory
             
             If minPackSpace > 0 Then

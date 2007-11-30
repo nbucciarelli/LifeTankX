@@ -301,6 +301,10 @@ On Error GoTo ErrorHandler
     m_bDeathMessageOccured = True
     g_TotalKilled = g_TotalKilled + 1
 
+    If g_ui.Loot.chkEnableLooting.Checked Then
+        Call g_Macro.incLoot
+    End If
+
 '    If g_Macro.Ticking Then
 '        Call g_Macro.OnMonsterDeathMessage(DeathMessage)
 '    End If
@@ -321,11 +325,12 @@ On Error GoTo ErrorHandler
     End If
         
     If g_ui.Options.chkAlertTell.Checked Then
-        
-        Dim objEntity As acObject
         Dim playTell As Boolean
+        Dim objPlayer As acObject
+        Dim objEntity As acObject
         playTell = True
         
+        Set objPlayer = g_Objects.Player
         Set objEntity = g_Objects.FindObject(lSenderGUID)
         If Valid(objEntity) Then
             If (objEntity.ObjectType = TYPE_MERCHANT) Or (objEntity.ObjectType = TYPE_MONSTER) Then playTell = False
@@ -1294,3 +1299,8 @@ End Function
 '    PrintErrorMessage "HandleNetworkMessages - " & Err.Description
 '    Resume Fin
 'End Sub
+
+Private Sub m_tmrClockChecker_OnTimeout()
+
+End Sub
+

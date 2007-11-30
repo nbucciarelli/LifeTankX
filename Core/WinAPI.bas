@@ -1,7 +1,8 @@
 Attribute VB_Name = "WinAPI"
 Option Explicit
 
-Public Declare Function GetTickCount Lib "kernel32" () As Long 'elapsed time in msec since system boot
+Public Declare Function timeGetTime Lib "winmm.dll" () As Long
+'Public Declare Function timeGetTime Lib "kernel32" () As Long 'elapsed time in msec since system boot
 Public Declare Function FindWindow Lib "user32" Alias "FindWindowA" (ByVal lpClassName As String, ByVal lpWindowName As String) As Long
 Public Declare Function PostMessage Lib "user32" Alias "PostMessageA" (ByVal hwnd As Long, ByVal wMsg As Long, ByVal wParam As Long, lParam As Any) As Long
 Public Declare Function SendMessage Lib "user32" Alias "SendMessageA" (ByVal hwnd As Long, ByVal wMsg As Long, ByVal wParam As Long, lParam As Any) As Long
@@ -100,13 +101,7 @@ End Function
 
 Public Function GetElapsedSeconds() As Double
 On Error GoTo ErrorHandler
-
-    If (GetTickCount <= 0) Then
-        GetElapsedSeconds = 1
-    Else
-        GetElapsedSeconds = CDbl(GetTickCount) / CDbl(1000)
-    End If
-    
+    GetElapsedSeconds = CDbl(timeGetTime) / CDbl(1000)
 Fin:
     Exit Function
 ErrorHandler:

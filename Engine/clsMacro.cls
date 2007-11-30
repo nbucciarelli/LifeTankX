@@ -1338,7 +1338,7 @@ On Error GoTo ErrorHandler
                 End If
                 
                 'check if we need to buff our little buddy
-                If Valid(g_buffBuddy) And (g_ui.Buffs.chkEnableBuffBuddy.Checked Or m_bForceBuddyRebuff) And (g_BuddyBuffer.BuffQueue.Count > 0) Then
+                If Valid(g_buffBuddy) And (g_ui.Buffs.chkEnableBuffBuddy.Checked Or m_bForceBuddyRebuff) And (g_BuddyBuffer.BuffQueue.Count > 0) And (m_bOKToCast = True) Then
                     If GoBuddyRebuff Then GoTo Fin
                 End If
                 
@@ -2625,8 +2625,16 @@ On Error GoTo ErrorHandler
 1    If (dTime = -1) And Valid(g_Buffer) Then
 2        dTime = g_Buffer.NextRebuff.RemainingTime
     End If
-3    If dTime < 0 Then dTime = 0
-4    m_sNextRebuff = myFormatTime(dTime, TF_LETTERS)
+     
+3    If dTime < 0 Then
+         dTime = 0
+     End If
+     
+     If dTime > 0 Then
+          m_sNextRebuff = myFormatTime(dTime, TF_LETTERS)
+     Else
+          m_sNextRebuff = "Unknown"
+     End If
     
 Fin:
     Exit Sub
@@ -2643,7 +2651,7 @@ On Error GoTo Error_Handler
     If m_dXpHour <= 0 Then
         GetSecondsUntilLevel = 0
     Else
-        fXpToNextLvl = g_ds.XpTracker.XPToNextLevel
+        fXpToNextLvl = g_ds.XpTracker.XpToNextLevel
         GetSecondsUntilLevel = (CDbl(fXpToNextLvl) * CDbl(3600)) / m_dXpHour
     End If
         
@@ -2900,7 +2908,7 @@ On Error GoTo ErrorHandler
     FiveMinXPCounter.XP(FiveMinXPCounter.Position) = 0
     FiveMinXPCounter.startXP(FiveMinXPCounter.Position) = g_ds.XpTracker.TotalXp
 
-    Call m_tmr5MinTimer.SetNextTime(10)
+    Call m_tmr5MinTimer.SetNextTime(300)
 
 Fin:
     Exit Sub

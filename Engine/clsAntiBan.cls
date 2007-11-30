@@ -14,10 +14,14 @@ Attribute VB_Exposed = False
 'Class module for the Anti-Ban part of Lifetank (admin alerts, unfriendly player scans, etc)
 Option Explicit
 
+Public m_bLogOut As Boolean
+Public m_sReason As String
+
 Private Const TAG_ADMIN_ALERT = "<<<[[ ADMIN ALERT ]]>>>"
 
 Private m_bAlarmTriggered As Boolean
 Private m_bAdminDetected As Boolean
+
 
 
 '#####################################################################################
@@ -156,7 +160,9 @@ On Error GoTo ErrorHandler
         
         'Log out? - objplayer must not be an admin
         If g_Macro.Active And g_ui.AntiBan.chkLogoutOnDetect.Checked Then
-            Call g_Service.Logout("Unfriend player " & objPlayer.Name & " detected.")
+            m_bLogOut = True
+            m_sReason = "Unfriend player " & objPlayer.Name & " detected."
+            'Call g_Service.Logout("Unfriend player " & objPlayer.Name & " detected.")
         End If
         
     End If
