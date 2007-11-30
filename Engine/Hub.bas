@@ -83,7 +83,7 @@ On Error GoTo ErrorHandler
     Set g_ui = New clsPluginInterface
     Set g_FellowList = New clsFellowList
     Set g_RareTracker = New clsRareTracker
-    'Set g_buffBuddy = Nothing
+    Set g_buffBuddy = Nothing
     
     MyDebug "CreateEngineObjects - End"
     

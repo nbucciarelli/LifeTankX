@@ -453,8 +453,8 @@ Public Property Get XpHourString() As String
     XpHourString = m_sXpHour
 End Property
 
-Public Property Get FiveMinXpHourString() As String
-    FiveMinXpHourString = m_sFiveMinXpHour
+Public Property Get XpMinString() As String
+    XpMinString = m_sFiveMinXpHour
 End Property
 
 Public Property Get XpEarnedString() As String
@@ -2651,7 +2651,7 @@ On Error GoTo Error_Handler
     If m_dXpHour <= 0 Then
         GetSecondsUntilLevel = 0
     Else
-        fXpToNextLvl = g_ds.XpTracker.XpToNextLevel
+        fXpToNextLvl = g_ds.XpTracker.XPToNextLevel
         GetSecondsUntilLevel = (CDbl(fXpToNextLvl) * CDbl(3600)) / m_dXpHour
     End If
         

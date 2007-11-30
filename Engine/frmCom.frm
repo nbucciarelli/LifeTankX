@@ -1,14 +1,14 @@
 VERSION 5.00
-Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "mswinsck.ocx"
+Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
 Begin VB.Form frmCom 
    Caption         =   "Form1"
-   ClientHeight    =   1365
+   ClientHeight    =   2970
    ClientLeft      =   60
    ClientTop       =   450
-   ClientWidth     =   2250
+   ClientWidth     =   4530
    LinkTopic       =   "Form1"
-   ScaleHeight     =   1365
-   ScaleWidth      =   2250
+   ScaleHeight     =   2970
+   ScaleWidth      =   4530
    StartUpPosition =   3  'Windows Default
    Begin MSWinsockLib.Winsock sckcom 
       Left            =   1320
@@ -16,7 +16,6 @@ Begin VB.Form frmCom
       _ExtentX        =   741
       _ExtentY        =   741
       _Version        =   393216
-      RequestTimeout  =   5
    End
    Begin MSWinsockLib.Winsock wsock 
       Left            =   360

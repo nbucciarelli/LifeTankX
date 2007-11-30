@@ -8,9 +8,9 @@ BEGIN
 END
 Attribute VB_Name = "clsUIMain"
 Attribute VB_GlobalNameSpace = False
-Attribute VB_Creatable = True
+Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
-Attribute VB_Exposed = True
+Attribute VB_Exposed = False
 '===========================================
 'User Interface for tab : Main
 '===========================================
@@ -71,9 +71,9 @@ Public lblElapsed As DecalControls.StaticText
 Public lblNextRebuff As DecalControls.StaticText
 Public lblTapersHour As DecalControls.StaticText
 Public lblTotalXp As DecalControls.StaticText
-Public lblXpHour As DecalControls.StaticText
-Public lbl5minXp As DecalControls.StaticText
 Public lblXpEarned As DecalControls.StaticText
+Public lblXpHour As DecalControls.StaticText
+Public lblXpMin As DecalControls.StaticText
 Public lblNextLevel As DecalControls.StaticText
 
 'Info tab
@@ -106,44 +106,44 @@ On Error GoTo Error_Handler
     Set cmdSaveBuffsProfile = g_MainView.Control("cmdSaveBuffsProfile")
     Set cmdSaveLootProfile = g_MainView.Control("cmdSaveLootProfile")
 
-3    Set btnSetSell = g_MainView.Control("btnSetSell")
+3   Set btnSetSell = g_MainView.Control("btnSetSell")
     Set btnSetBuy = g_MainView.Control("btnSetBuy")
     Set btnStartSell = g_MainView.Control("btnStartSell")
     Set chkSellAll = g_MainView.Control("chkSellAll")
 
-4    Set chCombatType = g_MainView.Control("chCombatType")
+4   Set chCombatType = g_MainView.Control("chCombatType")
     Set btnPause = g_MainView.Control("btnPause")
     Set btnRebuff = g_MainView.Control("btnRebuff")
     Set btnSendXpHour = g_MainView.Control("btnSendXpHour")
     Set btnSendComps = g_MainView.Control("btnSendComps")
     Set btnDebug = g_MainView.Control("btnDebug")
    
-5    Set lblElapsed = g_MainView.Control("lblElapsed")
-    Set lblNextRebuff = g_MainView.Control("lblNextRebuff")
-    Set lblTapersHour = g_MainView.Control("lblTapersHour")
-    Set lblTotalXp = g_MainView.Control("lblTotalXp")
-    Set lblXpHour = g_MainView.Control("lblXpHour")
-    Set lbl5minXp = g_MainView.Control("lbl5minXp")
-    Set lblXpEarned = g_MainView.Control("lblXpEarned")
-    Set lblNextLevel = g_MainView.Control("lblNextLevel")
+5   Set lblElapsed = g_MainView.Control("lblElapsed")
+6   Set lblNextRebuff = g_MainView.Control("lblNextRebuff")
+7   Set lblTapersHour = g_MainView.Control("lblTapersHour")
+8   Set lblTotalXp = g_MainView.Control("lblTotalXp")
+9   Set lblXpEarned = g_MainView.Control("lblXpEarned")
+10  Set lblXpHour = g_MainView.Control("lblXpHour")
+11  Set lblXpMin = g_MainView.Control("lblXpMin")
+12  Set lblNextLevel = g_MainView.Control("lblNextLevel")
    
-6    Set lblStatus = g_MainView.Control("lblStatus")
+20  Set lblStatus = g_MainView.Control("lblStatus")
     Set btnResetXp = g_MainView.Control("btnResetXp")
     
-7    Set progBuffs = g_MainView.Control("progBuffs")
+21  Set progBuffs = g_MainView.Control("progBuffs")
     Set stVersion = g_MainView.Control("stVersion")
     
-8    Set lblBuyTarget = g_MainView.Control("lblBuyTarget")
+22  Set lblBuyTarget = g_MainView.Control("lblBuyTarget")
     Set lblSellTarget = g_MainView.Control("lblSellTarget")
     
     'Default Control Initialization
-9    chkEnable.Checked = False
+23  chkEnable.Checked = False
     chMacroMode.Selected = 0
     progBuffs.DecalDrawText = False
     progBuffs.PreText = "Buffs : "
     chkSellAll.Checked = True
     
-10    stVersion.Text = "Version : " & App.Major & "." & App.Minor & "." & App.Revision
+30    stVersion.Text = "Version : " & App.Major & "." & App.Minor & "." & App.Revision
     
     Init = True
     MyDebug InterfaceName & ".Init() -- End"
@@ -242,9 +242,9 @@ On Error GoTo Error_Handler
     Set lblNextRebuff = Nothing
     Set lblTapersHour = Nothing
     Set lblTotalXp = Nothing
-    Set lblXpHour = Nothing
-    Set lbl5minXp = Nothing
     Set lblXpEarned = Nothing
+    Set lblXpHour = Nothing
+    Set lblXpMin = Nothing
     Set lblNextLevel = Nothing
     
     Set btnRebuff = Nothing
@@ -395,9 +395,9 @@ On Error GoTo ErrorHandler
 
     'Update other stats fields
     lblTotalXp.Text = g_Macro.TotalXpString
-    lblXpHour.Text = g_Macro.XpHourString
-    lbl5minXp.Text = g_Macro.FiveMinXpHourString
     lblXpEarned.Text = g_Macro.XpEarnedString
+    lblXpHour.Text = g_Macro.XpHourString
+    lblXpMin.Text = g_Macro.XpMinString
     lblNextLevel.Text = g_Macro.TimeUntilNextLevelString
     lblTapersHour.Text = g_Macro.TapersHourString
 
