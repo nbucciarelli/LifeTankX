@@ -1,7 +1,0 @@
-====================================================================
-LTCore v11.6.1 - Error Log - Session : 1/26/2006 7:56:10 PM
-====================================================================
-[01/26/2006 22:20:45.328]  [Engine] Busy Timeout - reseting combat flags
-[01/26/2006 23:12:23.750]  [Engine] Busy Timeout - reseting combat flags
-[01/26/2006 23:12:56.828]  [Engine] clsLoot.RunState[Opening Corpse] - Secure Timer expired : exiting state.
-[01/26/2006 23:15:41.453]  [Engine] Busy Timeout - reseting combat flags
