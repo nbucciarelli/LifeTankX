@@ -64,6 +64,11 @@ Public Const FILE_DEBUFFSPELLS = "Debuffs.dat"
 Public Const FILE_VITALSPELLS = "MacroSpells.dat"
 Public Const FILE_SPELLNAMES = "SpellNames.dat"
 
+Public Const CSIDL_MYDOCUMENTS = &HC             'My Documents
+Public Const CSIDL_APPDATA = &H1A           'Users App Data?
+Public Const CSIDL_LOCAL_APPDATA = &H1C
+Public Const CSIDL_COMMON_APPDATA = &H23
+
 '=============================================================
 '                       Sounds
 '=============================================================
@@ -303,3 +308,4 @@ Public Const CHAT_GLOBAL_LFG = 29       'global LFG chat
 'Public Const MOUSEEVENTF_MOVE = &H1         '  mouse move
 'Public Const MOUSEEVENTF_RIGHTDOWN = &H8    '  right button down
 'Public Const MOUSEEVENTF_RIGHTUP = &H10     '  right button up
+

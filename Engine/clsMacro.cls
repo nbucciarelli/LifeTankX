@@ -135,7 +135,7 @@ Private m_sTimeUntilLevel As String 'formated string of the time remaining until
 Private m_sXpHour As String         'formated string of the Xp/Hour
 Private m_sTotalXp As String        'formated string of the current total Xp
 Private m_sXpEarned As String       'formated string of the total amount of xp earned
-Private m_sFiveMinXpHour As String  'formated string of the 5 min rate of Xp
+Private m_sXpMinute As String       'formated string of the 5 min rate of Xp
 
 Private m_dTapersCount As Double
 Private m_dTapersHour As Double
@@ -453,8 +453,8 @@ Public Property Get XpHourString() As String
     XpHourString = m_sXpHour
 End Property
 
-Public Property Get XpMinString() As String
-    XpMinString = m_sFiveMinXpHour
+Public Property Get XpMinuteString() As String
+    XpMinuteString = m_sXpMinute
 End Property
 
 Public Property Get XpEarnedString() As String
@@ -1768,7 +1768,7 @@ On Error GoTo ErrorHandler
     m_sXpHour = "0"
     m_sTotalXp = "0"
     m_sXpEarned = "0"
-    m_sFiveMinXpHour = "0"
+    m_sXpMinute = "0"
     m_sTapersHour = "0"
     m_sPlatsHour = "0"
     m_sArrowsHour = "0"
@@ -1855,18 +1855,18 @@ On Error GoTo ErrorHandler
 1    g_Core.TimerInterval = DEFAULT_MACRO_TIMER_INTERVAL
 2    m_iCombatType = iCombatType
 
-    If mAuth.m_PluginEnabled = False Then
-        PrintMessage g_String(mStrings.e_strUnableToAuth)
-        bRet = False
-        GoTo Fin
-    End If
+    'If mAuth.m_PluginEnabled = False Then
+    '    PrintMessage g_String(mStrings.e_strUnableToAuth)
+    '    bRet = False
+    '    GoTo Fin
+    'End If
     
     'Security - Check Auth
-    If MustLogOut(sReason) Then
-        PrintMessage "Unable to start macro : " & sReason
-        bRet = False
-        GoTo Fin
-    End If
+    'If MustLogOut(sReason) Then
+    '    PrintMessage "Unable to start macro : " & sReason
+    '    bRet = False
+    '    GoTo Fin
+    'End If
     
     'remove pause
     If Paused Then TogglePause
@@ -1944,10 +1944,10 @@ End Sub
 
 Public Sub ResumeMacro()
     If Not Active Then
-        If mAuth.m_PluginEnabled = False Then
-            PrintMessage g_String(mStrings.e_strUnableToAuth)
-            Exit Sub
-        End If
+        'If mAuth.m_PluginEnabled = False Then
+        '    PrintMessage g_String(mStrings.e_strUnableToAuth)
+        '    Exit Sub
+        'End If
         m_bPaused = False
         PrintMessage "Macro resumed."
     End If
@@ -2743,7 +2743,7 @@ Private Sub UpdateStatsStrings()
 On Error GoTo ErrorHandler
     
     m_sXpHour = FormatXp(m_dXpHour)
-    m_sFiveMinXpHour = FormatXp(m_dFiveMinXpHour)
+    m_sXpMinute = FormatXp(m_dFiveMinXpHour)
     m_sXpEarned = FormatXp(m_dXpEarned)
     m_sTotalXp = FormatXp(m_dTotalXp)
     m_sTapersHour = FormatXp(m_dTapersHour, False)

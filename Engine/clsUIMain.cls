@@ -73,7 +73,7 @@ Public lblTapersHour As DecalControls.StaticText
 Public lblTotalXp As DecalControls.StaticText
 Public lblXpEarned As DecalControls.StaticText
 Public lblXpHour As DecalControls.StaticText
-Public lblXpMin As DecalControls.StaticText
+Public lblXpMinute As DecalControls.StaticText
 Public lblNextLevel As DecalControls.StaticText
 
 'Info tab
@@ -124,7 +124,7 @@ On Error GoTo Error_Handler
 8   Set lblTotalXp = g_MainView.Control("lblTotalXp")
 9   Set lblXpEarned = g_MainView.Control("lblXpEarned")
 10  Set lblXpHour = g_MainView.Control("lblXpHour")
-11  Set lblXpMin = g_MainView.Control("lblXpMin")
+11  Set lblXpMinute = g_MainView.Control("lblXpMinute")
 12  Set lblNextLevel = g_MainView.Control("lblNextLevel")
    
 20  Set lblStatus = g_MainView.Control("lblStatus")
@@ -244,7 +244,7 @@ On Error GoTo Error_Handler
     Set lblTotalXp = Nothing
     Set lblXpEarned = Nothing
     Set lblXpHour = Nothing
-    Set lblXpMin = Nothing
+    Set lblXpMinute = Nothing
     Set lblNextLevel = Nothing
     
     Set btnRebuff = Nothing
@@ -397,7 +397,7 @@ On Error GoTo ErrorHandler
     lblTotalXp.Text = g_Macro.TotalXpString
     lblXpEarned.Text = g_Macro.XpEarnedString
     lblXpHour.Text = g_Macro.XpHourString
-    lblXpMin.Text = g_Macro.XpMinString
+    lblXpMinute.Text = g_Macro.XpMinuteString
     lblNextLevel.Text = g_Macro.TimeUntilNextLevelString
     lblTapersHour.Text = g_Macro.TapersHourString
 
@@ -502,7 +502,7 @@ End Sub
 Private Sub UpdateLootProfileList()
 On Error GoTo ErrorHandler
 
-    Call UpdateProfileList(chLootProfile, App.Path & "\" & PATH_PROFILE_LOOT, FILE_LOOT_CONFIG, g_Settings.Profile.LootProfileName)
+    Call UpdateProfileList(chLootProfile, g_Settings.GetDataFolder & "\" & PATH_PROFILE_LOOT, FILE_LOOT_CONFIG, g_Settings.Profile.LootProfileName)
     
 Fin:
     Exit Sub
@@ -561,7 +561,7 @@ On Error GoTo ErrorHandler
     
     If sProfile <> "" Then
         'Call g_Settings.SavePluginConfiguration
-        Call MakeProfilePath(App.Path & "\" & PATH_PROFILE_LOOT, sProfile)
+        Call MakeProfilePath(g_Settings.GetDataFolder & "\" & PATH_PROFILE_LOOT, sProfile)
         Call g_Settings.Profile.SetLootProfile(sProfile)
         Call g_Settings.SavePluginConfiguration
         Call UpdateLootProfileList

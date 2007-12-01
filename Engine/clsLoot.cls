@@ -1115,7 +1115,7 @@ On Error GoTo ErrorHandler
     'Only Assess if ID time expired
     'If bRet Then bRet = ((g_ds.Time - objItem.LastIDTime) > ID_EXPIRATION_TIME)
     If IsWorthAssessing(objItem.itemType) Then
-        bRet = ((g_ds.Time - objItem.LastIDTime) > ID_EXPIRATION_TIME)
+        bRet = ((g_ds.Time - objItem.LastIdTime) > ID_EXPIRATION_TIME)
         If Not bRet Then
             locDebug "CanAssess(" & objItem.Name & ") : ID Time Not Expired - Not assessing item"
         End If
@@ -1847,7 +1847,7 @@ On Error GoTo ErrorHandler
     Dim sPath As String
     Dim sFileName As String
     
-    sPath = App.Path
+    sPath = g_Settings.GetDataFolder
     sFileName = g_ds.Player.Name & " Inventory.txt"
     
     MyDebug "clsLoot.exportInventory: sPath: " & sPath & "  sFileName: " & sFileName

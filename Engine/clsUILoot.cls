@@ -688,7 +688,7 @@ End Function
 '#############################################################################################
 
 Public Function GetLootProfilePath() As String
-    GetLootProfilePath = App.Path & "\" & PATH_PROFILE_LOOT & "\" & g_Settings.Profile.LootProfileName
+    GetLootProfilePath = g_Settings.GetDataFolder & "\" & PATH_PROFILE_LOOT & "\" & g_Settings.Profile.LootProfileName
 End Function
 
 Private Function GetPickupListPath() As String

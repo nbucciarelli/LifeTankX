@@ -127,13 +127,13 @@ On Error GoTo ErrorHandler
         'g_Hooks.AddChatText "of LeafCull", COLOR_BLUE, 0
         
         g_Hooks.AddChatText "[" & PLUG_NAME & "] Version " & App.Major & "." & App.Minor & " - Rev: " & App.Revision, COLOR_CYAN, 0
-        g_Hooks.AddChatText "Original plugin by Spax/Spk of WintersEbb and Xeon Xarid of LeafCull.", COLOR_CYAN, 0
+        g_Hooks.AddChatText "Original plugin by Spax/Spk of WintersEbb", COLOR_CYAN, 0
         'If g_ds.ServerName = "Harvestgain" Then
         '    g_Hooks.AddChatText "Now developed by C'relic, Paraduck of Morningthaw and Enigma of Lust of Harvestgain.", COLOR_BRIGHT_YELLOW, 0
         'Else
-        g_Hooks.AddChatText "Now developed by C'relic of Morningthaw.", COLOR_BRIGHT_YELLOW, 0
+        g_Hooks.AddChatText "Developed by C'relic of Morningthaw.", COLOR_BRIGHT_YELLOW, 0
         'End If
-        'g_Hooks.AddChatText "Developed by Xeon Xarid", COLOR_BRIGHT_YELLOW, 0
+        g_Hooks.AddChatText "Developed by Xeon Xarid/Xeonx", COLOR_BRIGHT_YELLOW, 0
         'g_Hooks.AddChatText "Released for Decal Alpha 7 by C'relic and Paraduck of Morningthaw", COLOR_BRIGHT_YELLOW, 0
         
         'Print MOTD

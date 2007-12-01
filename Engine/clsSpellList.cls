@@ -179,7 +179,7 @@ On Error GoTo ErrorHandler
         For Each objSpell In objFamily
             If (objSpell.SpellLevel <= iLevel) And (objSpell.SpellLevel >= iHighestLvl) Then
                 If ((bMatchName And InStr(LCase(objSpell.SpellName), LCase(sPartialSpellName))) Or (Not bMatchName)) Then
-                    If g_Filters.SpellLearned(objSpell.spellID) Then
+                    If g_Filters.SpellLearned(objSpell.SpellID) Then
                         iHighestLvl = objSpell.SpellLevel
                         Set objSelectedSpell = objSpell
                     End If
@@ -229,7 +229,7 @@ On Error GoTo ErrorHandler
         
     For Each objFamily In m_colFamily
         For Each objSpell In objFamily
-            If objSpell.spellID = lSpellID Then
+            If objSpell.SpellID = lSpellID Then
                 GoTo Fin
             End If
         Next objSpell
@@ -292,7 +292,7 @@ On Error GoTo Error_Handler
     Dim sPath As String
     Dim objSpell As clsSpell
 
-    sPath = App.Path & "\" & sFileName
+    sPath = g_Settings.GetDataFolder & "\" & sFileName
     
     If Not db.Load(sPath) Then
         PrintErrorMessage Description & ".LoadData : failed to load " & sPath
@@ -309,7 +309,7 @@ On Error GoTo Error_Handler
             If dat.ParamExist(TAG_SPELL_SCHOOL) Then .SpellSchool = dat.Param(TAG_SPELL_SCHOOL)
             If dat.ParamExist(TAG_SPELL_LEVEL) Then .SpellLevel = dat.Param(TAG_SPELL_LEVEL)
             If dat.ParamExist(TAG_SPELL_ELEMENT) Then .SpellElement = dat.Param(TAG_SPELL_ELEMENT)
-            If dat.ParamExist(TAG_SPELL_ID) Then .spellID = dat.Param(TAG_SPELL_ID)
+            If dat.ParamExist(TAG_SPELL_ID) Then .SpellID = dat.Param(TAG_SPELL_ID)
             If dat.ParamExist(TAG_SPELL_ICON) Then .SpellIcon = dat.Param(TAG_SPELL_ICON)
         End With
         

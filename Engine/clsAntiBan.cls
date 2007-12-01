@@ -139,7 +139,7 @@ On Error GoTo ErrorHandler
             MyDebug "clsAntiBan.CheckAlerts - Admin object detected: name: " & objPlayer.Name
             PrintMessage "======  Admin Detected: " & objPlayer.Name & "   ======"
             Call PlaySound(SOUND_ENVOY)
-            'Call SetAdminAlert(True, "Admin '" & objPlayer.Name & "' detected at " & objPlayer.Loc.Coords)
+            Call SetAdminAlert(True, "Admin '" & objPlayer.Name & "' detected at " & objPlayer.Loc.Coords)
     
     'Unfriendly Player (must not be an admin) ?
     ElseIf g_ui.AntiBan.chkEnableUnfriendlyDetect.Checked _

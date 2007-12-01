@@ -463,7 +463,7 @@ End Sub
 Public Function ScanRoutesFolder() As Boolean
 On Error GoTo ErrorHandler
     
-    ScanRoutesFolder = m_colRouteFiles.DirFolder(App.Path & "\" & PATH_ROUTES, vbNormal, "*." & FILE_EXT_ROUTE)
+    ScanRoutesFolder = m_colRouteFiles.DirFolder(g_Settings.GetDataFolder & "\" & PATH_ROUTES, vbNormal, "*." & FILE_EXT_ROUTE)
 
 Fin:
     Exit Function

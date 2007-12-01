@@ -654,7 +654,7 @@ End Function
 
 
 Public Function GetRouteFilePath(ByVal sRouteName As String) As String
-    GetRouteFilePath = App.Path & "\" & PATH_ROUTES & "\" & sRouteName & "." & FILE_EXT_ROUTE
+    GetRouteFilePath = g_Settings.GetDataFolder & "\" & PATH_ROUTES & "\" & sRouteName & "." & FILE_EXT_ROUTE
 End Function
 
 Public Function RouteExist(ByVal sRouteName As String) As Boolean
@@ -775,7 +775,7 @@ On Error GoTo ErrorHandler
   lngFileNr = FreeFile(0)
   ' Here I'm opening from same directory that scribe.dll is installed,
   ' but you can open from anywhere you'd like.
-  Open App.Path & "\" & sFile For Input As #lngFileNr
+  Open g_Settings.GetDataFolder & "\" & sFile For Input As #lngFileNr
   Do Until EOF(lngFileNr)
     Line Input #lngFileNr, sLine
     FileToString = FileToString & sLine

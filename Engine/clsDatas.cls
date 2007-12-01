@@ -307,7 +307,7 @@ End Sub
 
 Public Function LoadMonsters(Optional ByVal sBaseFolder As String = "") As Boolean
     If sBaseFolder = "" Then
-        sBaseFolder = App.Path & "\" & PATH_DATA
+        sBaseFolder = g_Settings.GetDataFolder & "\" & PATH_DATA
     End If
     
     LoadMonsters = mdbMonsters.LoadDatabase(sBaseFolder & "\" & FILE_MONSTERS)
@@ -315,7 +315,7 @@ End Function
 
 Public Function LoadLootFilters(Optional ByVal sBaseFolder As String = "") As Boolean
     If sBaseFolder = "" Then
-        sBaseFolder = App.Path & "\" & PATH_DATA
+        sBaseFolder = g_Settings.GetDataFolder & "\" & PATH_DATA
     End If
     
     LoadLootFilters = m_LootFilters.LoadFilters(sBaseFolder & "\" & FILE_LOOT_FILTERS)

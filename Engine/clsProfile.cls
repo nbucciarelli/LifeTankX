@@ -84,11 +84,11 @@ Public Property Get ShortPath() As String
 End Property
 
 Public Property Get FullPath() As String
-    FullPath = App.Path & "\" & m_sPath
+    FullPath = g_Settings.GetDataFolder & "\" & m_sPath
 End Property
 
 Public Property Get DefaultProfilePath() As String
-    DefaultProfilePath = App.Path & "\" & DEFAULT_PROFILE_FOLDER
+    DefaultProfilePath = g_Settings.GetDataFolder & "\" & DEFAULT_PROFILE_FOLDER
 End Property
 
 Public Property Get MacroProfileName() As String
@@ -126,7 +126,7 @@ ErrorHandler:
 End Function
 
 Private Function GetFullProfilePath(ByVal sProfileName As String) As String
-    GetFullProfilePath = App.Path & "\" & GetProfilePath(sProfileName)
+    GetFullProfilePath = g_Settings.GetDataFolder & "\" & GetProfilePath(sProfileName)
 End Function
 
 Private Sub CreateNewProfile(ByVal sProfileName As String)
@@ -149,12 +149,12 @@ Private Sub CreateNewBuffProfile(newBuffProfileName As String, currentProfileNam
 Dim TargetPath As String
 
 '    MyDebug "Creating New Buff Profile : " & newBuffProfileName
-'    TargetPath = App.Path & "\" & GetBuffsFolder(currentProfileName) & "\" & newBuffProfileName
+'    TargetPath = g_Settings.GetDataFolder & "\" & GetBuffsFolder(currentProfileName) & "\" & newBuffProfileName
 '
 '    MyDebug "CreateNewBuffProfile : TargetPath = " & TargetPath
 '
 '    If Not PathExists(TargetPath) Then
-'        CopyFolder App.Path & "\" & GetBuffsFolder(currentProfileName) & "\" & g_ui.BuffProfileName, TargetPath
+'        CopyFolder g_Settings.GetDataFolder & "\" & GetBuffsFolder(currentProfileName) & "\" & g_ui.BuffProfileName, TargetPath
 '    Else
 '        PrintErrorMessage "The Buff Profile '" & newBuffProfileName & "' already exists."
 '    End If
@@ -215,7 +215,7 @@ End Sub
 
 Public Sub SetLootProfile(ByVal sVal As String)
     m_sLootProfile = sVal
-    m_cfgLoot.File.FileName = App.Path & "\" & PATH_PROFILE_LOOT & "\" & sVal & "\" & FILE_LOOT_CONFIG
+    m_cfgLoot.File.FileName = g_Settings.GetDataFolder & "\" & PATH_PROFILE_LOOT & "\" & sVal & "\" & FILE_LOOT_CONFIG
 End Sub
 
 Public Function LoadBuffsProfile(ByVal sProfile As String) As Boolean

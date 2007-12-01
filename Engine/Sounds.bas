@@ -18,7 +18,7 @@ Private Const SND_PURGE = &H40             '/* purge non-static events for task 
 Private Const SND_APPLICATION = &H80       '/* look for application specific association */
 
 Public Sub PlayLoopingSound(sWavFilename As String)
-    Call sndPlaySound(App.Path & "\" & sWavFilename, SND_LOOP Or SND_FILENAME Or SND_ASYNC)
+    Call sndPlaySound(g_Settings.GetDataFolder & "\" & sWavFilename, SND_LOOP Or SND_FILENAME Or SND_ASYNC)
 End Sub
 
 Public Sub StopLoopingSound()
@@ -36,7 +36,9 @@ On Error GoTo ErrorHandler
         lFlags = lFlags Or SND_NOSTOP
     End If
     
-    Call sndPlaySound(App.Path & "\" & sWavFilename, lFlags)
+    MyDebug "Playsound: " & g_Settings.GetDataFolder & "\" & sWavFilename
+    
+    Call sndPlaySound(g_Settings.GetDataFolder & "\" & sWavFilename, lFlags)
     
 Fin:
     Exit Sub

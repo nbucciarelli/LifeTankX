@@ -22,6 +22,8 @@ Public Declare Function GetAsyncKeyState Lib "user32" (ByVal vKey As Long) As In
 
 Private Declare Sub CopyMemory Lib "kernel32" Alias "RtlMoveMemory" (ByRef lpvDest As Any, ByRef lpvSrc As Any, ByVal cbLength As Long)
 
+Public Declare Function SHGetFolderPath Lib "shfolder.dll" Alias "SHGetFolderPathA" (ByVal hwndOwner As Long, ByVal nFolder As Long, ByVal hToken As Long, ByVal dwFlags As Long, ByVal lpszPath As String) As Long
+
 
 '#define WM_MOUSEFIRST                   0x0200
 '#define WM_MOUSEMOVE                    0x0200

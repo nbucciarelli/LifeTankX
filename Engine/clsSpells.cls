@@ -234,7 +234,7 @@ Dim Err As Boolean
     If (Not Err) Then Err = Not m_oBuffs.LoadData(PATH_SPELLS & "\" & FILE_OTHERBUFFS)
     If (Not Err) Then Err = Not m_Debuffs.LoadData(PATH_SPELLS & "\" & FILE_DEBUFFSPELLS)
     If (Not Err) Then Err = Not m_Items.LoadData(PATH_SPELLS & "\" & FILE_ITEMSPELLS)
-    'If (Not Err) Then Err = Not LoadSpellNames(App.Path & "\" & PATH_SPELLS & "\" & FILE_SPELLNAMES)
+    'If (Not Err) Then Err = Not LoadSpellNames(g_Settings.GetDataFolder & "\" & PATH_SPELLS & "\" & FILE_SPELLNAMES)
     
     m_bSpellsLoaded = Not Err
     LoadSpells = m_bSpellsLoaded

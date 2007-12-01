@@ -28,7 +28,9 @@ Public Declare Sub CopyMemory Lib "kernel32" Alias "RtlMoveMemory" _
     
 'Public Declare Sub CopyMemToStr Lib "kernel32" Alias "RtlMoveMemory" _
 '  (ByVal sDest As String, Source As Any, ByVal numBytesToRead As Long)
-  
+
+Public Declare Function SHGetFolderPath Lib "shfolder.dll" Alias "SHGetFolderPathA" (ByVal hwndOwner As Long, ByVal nFolder As Long, ByVal hToken As Long, ByVal dwFlags As Long, ByVal lpszPath As String) As Long
+
 
 Public Type RECT
   Left As Long

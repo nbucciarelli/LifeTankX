@@ -650,10 +650,10 @@ End Sub
 
 Private Sub m_Objects_OnRareDetected(ByVal obj As DarksideFilter.acObject)
 On Error Resume Next
-    'If g_ui.Loot.chkEnableLooting.Checked Then
-    '    PrintMessage "*** [Rare Detected] ***  " & obj.Name
-    '    Call PlaySound(SOUND_RARE)
-    'End If
+    If g_ui.Loot.chkEnableLooting.Checked Then
+        PrintMessage "*** [Rare Detected] ***  " & obj.Name
+        Call PlaySound(SOUND_RARE)
+    End If
 End Sub
 
 Private Sub m_Objects_OnMajorDetected(ByVal obj As DarksideFilter.acObject, ByVal sSpellName As String)

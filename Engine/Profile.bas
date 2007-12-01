@@ -7,7 +7,7 @@ Option Explicit
 '
 'Public Function BuffProfileExists(szProfileName As String, szBuffProfileName As String) As Boolean
 '    If ProfileExists(szProfileName) Then
-'        BuffProfileExists = PathExists(App.Path & "\" & GetBuffsFolder(szProfileName) & "\" & szBuffProfileName)
+'        BuffProfileExists = PathExists(g_Settings.GetDataFolder & "\" & GetBuffsFolder(szProfileName) & "\" & szBuffProfileName)
 '    Else
 '        BuffProfileExists = False
 '    End If

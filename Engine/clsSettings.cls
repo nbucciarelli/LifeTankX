@@ -64,6 +64,28 @@ End Property
 '#
 '#####################################################################################
 
+Public Function GetDataFolder()
+   On Error GoTo GenericFolder
+   Dim PathName  As String
+   Dim strPath   As String
+   Dim lngReturn As Long
+   Dim ReturnVal As Long
+   
+   'PathName = String(260, 0)
+   'ReturnVal = SHGetFolderPath(g_PluginSite.hwnd, CSIDL_APPDATA, 0, 0, PathName)
+   'PathName = Left(PathName, InStr(PathName, vbNullChar) - 1)
+   'GetDataFolder = PathName & "\LifeTankX"
+   
+    strPath = String(260, 0)
+    lngReturn = SHGetFolderPath(0, CSIDL_APPDATA, 0, &H0, strPath)
+    PathName = Left$(strPath, InStr(1, strPath, Chr(0)) - 1)
+    GetDataFolder = PathName & "\LifeTankX"
+    
+   Exit Function
+GenericFolder:
+   If Err.Number = 453 Then GetDataFolder = App.Path
+End Function
+
 Public Function GetValue(ByVal sId As String, Optional ByVal vDefaultVal As Variant = 0, Optional ByVal bSharedConfig As Boolean = False) As Variant
     If bSharedConfig Then
         GetValue = m_SharedConfig.GetValue(sId, vDefaultVal)
@@ -75,7 +97,7 @@ End Function
 Public Function LoadSharedConfig() As Boolean
 On Error GoTo ErrorHandler
 
-    LoadSharedConfig = m_SharedConfig.LoadContent(App.Path & "\" & PATH_DATA & "\" & FILE_SHARED_CONFIG)
+    LoadSharedConfig = m_SharedConfig.LoadContent(g_Settings.GetDataFolder & "\" & PATH_DATA & "\" & FILE_SHARED_CONFIG)
     If Not LoadSharedConfig Then
         PrintErrorMessage "Could not load shared config : " & m_SharedConfig.File.FileName
     Else

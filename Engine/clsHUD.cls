@@ -956,7 +956,7 @@ On Error GoTo ErrorHandler
             y = y + DrawData(m_HUDStats, d_statsRect, lWidth, x, y, "Tapers/Plats Hr : ", g_Macro.TapersHourString & " / " & g_Macro.PlatsHourString)
             y = y + DrawData(m_HUDStats, d_statsRect, lWidth, x, y, "Xp Earned : ", g_Macro.XpEarnedString)
             y = y + DrawData(m_HUDStats, d_statsRect, lWidth, x, y, "Xp/Hour : ", g_Macro.XpHourString, cYELLOW)
-            y = y + DrawData(m_HUDStats, d_statsRect, lWidth, x, y, "5Min Xp: ", g_Macro.XpMinString)
+            y = y + DrawData(m_HUDStats, d_statsRect, lWidth, x, y, "5Min Xp: ", g_Macro.XpMinuteString)
             y = y + DrawData(m_HUDStats, d_statsRect, lWidth, x, y, "Current Level : ", g_ds.XpTracker.Level)
             y = y + DrawData(m_HUDStats, d_statsRect, lWidth, x, y, "Next Level In : ", g_Macro.TimeUntilNextLevelString)
         '------------------------------------------------------------------------------

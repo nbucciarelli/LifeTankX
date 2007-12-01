@@ -4,7 +4,32 @@ Option Explicit
 '----------------------------------------------------------------------------------------
 '----------------------------------------------------------------------------------------
 '----------------------------------------------------------------------------------------
+Public Const CSIDL_MYDOCUMENTS = &HC             'My Documents
+Public Const CSIDL_APPDATA = &H1A           'Users App Data?
+Public Const CSIDL_LOCAL_APPDATA = &H1C
+Public Const CSIDL_COMMON_APPDATA = &H23
 
+Public Function GetDataFolder()
+   On Error GoTo GenericFolder
+   Dim PathName  As String
+   Dim strPath   As String
+   Dim lngReturn As Long
+   Dim ReturnVal As Long
+   
+   'PathName = String(260, 0)
+   'ReturnVal = SHGetFolderPath(g_PluginSite.hwnd, CSIDL_APPDATA, 0, 0, PathName)
+   'PathName = Left(PathName, InStr(PathName, vbNullChar) - 1)
+   'GetDataFolder = PathName & "\LifeTankX"
+   
+    strPath = String(260, 0)
+    lngReturn = SHGetFolderPath(0, CSIDL_APPDATA, 0, &H0, strPath)
+    PathName = Left$(strPath, InStr(1, strPath, Chr(0)) - 1)
+    GetDataFolder = PathName & "\LifeTankX"
+    
+   Exit Function
+GenericFolder:
+   If Err.Number = 453 Then GetDataFolder = App.Path
+End Function
 
 'Builds/Overwrites the file filename and inserts the message Title in the first line
 Public Function xBuildLogFile(ByVal sPath As String, ByVal sFileName As String, sTitle As String) As TextStream
@@ -120,7 +145,7 @@ Public Sub BuildLogFile(ByVal sFileName As String, sTitle As String)
 On Error GoTo ErrorHandler
     
     Dim lngFileNr As Long, sLine As String
-    sFileName = App.Path & "\" & sFileName
+    sFileName = GetDataFolder & "\" & sFileName
     MyDebug "Building " & sFileName
     lngFileNr = FreeFile(0)
     Open sFileName For Output As #lngFileNr
@@ -132,7 +157,7 @@ On Error GoTo ErrorHandler
 Fin:
     Exit Sub
 ErrorHandler:
-    MsgBox "(Core) ERROR @ BuildLogFile - " & Err.Description
+    MsgBox "(Core) ERROR @ BuildLogFile (" & sFileName & ") - " & Err.Description
     Resume Fin
 End Sub
 
@@ -297,7 +322,7 @@ On Error GoTo ErrorHandler
 
     Dim lngFileNr As Long, sLine As String
     lngFileNr = FreeFile(0)
-    Open App.Path & "\" & FileName For Append As #lngFileNr
+    Open GetDataFolder & "\" & FileName For Append As #lngFileNr
         Print #lngFileNr, "[" & CurrentTime & "] ", Msg
     Close #lngFileNr
     
@@ -320,7 +345,7 @@ On Error GoTo ErrorHandler
   lngFileNr = FreeFile(0)
   ' Here I'm opening from same directory that scribe.dll is installed,
   ' but you can open from anywhere you'd like.
-  Open App.Path & "\" & sFile For Input As #lngFileNr
+  Open GetDataFolder & "\" & sFile For Input As #lngFileNr
   Do Until EOF(lngFileNr)
     Line Input #lngFileNr, sLine
     FileToString = FileToString & sLine
