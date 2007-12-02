@@ -98,10 +98,10 @@ End Sub
 
 Private Sub tmrTimeout_Timer()
 
-If mAuth.m_PluginEnabled = False Then
-    PrintMessage "Your Lifetank is now disabled because the Authorization Server failed to respond. You may try to connect to another authorization server by typing: '/lt auth server 1' or 2. Sorry for the inconvienience."
-    mAuth.m_PluginEnabled = False
-End If
+'If mAuth.m_PluginEnabled = False Then
+'    PrintMessage "Your Lifetank is now disabled because the Authorization Server failed to respond. You may try to connect to another authorization server by typing: '/lt auth server 1' or 2. Sorry for the inconvienience."
+'    mAuth.m_PluginEnabled = False
+'End If
 
     tmrTimeout.Enabled = False
     

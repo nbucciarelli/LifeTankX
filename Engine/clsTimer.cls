@@ -103,11 +103,11 @@ On Error GoTo ErrorHandler
     m_dTimerValue = g_Core.Time + dVal
     m_bEnabled = True
 
-fin:
+Fin:
     Exit Sub
 ErrorHandler:
     PrintErrorMessage "clsTimer.SetNextTime - " & Err.Description
-    Resume fin
+    Resume Fin
 End Sub
 
 Public Sub AddTime(ByVal dVal As Double)
@@ -118,11 +118,11 @@ On Error GoTo ErrorHandler
         m_bEnabled = True
     End If
     
-fin:
+Fin:
     Exit Sub
 ErrorHandler:
     PrintErrorMessage "clsTimer.AddTime - " & Err.Description
-    Resume fin
+    Resume Fin
 End Sub
 
 Public Function RemainingTime() As Double
@@ -134,12 +134,12 @@ On Error GoTo ErrorHandler
         RemainingTime = m_dTimerValue - g_Core.Time
     End If
     
-fin:
+Fin:
     Exit Function
 ErrorHandler:
     RemainingTime = m_dTimeLeft
     PrintErrorMessage "clsTimer.RemainingTime - " & Err.Description
-    Resume fin
+    Resume Fin
 End Function
 
 Public Function GetDisplay(Optional ByVal iFormat As String = TF_LETTERS) As String

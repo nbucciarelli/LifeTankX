@@ -248,6 +248,13 @@ On Error GoTo ErrorHandler
     If Not m_bEngineObjectsLoaded Then Exit Function
     
     Dim bStarted As Boolean
+    
+    'If mAuth.m_PluginEnabled = False Then
+    '    PrintMessage g_String(mStrings.e_strUnableToAuth)
+    '    bStarted = False
+    '    GoTo Fin
+    'End If
+    
     bStarted = g_Macro.StartMacro(iMode, iCombatType)
     
     If iMode = MODE_NORMAL Then
@@ -386,6 +393,9 @@ On Error GoTo ErrorHandler
     g_MainView.Position.Left = Hub.mWindowObj.Left
     g_MainView.Position.Right = Hub.mWindowObj.Right
     g_MainView.Position = Hub.mWindowObj
+    
+    'authenticate!
+    mAuth.m_Auth (1)
     
 
 Fin:

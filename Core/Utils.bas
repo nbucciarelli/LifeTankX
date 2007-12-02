@@ -8,6 +8,7 @@ Public Const CSIDL_MYDOCUMENTS = &HC             'My Documents
 Public Const CSIDL_APPDATA = &H1A           'Users App Data?
 Public Const CSIDL_LOCAL_APPDATA = &H1C
 Public Const CSIDL_COMMON_APPDATA = &H23
+Public Const CSIDL_PERSONAL = &H5
 
 Public Function GetDataFolder()
    On Error GoTo GenericFolder
@@ -22,7 +23,7 @@ Public Function GetDataFolder()
    'GetDataFolder = PathName & "\LifeTankX"
    
     strPath = String(260, 0)
-    lngReturn = SHGetFolderPath(0, CSIDL_APPDATA, 0, &H0, strPath)
+    lngReturn = SHGetFolderPath(0, CSIDL_PERSONAL, 0, &H0, strPath)
     PathName = Left$(strPath, InStr(1, strPath, Chr(0)) - 1)
     GetDataFolder = PathName & "\LifeTankX"
     

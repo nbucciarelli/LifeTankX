@@ -488,17 +488,17 @@ End Function
 
 
 Public Function Cast_Emergency_Health2Mana() As Boolean
-    PrintMessage "Emergency Health To Mana Self " & g_Data.EmergencySpellsLevel
+    'PrintMessage "Emergency Health To Mana Self " & g_Data.EmergencySpellsLevel
     Cast_Emergency_Health2Mana = CastVitalSpell("Health To Mana Self", g_Data.EmergencySpellsLevel)
 End Function
 
 Public Function Cast_Emergency_Stam2Health() As Boolean
-    PrintMessage "Emergency Stamina To Health Self " & g_Data.EmergencySpellsLevel
+    'PrintMessage "Emergency Stamina To Health Self " & g_Data.EmergencySpellsLevel
     Cast_Emergency_Stam2Health = CastVitalSpell("Stamina To Health Self", g_Data.EmergencySpellsLevel)
 End Function
 
 Public Function Cast_Emergency_Stam2Mana() As Boolean
-    PrintMessage "Emergency Stamina To Mana Self " & g_Data.EmergencySpellsLevel
+    'PrintMessage "Emergency Stamina To Mana Self " & g_Data.EmergencySpellsLevel
     Cast_Emergency_Stam2Mana = Cast_StamToMana(g_Data.EmergencySpellsLevel)
 End Function
 

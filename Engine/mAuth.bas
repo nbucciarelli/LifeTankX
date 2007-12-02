@@ -11,7 +11,7 @@ Public Function VerifyClient()
 On Error Resume Next
     Dim strbReturn As String
     Dim strbPlugins As String
-    m_PluginEnabled = False
+    m_PluginEnabled = True
 
     If m_Variable("PM", vbLf) <> "NONE" And m_Variable("PM", vbLf) <> "NULL" Then
         PrintMessage "Private Message from LTxi Admins: " & m_Variable("PM", vbLf)
@@ -279,5 +279,5 @@ cEncStringToASCII = m_Return
 End Function
 
 Public Function LoadSettingsAuth()
-    m_PluginEnabled = False
+    m_PluginEnabled = True
 End Function

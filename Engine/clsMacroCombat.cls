@@ -201,7 +201,7 @@ Public Sub RunState()
 On Error GoTo ErrorMessage
 
     If m_tmrSecure.Expired Then
-        PrintWarning "Busy Timeout - reseting combat flags"
+        'PrintWarning "Busy Timeout - reseting combat flags"
         Call StopCombat("clsMacroCombat.m_tmrSecure_OnTimeout")
         Exit Sub
     End If

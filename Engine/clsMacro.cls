@@ -1203,7 +1203,7 @@ End Sub
 Private Sub RunState()
 On Error GoTo ErrorHandler
 
-    If m_PluginEnabled = False Then GoTo Fin
+    'If m_PluginEnabled = False Then GoTo Fin
     
     Dim objTarget As acObject
     
