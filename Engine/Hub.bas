@@ -30,6 +30,7 @@ Public g_Buffer As clsBuffer
 Public g_BuddyBuffer As clsBuddyBuffer
 Public g_Macro As clsMacro
 Public g_HUD As clsHUD
+Public g_D3D As clsD3D
 Public g_DOT As clsDOT
 Public g_Nav As clsNav
 Public g_AntiBan As clsAntiBan
@@ -75,6 +76,7 @@ On Error GoTo ErrorHandler
     Set g_BuddyBuffer = New clsBuddyBuffer
     Set g_Macro = New clsMacro
     Set g_HUD = New clsHUD
+    Set g_D3D = New clsD3D
     Set g_DOT = New clsDOT
     Set g_AntiBan = New clsAntiBan
     Set g_RemoteCmd = New clsRemoteCmd
@@ -118,6 +120,7 @@ On Error GoTo ErrorHandler
     Set g_BuddyBuffer = Nothing
     Set g_Macro = Nothing
     Set g_HUD = Nothing
+    Set g_D3D = Nothing
     Set g_DOT = Nothing
     Set g_Nav = Nothing
     Set g_AntiBan = Nothing
@@ -132,7 +135,7 @@ On Error GoTo ErrorHandler
     
     Set g_manaItem = Nothing
     Set g_buffBuddy = Nothing
-            
+                
     DeleteEngineObjects = True
     
     MyDebug "DeleteEngineObjects - End"

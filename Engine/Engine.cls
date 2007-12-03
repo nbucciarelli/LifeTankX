@@ -328,7 +328,7 @@ On Error GoTo ErrorHandler
     acRect = g_Hooks.ACWindowRect
     MyDebug "acRect dimensions: " & g_Hooks.ACWindowRect.Right & " x " & g_Hooks.ACWindowRect.Bottom
     PrintMessage "Window: " & g_Hooks.ACWindowRect.Right & " x " & g_Hooks.ACWindowRect.Bottom
-    If (g_Hooks.ACWindowRect.Right = 800) Then
+    If (g_Hooks.ACWindowRect.Right <= 800) Then
         PrintErrorMessage "*************************************************"
         PrintErrorMessage "*** You should run at least 1024x768 resolution ***"
         PrintErrorMessage "*************************************************"
@@ -336,7 +336,11 @@ On Error GoTo ErrorHandler
         'm_bEngineObjectsLoaded = False
     End If
     
+    'init D3D
+    Call g_D3D.Init
+
     mAuth.LoadSettingsAuth
+    
     MyDebug "IEngine_OnLogin all done"
 
     
@@ -395,7 +399,7 @@ On Error GoTo ErrorHandler
     g_MainView.Position = Hub.mWindowObj
     
     'authenticate!
-    mAuth.m_Auth (1)
+    'mAuth.m_Auth (1)
     
 
 Fin:
