@@ -36,13 +36,13 @@ Public g_bAuthorized As Boolean   'fake flag
 Public Function CreatePluginObjects() As Boolean
 On Error GoTo ErrorHandler
 
-    Call Randomize(DateTime.Timer)
+1    Call Randomize(DateTime.Timer)
 
-    Set g_Timers = New clsTimers 'g_Timers must be loaded before other modules
-    Set g_Service = New clsServices
-    Set g_Events = New clsACEvents
-    Set g_Clock = New clsClock
-    Set g_Hotkeys = New clsHotkeys
+2    Set g_Timers = New clsTimers 'g_Timers must be loaded before other modules
+3    Set g_Service = New clsServices
+4    Set g_Events = New clsACEvents
+5    Set g_Clock = New clsClock
+6    Set g_Hotkeys = New clsHotkeys
     
     CreatePluginObjects = True
     

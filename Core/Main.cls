@@ -31,13 +31,14 @@ Private Sub Class_Initialize()
     g_bAuthorized = False
     
     'Build Log files
-    Call BuildPluginLogFiles
+1    Call BuildPluginLogFiles
     
     'Create the global plugin objects
-    g_bObjectsLoaded = CreatePluginObjects
+2    g_bObjectsLoaded = CreatePluginObjects
     
+    LogEvent "Main.Class_Initialize Schema file: " & Utils.GetDataFolder & "\" & PATH_DATA & "\" & FILE_PLUGIN_VIEW
     'Get the plugin UI string
-    m_sViewSchema = FileToString(PATH_DATA & "\" & FILE_PLUGIN_VIEW)
+3    m_sViewSchema = FileToString(PATH_DATA & "\" & FILE_PLUGIN_VIEW)
     
     LogEvent "Main.Class_Initialize - done"
     
@@ -76,42 +77,42 @@ On Error GoTo Error_Handler
     
     g_bInitComplete = False
     
-    Call Site.RegisterSinks(Me)
+1    Call Site.RegisterSinks(Me)
     
-    Set g_PluginSite2 = Site
+2    Set g_PluginSite2 = Site
     
     'Save reference to PluginSite
-    Set g_PluginSite = Site.PluginSite
+3    Set g_PluginSite = Site.PluginSite
     
     'Setup ACHooks
-    Set m_ACHooks = g_PluginSite2.Hooks
-    Set g_Hooks = m_ACHooks
+4    Set m_ACHooks = g_PluginSite2.Hooks
+5    Set g_Hooks = m_ACHooks
     
     MyDebug "ACHooks : " & Valid(g_Hooks)
     
     'Plugin UI
     MyDebug "IPlugin2_Initialize : loading Plugin View"
-    Set g_MainView = g_PluginSite.LoadView(m_sViewSchema)
+6    Set g_MainView = g_PluginSite.LoadView(m_sViewSchema)
     
-    If Not g_bObjectsLoaded Then
+7    If Not g_bObjectsLoaded Then
         PrintErrorMessage "Plugin Objects not loaded properly."
         GoTo Fin
     End If
      
-    If Not LoadDarksideFilter Then
+8    If Not LoadDarksideFilter Then
         PrintErrorMessage "Could not link to Darkside Filter - Please make sure you're using the correct version."
         GoTo Fin
     End If
         
     'Call Engine Initialization
-    Set g_Core = New Core
-    If Not g_Core.Initialize Then
+9    Set g_Core = New Core
+10   If Not g_Core.Initialize Then
         PrintErrorMessage "Core Init Failed!"
         GoTo Fin
     End If
     
     'Start the main clock timer
-    Call g_Clock.StartTimer
+11  Call g_Clock.StartTimer
     
     'Everything went fine
     g_bInitComplete = True
@@ -267,3 +268,25 @@ ErrorHandler:
     Resume Fin
 End Sub
 
+
+Public Function GetDataFolder()
+   On Error GoTo GenericFolder
+   Dim PathName  As String
+   Dim strPath   As String
+   Dim lngReturn As Long
+   Dim ReturnVal As Long
+   
+   'PathName = String(260, 0)
+   'ReturnVal = SHGetFolderPath(g_PluginSite.hwnd, CSIDL_PERSONAL, 0, 0, PathName)
+   'PathName = Left(PathName, InStr(PathName, vbNullChar) - 1)
+   'GetDataFolder = PathName & "\LifeTankX"
+   
+    strPath = String(260, 0)
+    lngReturn = SHGetFolderPath(0, CSIDL_PERSONAL, 0, &H0, strPath)
+    PathName = Left$(strPath, InStr(1, strPath, Chr(0)) - 1)
+    GetDataFolder = PathName & "\LifeTankX"
+    
+   Exit Function
+GenericFolder:
+   If Err.Number = 453 Then GetDataFolder = App.Path
+End Function

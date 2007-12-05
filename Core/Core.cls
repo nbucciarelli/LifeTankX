@@ -80,7 +80,7 @@ On Error GoTo ErrorHandler
 
     MyDebug "Core.Initialize"
     
-    Initialize = m_engine.Initialize(Me)
+1    Initialize = m_engine.Initialize(Me)
     
 Fin:
     Exit Function

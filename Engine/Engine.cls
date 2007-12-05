@@ -131,27 +131,27 @@ On Error GoTo ErrorHandler
     bInitComplete = False
         
     'Keep a handy reference to ourself
-    Set g_Engine = Me
+1    Set g_Engine = Me
         
     'Keep a reference to the core
-    Set g_Core = oCore
+2    Set g_Core = oCore
 
     'Create Engine objects
-    m_bEngineObjectsLoaded = CreateEngineObjects
-    If Not m_bEngineObjectsLoaded Then
+3    m_bEngineObjectsLoaded = CreateEngineObjects
+4    If Not m_bEngineObjectsLoaded Then
         PrintErrorMessage "Engine.Initialize - Engine Objects Creation Failed"
         GoTo Fin
     End If
     
     MyDebug "----- Engine Initialization -----"
     
-    Set g_PluginSite = g_Core.PluginSite
-    Set g_PluginSite2 = g_Core.PluginSite2
-    Set g_Hooks = g_Core.ACHooks
-    Set g_MainView = g_Core.MainView
+5    Set g_PluginSite = g_Core.PluginSite
+6    Set g_PluginSite2 = g_Core.PluginSite2
+7    Set g_Hooks = g_Core.ACHooks
+8    Set g_MainView = g_Core.MainView
 
     'Load shared config file settings
-    bSharedConfigOk = g_Settings.LoadSharedConfig
+9    bSharedConfigOk = g_Settings.LoadSharedConfig
     If bSharedConfigOk Then
         'g_Data.mDebugMode = g_Settings.GetValue("DebugMode", False, True)
         Hub.mWindowObj.Top = g_Settings.GetValue("WindowTop", 60, True)

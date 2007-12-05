@@ -33,7 +33,7 @@ Private m_objTarget As acObject         'our current target
 Private m_lastTargetName As String      'last target name
 Private m_lLastTargetGUID As Long
 Private m_bAttackKeyPushed As Boolean
-Private tMark As CD3DObj
+Private m_tMark As CD3DObj
 Private m_Action As eActionType
 Private m_tmrAttackCheck As clsTimer
 Private m_tmrSecure As clsTimer
@@ -370,7 +370,7 @@ On Error GoTo ErrorHandler
     bRet = True
     
     'Put a 3D arrow above the target
-    Set tMark = g_D3D.m_d3ds.MarkObjectWithShape(m_objTarget.Guid, D3DService.eShape.eVArrow, &HFFBB0055) ' FFBB0000 :: 55667788
+    Set m_tMark = g_D3D.m_d3ds.MarkObjectWithShape(m_objTarget.Guid, D3DService.eShape.eVArrow, &HFFBB0055) ' FFBB0000 :: 55667788
     locDebug "SetTarget: D3D MarkObject " & m_objTarget.Guid
 
 Fin:
