@@ -1243,8 +1243,9 @@ On Error GoTo ErrorHandler
     
     ' Check for queued spells
     If g_Spells.c_SpellQueue.Count > 0 And m_bOKToCast Then
-        'PrintErrorMessage "Displaying " & g_Spells.c_SpellQueue.Count & " spells"
+        locDebug "Queue has " & g_Spells.c_SpellQueue.Count & " spells"
         'Call g_Spells.c_SpellQueue.Display
+        
         Dim o_Spell As clsSpellQueueItemSimple
         
         Set o_Spell = g_Spells.c_SpellQueue.ReadTop
@@ -1281,7 +1282,7 @@ On Error GoTo ErrorHandler
             Case ST_IDLE
                 If ACBusy Then GoTo Fin
                 
-                'PrintErrorMessage ("Debug: Idle")
+                locDebug "ST_IDLE: Idle"
                                 
                 'check to see if we need to loot a rare
                 If g_bLootRare Then

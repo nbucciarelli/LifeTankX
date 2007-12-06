@@ -103,7 +103,10 @@ End Function
 
 Public Function GetElapsedSeconds() As Double
 On Error GoTo ErrorHandler
-    GetElapsedSeconds = CDbl(timeGetTime) / CDbl(1000)
+    If GetElapsedSeconds <= 0 Or timeGetTime <= 0 Then
+        GetElapsedSeconds = 1
+    Else
+        GetElapsedSeconds = CDbl(timeGetTime) / CDbl(1000)
 Fin:
     Exit Function
 ErrorHandler:

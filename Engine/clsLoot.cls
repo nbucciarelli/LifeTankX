@@ -22,13 +22,13 @@ Option Explicit
 Private Const DEBUG_ME = False
 
 'Contants
-Private Const LOOT_MAX_SEARCH_CORPSE_TIME = 2
+Private Const LOOT_MAX_SEARCH_CORPSE_TIME = 3
 Private Const LOOT_MAX_CORPSE_OPEN_ATTEMPT_TIME = 9
 Private Const LOOT_MAX_SEARCH_ITEM_TIME = 6
 Private Const LOOT_MAX_PICKUP_TIME = 10 ' seconds max to pickup an item
 
 Private Const DEFAULT_TRANSITION_TIME = 0.25
-Private Const MAX_Z_DIFF = 2
+Private Const MAX_Z_DIFF = 8
 Private Const ID_EXPIRATION_TIME = 120      'if the item has been ided in the last 2 minutes,
                                             'dont try to ID it again
 
@@ -376,7 +376,7 @@ On Error GoTo ErrorHandler
 
     If Valid(objItem) Then
         If Not m_ItemsToLoot.Exists(objItem.Guid) Then
-            'locDebug "AddItemToLoot - Added " & objItem.Name
+            locDebug "AddItemToLoot - Added " & objItem.Name
             Call m_ItemsToLoot.addObject(objItem)
         Else
             PrintWarning "clsLoot.AddItemToLoot - " & objItem.Name & " is already in m_ItemsToLoot. Ignoring."
@@ -613,7 +613,6 @@ On Error GoTo Error_Handler
     ' aMessage will be of the form:
     '         Xeon Xarid has discovered the Dodger's Crystal
     ' so we need to parse out the name of the item discovered, so we can try and loot it
-    ' FIXME -- we also should play a warning sound
     
     Dim aMatch As String
     Dim aName As String
@@ -771,11 +770,11 @@ On Error GoTo Error_Handler
                 End If
                 
             Case ST_LOOT_OPEN_CORPSE
-8                If Not DoOpenCorpse Then
+8               If Not DoOpenCorpse Then
                     locDebug "Couldn't open corpse (unreachable or invalid). Searching for Corpse again."
                     Call SetSubState(ST_LOOT_SEARCH)
-                'Else
-                    'locDebug "Corpse selected - waiting for Corpse to open."
+                Else
+                    locDebug "Corpse selected - waiting for Corpse to open."
                     'Should then receive an OnCorpseOpen event, enabling ST_LOOT_SEARCH_ITEM state
                 End If
             
@@ -1057,7 +1056,6 @@ On Error GoTo Error_Handler
         Exit Function
     End If
     
-'    For Each tmpObj In g_Objects.Items.World
     For Each tmpObj In m_corpseList
         If IsValidCorpse(tmpObj) Then
             If (tmpObj.GetSquareRange <= (g_Data.LootSearchRadius * g_Data.LootSearchRadius)) _
@@ -1115,7 +1113,7 @@ On Error GoTo ErrorHandler
     'Only Assess if ID time expired
     'If bRet Then bRet = ((g_ds.Time - objItem.LastIDTime) > ID_EXPIRATION_TIME)
     If IsWorthAssessing(objItem.itemType) Then
-        bRet = ((g_ds.Time - objItem.LastIDTime) > ID_EXPIRATION_TIME)
+        bRet = ((g_ds.Time - objItem.LastIdTime) > ID_EXPIRATION_TIME)
         If Not bRet Then
             locDebug "CanAssess(" & objItem.Name & ") : ID Time Not Expired - Not assessing item"
         End If
@@ -1130,7 +1128,6 @@ ErrorHandler:
 End Function
 
 'Returns true if the item has met one of the filters criteras
-'FIXME: has been changed to PUBLIC for testing purpose
 Public Function PassedPickupFilters(obj As acObject)
 On Error GoTo ErrorHandler
     Dim bOk As Boolean
@@ -1255,7 +1252,7 @@ On Error GoTo Error_Handler
     If Not Valid(m_curItem) Then
         PrintErrorMessage "clsLoot.OnCurrentItemPickupedUp - invalid m_curItem, ignoring"
     Else
-        'locDebug "OnCurrentItemPickupedUp - " & m_curItem.Name & " picked up."
+        locDebug "OnCurrentItemPickupedUp - " & m_curItem.Name & " picked up."
         RaiseEvent OnItemLooted(m_curItem)
         Call RemoveItemFromCorpse(m_curItem)
         Call m_tmrNextTime.Reset

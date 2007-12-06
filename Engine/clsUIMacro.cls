@@ -144,6 +144,7 @@ Attribute cmdSetSticky.VB_VarHelpID = -1
 
 'Targetting
 Public chkAttackAny As DecalControls.CheckBox
+Public chkAttackSelected As DecalControls.CheckBox
 Public chkAttackGroundOnly As DecalControls.CheckBox
 Public chkSwitchIfBetterTarget As DecalControls.CheckBox
 Public chkAttackVulnedOnly As DecalControls.CheckBox
@@ -196,6 +197,7 @@ On Error GoTo ErrorHandler
     
     Set chkAttackAny = g_MainView.Control("chkAttackAny")
     Set chkAttackGroundOnly = g_MainView.Control("chkAttackGroundOnly")
+    Set chkAttackSelected = g_MainView.Control("chkAttackSelected")
     Set chkSwitchIfBetterTarget = g_MainView.Control("chkSwitchIfBetterTarget")
     Set chkAttackVulnedOnly = g_MainView.Control("chkAttackVulnedOnly")
     Set chkAttackPK = g_MainView.Control("chkAttackPK")
@@ -338,6 +340,7 @@ On Error GoTo Error_Handler
     
         chkAttackAny.Checked = .GetValue("chkAttackAny", False)
         chkAttackGroundOnly.Checked = .GetValue("chkAttackGroundOnly", False)
+        chkAttackSelected.Checked = .GetValue("chkAttackSelected", False)
         chkSwitchIfBetterTarget.Checked = .GetValue("chkSwitchIfBetterTarget", True)
         chkAttackVulnedOnly.Checked = .GetValue("chkAttackVulnedOnly", True)  'vulneds first
         chkAttackPK.Checked = .GetValue("chkAttackPK", True)
@@ -518,6 +521,7 @@ On Error GoTo Error_Handler
         'Main settings
         .SaveCheckbox chkAttackAny, "chkAttackAny"
         .SaveCheckbox chkAttackGroundOnly, "chkAttackGroundOnly"
+        .SaveCheckbox chkAttackSelected, "chkAttackSelected"
         .SaveCheckbox chkSwitchIfBetterTarget, "chkSwitchIfBetterTarget"
         .SaveCheckbox chkAttackVulnedOnly, "chkAttackVulnedOnly"
         .SaveCheckbox chkAttackPK, "chkAttackPK"
@@ -607,6 +611,7 @@ On Error GoTo Error_Handler
     
     Set chkAttackAny = Nothing
     Set chkAttackGroundOnly = Nothing
+    Set chkAttackSelected = Nothing
     Set chkSwitchIfBetterTarget = Nothing
     Set chkAttackVulnedOnly = Nothing
     Set chkAttackPK = Nothing

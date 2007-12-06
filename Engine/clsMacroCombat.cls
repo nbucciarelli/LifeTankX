@@ -824,16 +824,27 @@ On Error GoTo Error_Handler
     Dim bRes As Boolean
     Dim objNewTarget As acObject
     
-    If Not g_ui.Macro.chkSwitchIfBetterTarget.Checked Then
-        bRes = False
-    ElseIf Not Valid(m_objTarget) Then
-        bRes = False
-    ElseIf BetterTargetAvailable(m_objTarget, objNewTarget) Then
-        locDebug "EngagingBetterTarget - Found a better target"
-        If Not g_ui.Options.chkFilterLTMsg.Checked Then
-            PrintMessage "Better target available - Switching from " & m_objTarget.Name & " to " & objNewTarget.Name & "..."
+    If Not Valid(m_objTarget) Then
+        EngagingBetterTarget = False
+        Exit Function
+    End If
+    
+    If g_ui.Macro.chkAttackSelected.Checked Then
+        If SelectedTargetAvailable(objNewTarget) Then
+            bRes = EngageCombat(objNewTarget, "SelectedTarget")
+        Else
+            bRes = False
         End If
-        bRes = EngageCombat(objNewTarget, "EngageBetterTarget")
+    ElseIf g_ui.Macro.chkSwitchIfBetterTarget.Checked Then
+        If BetterTargetAvailable(m_objTarget, objNewTarget) Then
+            locDebug "EngagingBetterTarget - Found a better target"
+            If Not g_ui.Options.chkFilterLTMsg.Checked Then
+                PrintMessage "Better target available - Switching from " & m_objTarget.Name & " to " & objNewTarget.Name & "..."
+            End If
+            bRes = EngageCombat(objNewTarget, "EngageBetterTarget")
+        Else
+            bRes = False
+        End If
     Else
         bRes = False
     End If

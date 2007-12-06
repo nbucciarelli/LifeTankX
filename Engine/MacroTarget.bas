@@ -120,6 +120,35 @@ ErrorHandler:
     Resume Fin
 End Function
 
+'SelectedTargetAvailable
+Public Function SelectedTargetAvailable(ByRef objTargetOut As acObject) As Boolean
+On Error GoTo ErrorHandler
+    
+    'Default to false
+    SelectedTargetAvailable = False
+    
+    If g_Hooks.CurrentSelection = 0 Then
+        Exit Function
+    End If
+        
+    Set objTargetOut = g_Objects.FindObject(g_Hooks.CurrentSelection)
+    
+    If IsMonster(objTargetOut) Then
+        SelectedTargetAvailable = True
+    Else
+        PrintErrorMessage "SelectedTargetAvailable - invalid objNewTarget"
+        Exit Function
+    End If
+
+Fin:
+    Exit Function
+ErrorHandler:
+    SelectedTargetAvailable = False
+    PrintErrorMessage "SelectedTargetAvailable - " & Err.Description
+    Resume Fin
+End Function
+
+
 Public Function BetterTargetAvailable(ByVal objCurTarget As acObject, ByRef objTargetOut As acObject) As Boolean
 On Error GoTo ErrorHandler
     
