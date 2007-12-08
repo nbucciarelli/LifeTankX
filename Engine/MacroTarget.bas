@@ -136,7 +136,7 @@ On Error GoTo ErrorHandler
     If IsMonster(objTargetOut) Then
         SelectedTargetAvailable = True
     Else
-        PrintErrorMessage "SelectedTargetAvailable - invalid objNewTarget"
+        locDebug "SelectedTargetAvailable - invalid objNewTarget"
         Exit Function
     End If
 
