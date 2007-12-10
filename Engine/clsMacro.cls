@@ -1433,6 +1433,8 @@ On Error GoTo ErrorHandler
                         If m_bForceSalvage _
                         Or g_Objects.Items.BackpackFull _
                         Or (g_ui.Loot.chkSalvageFrequency.Checked And (m_iNumItemsPickedUp >= g_Data.SalvagerFrequency)) Then
+                            'locDebug "ST_IDLE : Salvaging"
+                            Call m_tmrNextSalvageTime.SetNextTime(SALVAGER_CHECK_INTERVAL)
                             If GoSalvage Then
                                 locDebug "ST_IDLE : Starting AutoSalvager..."
                                 GoTo Fin
@@ -1447,11 +1449,11 @@ On Error GoTo ErrorHandler
                     And (Not g_Objects.Items.BackpackFull) _
                     And m_tmrNextLootCheck.Expired Then
                         'locDebug "ST_IDLE : Checking Loot..."
+                        Call m_tmrNextLootCheck.SetNextTime(LOOT_CHECK_INTERVAL)
                         If GoLooting Then
                             locDebug "ST_IDLE : Starting Looting..."
                             GoTo Fin
                         End If
-                        Call m_tmrNextLootCheck.SetNextTime(LOOT_CHECK_INTERVAL)
                     End If
                         
                     'Check if we can move to next waypoint. Don't interrupt looting for this.

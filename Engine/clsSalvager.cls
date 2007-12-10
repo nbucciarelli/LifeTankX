@@ -143,6 +143,7 @@ On Error GoTo ErrorHandler
         m_bComplete = False
         Call SetState(ST_PREPARE_UST)
         Call m_tmrSecure.SetNextTime(3)
+        Call m_tmrNextTime.ExpireNow
         bRet = True
     End If
     
