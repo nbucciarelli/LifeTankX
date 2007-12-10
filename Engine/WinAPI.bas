@@ -102,10 +102,6 @@ ErrorHandler:
 End Function
 
 
-Public Function GetElapsedSeconds() As Double
-    GetElapsedSeconds = CDbl(timeGetTime) / 1000
-End Function
-
 Public Function GetACWindowRect() As RECT
 On Error GoTo ErrorHandler
 

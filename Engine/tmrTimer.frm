@@ -10,13 +10,13 @@ Begin VB.Form frmTimer
    ScaleWidth      =   5340
    StartUpPosition =   3  'Windows Default
    Begin VB.Timer tmrInputQueue 
-      Interval        =   30
+      Interval        =   100
       Left            =   840
       Top             =   120
    End
    Begin VB.Timer tmrRoute 
       Enabled         =   0   'False
-      Interval        =   30
+      Interval        =   100
       Left            =   240
       Top             =   120
    End

@@ -269,22 +269,17 @@ ErrorHandler:
 End Sub
 
 
-Public Function GetDataFolder()
+Public Function GetDataFolder() As String
    On Error GoTo GenericFolder
    Dim PathName  As String
    Dim strPath   As String
    Dim lngReturn As Long
    Dim ReturnVal As Long
-   
-   'PathName = String(260, 0)
-   'ReturnVal = SHGetFolderPath(g_PluginSite.hwnd, CSIDL_PERSONAL, 0, 0, PathName)
-   'PathName = Left(PathName, InStr(PathName, vbNullChar) - 1)
-   'GetDataFolder = PathName & "\LifeTankX"
-   
-    strPath = String(260, 0)
-    lngReturn = SHGetFolderPath(0, CSIDL_PERSONAL, 0, &H0, strPath)
-    PathName = Left$(strPath, InStr(1, strPath, Chr(0)) - 1)
-    GetDataFolder = PathName & "\LifeTankX"
+
+   strPath = String(260, 0)
+   lngReturn = SHGetFolderPath(0, CSIDL_PERSONAL, 0, &H0, strPath)
+   PathName = Left$(strPath, InStr(1, strPath, Chr(0)) - 1)
+   GetDataFolder = PathName & "\LifeTankX"
     
    Exit Function
 GenericFolder:

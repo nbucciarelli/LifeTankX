@@ -24,7 +24,7 @@ Private Const DEBUG_ME = False
 'Contants
 Private Const LOOT_MAX_SEARCH_CORPSE_TIME = 3
 Private Const LOOT_MAX_CORPSE_OPEN_ATTEMPT_TIME = 9
-Private Const LOOT_MAX_SEARCH_ITEM_TIME = 6
+Private Const LOOT_MAX_SEARCH_ITEM_TIME = 9
 Private Const LOOT_MAX_PICKUP_TIME = 10 ' seconds max to pickup an item
 
 Private Const DEFAULT_TRANSITION_TIME = 0.25

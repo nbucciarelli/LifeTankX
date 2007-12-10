@@ -118,6 +118,7 @@ On Error GoTo ErrorHandler
         m_sArrowShaft = sArrowShaft
         m_State = ST_FLETCH_DOFLETCHING
         Call m_tmrSecure.SetNextTime(SECURE_TIMER)
+        Call m_tmrNextTime.SetNextTime(1)
         bRet = True
     Else
         bRet = False

@@ -469,35 +469,35 @@ ErrorHandler:
     Resume Fin
 End Sub
 
-'Private Sub m_DSFilter_OnSpellCast(ByVal spellID As Long)
-'On Error GoTo ErrorHandler
+Private Sub m_DSFilter_OnSpellCast(ByVal SpellID As Long)
+On Error GoTo ErrorHandler
 
-    'MyDebug "OUTGOING: OnSpellCast event: spellID: " & spellID
+    MyDebug "OUTGOING: OnSpellCast event: spellID: " & SpellID
     
     ' Set spell casting start flags
     'Call g_Spells.OnSpellCastBegin
     
-'Fin:
-'    Exit Sub
-'ErrorHandler:
-'    PrintErrorMessage "ACEvents.OnSpellCast"
-'    Resume Fin
-'End Sub
+Fin:
+    Exit Sub
+ErrorHandler:
+    PrintErrorMessage "ACEvents.OnSpellCast"
+    Resume Fin
+End Sub
 
-'Private Sub m_DSFilter_OnSpellCastOn(ByVal spellID As Long, ByVal objTarget As acObject)
-'On Error GoTo ErrorHandler
+Private Sub m_DSFilter_OnSpellCastOn(ByVal SpellID As Long, ByVal objTarget As acObject)
+On Error GoTo ErrorHandler
 
-    'MyDebug "OUTGOING: OnSpellCastOn event: spellId: " & spellID & "  target: " & objTarget.Name
+    MyDebug "OUTGOING: OnSpellCastOn event: spellId: " & SpellID & "  target: " & objTarget.Name
     
     ' Set spell casting start flags
     'Call g_Spells.OnSpellCastBegin
 
-'Fin:
-'    Exit Sub
-'ErrorHandler:
-'    PrintErrorMessage "ACEvents.OnSpellCastOn"
-'    Resume Fin
-'End Sub
+Fin:
+    Exit Sub
+ErrorHandler:
+    PrintErrorMessage "ACEvents.OnSpellCastOn"
+    Resume Fin
+End Sub
 
 
 'Private Sub m_DSFilter_OnLoginComplete()

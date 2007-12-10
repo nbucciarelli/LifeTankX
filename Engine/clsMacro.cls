@@ -227,16 +227,22 @@ Private Sub Class_Initialize()
     Set m_tmr5MinTimer = CreateTimer
     Set m_tmrCastSpell = CreateTimer
     
-    Call m_tmrCastSpell.Reset
-    Call m_tmrWaypointDelay.Reset
     Call m_tmrBusyDelay.Reset
     Call PostCastDelayTimer.Reset
+    Call m_tmrWaypointDelay.Reset
+    Call m_tmrNextLogoutCheck.Reset
+    Call m_tmrNextLootCheck.Reset
+    Call m_tmrNextSalvageTime.Reset
     Call m_tmrFellowHealTimer.Reset
     Call m_tmrManaChargeTimer.Reset
     Call m_tmr5MinTimer.Reset
+    Call m_tmrCastSpell.Reset
+    
     Call ResetTargetScanTimer
     
-    m_tmrCastSpell.SetNextTime (CAST_TIMER)
+    Call m_tmrCastSpell.SetNextTime(CAST_TIMER)
+    Call m_tmrNextSalvageTime.SetNextTime(SALVAGER_CHECK_INTERVAL)
+    Call m_tmrNextLootCheck.SetNextTime(LOOT_CHECK_INTERVAL)
     
     g_Core.TimerInterval = DEFAULT_MACRO_TIMER_INTERVAL
     
@@ -278,15 +284,15 @@ Private Sub Class_Initialize()
     m_fStartHeading = 0
     
     'Timer display
-    Call SetElapsedTime(0)
-    Call UpdateNextRebuffDisplay(0)
-    Call UpdateTimeUntilLevelDisplay(0)
+    Call SetElapsedTime(1)
+    Call UpdateNextRebuffDisplay(1)
+    Call UpdateTimeUntilLevelDisplay(1)
     
     Set m_colChargeItems = New colObjects
     
     'Stats
-    m_dLastResetTime = 0
-    m_dStartTime = 0
+    m_dLastResetTime = 1
+    m_dStartTime = 1
     m_dXpAtStart = 0
     m_dXpHour = 0
     m_dXpEarned = 0
@@ -587,6 +593,7 @@ On Error GoTo ErrorHandler
     'increase elapsed time
      If (g_Core.Time - m_dStartTime > 0) Then
 1        Call SetElapsedTime(g_Core.Time - m_dStartTime)
+        'MyDebug "OnMacroTick: " & CDbl(g_Core.Time - m_dStartTime)
      End If
      
 2    Call UpdateNextRebuffDisplay
@@ -1773,20 +1780,20 @@ On Error GoTo ErrorHandler
     m_sTapersHour = "0"
     m_sPlatsHour = "0"
     m_sArrowsHour = "0"
-    m_sTimeSpent = "0"
-    'm_sElapsedTime = "0"
-    m_sNextRebuff = "0"
+    m_sTimeSpent = "1"
+    m_sNextRebuff = "1"
 
-2    'turn on the macro timer
+2   'turn on the macro timer
     m_bRunning = True
     m_bDied = False
     Call m_tmrNextStatsUpdate.Reset
-    
+    Call m_tmrNextStatsUpdate.SetNextTime(5)
+
     'reset counters
 3    Call UpdateNextRebuffDisplay
 4    m_dStartTime = g_Core.Time
-5    m_dLastResetTime = 0
-6    Call SetElapsedTime(0)
+5    m_dLastResetTime = 1
+6    Call SetElapsedTime(1)
     
 7    m_dTotalXp = g_ds.XpTracker.TotalXp
 8    m_dXpAtStart = m_dTotalXp
@@ -1913,7 +1920,7 @@ On Error GoTo ErrorHandler
                 
         End Select
         
-9        Call OnMacroStart
+9       Call OnMacroStart
         
     End If
 
@@ -2117,6 +2124,8 @@ End Function
 Private Sub OnStateSpellCasted()
 On Error GoTo ErrorHandler
 
+    'MyDebug "OnStateSpellCasted: m_iState: " & m_iState
+    
     Select Case m_iState
     
         Case ST_HEALING
@@ -2254,6 +2263,8 @@ End Function
 
 'A spell is done being casted
 Public Sub OnSpellCasted(Optional ByVal bSuccessfully As Boolean = True)
+
+    'MyDebug "OnSpellCasted: bSucessfully: " & bSuccessfully & " :: m_iState: " & m_iState
 
     If bSuccessfully Then
         Call OnStateSpellCasted
@@ -2568,12 +2579,12 @@ On Error GoTo ErrorHandler
     End If
     
     If (Not bRet) And g_ui.Macro.chkLogoutOnScarabs.Checked Then
-        If g_Objects.Items.InvCntByName(STR_ITEM_PLAT) < 5 Then
+        If g_Objects.Items.InvCntByName(STR_ITEM_PLAT) <= 0 Then
             sReasonOut = "Running out of " & STR_ITEM_PLAT
             bRet = True
             ' Never force logout if we need healing!
             If g_Macro.NeedHealing("clsMacro.MustLogOut") Then bRet = False
-        ElseIf g_Objects.Items.InvCntByName(STR_ITEM_PYREAL_SCARAB) < 5 Then
+        ElseIf g_Objects.Items.InvCntByName(STR_ITEM_PYREAL_SCARAB) <= 0 Then
             sReasonOut = "Running out of " & STR_ITEM_PYREAL_SCARAB
             bRet = True
             ' Never force logout if we need healing!
@@ -2582,16 +2593,16 @@ On Error GoTo ErrorHandler
     End If
     
     If (Not bRet) And g_ui.Macro.chkUseRings.Checked Then
-        If g_Objects.Items.InvCntByName(STR_ITEM_DIAMOND_SCARAB) < 2 Then
+        If g_Objects.Items.InvCntByName(STR_ITEM_DIAMOND_SCARAB) <= 0 Then
             PrintMessage "NOTICE: Running out of Diamond Scarabs!"
             g_ui.Macro.chkUseRings.Checked = False
         End If
     End If
     
-    'If (g_AntiBan.m_bLogOut) Then
-    '    Call g_Service.Logout(g_AntiBan.m_sReason)
-    '    bRet = True
-    'End If
+    If (g_AntiBan.m_bLogOut) Then
+        Call g_Service.Logout(g_AntiBan.m_sReason)
+        bRet = True
+    End If
     
 Fin:
     MustLogOut = bRet
@@ -2610,7 +2621,7 @@ On Error GoTo ErrorHandler
     Else
         m_dElapsedTime = dTime
     End If
-    'm_sElapsedTime = myFormatTime(m_dElapsedTime, TF_LETTERS)
+    
     m_sTimeSpent = myFormatTime(m_dTimeSpent, TF_LETTERS)
 
 Fin:
@@ -2673,7 +2684,7 @@ On Error GoTo ErrorHandler
 Fin:
     Exit Sub
 ErrorHandler:
-    PrintErrorMessage "clsMacro.UpdateNextRebuffDisplay"
+    PrintErrorMessage "clsMacro.UpdateTimeUntilLevelDisplay"
     Resume Fin
 End Sub
 

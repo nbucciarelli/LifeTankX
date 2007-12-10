@@ -162,7 +162,7 @@ On Error GoTo ErrorHandler
         If g_Macro.Active And g_ui.AntiBan.chkLogoutOnDetect.Checked Then
             m_bLogOut = True
             m_sReason = "Unfriend player " & objPlayer.Name & " detected."
-            'Call g_Service.Logout("Unfriend player " & objPlayer.Name & " detected.")
+            Call g_Service.Logout("Unfriend player " & objPlayer.Name & " detected.")
         End If
         
     End If

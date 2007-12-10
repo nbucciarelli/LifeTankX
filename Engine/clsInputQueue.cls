@@ -117,7 +117,7 @@ Public Sub OnInputTimerTick()
         End If
         
         'Update internal timer
-        m_Time = m_Time + CDbl(m_InputTimer.Interval) / 1000        'timer in seconds
+        m_Time = m_Time + CDbl(m_InputTimer.Interval / 1000)        'timer in seconds
     Else
         m_Time = 0
         m_Delay = 0
