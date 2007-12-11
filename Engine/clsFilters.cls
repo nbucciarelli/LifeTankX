@@ -116,10 +116,10 @@ Public Property Get dsFilter() As DarksideFilter.Filter
     Set dsFilter = m_DSFilter
 End Property
 
-Public Function SpellLearned(ByVal spellID As Long) As Boolean
+Public Function SpellLearned(ByVal SpellID As Long) As Boolean
 
     If Valid(g_charFilter) Then
-        SpellLearned = (g_charFilter.SpellLearned(spellID) <> 0)
+        SpellLearned = (g_charFilter.SpellLearned(SpellID) <> 0)
     Else
         SpellLearned = False
     End If
@@ -171,7 +171,7 @@ On Error GoTo InvalidFilter
             If Valid(spell) Then
                 'MyDebug "spellfilter: spellid: " & spell.spellID & " name: " & spell.Name
                 
-                MyDebug "<id=" & spell.spellID & "><spl=" & spell.Name & ">"
+                MyDebug "<id=" & spell.SpellID & "><spl=" & spell.Name & ">"
                 
                 '        <spl=Spirit Drinker II><type=0><family=Spirit Drinker><sch=3><lvl=2><id=3254><icon=100673984><desc=Increases elemental damage bonus of a magic caster by 2%>
                 'MyDebug "<spl=" & spell.Name & "><type=" & spell.SpellType & "<family=" & spell.Name & "><sch=" & spell.SpellSchool & "><lvl=" & spell.Difficulty & "><icon=" & spell.Icon & "><desc=" & spell.Description
@@ -398,6 +398,8 @@ On Error GoTo ErrorHandler
     MyDebug "Monarch Name : " & m_DSFilter.Allegiance.Name
     MyDebug "Patron Name : " & m_DSFilter.Allegiance.Patron
     MyDebug "--------------------------"
+    
+    PrintMessage "Loading Player: " & m_DSFilter.Player.Name
 
 Fin:
     Exit Sub

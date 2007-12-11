@@ -1427,13 +1427,15 @@ On Error GoTo ErrorHandler
                     'Not Target Found
                     '
                         
+                    locDebug "ST_IDLE : m_tmrNextSalvageTime.expired: " & m_tmrNextSalvageTime.Expired & " :: " & m_tmrNextSalvageTime.RemainingTime
+                        
                     'Check if we should run the auto-salvager
                     If g_ui.Loot.chkEnableSalvage.Checked _
                     And m_tmrNextSalvageTime.Expired Then
                         If m_bForceSalvage _
                         Or g_Objects.Items.BackpackFull _
                         Or (g_ui.Loot.chkSalvageFrequency.Checked And (m_iNumItemsPickedUp >= g_Data.SalvagerFrequency)) Then
-                            'locDebug "ST_IDLE : Salvaging"
+                            locDebug "ST_IDLE : before GoSalvage... "
                             Call m_tmrNextSalvageTime.SetNextTime(SALVAGER_CHECK_INTERVAL)
                             If GoSalvage Then
                                 locDebug "ST_IDLE : Starting AutoSalvager..."

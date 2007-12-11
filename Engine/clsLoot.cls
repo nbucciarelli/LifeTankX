@@ -1171,8 +1171,7 @@ On Error GoTo ErrorHandler
                                         True, _
                                         g_ui.Loot.chkLootAny.Checked, _
                                         g_ui.Loot.chkLootAny.Checked)
-
-
+    
     End If
 
     If Not bOk Then
@@ -1257,6 +1256,15 @@ On Error GoTo Error_Handler
         Call RemoveItemFromCorpse(m_curItem)
         Call m_tmrNextTime.Reset
         Call SetSubState(ST_LOOT_ITEM_PICKED_UP)
+        If PhatLoot.PassActiveFilters(m_curItem, True, False, False, False, False, False) And g_Macro.Salvager.CheckValidSalvageItem(m_curItem) Then
+            MyDebug "clsLoot: OnCurrentItemPickedUp: Passed Salvage Filters, adding to List"
+            Call g_Macro.Salvager.AddLootToSalvageList(m_curItem)
+        Else
+            MyDebug "clsLoot: onCurrentItemPickedUp: did NOT pass salvage Filters: " & m_curItem.Name
+            MyDebug "clsLoot: PhatLoot: " & PhatLoot.PassActiveFilters(m_curItem, True, False, False, False, False, False)
+            MyDebug "clsLoot: ValidSalvage: " & g_Macro.Salvager.CheckValidSalvageItem(m_curItem)
+        End If
+
     End If
     
 Fin:
@@ -1353,6 +1361,8 @@ On Error GoTo Error_Handler
         End If
         
         Call g_Service.UseItem(m_curItem) 'UseItemOnSelf
+        Call g_Hooks.IDQueueAdd(m_curItem.Guid) 'Make sure we ID it
+
         Call m_tmrNextTime.SetNextTime(3)
         DoPickupItem = True
     End If

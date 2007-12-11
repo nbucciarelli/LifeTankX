@@ -361,7 +361,7 @@ On Error GoTo ErrorHandler
                             
                         Case "showxp"
                             MyDebug "Showing Xps..."
-                            MyDebug "XpToNextLvl: " & g_ds.XpTracker.XpToNextLevel
+                            MyDebug "XpToNextLvl: " & g_ds.XpTracker.XPToNextLevel
                             MyDebug "TotalXp: " & g_ds.XpTracker.TotalXp
             
                         Case "fellow"
@@ -402,7 +402,8 @@ On Error GoTo ErrorHandler
                             
                         Case "salvlist"
                             PrintMessage "Listing Salvageable Items in Main Inventory: "
-                            Call g_Macro.Salvager.MakeValidSalvagesList
+                            'Call g_Macro.Salvager.MakeValidSalvagesList
+                            Call g_Macro.Salvager.GetSalvagesList
                             
                         Case "clicksalv"
                             PrintMessage "Clicking salvage button..."

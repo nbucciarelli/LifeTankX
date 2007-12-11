@@ -327,10 +327,10 @@ On Error GoTo ErrorHandler
     Dim acRect As Decal.tagRECT
     acRect = g_Hooks.ACWindowRect
     MyDebug "acRect dimensions: " & g_Hooks.ACWindowRect.Right & " x " & g_Hooks.ACWindowRect.Bottom
-    PrintMessage "Window: " & g_Hooks.ACWindowRect.Right & " x " & g_Hooks.ACWindowRect.Bottom
-    If (g_Hooks.ACWindowRect.Right <= 800) Then
+    'PrintMessage "Window: " & g_Hooks.ACWindowRect.Right & " x " & g_Hooks.ACWindowRect.Bottom
+    If (g_Hooks.ACWindowRect.Right < 800) Then
         PrintErrorMessage "*************************************************"
-        PrintErrorMessage "*** You should run at least 1024x768 resolution ***"
+        PrintErrorMessage "*** You should run at least 800x600 resolution ***"
         PrintErrorMessage "*************************************************"
         'Call DeleteEngineObjects
         'm_bEngineObjectsLoaded = False

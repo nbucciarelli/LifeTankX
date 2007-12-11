@@ -773,7 +773,7 @@ On Error GoTo ErrorHandler
     RaiseEvent OnCreateObject(objEntity)
 
 Fin:
-    Set objEntity = Nothing
+    'Set objEntity = Nothing
     'myDebug "OnCreateObject done"
     Exit Sub
 ErrorHandler:
@@ -1342,11 +1342,21 @@ On Error GoTo ErrorHandler
         End If
     End If
 
+    
+    ' Update the Inventory objects
+    'If (objEntity.Container = m_objPlayer.GUID) _
+    'Or (objEntity.Wielder = m_objPlayer.GUID) _
+    'Or m_Items.InInventory(objEntity.Container) Then
+    '    m_Items.AddInventoryItemEx (objEntity)
+    'Else
+    '    m_Items.AddWorldItemEx (objEntity)
+    'End If
+
     'Trigger the assess event
     RaiseEvent OnIdentifyObject(objEntity)
 
 Fin:
-    Set objEntity = Nothing
+    'Set objEntity = Nothing
     Exit Sub
 ErrorHandler:
     myError "GameObjects.NetEvent_OnIdentifyObject - " & Err.Description & " - line: " & Erl
@@ -1420,7 +1430,7 @@ On Error GoTo ErrorHandler
     End If
 
 Fin:
-    Set objEntity = Nothing
+    'Set objEntity = Nothing
     Exit Sub
 ErrorHandler:
     myError "OnSetPosition"
@@ -1502,7 +1512,7 @@ On Error GoTo ErrorHandler
     End If
 
 Fin:
-    Set objEntity = Nothing
+    'Set objEntity = Nothing
     Exit Sub
 ErrorHandler:
     myError "OnApproachVendor -- Err: " & Err.Description

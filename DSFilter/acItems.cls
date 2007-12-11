@@ -381,7 +381,7 @@ Public Sub DisplayWorld()
     
     Next tmpItem
     
-    Set tmpItem = Nothing
+    'Set tmpItem = Nothing
     'Set objOwner = Nothing
 
 End Sub

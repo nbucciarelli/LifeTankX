@@ -50,6 +50,8 @@ Private m_bComplete As Boolean  'tell if salvaging was complete or interupted
 Private m_IdQueue As colObjects
 Private m_ItemsToSalvage As colObjects
 
+Private m_LootedItemsToSalvage As colObjects 'All the looted items we want to salvage
+
 Private m_colSalvages As colObjects 'List of all the items from the main pack we can salvage
 Private m_colBatch As colObjects
 Private m_batchState As Integer
@@ -72,6 +74,7 @@ Private Sub Class_Initialize()
     Set m_ItemsToSalvage = New colObjects
     Set m_colBatch = New colObjects
     Set m_colItemsInUse = New colObjects
+    Set m_LootedItemsToSalvage = New colObjects
     Set m_objUst = Nothing
     Call Reset
 End Sub
@@ -94,6 +97,7 @@ Private Sub Class_Terminate()
     Set m_colSalvages = Nothing
     Set m_colBatch = Nothing
     Set m_colItemsInUse = Nothing
+    Set m_LootedItemsToSalvage = Nothing
 End Sub
 
 
@@ -109,6 +113,21 @@ End Sub
 '                           Public Methods
 '
 '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+Public Function AddLootToSalvageList(objItem As acObject) As Boolean
+On Error GoTo ErrorHandler
+    Dim bRet As Boolean
+    
+    bRet = m_LootedItemsToSalvage.addObject(objItem)
+
+Fin:
+    AddLootToSalvageList = bRet
+    Exit Function
+ErrorHandler:
+    PrintErrorMessage "clsSalvager.AddLootToSalvageList - " & Err.Description
+    bRet = False
+    Resume Fin
+End Function
 
 Public Function UstAvailable() As Boolean
 On Error GoTo ErrorHandler
@@ -146,6 +165,8 @@ On Error GoTo ErrorHandler
         Call m_tmrNextTime.ExpireNow
         bRet = True
     End If
+    
+    locDebug "StartSalvaging called, bRet = " & bRet
     
 Fin:
     StartSalvaging = bRet
@@ -268,6 +289,61 @@ Public Sub StopSalvage(Optional ByVal sSrc As String = "None")
     Call m_tmrTransition.SetNextTime(TRANSITION_DELAY)
 End Sub
 
+'Prints out the current salvages list
+Public Sub GetSalvagesList()
+On Error GoTo ErrorHandler
+
+    Dim objItem As acObject
+
+    'Loop through inventory items, looking for valid salvages
+    For Each objItem In m_LootedItemsToSalvage
+        If Valid(objItem) Then
+            PrintMessage "Salvage: " & objItem.Name
+        End If
+    Next objItem
+
+Fin:
+    Exit Sub
+ErrorHandler:
+    PrintErrorMessage "clsSalvager.GetSalvagesList - " & Err.Description
+    Resume Fin
+End Sub
+
+' Check to see if this object is Valid Salvage
+Public Function CheckValidSalvageItem(objItem As acObject) As Boolean
+On Error GoTo ErrorHandler
+    Dim bRet As Boolean
+    
+    locDebug "clsSalvager: CheckValidSalvageItem: " & objItem.Name
+    
+        'Check for bad salvage item
+        If (objItem.UserData(INT_SALVAGECOUNT) > 2) Then
+            bRet = False
+        ElseIf objItem.Workmanship < 1 Then
+            bRet = False
+        ElseIf objItem.itemType = ITEM_SALVAGE Then
+            bRet = False
+        ElseIf PhatLoot.IsImportantItem(objItem) Then
+            bRet = False
+        ElseIf objItem.HasMajors Then
+            bRet = False
+        'ElseIf IsWorthAssessing(objItem.itemType) And (objItem.LastIdTime = 0) Then
+            'If item hasn't been assessed return
+        '    bRet = False
+        Else
+            'Ok we found a salvageable item, add it to our list
+            bRet = True
+        End If
+
+Fin:
+    CheckValidSalvageItem = bRet
+    Exit Function
+ErrorHandler:
+    PrintErrorMessage "clsSalvager.CheckValidSalvageItem - " & Err.Description
+    bRet = False
+    Resume Fin
+End Function
+
 'List all the valid non-salvaged-yet items in main inventory we can salvage
 'FIXME: make private
 Public Sub MakeValidSalvagesList()
@@ -278,32 +354,61 @@ On Error GoTo ErrorHandler
     'Start a new collection
     Set m_colSalvages = New colObjects
     
+    locDebug "clsSalvager: MakeValidSalvagesList: Items.Inv: " & g_Objects.Items.Inv.Count
+    
     'Loop through inventory items, looking for valid salvages
     For Each objItem In g_Objects.Items.Inv
         
+        locDebug "MVSL: Testing: " & objItem.Name
+        
         'Check for bad salvage item
-        If (objItem.UserData(INT_SALVAGECOUNT) > 2) Then GoTo NextItem
+        If (objItem.UserData(INT_SALVAGECOUNT) > 2) Then
+            locDebug "MVSL: INT_SALVAGECOUNT: " & objItem.UserData(INT_SALVAGECOUNT)
+            GoTo NextItem
+        End If
         
         'Must have a workmanship
-        If objItem.Workmanship < 1 Then GoTo NextItem
+        If objItem.Workmanship < 1 Then
+            locDebug "MVSL: Workmanship: " & objItem.Workmanship
+            GoTo NextItem
+        End If
         
         'Must not be a bag of salvage
-        If objItem.itemType = ITEM_SALVAGE Then GoTo NextItem
+        If objItem.itemType = ITEM_SALVAGE Then
+            locDebug "MVSL: ITEM_SALVAGE true"
+            GoTo NextItem
+        End If
 
         'Must not be an important item
-        If PhatLoot.IsImportantItem(objItem) Then GoTo NextItem
+        If PhatLoot.IsImportantItem(objItem) Then
+            locDebug "MVSL: PhatLoot IsImportantItem"
+            GoTo NextItem
+        End If
         
         'Check all filters but salvage filters
-        If PhatLoot.PassActiveFilters(objItem, False) Then GoTo NextItem
+        If PhatLoot.PassActiveFilters(objItem, False) Then
+            locDebug "MVSL: PhatLoot PassActiveFilters"
+            GoTo NextItem
+        End If
         
         'Salvage must be in our "salvages to pickup" list, even if the "loot salvage" is unchecked
-        If Not g_Data.LootFilters.PassFilters(objItem, g_Data.LootFilters.SalvageFilters) Then GoTo NextItem
+        If Not g_Data.LootFilters.PassFilters(objItem, g_Data.LootFilters.SalvageFilters) Then
+            locDebug "MVSL: NOT in SalvageFilter list"
+            GoTo NextItem
+        End If
         
         'Never Salvage a major (yeah, I know major banes should be salvage :)
-        If objItem.HasMajors Then GoTo NextItem
+        If objItem.HasMajors Then
+            locDebug "MVSL: HasMajors: " & objItem.HasMajors
+            GoTo NextItem
+        End If
         
         'If item hasn't been assessed return
-        If IsWorthAssessing(objItem.itemType) And (objItem.LastIdTime = 0) Then GoTo NextItem         'FIX: 11/11/2004 - Prevent non assessed items from being salvaged
+        If IsWorthAssessing(objItem.itemType) And (objItem.LastIdTime = 0) Then
+            locDebug "IsWorthAssessing, LastIdTime = " & objItem.LastIdTime
+            'Call g_Hooks.IDQueueAdd(objItem.Guid)
+            GoTo NextItem         'FIX: 11/11/2004 - Prevent non assessed items from being salvaged
+        End If
         
         'Ok we found a salvageable item, add it to our list
         If Not m_colSalvages.addObject(objItem) Then
@@ -424,13 +529,13 @@ On Error GoTo ErrorHandler
     Dim oFilter As clsLootFilter
     
     Dim colBigBatch As New colObjects 'final list of items & partial bags with different salvage kinds
-    Dim colBatch As colObjects   'list of partial bags & items of the same salvage kind to add to the big batch
+    Dim colBatch As colObjects        'list of partial bags & items of the same salvage kind to add to the big batch
     Dim oItem As acObject
     Dim iMaxSalWork As Integer
     Dim iMinSalWork As Integer
     
     'Generate the list of valid salvage items currently in inventory
-    Call MakeValidSalvagesList
+    'Call MakeValidSalvagesList
     
     'Try to make a batch for each salvage kind enabled
     For Each oFilter In g_Data.LootFilters.SalvageFilters
@@ -568,8 +673,9 @@ On Error GoTo ErrorHandler
     
         'Now check if we can salvage some items
         Set colSalv = New colObjects
-            
-        For Each objItem In m_colSalvages
+        
+        'For Each objItem In m_colSalvages
+        For Each objItem In m_LootedItemsToSalvage
             If (objItem.MaterialType = lSalvageMaterial) _
             And (objItem.Workmanship >= salMinWork) _
             And (objItem.Workmanship <= salMaxWork) Then
@@ -740,6 +846,10 @@ On Error GoTo ErrorHandler
             locDebug "clsSalvager.OnRemoveObject - Removing " & objItem.Name & " from batch"
         End If
         
+        If m_LootedItemsToSalvage.Remove(objItem.Guid) Then
+            locDebug "clsSalvager.OnRemoveObject - Removing " & objItem.Name & " from LootedItemsToSalvage"
+        End If
+        
         'Are we done usting all the items ?
         If m_colBatch.Count < 1 Then
             If Not g_ui.Options.chkFilterSalvageMsg.Checked Then
@@ -788,7 +898,7 @@ Private Sub m_tmrTransition_OnTimeout()
     Call Reset
 End Sub
 
-Private Function ValidSalvageItem(objItem As acObject) As Boolean
+Public Function ValidSalvageItem(objItem As acObject) As Boolean
 On Error GoTo ErrorHandler
     Dim bRet As Boolean
     

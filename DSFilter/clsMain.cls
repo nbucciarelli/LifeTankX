@@ -1384,7 +1384,7 @@ On Error GoTo ErrorHandler
     End If
     
 Fin:
-    Set objEntity = Nothing
+    'Set objEntity = Nothing
     Exit Sub
 ErrorHandler:
     myError "NetEvent_OnApplyVisualEffects"
