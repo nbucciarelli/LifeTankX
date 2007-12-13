@@ -407,7 +407,7 @@ On Error GoTo ErrorHandler
             'If we're currently looking for items to loot on the corpse,
             'tell the macro we can perform a new search right now
             If m_State = ST_LOOT_SEARCH_ITEM Then
-                Call m_tmrNextTime.Reset
+                Call m_tmrNextTime.ExpireNow
             End If
             
             bRet = True
@@ -469,7 +469,7 @@ On Error GoTo ErrorHandler
     'If we're currently looking for items to loot on the corpse,
     'tell the macro we can perform a new search right now
     If m_State = ST_LOOT_SEARCH_ITEM Then
-        Call m_tmrNextTime.Reset
+        Call m_tmrNextTime.ExpireNow
     End If
 
     'return ok
@@ -580,7 +580,7 @@ On Error GoTo Error_Handler
         
             'If we're currently looking for items to loot on the corpse,
             'tell the macro we can perform a new search right now
-            If m_State = ST_LOOT_SEARCH_ITEM Then Call m_tmrNextTime.Reset
+            If m_State = ST_LOOT_SEARCH_ITEM Then Call m_tmrNextTime.ExpireNow
         End If
     End If
     
@@ -1093,6 +1093,7 @@ On Error GoTo ErrorHandler
     Else
         locDebug "OnCorpseOpened : " & m_curCorpse.Name & " - Now Searching for Items"
         Call SetSubState(ST_LOOT_SEARCH_ITEM)
+        Call m_tmrNextTime.ExpireNow
     End If
 
 Fin:
@@ -1254,7 +1255,7 @@ On Error GoTo Error_Handler
         locDebug "OnCurrentItemPickupedUp - " & m_curItem.Name & " picked up."
         RaiseEvent OnItemLooted(m_curItem)
         Call RemoveItemFromCorpse(m_curItem)
-        Call m_tmrNextTime.Reset
+        Call m_tmrNextTime.ExpireNow
         Call SetSubState(ST_LOOT_ITEM_PICKED_UP)
         If PhatLoot.PassActiveFilters(m_curItem, True, False, False, False, False, False) And g_Macro.Salvager.CheckValidSalvageItem(m_curItem) Then
             MyDebug "clsLoot: OnCurrentItemPickedUp: Passed Salvage Filters, adding to List"
@@ -1363,7 +1364,7 @@ On Error GoTo Error_Handler
         Call g_Service.UseItem(m_curItem) 'UseItemOnSelf
         Call g_Hooks.IDQueueAdd(m_curItem.Guid) 'Make sure we ID it
 
-        Call m_tmrNextTime.SetNextTime(3)
+        Call m_tmrNextTime.SetNextTime(1)
         DoPickupItem = True
     End If
     

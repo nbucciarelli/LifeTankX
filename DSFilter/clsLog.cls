@@ -18,6 +18,8 @@ Option Explicit
 Private Const FILE_DEBUGLOG = "DSFilter_Debug.log"
 Private Const FILE_ERROR = "DSFilter_Error.log"
 
+Private Const DEBUG_ME = False
+
 Private m_lFileDebugLog As Long
 Private m_lFileErrorLog As Long
 
@@ -79,12 +81,14 @@ End Function
 Public Sub DebugMsg(ByVal sMsg As String)
 On Error GoTo ErrorHandler
 
-    If Valid(g_debugLog) Then
-        Call xWriteMessageToFile(g_debugLog, sMsg)
-    ElseIf m_lFileDebugLog <> -1 Then
-        Call DS_WriteToFile(m_lFileDebugLog, sMsg)
+    If DEBUG_ME Then
+        If Valid(g_debugLog) Then
+            Call xWriteMessageToFile(g_debugLog, sMsg)
+        ElseIf m_lFileDebugLog <> -1 Then
+            Call DS_WriteToFile(m_lFileDebugLog, sMsg)
+        End If
     End If
-    
+
 Fin:
     Exit Sub
 ErrorHandler:

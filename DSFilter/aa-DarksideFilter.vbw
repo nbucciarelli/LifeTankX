@@ -1,8 +1,8 @@
 Filter = 213, 10, 1006, 609, 
 Globals = 40, 90, 788, 689, C
 Constants = 0, 76, 747, 759, C
-Utils = 137, 70, 885, 669, C
-DebugLog = 198, 261, 940, 860, C
+Utils = 137, 70, 885, 669, 
+DebugLog = 198, 261, 940, 860, 
 acLoc = 88, 116, 836, 715, C
 netCharacterList = 98, 265, 846, 864, C
 acAccount = 264, 264, 999, 868, C
