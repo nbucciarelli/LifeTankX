@@ -1,8 +1,8 @@
 Attribute VB_Name = "Utils"
 Option Explicit
 
-Public Declare Function timeGetTime Lib "winmm.dll" () As Long
-'Public Declare Function timeGetTime Lib "kernel32" () As Long 'elapsed time in msec since system boot
+Public Declare Function timeGetTime Lib "winmm.dll" () As Double
+'Public Declare Function timeGetTime Lib "kernel32" () As Double 'elapsed time in msec since system boot
 Public Declare Function SHGetFolderPath Lib "shfolder.dll" Alias "SHGetFolderPathA" (ByVal hwndOwner As Long, ByVal nFolder As Long, ByVal hToken As Long, ByVal dwFlags As Long, ByVal lpszPath As String) As Long
 
 
@@ -295,11 +295,12 @@ End Function
 
 Public Function GetElapsedSeconds() As Double
 On Error GoTo ErrorHandler
-    If GetElapsedSeconds <= 0 Or timeGetTime <= 0 Then
-        GetElapsedSeconds = 1
-    Else
-        GetElapsedSeconds = CDbl(timeGetTime) / CDbl(1000)
-    End If
+    'If GetElapsedSeconds <= 0 Or timeGetTime <= 0 Then
+    '    GetElapsedSeconds = 1
+    'Else
+    '    GetElapsedSeconds = CDbl(timeGetTime) / CDbl(1000)
+    'End If
+     GetElapsedSeconds = timeGetTime
 Fin:
     Exit Function
 ErrorHandler:

@@ -429,6 +429,39 @@ ErrorHandler:
     Resume Fin
 End Function
 
+Public Function GetModObject(ByVal lObjGUID As Long, Optional ByRef objOut As acObject) As Boolean
+On Error GoTo ErrorHandler
+    Dim bRet As Boolean
+    
+    If lObjGUID = 0 Then
+        Set objOut = m_objWorld
+        bRet = True
+    ElseIf lObjGUID = m_objPlayer.GUID Then
+        Set objOut = m_objPlayer
+        bRet = True
+    ElseIf m_colMonsters.Exists(lObjGUID, objOut) Then
+        bRet = True
+    ElseIf m_colPlayers.Exists(lObjGUID, objOut) Then
+        bRet = True
+    ElseIf m_Items.Exists(lObjGUID, objOut) Then
+        bRet = True
+    ElseIf m_colJunk.Exists(lObjGUID, objOut) Then
+        bRet = True
+    Else    ' not found
+        bRet = False
+        Set objOut = Nothing
+    End If
+    
+Fin:
+    GetModObject = bRet
+    Exit Function
+ErrorHandler:
+    Set objOut = Nothing
+    bRet = False
+    myError "GameObjects.GetModObject - " & Err.Description
+    Resume Fin
+End Function
+
 Public Function FindPlayer(ByVal lPlayerGUID As Long) As acObject
 On Error GoTo ErrorHandler
 
@@ -773,7 +806,7 @@ On Error GoTo ErrorHandler
     RaiseEvent OnCreateObject(objEntity)
 
 Fin:
-    'Set objEntity = Nothing
+    Set objEntity = Nothing
     'myDebug "OnCreateObject done"
     Exit Sub
 ErrorHandler:
@@ -812,7 +845,13 @@ On Error GoTo ErrorHandler
     
     If Not Valid(objEntity) Then Exit Sub
     
-    myDebug "OnIdentifyObject: " & objEntity.Name & " : " & lObjGUID & " -- AssessFlag=" & Hex(lAssessFlag) & " -- lCharFlags=" & Hex(lCharFlags)
+    If GetModObject(lObjGUID, objEntity) Then
+        myDebug "OnIdentifyObject: WILL UPDATE " & objEntity.Name & " : " & lObjGUID & " -- AssessFlag=" & Hex(lAssessFlag) & " -- lCharFlags=" & Hex(lCharFlags)
+    Else
+        myDebug "OnIdentifyObject: ERROR, could not GetModObject for: " & lObjGUID
+    End If
+
+    'myDebug "OnIdentifyObject: " & objEntity.Name & " : " & lObjGUID & " -- AssessFlag=" & Hex(lAssessFlag) & " -- lCharFlags=" & Hex(lCharFlags)
     
     'Remember when we last IDed this item
     objEntity.LastIDTime = g_Time
@@ -840,7 +879,8 @@ On Error GoTo ErrorHandler
                 Case &H11& 'Rare #
                     objEntity.IsRare = True
                     objEntity.RareNumber = lVal
-                    myError "IDObject: Rare #: " & objEntity.Name & " Key:" & Hex(lKey) & " Rare #:" & sVal
+                    myDebug "IDObject: Rare #: " & objEntity.Name & " Key:" & Hex(lKey) & " Rare #:" & sVal
+                    'myError "IDObject: Rare #: " & objEntity.Name & " Key:" & Hex(lKey) & " Rare #:" & sVal
                     RaiseEvent OnRareDetected(objEntity)
                 
                 Case &H13& 'Value
@@ -1026,15 +1066,15 @@ On Error GoTo ErrorHandler
                         End If
                     End If
                     
-                    'myError "Imbue #" & Hex(lVal) & " on " & objEntity.Name
+                    'myDebug "Imbue #" & Hex(lVal) & " on " & objEntity.Name
                     'Else
                         'objEntity.Imbue = "Unknown Imbue #" & Hex(lVal) & " on " & objEntity.Name
                     'End If
-                    'myError "ID: " & objEntity.Name & " - Imbue: " & objEntity.Imbue
+                    'myDebug "ID: " & objEntity.Name & " - Imbue: " & objEntity.Imbue
                 
                 Case &HCC& 'ElementBonusDamage
                     objEntity.ElementBonusDamage = lVal
-                    'myError "ID: " & objEntity.Name & " - Element Bonus Damage: " & objEntity.ElementBonusDamage
+                    'myDebug "ID: " & objEntity.Name & " - Element Bonus Damage: " & objEntity.ElementBonusDamage
                     
                 Case &H107& 'Resistance Cleaving Type
                     If lVal = 1 Then
@@ -1058,21 +1098,21 @@ On Error GoTo ErrorHandler
         iNumData = pMsg.Value("booleanCount")
         Set xB = pMsg.Struct("booleans")
 
-        'myError "IDObject: Booleans: " & objEntity.Name & " [NumData=" & iNumData & "]"
+        'myDebug "IDObject: Booleans: " & objEntity.Name & " [NumData=" & iNumData & "]"
 
         For i = 0 To iNumData - 1
             bVal = xB.Struct(i).Value("value")
             lKey = xB.Struct(i).Value("key")
             
-            'myError "Boolean"
-            'myError "IDObject: " & objEntity.Name & " Key:" & Hex(lKey) & " Val:" & bVal
+            'myDebug "Boolean"
+            'myDebug "IDObject: " & objEntity.Name & " Key:" & Hex(lKey) & " Val:" & bVal
                     
             Select Case lKey
                 'Case &HE&  'Use Instruction
-                    'myError "ID: " & objEntity.Name & " - Use Instruction : " & sVal
+                    'myDebug "ID: " & objEntity.Name & " - Use Instruction : " & sVal
 
                 'Case &HF&  'Simple Description
-                    'myError "ID: " & objEntity.Name & " - Simple Description : " & sVal
+                    'myDebug "ID: " & objEntity.Name & " - Simple Description : " & sVal
 
             End Select
         Next i
@@ -1116,17 +1156,17 @@ On Error GoTo ErrorHandler
                 Case &H98   'PvM bonus
                     objEntity.PvMBonus = Round(dVal * 100) - 100
                     If objEntity.PvMBonus < 0 Then objEntity.PvMBonus = 0
-                    myError "ID: " & objEntity.Name & " - PvM Bonus (dVal:" & dVal & ") = +" & objEntity.PvMBonus
+                    myDebug "ID: " & objEntity.Name & " - PvM Bonus (dVal:" & dVal & ") = +" & objEntity.PvMBonus
                     
                 Case &H88 'Crushing Blow
                     If lVal >= 1 Then
-                        myError "Found Crushing Blow property."
+                        myDebug "Found Crushing Blow property."
                         objEntity.CrushingBlow = True
                     End If
                 
                 Case &H93 'Biting Strike
                     If lVal >= 1 Then
-                        myError "Found Biting Strike property."
+                        myDebug "Found Biting Strike property."
                         objEntity.BitingStrike = True
                     End If
                     
@@ -1167,11 +1207,11 @@ On Error GoTo ErrorHandler
             Select Case lKey
                 Case &HE&  'Use Instruction
                     objEntity.UsageInstructions = sVal
-                    'myError "ID: " & objEntity.Name & " - Use Instruction : " & sVal
+                    'myDebug "ID: " & objEntity.Name & " - Use Instruction : " & sVal
 
                 Case &HF&  'Simple Description
                     objEntity.ShortDesc = sVal
-                    'myError "ID: " & objEntity.Name & " - Simple Description : " & sVal
+                    'myDebug "ID: " & objEntity.Name & " - Simple Description : " & sVal
 
                 Case &H7& 'Inscription
                     objEntity.Inscription = sVal
@@ -1212,9 +1252,9 @@ On Error GoTo ErrorHandler
         
         'myDebug "IDObject: Spells: " & objEntity.Name & " [NumData=" & iNumData & "]"
         
-        If iNumData > 0 Then
-            Set objEntity.Spells = New Dictionary
-        End If
+        'If iNumData > 0 Then
+        '    Set objEntity.Spells = New Dictionary
+        'End If
         
         For i = 0 To iNumData - 1
             lSpellID = xSpells.Struct(i).Value("spell")
@@ -1224,7 +1264,9 @@ On Error GoTo ErrorHandler
                 Dim sFlags As Integer
                 sFlags = xSpells.Struct(i).Value("flags")
                 
-                Call objEntity.Spells.Add(sSpellName, sFlags)
+                If Not objEntity.Spells.Exists(sSpellName) Then
+                    Call objEntity.Spells.Add(sSpellName, sFlags)
+                End If
                 
                 'myDebug "ID: " & objEntity.Name & " - Spell: " & sSpellName & "  flags: " & sFlags
                 
@@ -1430,7 +1472,7 @@ On Error GoTo ErrorHandler
     End If
 
 Fin:
-    'Set objEntity = Nothing
+    Set objEntity = Nothing
     Exit Sub
 ErrorHandler:
     myError "OnSetPosition"
@@ -1512,7 +1554,7 @@ On Error GoTo ErrorHandler
     End If
 
 Fin:
-    'Set objEntity = Nothing
+    Set objEntity = Nothing
     Exit Sub
 ErrorHandler:
     myError "OnApproachVendor -- Err: " & Err.Description

@@ -307,7 +307,7 @@ Private Sub Class_Initialize()
     m_bImperilOrBludgeon = False
     m_fImperilOrBludgeonTimer = 0
     LastIDTime = 0
-    Set Spells = Nothing
+    Set Spells = New Dictionary
     
 End Sub
 

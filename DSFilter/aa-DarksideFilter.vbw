@@ -1,13 +1,13 @@
 Filter = 213, 10, 1006, 609, 
-Globals = 40, 90, 788, 689, C
-Constants = 0, 76, 747, 759, C
+Globals = 40, 90, 788, 689, 
+Constants = 10, 109, 757, 792, C
 Utils = 137, 70, 885, 669, 
-DebugLog = 198, 261, 940, 860, 
+DebugLog = 198, 261, 940, 860, C
 acLoc = 88, 116, 836, 715, C
 netCharacterList = 98, 265, 846, 864, C
 acAccount = 264, 264, 999, 868, C
 acAccountChar = 198, 261, 940, 860, C
-acObject = 262, 28, 1004, 627, C
+acObject = 268, 5, 1010, 604, C
 colObjects = 47, 30, 789, 629, C
 GameObjects = 1, 244, 1007, 872, 
 acAllegianceTreeItem = 81, 85, 823, 684, C

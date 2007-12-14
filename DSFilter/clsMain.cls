@@ -244,8 +244,17 @@ On Error GoTo ErrorHandler
         GoTo Fin
     End If
     
+    ' Get the elapsed time as a TimeSpan value.
+    'Dim ts As TimeSpan = stopWatch.Elapsed
+
+    ' Format and display the TimeSpan value.
+    'labelTime.Text = String.Format("{0:00}:{1:00}:{2:00}.{3:00}", _
+    'ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds/10)
+    
     'Init Clock
-    m_fLastTime = GetElapsedSeconds
+    
+    'm_fLastTime = GetElapsedSeconds
+    m_fLastTime = timeGetTime
     g_Time = 0
     m_tmrClock.Enabled = True
     
@@ -297,7 +306,8 @@ On Error GoTo ErrorHandler
     Dim fDelta As Double
     Dim fCurTime As Double
     
-    fCurTime = GetElapsedSeconds
+    'fCurTime = GetElapsedSeconds
+    fCurTime = timeGetTime
     fDelta = fCurTime - m_fLastTime
     m_fLastTime = fCurTime
     
@@ -1384,7 +1394,7 @@ On Error GoTo ErrorHandler
     End If
     
 Fin:
-    'Set objEntity = Nothing
+    Set objEntity = Nothing
     Exit Sub
 ErrorHandler:
     myError "NetEvent_OnApplyVisualEffects"

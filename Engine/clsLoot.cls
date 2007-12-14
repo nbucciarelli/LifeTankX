@@ -19,7 +19,7 @@ Option Explicit
 ' [[                                                                         [[
 ' [[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
 
-Private Const DEBUG_ME = False
+Private Const DEBUG_ME = True
 
 'Contants
 Private Const LOOT_MAX_SEARCH_CORPSE_TIME = 3
@@ -1117,6 +1117,7 @@ On Error GoTo ErrorHandler
         bRet = ((g_ds.Time - objItem.LastIdTime) > ID_EXPIRATION_TIME)
         If Not bRet Then
             locDebug "CanAssess(" & objItem.Name & ") : ID Time Not Expired - Not assessing item"
+            locDebug "CanAssess(" & objItem.Name & ") : Time: " & g_ds.Time & " LastIdTime: " & objItem.LastIdTime
         End If
     End If
     

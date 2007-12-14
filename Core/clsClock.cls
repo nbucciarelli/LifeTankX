@@ -38,7 +38,8 @@ On Error GoTo ErrorHandler
     Dim fDelta As Double
     Dim fCurTime As Double
     
-1    fCurTime = CDbl(GetElapsedSeconds)
+    'fCurTime = GetElapsedSeconds
+1    fCurTime = timeGetTime
 2    fDelta = fCurTime - m_fLastTime
 3    m_fLastTime = fCurTime
     
@@ -64,7 +65,8 @@ ErrorHandler:
 End Sub
 
 Public Sub StartTimer()
-    m_fLastTime = GetElapsedSeconds
+    'm_fLastTime = GetElapsedSeconds
+    m_fLastTime = timeGetTime
     g_Time = 0
     m_tmrClock.Enabled = True
     MyDebug "Clock Timer Started"
