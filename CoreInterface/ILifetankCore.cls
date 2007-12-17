@@ -32,7 +32,7 @@ End Property
 Public Property Get MainView() As DecalPlugins.IView
 End Property
 
-Public Property Get Time() As Double
+Public Property Get Time() As Long
 End Property
 
 Public Property Get Ticking() As Boolean

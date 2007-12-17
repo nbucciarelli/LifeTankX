@@ -215,7 +215,7 @@ Private Property Get ICore_Ticking() As Boolean
     ICore_Ticking = m_tmrMacro.Enabled
 End Property
 
-Private Property Get ICore_Time() As Double
+Private Property Get ICore_Time() As Long
     ICore_Time = g_Time
 End Property
 

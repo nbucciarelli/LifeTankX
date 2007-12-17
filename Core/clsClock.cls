@@ -35,20 +35,21 @@ End Sub
 Private Sub m_tmrClock_Timer()
 On Error GoTo ErrorHandler
     
-    Dim fDelta As Double
-    Dim fCurTime As Double
+    Dim fDelta As Long
+    Dim fCurTime As Long
     
-    'fCurTime = GetElapsedSeconds
-1    fCurTime = timeGetTime
-2    fDelta = fCurTime - m_fLastTime
-3    m_fLastTime = fCurTime
+    fCurTime = timeGetTime
+    fDelta = fCurTime - m_fLastTime
     
-    'Give current time in seconds
-4    g_Time = g_Time + fDelta
-        
+    If (fDelta >= 1000) Then
+        'Give current time in seconds
+        g_Time = g_Time + 1
+        m_fLastTime = fCurTime
+    End If
+    
     'Update timers
     If Valid(g_Timers) Then
-5       Call g_Timers.Update
+        Call g_Timers.Update
         
         If Valid(g_Core) Then
             If Valid(g_Core.Engine) Then
@@ -65,10 +66,9 @@ ErrorHandler:
 End Sub
 
 Public Sub StartTimer()
-    'm_fLastTime = GetElapsedSeconds
     m_fLastTime = timeGetTime
     g_Time = 0
     m_tmrClock.Enabled = True
-    MyDebug "Clock Timer Started"
+    MyDebug "Clock Timer Started: " & m_fLastTime
 End Sub
 

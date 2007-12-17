@@ -407,7 +407,7 @@ Public Sub ResetCastingFlag(Optional sSource As String = "", Optional ByVal bRes
     locDebug "ResetCastingFlag - From: " & sSource
     m_bCasting = False
     'FIXME - JSC
-    Call m_tmrPrecastDelay.Reset
+    Call m_tmrPrecastDelay.ExpireNow
     Call g_Macro.PostCastDelayTimer.SetNextTime(0.5)
 End Sub
 

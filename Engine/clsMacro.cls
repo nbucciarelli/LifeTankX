@@ -93,7 +93,7 @@ Private FiveMinXPCounter As TypeFiveMinCounter
 '#
 '#####################################################################################
 
-Public PostCastDelayTimer As clsTimer
+Private m_tmrPostCastDelayTimer As clsTimer
 Private m_tmrBusyDelay As clsTimer
 Private m_tmrNextLogoutCheck As clsTimer
 Private WithEvents m_tmrWaypointDelay As clsTimer
@@ -215,7 +215,7 @@ Private Sub Class_Initialize()
 'On Error GoTo ErrorHandler
  
     Set m_tmrBusyDelay = CreateTimer
-    Set PostCastDelayTimer = CreateTimer
+    Set m_tmrPostCastDelayTimer = CreateTimer
     Set m_tmrWaypointDelay = CreateTimer
     Set m_tmrNextLogoutCheck = CreateTimer
     Set m_tmrNextLootCheck = CreateTimer
@@ -228,7 +228,7 @@ Private Sub Class_Initialize()
     Set m_tmrCastSpell = CreateTimer
     
     Call m_tmrBusyDelay.Reset
-    Call PostCastDelayTimer.Reset
+    Call m_tmrPostCastDelayTimer.Reset
     Call m_tmrWaypointDelay.Reset
     Call m_tmrNextLogoutCheck.Reset
     Call m_tmrNextLootCheck.Reset
@@ -330,7 +330,7 @@ Private Sub Class_Terminate()
 
     Set m_tmrCastSpell = Nothing
     Set m_tmrBusyDelay = Nothing
-    Set PostCastDelayTimer = Nothing
+    Set m_tmrPostCastDelayTimer = Nothing
     Set m_tmrWaypointDelay = Nothing
     Set m_tmrNextLogoutCheck = Nothing
     Set m_tmrNextLootCheck = Nothing
@@ -424,6 +424,10 @@ End Property
 
 Public Property Get Fletcher() As clsMacroFletcher
     Set Fletcher = m_Fletcher
+End Property
+
+Public Property Get PostCastDelayTimer() As clsTimer
+    Set PostCastDelayTimer = m_tmrPostCastDelayTimer
 End Property
 
 Public Property Get BusyDelayTimer() As clsTimer
@@ -977,6 +981,7 @@ On Error GoTo ErrorHandler
     Else
         locDebug "OnRebuffComplete - Buff cycle completed, moving back to idle mode"
         m_bForceRebuff = False
+        Call g_Spells.tmrPrecastDelay.ExpireNow
         Call GoIdle
         Call RunState
     End If
@@ -1169,22 +1174,22 @@ Dim bRet As Boolean
     If IsBusy(bTurbo) Or g_Spells.Casting Then
         locDebug "clsMacro.isReadyToCast: IsBusy: " & IsBusy(bTurbo) & " : or g_Spells.Casting"
         bRet = False
-    ElseIf Not (g_Spells.tmrPrecastDelay.Expired) Then
-        locDebug "clsMacro.isReadyToCast: tmrPrecastDelay not Expired"
-        bRet = False
+    'ElseIf Not (g_Spells.tmrPrecastDelay.Expired) Then
+    '    locDebug "clsMacro.isReadyToCast: tmrPrecastDelay not Expired"
+    '    bRet = False
     'ElseIf (g_Spells.LastCastAttempt + 1) > g_Core.Time Then
     '    locDebug "clsMacro.isReadyToCast: LastCastAttemp is less that g_Core.Time"
     '    'Limit to one try per second
     '    bRet = False
     'ElseIf Not (g_Macro.PostCastDelayTimer.Expired) Then
-    '    locDebug "clsMacro.isReadyToCast: tmrPostCastDelayTimer not Expired"
+    '    locDebug "clsMacro.isReadyToCast: m_tmrPostCastDelayTimer not Expired"
     '    bRet = False
     Else
         'locDebug "clsMacro.isReadyToCast: Not RechargingManaStam"
         bRet = Not RechargingManaStam
     End If
     
-    'locDebug "clsMacro.isReadyToCast: " & bRet
+    locDebug "clsMacro.isReadyToCast: " & bRet
     
     isReadyToCast = bRet
 End Function
@@ -1382,12 +1387,12 @@ On Error GoTo ErrorHandler
                 End If
                 
                 
-                If IsCaster And Not (g_ui.Loot.chkLootForcePeaceMode.Checked) Then
-                    If Not isReadyToCast(TurboMode) Then 'make sure we keep our mana/stam up
-                        locDebug "clsMacro.RunState: ST_IDLE: Not isReadyToCast()"
-                        GoTo Fin
-                    End If
-                End If
+                'If IsCaster And Not (g_ui.Loot.chkLootForcePeaceMode.Checked) Then
+                '    If Not isReadyToCast(TurboMode) Then 'make sure we keep our mana/stam up
+                '        locDebug "clsMacro.RunState: ST_IDLE: Not isReadyToCast()"
+                '        GoTo Fin
+                '    End If
+                'End If
                 
                 'Check if loot priority is boosted.
                 If g_ui.Loot.chkBoostLootPriority.Checked _
@@ -1666,6 +1671,15 @@ On Error GoTo ErrorHandler
                 End If
                 
             Case ST_LOOT
+                ' See if we should be in combat
+                If m_Combat.Target Is Nothing Then
+                    If FindBestTarget(objTarget) Then
+                        locDebug "ST_LOOT : found target while LOOTing"
+                        Call GoCombat(objTarget)
+                        GoTo Fin
+                    End If
+                End If
+
                 'check to see if fellow members nearby need healing
                 If g_ui.Macro.chkHealFellow.Checked And g_Objects.Fellowship.Active And m_fellowNeedsHealing Then
                     locDebug "ST_IDLE: checking for fellow members in need of healing"

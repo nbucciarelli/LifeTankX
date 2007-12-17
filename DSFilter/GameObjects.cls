@@ -846,9 +846,10 @@ On Error GoTo ErrorHandler
     If Not Valid(objEntity) Then Exit Sub
     
     If GetModObject(lObjGUID, objEntity) Then
-        myDebug "OnIdentifyObject: WILL UPDATE " & objEntity.Name & " : " & lObjGUID & " -- AssessFlag=" & Hex(lAssessFlag) & " -- lCharFlags=" & Hex(lCharFlags)
+        objEntity.LastIDTime = g_Time
+        myDebug "OnIdentifyObject: WILL UPDATE (" & g_Time & ") " & objEntity.Name & " : " & lObjGUID & " -- AssessFlag=" & Hex(lAssessFlag) & " -- lCharFlags=" & Hex(lCharFlags)
     Else
-        myDebug "OnIdentifyObject: ERROR, could not GetModObject for: " & lObjGUID
+        myError "OnIdentifyObject: ERROR, could not GetModObject for: " & lObjGUID
     End If
 
     'myDebug "OnIdentifyObject: " & objEntity.Name & " : " & lObjGUID & " -- AssessFlag=" & Hex(lAssessFlag) & " -- lCharFlags=" & Hex(lCharFlags)
@@ -879,8 +880,8 @@ On Error GoTo ErrorHandler
                 Case &H11& 'Rare #
                     objEntity.IsRare = True
                     objEntity.RareNumber = lVal
-                    myDebug "IDObject: Rare #: " & objEntity.Name & " Key:" & Hex(lKey) & " Rare #:" & sVal
-                    'myError "IDObject: Rare #: " & objEntity.Name & " Key:" & Hex(lKey) & " Rare #:" & sVal
+                    myDebug "IDObject: Rare #: " & objEntity.Name & " Key:" & Hex(lKey) & " Rare #:" & lVal
+                    'myError "IDObject: Rare #: " & objEntity.Name & " Key:" & Hex(lKey) & " Rare #:" & lVal
                     RaiseEvent OnRareDetected(objEntity)
                 
                 Case &H13& 'Value

@@ -1,8 +1,8 @@
 Attribute VB_Name = "shWinAPI"
 Option Explicit
 
-Public Declare Function timeGetTime Lib "winmm.dll" () As Double
-'Public Declare Function timeGetTime Lib "kernel32" () As Double 'elapsed time in msec since system boot
+Public Declare Function timeGetTime Lib "winmm.dll" () As Long
+'Public Declare Function timeGetTime Lib "kernel32" () As Long 'elapsed time in msec since system boot
 
 'Public Declare Function FindWindow Lib "user32" Alias "FindWindowA" (ByVal lpClassName As String, ByVal lpWindowName As String) As Long
 'Public Declare Function PostMessage Lib "user32" Alias "PostMessageA" (ByVal hwnd As Long, ByVal wMsg As Long, ByVal wParam As Long, lParam As Any) As Long

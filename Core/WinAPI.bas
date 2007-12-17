@@ -1,8 +1,8 @@
 Attribute VB_Name = "WinAPI"
 Option Explicit
 
-Public Declare Function timeGetTime Lib "winmm.dll" () As Double
-'Public Declare Function timeGetTime Lib "kernel32" () As Double 'elapsed time in msec since system boot
+Public Declare Function timeGetTime Lib "winmm.dll" () As Long
+'Public Declare Function timeGetTime Lib "kernel32" () As Long 'elapsed time in msec since system boot
 Public Declare Function FindWindow Lib "user32" Alias "FindWindowA" (ByVal lpClassName As String, ByVal lpWindowName As String) As Long
 Public Declare Function PostMessage Lib "user32" Alias "PostMessageA" (ByVal hwnd As Long, ByVal wMsg As Long, ByVal wParam As Long, lParam As Any) As Long
 Public Declare Function SendMessage Lib "user32" Alias "SendMessageA" (ByVal hwnd As Long, ByVal wMsg As Long, ByVal wParam As Long, lParam As Any) As Long
@@ -99,17 +99,6 @@ Public Function GET_Y_LPARAM(ByVal lParam As Long) As Long
     Dim hexstr As String
     hexstr = Right("00000000" & Hex(lParam), 8)
     GET_Y_LPARAM = CLng("&H" & Left(hexstr, 4))
-End Function
-
-Public Function GetElapsedSeconds() As Double
-On Error GoTo ErrorHandler
-    GetElapsedSeconds = CDbl(timeGetTime) / CDbl(1000)
-Fin:
-    Exit Function
-ErrorHandler:
-    PrintErrorMessage "GetElapsedSeconds - " & Err.Description
-    GetElapsedSeconds = 1
-    Resume Fin
 End Function
 
 Public Function GetACWindowRect() As RECT

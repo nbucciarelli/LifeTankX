@@ -14,10 +14,10 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private m_lIndex As Long
-Private m_dTimerValue As Double     'time in seconds
+Private m_dTimerValue As Long     'time in seconds
 Private m_bEnabled As Boolean       'flag to check if the OnTimeout event will be triggered
 Private m_bPause As Boolean
-Private m_dTimeLeft As Double   'for pause (save time remaining)
+Private m_dTimeLeft As Long   'for pause (save time remaining)
 
 Public Event OnTimeout()
 
@@ -29,12 +29,12 @@ Private Sub Class_Initialize()
 End Sub
 
 'Properties
-Public Property Get Value() As Double
+Public Property Get Value() As Long
 Attribute Value.VB_UserMemId = 0
     Value = m_dTimerValue
 End Property
 
-Public Property Let Value(ByVal dNewVal As Double)
+Public Property Let Value(ByVal dNewVal As Long)
     m_dTimerValue = dNewVal
 End Property
 
@@ -97,19 +97,19 @@ Public Function Expired() As Boolean
     Expired = (RemainingTime <= 0)
 End Function
 
-Public Sub SetNextTime(ByVal dVal As Double)
+Public Sub SetNextTime(ByVal dVal As Long)
     m_dTimerValue = g_Time + dVal
     m_bEnabled = True
 End Sub
 
-Public Sub AddTime(ByVal dVal As Double)
+Public Sub AddTime(ByVal dVal As Long)
     m_dTimerValue = m_dTimerValue + dVal
     If m_dTimerValue >= g_Time Then
         m_bEnabled = True
     End If
 End Sub
 
-Public Function RemainingTime() As Double
+Public Function RemainingTime() As Long
     If m_bPause Then
         RemainingTime = m_dTimeLeft
     Else

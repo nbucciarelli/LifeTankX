@@ -737,6 +737,16 @@ On Error GoTo Error_Handler
         GoTo Fin
     End If
     
+    'Look for targets
+    If g_Macro.Combat.Target Is Nothing Then
+        If FindBestTarget() And g_bLootRare = False Then
+            locDebug "clsLoot.Runstate : found target, moving to regular IDLE state for combat initialization"
+            'go back to regular IDLE mode to ensure we're in the proper equipment/vital state
+            Call SetSubState(ST_LOOT_STOP)
+            Call StopLooting("RunState - ST_LOOT_SEARCH_ITEM")
+        End If
+    End If
+
 5    If m_tmrNextTime.Expired Then
         
 '        If g_ui.Loot.chkLootForcePeaceMode.Checked And (g_Hooks.CombatMode <> COMBATSTATE_PEACE) Then

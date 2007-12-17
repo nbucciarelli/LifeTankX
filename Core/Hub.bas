@@ -21,7 +21,7 @@ Public g_bInitComplete As Boolean   'tell if the plugin initialized properly
 Public g_bStopPlugin As Boolean
 Public g_bObjectsLoaded As Boolean
 
-Public g_Time As Double     'Current time
+Public g_Time As Long     'Current time
 Public g_LogPath As String
 
 Public g_debugLog As TextStream

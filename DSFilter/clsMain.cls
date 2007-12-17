@@ -253,7 +253,6 @@ On Error GoTo ErrorHandler
     
     'Init Clock
     
-    'm_fLastTime = GetElapsedSeconds
     m_fLastTime = timeGetTime
     g_Time = 0
     m_tmrClock.Enabled = True
@@ -296,7 +295,7 @@ On Error GoTo ErrorHandler
 Fin:
     Exit Sub
 ErrorHandler:
-    myError "Filter.tmrClock_Timer - " & Err.Description & " - Line: " & Erl
+    myError "Filter.tmrCheck_Timer - " & Err.Description & " - Line: " & Erl
     Resume Fin
 End Sub
 
@@ -306,13 +305,14 @@ On Error GoTo ErrorHandler
     Dim fDelta As Double
     Dim fCurTime As Double
     
-    'fCurTime = GetElapsedSeconds
     fCurTime = timeGetTime
     fDelta = fCurTime - m_fLastTime
-    m_fLastTime = fCurTime
     
-    'Give current time in seconds
-    g_Time = g_Time + fDelta
+    If (fDelta >= 1000) Then
+        'Give current time in seconds
+        m_fLastTime = fCurTime
+        g_Time = g_Time + 1
+    End If
     
 Fin:
     Exit Sub
@@ -402,7 +402,7 @@ ErrorHandler:
     Resume Fin
 End Property
 
-Public Property Get Time() As Double
+Public Property Get Time() As Long
     Time = g_Time
 End Property
 
