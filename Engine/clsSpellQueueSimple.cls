@@ -109,7 +109,7 @@ Public Sub Add(NewSpellItem As clsSpellQueueItemSimple)
     Else
         'add this spell to the queue
         Call m_SpellQueue.Add(NewSpellItem)
-        'MyDebug "SpellQueue.Add : " & NewSpellItem.Description
+        MyDebug "SpellQueue.Add : " & NewSpellItem.Description
     End If
     
 End Sub

@@ -324,7 +324,7 @@ On Error GoTo ErrorHandler
     'remember when we tryed to cast our last spell
     m_dLastCastAttempt = g_Core.Time
     
-    Call myCastSpell(objSpell.SpellID, lTargetId)
+    Call myCastSpell(objSpell, lTargetId)
     
     CastSpellAlt = True
     
@@ -756,7 +756,7 @@ End Function
 '
 '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
-Private Sub myCastSpell(ByVal SpellID As Long, ByVal TargetGUID As Long)
+Private Sub myCastSpell(ByVal objSpell As clsSpell, ByVal TargetGUID As Long)
 On Error GoTo ErrorHandler
 
 1    If Not Valid(g_Data) Then
@@ -764,6 +764,11 @@ On Error GoTo ErrorHandler
         Exit Sub
     End If
     
+    If Not Valid(objSpell) Then
+        PrintErrorMessage "myCastSpell : Invalid objSpell"
+        Exit Sub
+    End If
+
     ' Make sure we're ready to cast.
     ' TODO: This can be moved once we check that LTxi is "well behaved" with spell calls.
     If g_Macro.m_bOKToCast = False Then
@@ -786,10 +791,11 @@ On Error GoTo ErrorHandler
 6       Call m_tmrSecureCasting.SetNextTime(SECURE_CASTING_TIME)
         'Call CastSpellfunctions.myCastSpell(g_Data.memCurrentItem1, g_Data.memCurrentItem2, g_Data.memCastSpell, SpellID, TargetGUID)
         
-7       Dim objSpell As New clsSpellQueueItemSimple
+7       Dim s_objSpell As New clsSpellQueueItemSimple
                         
-        With objSpell
-            .SpellID = SpellID
+        With s_objSpell
+            .SpellID = objSpell.SpellID
+            .SpellName = objSpell.SpellName
             .TargetGUID = TargetGUID
         End With
             

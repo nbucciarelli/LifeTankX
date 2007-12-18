@@ -16,6 +16,7 @@ Option Explicit
 
 Public SpellID As Long
 Public TargetGUID As Long
+Public SpellName As String
 
 Private Sub Class_Initialize()
     SpellID = -1
@@ -23,5 +24,6 @@ Private Sub Class_Initialize()
 End Sub
 
 Public Function Description() As String
-    Description = "War Spell"
+    'Description = "War Spell"
+    Description = SpellName
 End Function
