@@ -259,7 +259,7 @@ End Enum
 '=============================================================
 
 Public Const LOGOUT_REASON_DIED = "Died"
-Public Const LOGOUT_TIMER_DIED = 30 'logout 30 seconds after dying
+Public Const LOGOUT_TIMER_DIED = 60 'logout 60 seconds after dying
 Public Const LOGOUT_NO_HEALINGKIT = "No healing kits in inventory"
 
 

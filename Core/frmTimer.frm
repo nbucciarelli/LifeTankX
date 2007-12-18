@@ -21,13 +21,13 @@ Begin VB.Form frmTimer
       Top             =   2400
    End
    Begin VB.Timer tmrInputQueue 
-      Interval        =   20
+      Interval        =   100
       Left            =   2040
       Top             =   240
    End
    Begin VB.Timer tmrRoute 
       Enabled         =   0   'False
-      Interval        =   20
+      Interval        =   100
       Left            =   1440
       Top             =   240
    End

@@ -595,9 +595,9 @@ Friend Sub OnMacroTick()
 On Error GoTo ErrorHandler
 
     'increase elapsed time
-     If (g_Core.Time - m_dStartTime > 0) Then
-1        Call SetElapsedTime(g_Core.Time - m_dStartTime)
-        'MyDebug "OnMacroTick: " & CDbl(g_Core.Time - m_dStartTime)
+     If (g_Core.ElapsedSeconds - m_dStartTime > 0) Then
+1        Call SetElapsedTime(g_Core.ElapsedSeconds - m_dStartTime)
+        'MyDebug "OnMacroTick: " & CDbl(g_Core.ElapsedSeconds - m_dStartTime)
      End If
      
 2    Call UpdateNextRebuffDisplay
@@ -614,7 +614,7 @@ On Error GoTo ErrorHandler
 Fin:
     Exit Sub
 ErrorHandler:
-    'PrintErrorMessage "clsMacro.OnMacroTick() - " & Err.Description & " - line : " & Erl
+    PrintErrorMessage "clsMacro.OnMacroTick() - " & Err.Description & " - line : " & Erl
     Resume Fin
 End Sub
 
@@ -1174,9 +1174,9 @@ Dim bRet As Boolean
     If IsBusy(bTurbo) Or g_Spells.Casting Then
         locDebug "clsMacro.isReadyToCast: IsBusy: " & IsBusy(bTurbo) & " : or g_Spells.Casting"
         bRet = False
-    'ElseIf Not (g_Spells.tmrPrecastDelay.Expired) Then
-    '    locDebug "clsMacro.isReadyToCast: tmrPrecastDelay not Expired"
-    '    bRet = False
+    ElseIf Not (g_Spells.tmrPrecastDelay.Expired) Then
+        locDebug "clsMacro.isReadyToCast: tmrPrecastDelay not Expired"
+        bRet = False
     'ElseIf (g_Spells.LastCastAttempt + 1) > g_Core.Time Then
     '    locDebug "clsMacro.isReadyToCast: LastCastAttemp is less that g_Core.Time"
     '    'Limit to one try per second
@@ -1269,7 +1269,7 @@ On Error GoTo ErrorHandler
         
         ' Reset casting state
         m_bOKToCast = False
-        m_tmrCastSpell.SetNextTime (CAST_TIMER)
+        Call m_tmrCastSpell.SetNextTime(CAST_TIMER)
         
         GoTo Fin
     End If
@@ -1377,7 +1377,9 @@ On Error GoTo ErrorHandler
                 'Check if we need mana.
                 If IsCaster Then
                     'MyDebug "Checking if we need more stamina..."
-                    Call Vitals.CastManaStamRegen(False, m_RegenManaAction, m_RegenStamAction)
+                    If Vitals.CastManaStamRegen(False, m_RegenManaAction, m_RegenStamAction) Then
+                        GoTo Fin
+                    End If
                 End If
                 
                 ' See if we need to change our Items with a Mana Charge
@@ -1809,7 +1811,7 @@ On Error GoTo ErrorHandler
 
     'reset counters
 3    Call UpdateNextRebuffDisplay
-4    m_dStartTime = g_Core.Time
+4    m_dStartTime = g_Core.ElapsedSeconds
 5    m_dLastResetTime = 1
 6    Call SetElapsedTime(1)
     

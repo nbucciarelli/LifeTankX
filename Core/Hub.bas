@@ -21,7 +21,8 @@ Public g_bInitComplete As Boolean   'tell if the plugin initialized properly
 Public g_bStopPlugin As Boolean
 Public g_bObjectsLoaded As Boolean
 
-Public g_Time As Long     'Current time
+Public g_Time As Long        'Current time in miliseconds
+Public g_ElapsedTime As Long 'Elapsed seconds since start
 Public g_LogPath As String
 
 Public g_debugLog As TextStream
@@ -29,7 +30,6 @@ Public g_errorLog As TextStream
 Public g_chatLog As TextStream
 Public g_eventLog As TextStream
 
-Public g_bAuthorized As Boolean   'fake flag
 
 'Called at plugin class initialization
 'Objects will be created before IPlugin_Initialize

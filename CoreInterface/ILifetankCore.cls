@@ -35,6 +35,9 @@ End Property
 Public Property Get Time() As Long
 End Property
 
+Public Property Get ElapsedSeconds() As Long
+End Property
+
 Public Property Get Ticking() As Boolean
 End Property
 

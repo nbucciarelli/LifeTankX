@@ -69,6 +69,12 @@ Friend Property Get Engine() As IEngine
 End Property
 
 
+Friend Property Get mg_Time() As Long
+    mg_Time = g_Time / 1000
+End Property
+
+
+
 '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 '@
 '@                              Friend Methods
@@ -216,7 +222,11 @@ Private Property Get ICore_Ticking() As Boolean
 End Property
 
 Private Property Get ICore_Time() As Long
-    ICore_Time = g_Time
+    ICore_Time = g_Time / 1000
+End Property
+
+Private Property Get ICore_ElapsedSeconds() As Long
+    ICore_ElapsedSeconds = g_ElapsedTime
 End Property
 
 Private Property Let ICore_TimerInterval(ByVal RHS As Long)

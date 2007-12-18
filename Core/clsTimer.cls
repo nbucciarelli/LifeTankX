@@ -98,13 +98,13 @@ Public Function Expired() As Boolean
 End Function
 
 Public Sub SetNextTime(ByVal dVal As Long)
-    m_dTimerValue = g_Time + dVal
+    m_dTimerValue = g_Core.mg_Time + dVal
     m_bEnabled = True
 End Sub
 
 Public Sub AddTime(ByVal dVal As Long)
     m_dTimerValue = m_dTimerValue + dVal
-    If m_dTimerValue >= g_Time Then
+    If m_dTimerValue >= g_Core.mg_Time Then
         m_bEnabled = True
     End If
 End Sub
@@ -113,7 +113,7 @@ Public Function RemainingTime() As Long
     If m_bPause Then
         RemainingTime = m_dTimeLeft
     Else
-        RemainingTime = m_dTimerValue - g_Time
+        RemainingTime = m_dTimerValue - g_Core.mg_Time
     End If
 End Function
 

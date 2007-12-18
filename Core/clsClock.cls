@@ -18,12 +18,13 @@ Private Const CLOCK_TIMER_INTERVAL = 100 'msec
 Private WithEvents m_tmrClock As Timer
 Attribute m_tmrClock.VB_VarHelpID = -1
 
-Private m_fLastTime As Double
+Private m_fLastTime As Long
 
 Private Sub Class_Initialize()
     Set m_tmrClock = frmTimer.tmrClock
-    m_fLastTime = 0
-    g_Time = 0
+    m_fLastTime = 1
+    g_Time = 1
+    g_ElapsedTime = 1
     m_tmrClock.Interval = CLOCK_TIMER_INTERVAL
     m_tmrClock.Enabled = False
 End Sub
@@ -39,11 +40,13 @@ On Error GoTo ErrorHandler
     Dim fCurTime As Long
     
     fCurTime = timeGetTime
+    g_Time = timeGetTime
+
     fDelta = fCurTime - m_fLastTime
     
     If (fDelta >= 1000) Then
         'Give current time in seconds
-        g_Time = g_Time + 1
+        g_ElapsedTime = g_ElapsedTime + 1
         m_fLastTime = fCurTime
     End If
     
@@ -67,7 +70,8 @@ End Sub
 
 Public Sub StartTimer()
     m_fLastTime = timeGetTime
-    g_Time = 0
+    g_Time = timeGetTime
+    g_ElapsedTime = 1
     m_tmrClock.Enabled = True
     MyDebug "Clock Timer Started: " & m_fLastTime
 End Sub

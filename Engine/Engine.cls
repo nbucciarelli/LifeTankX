@@ -357,7 +357,7 @@ On Error GoTo ErrorHandler
 
     If Not m_bEngineObjectsLoaded Then Exit Function
     
-    LogEvent "Login Complete", True
+    'LogEvent "Login Complete", True
 
     Call g_Filters.TestFilters
     Call g_Window.UpdateDimensions

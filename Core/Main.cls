@@ -28,7 +28,6 @@ Private Sub Class_Initialize()
     'Init
     g_bInitComplete = False
     g_bStopPlugin = False
-    g_bAuthorized = False
     
     'Build Log files
 1    Call BuildPluginLogFiles
