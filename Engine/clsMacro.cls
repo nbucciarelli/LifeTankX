@@ -23,7 +23,7 @@ Private Const DEBUG_ME = False
 
 Private Const DEFAULT_MACRO_TIMER_INTERVAL = 300   'msec
 Private Const WAYPOINT_DELAY = 2                   'seconds
-Private Const CAST_TIMER = 0.1                     'seconds
+Private Const CAST_TIMER = 0.3                     'seconds
 
 Private Const LOGOUT_CHECK_INTERVAL = 2     'check every X seconds
 Private Const LOOT_CHECK_INTERVAL = 2       'check for loot every 2 seconds in idle mode
@@ -1262,13 +1262,15 @@ On Error GoTo ErrorHandler
         
         Set o_Spell = g_Spells.c_SpellQueue.ReadTop
                 
-        'PrintErrorMessage "Casting..."
+        locDebug "Casting spell: " & o_Spell.Description
         Call g_Hooks.CastSpell(o_Spell.SpellID, o_Spell.TargetGUID)
         
-        Call g_Spells.c_SpellQueue.Pop ' Pop the spell off the queue
+        ' Don't pop the spell off the Queue untill we are sure it's actualy been cast
+        ' So, moved this to clsSpells.OnSpellCastBegin
+        'Call g_Spells.c_SpellQueue.Pop ' Pop the spell off the queue
         
         ' Reset casting state
-        m_bOKToCast = False
+        'm_bOKToCast = False
         Call m_tmrCastSpell.SetNextTime(CAST_TIMER)
         
         GoTo Fin

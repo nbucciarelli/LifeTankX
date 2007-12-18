@@ -731,7 +731,7 @@ On Error GoTo Error_Handler
         'Choose a war spell
         Dim fRange As Single
         
-        fRange = m_objTarget.GetSquareRange 'SPK - Fix: replace GetRange by GetSquareRange
+        fRange = m_objTarget.GetSquareRange
         m_Action = ACT_WAR_PRIMARY
         
         If TargetCanBeReached(m_objTarget) Then
@@ -743,30 +743,33 @@ On Error GoTo Error_Handler
             GoTo Fin
         End If
         
-        If ((m_objTarget.Vulns > 0) And (Not m_objTarget.IsVulnedTo(m_objTarget.Vulnerability))) Then
-            'if the monster is vulned to another vuln than the one we're using, switch our
-            'bolt damage type to match the vuln if available.
-            For i = DMG_SLASHING To DMG_LIGHTNING
-                If m_objTarget.IsVulnedTo(i) Then
-                    If g_Spells.SetupWarSpellForDamage(i, fRange, True) Then
-                        locDebug "FireMageAttack: " & m_objTarget.Name & " is vulned to " & GetDamageString(i)
-                        Exit For
+        If (m_objTarget.Vulns > 0) Then
+            If Not m_objTarget.IsVulnedTo(m_objTarget.Vulnerability) Then
+                'if the monster is vulned to another vuln than the one we're using, switch our
+                'bolt damage type to match the vuln if available.
+                For i = DMG_SLASHING To DMG_LIGHTNING
+                    If m_objTarget.IsVulnedTo(i) Then
+                        If g_Spells.SetupWarSpellForDamage(i, fRange, True) Then
+                            locDebug "FireMageAttack: " & m_objTarget.Name & " is vulned to " & GetDamageString(i)
+                            Exit For
+                        End If
                     End If
-                End If
-            Next i
-        Else
-            Call g_Spells.SetupWarSpellForDamage(m_objTarget.Vulnerability, fRange)
+                Next i
+            Else
+                Call g_Spells.SetupWarSpellForDamage(m_objTarget.Vulnerability, fRange)
+            End If
         End If
+        
     End If
 
     'Do the casting
     Select Case m_Action
         Case ACT_WAR_PRIMARY
-            locDebug "clsMacroCombat.FireMageAttack: ACT_WAR_PRIMARY CastSpellAlt"
-            Call g_Spells.CastSpellAlt(g_Spells.CurrentWarSpell, m_objTarget.Guid)
+            locDebug "clsMacroCombat.FireMageAttack: ACT_WAR_PRIMARY CastThisSpell"
+            Call g_Spells.CastThisSpell(g_Spells.CurrentWarSpell, m_objTarget.Guid)
         Case ACT_VULN
-            locDebug "clsMacroCombat.FireMageAttack: ACT_VULN CastSpellAlt"
-            Call g_Spells.CastSpellAlt(g_Spells.CurrentVuln, m_objTarget.Guid)
+            locDebug "clsMacroCombat.FireMageAttack: ACT_VULN CastThisSpell"
+            Call g_Spells.CastThisSpell(g_Spells.CurrentVuln, m_objTarget.Guid)
         Case ACT_YIELDMONSTER
             locDebug "clsMacroCombat.FireMageAttack: ACT_YIELD CastCreatureDebuff"
             Call g_Spells.CastCreatureDebuff("Magic Yield Other", g_Data.mMaxVulnLevel, m_objTarget.Guid)

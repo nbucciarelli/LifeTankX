@@ -627,7 +627,7 @@ On Error GoTo ErrorHandler
                 End If
             End If
             
-            Call g_Spells.CastSpellAlt(objSpell, lTargetGUID)
+            Call g_Spells.CastThisSpell(objSpell, lTargetGUID)
         Else
             'MyDebug "clsBuddyBuffer.CastNextSpell: IsBusy, _not_ casting: " & objSpell.SpellName
         End If

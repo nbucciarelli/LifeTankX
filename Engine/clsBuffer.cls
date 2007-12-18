@@ -13,6 +13,8 @@ Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 Option Explicit
 
+Private Const DEBUG_ME = False
+
 Private m_BuffQueue As clsSpellQueue        'list of pending buff spells
 Private m_colBuffs As Collection            'list of all the spells the buffer has to use
 Private m_iRebuffMode As Integer
@@ -578,15 +580,15 @@ On Error GoTo ErrorHandler
         
     End If
     
-    'MyDebug "Spell level wanted : " & objBuff.LevelWanted
+    locDebug "clsBuffer.NextSpell:Spell level wanted : " & objBuff.LevelWanted
     
     'Find the spell infos
     If objBuff.SpellType <> SPELLTYPE_NORMAL Then   'if it's a typed spell (i.e banes)
         Set objSpell = spellList.FindSpellByType(objBuff.SpellType, objBuff.SpellElement, g_Data.BuffsSpellsLevel)
-        'MyDebug "clsBuffer.NextSpell:Typed Spell: wanted: " & objBuff.SpellType
+        locDebug "clsBuffer.NextSpell:Typed Spell: wanted: " & objBuff.SpellType
     Else
         Set objSpell = spellList.FindSpell(objBuff.SpellFamily, g_Data.BuffsSpellsLevel)
-        'MyDebug "clsBuffer.NextSpell: SpellFamily: " & objBuff.SpellFamily
+        locDebug "clsBuffer.NextSpell: SpellFamily: " & objBuff.SpellFamily
     End If
     
     'Check if we have been able to find the spell, and cast it
@@ -606,10 +608,10 @@ On Error GoTo ErrorHandler
         m_sCurSpellName = objSpell.SpellName
         
         If Not (IsBusy) And (g_Macro.m_bOKToCast = True) Then ' Prevent spell spamming
-            'MyDebug "clsBuffer.CastNextSpell: Not (IsBusy), casting: " & objSpell.SpellName
-            Call g_Spells.CastSpellAlt(objSpell, lTargetGUID)
+            locDebug "clsBuffer.CastNextSpell: Not (IsBusy), casting: " & objSpell.SpellName
+            Call g_Spells.CastThisSpell(objSpell, lTargetGUID)
         Else
-            'MyDebug "clsBuffer.CastNextSpell: IsBusy, _not_ casting: " & objSpell.SpellName
+            locDebug "clsBuffer.CastNextSpell: IsBusy, _not_ casting: " & objSpell.SpellName
         End If
     End If
     
@@ -627,14 +629,14 @@ End Sub
 
 'Read the AC Console to figure out if we have casted the current buff spell,
 'And pop it from the queue
-'You cast Adja's Blessing you yourself
+'ex: You cast Adja's Blessing you yourself
 Public Sub CheckCastedSpell(ByVal sCastMsg As String)
 On Error GoTo ErrorHandler
 
     If m_sCurSpellName <> "" Then
         If InStr(LCase(sCastMsg), LCase(m_sCurSpellName)) Then
             
-            'MyDebug "clsBuffer.CheckCastedSpell - Current spell " & m_sCurSpellName & " has been cast"
+            locDebug "clsBuffer.CheckCastedSpell - Current spell " & m_sCurSpellName & " has been cast"
             
             If (g_Macro.State = ST_REBUFF) Then
                 Call m_BuffQueue.Pop
@@ -644,23 +646,23 @@ On Error GoTo ErrorHandler
             End If
             
             If g_Spells.Casting Then
-                'MyDebug "clsBuffer.CheckCastedSpell - g_Spells.Casting is true, calling OnSpellCastComplete"
+                locDebug "clsBuffer.CheckCastedSpell - g_Spells.Casting is true, calling OnSpellCastComplete"
                 Call g_Spells.OnSpellCastComplete(True, "CheckCastedSpell")
                 'g_Spells.ReadyToCast = True
             Else
-                'MyDebug "clsBuffer.CheckCastedSpell - NOT g_Spells.Casting"
+                locDebug "clsBuffer.CheckCastedSpell - NOT g_Spells.Casting"
             End If
         Else
-            'MyDebug "clsBuffer.CheckCastedSpell doesn't match: " & m_sCurSpellName & " : " & sCastMsg
+            locDebug "clsBuffer.CheckCastedSpell doesn't match: " & m_sCurSpellName & " : " & sCastMsg
             If g_Spells.Casting Then
-                'MyDebug "clsBuffer.CheckCastedSpell - g_Spells.Casting is true, calling OnSpellCastComplete"
+                locDebug "clsBuffer.CheckCastedSpell - g_Spells.Casting is true, calling OnSpellCastComplete"
                 Call g_Spells.OnSpellCastComplete(True, "CheckCastedSpell")
             End If
         End If
     Else
-        'MyDebug "clsBuffer.CheckCastedSpell: m_sCurSpellName is Blank"
+        locDebug "clsBuffer.CheckCastedSpell: m_sCurSpellName is Blank"
         If g_Spells.Casting Then
-            'MyDebug "clsBuffer.CheckCastedSpell - g_Spells.Casting is true, calling OnSpellCastComplete"
+            locDebug "clsBuffer.CheckCastedSpell - g_Spells.Casting is true, calling OnSpellCastComplete"
             Call g_Spells.OnSpellCastComplete(True, "CheckCastedSpell")
         End If
 
@@ -672,4 +674,12 @@ ErrorHandler:
     PrintErrorMessage "CheckCastedSpell - " & Err.Description
     Resume Fin
 End Sub
+
+'Local Debug
+Private Sub locDebug(DebugMsg As String, Optional bSilent As Boolean = False)
+    If DEBUG_ME Or g_Data.mDebugMode Then
+        Call MyDebug("[clsBuffer] " & DebugMsg, bSilent)
+    End If
+End Sub
+
 

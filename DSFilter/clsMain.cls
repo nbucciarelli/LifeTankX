@@ -1293,7 +1293,7 @@ On Error GoTo ErrorHandler
     myDebug "OnToggleVisibility : " & g_Objects.FindObject(lCharGUID).Name & " - PType (Hex): " & Hex(iPortalType) & " pString: " & pString
     
     If InStr(pString, "8374") Or InStr(pString, "8774") Or InStr(pString, "374") Then
-            'myDebug "INSTR: raising OnSpellVisible: " & g_Objects.FindObject(lCharGUID).Name
+            myDebug "INSTR: raising OnSpellVisible: " & g_Objects.FindObject(lCharGUID).Name
             RaiseEvent OnSpellVisible(g_Objects.FindObject(lCharGUID).Name)
     End If
     
@@ -1499,7 +1499,7 @@ On Error GoTo ErrorHandler
     
     spellID = pMsg.Value("spell")
     
-    'myDebug "NetAction_CastSpell - spellID: " & spellID
+    myDebug "NetAction_CastSpell - spellID: " & spellID
     
     RaiseEvent OnSpellCast(spellID)
     
@@ -1521,7 +1521,7 @@ On Error GoTo ErrorHandler
     Set objTarget = g_Objects.FindObject(pMsg.Value("target"))
     
     If Valid(objTarget) Then
-        'myDebug "NetAction_CastSpellOn: spellId " & spellID & " objTarget " & objTarget.Name
+        myDebug "NetAction_CastSpellOn: spellId " & spellID & " objTarget " & objTarget.Name
         RaiseEvent OnSpellCastOn(spellID, objTarget)
     End If
     

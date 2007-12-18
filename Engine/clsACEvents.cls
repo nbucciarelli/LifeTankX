@@ -14,6 +14,7 @@ Attribute VB_Exposed = False
 'AC Events
 Option Explicit
 
+Private Const DEBUG_ME = False
 
 Private WithEvents m_DSFilter As DarksideFilter.Filter
 Attribute m_DSFilter.VB_VarHelpID = -1
@@ -455,10 +456,10 @@ End Sub
 Private Sub m_DSFilter_OnSpellVisible(ByVal SpellName As String)
 On Error GoTo ErrorHandler
 
-    'MyDebug "OnSpellVisible name: " & SpellName
+    locDebug "OnSpellVisible name: " & SpellName
     
     If g_Spells.Casting Then
-        'MyDebug "-- DSFilter_OnSpellVisible: g_Spells.Casting --"
+        locDebug "-- DSFilter_OnSpellVisible: g_Spells.Casting --"
         Call g_Spells.OnSpellCastComplete(True, "OnSpellVisible")
     End If
 
@@ -1304,3 +1305,10 @@ Private Sub m_tmrClockChecker_OnTimeout()
 
 End Sub
 
+
+'Local Debug
+Private Sub locDebug(DebugMsg As String, Optional bSilent As Boolean = False)
+    If DEBUG_ME Or g_Data.mDebugMode Then
+        Call MyDebug("[clsACEvents] " & DebugMsg, bSilent)
+    End If
+End Sub

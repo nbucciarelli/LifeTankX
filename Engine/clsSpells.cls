@@ -224,21 +224,28 @@ End Property
 '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 Public Function LoadSpells() As Boolean
-Dim Err As Boolean
+On Error GoTo ErrorHandler
+
+    Dim bRet As Boolean
     
     MyDebug "Loading Spells Databases"
     
-    Err = Not m_Vitals.LoadData(PATH_SPELLS & "\" & FILE_VITALSPELLS)
-    If (Not Err) Then Err = Not m_War.LoadData(PATH_SPELLS & "\" & FILE_WARSPELLS)
-    If (Not Err) Then Err = Not m_sBuffs.LoadData(PATH_SPELLS & "\" & FILE_SELFBUFFS)
-    If (Not Err) Then Err = Not m_oBuffs.LoadData(PATH_SPELLS & "\" & FILE_OTHERBUFFS)
-    If (Not Err) Then Err = Not m_Debuffs.LoadData(PATH_SPELLS & "\" & FILE_DEBUFFSPELLS)
-    If (Not Err) Then Err = Not m_Items.LoadData(PATH_SPELLS & "\" & FILE_ITEMSPELLS)
-    'If (Not Err) Then Err = Not LoadSpellNames(g_Settings.GetDataFolder & "\" & PATH_SPELLS & "\" & FILE_SPELLNAMES)
+    bRet = Not m_Vitals.LoadData(PATH_SPELLS & "\" & FILE_VITALSPELLS)
+    If (Not bRet) Then bRet = Not m_War.LoadData(PATH_SPELLS & "\" & FILE_WARSPELLS)
+    If (Not bRet) Then bRet = Not m_sBuffs.LoadData(PATH_SPELLS & "\" & FILE_SELFBUFFS)
+    If (Not bRet) Then bRet = Not m_oBuffs.LoadData(PATH_SPELLS & "\" & FILE_OTHERBUFFS)
+    If (Not bRet) Then bRet = Not m_Debuffs.LoadData(PATH_SPELLS & "\" & FILE_DEBUFFSPELLS)
+    If (Not bRet) Then bRet = Not m_Items.LoadData(PATH_SPELLS & "\" & FILE_ITEMSPELLS)
+    'If (Not bRet) Then bRet = Not LoadSpellNames(PATH_SPELLS & "\" & FILE_SPELLNAMES)
     
-    m_bSpellsLoaded = Not Err
+    m_bSpellsLoaded = Not bRet
     LoadSpells = m_bSpellsLoaded
     
+Fin:
+    Exit Function
+ErrorHandler:
+    PrintErrorMessage "ERROR: clsSpells.LoadSpells - " & Err.Description
+    Resume Fin
 End Function
 
 Public Sub OnBusyCast()
@@ -256,7 +263,7 @@ On Error GoTo ErrorHandler
     m_bCasting = True
     'm_bReadyToCast = False
     
-    locDebug "clsSpells.OnSpellCastBegin - start"
+    locDebug "clsSpells.OnSpellCastBegin..."
     
     ' *****  JSC - Moved to clsACEvents.OnSpellCastOn()     ******
     'If Valid(g_Macro.Combat.Target) And (g_Macro.State = ST_COMBAT_ATTACKING) Then
@@ -267,11 +274,18 @@ On Error GoTo ErrorHandler
     '    locDebug "clsSpells.OnSpellCastBegin: +1 MISSCOUNT: " & missCount & " for: " & g_Macro.Combat.Target.Name
     'End If
 
-    If TurboMode Then
-        locDebug "-- Starting Cast Breaker --"
-        Call m_tmrCastBreaker.SetNextTime(g_Data.CastBreakerTime)
-    End If
+    'If TurboMode Then
+    '    locDebug "-- Starting Cast Breaker Timer :: " & g_Data.CastBreakerTime
+    '    Call m_tmrCastBreaker.SetNextTime(g_Data.CastBreakerTime)
+    'End If
 
+    ' See if this spell is on the Queue, if so, pop it off
+    If g_Spells.c_SpellQueue.Count > 0 Then
+        Call g_Spells.c_SpellQueue.Pop ' Pop the spell off the queue
+        g_Macro.m_bOKToCast = False
+        'Call g_Macro.PostCastDelayTimer.SetNextTime(CAST_TIMER)
+    End If
+    
 Fin:
     Exit Sub
 ErrorHandler:
@@ -305,7 +319,7 @@ Public Sub OnSpellCastFailed(Optional ByVal sSource As String = "")
     Call OnSpellCastComplete(False, sSource)
 End Sub
 
-Public Function CastSpellAlt(ByVal objSpell As clsSpell, ByVal lTargetId As Long) As Boolean
+Public Function CastThisSpell(ByVal objSpell As clsSpell, ByVal lTargetId As Long) As Boolean
 On Error GoTo ErrorHandler
     
     ' Make sure we're ready to cast.
@@ -314,24 +328,24 @@ On Error GoTo ErrorHandler
         GoTo Fin
     End If
     
-    CastSpellAlt = False
+    CastThisSpell = False
         
     If Not Valid(objSpell) Then
-        PrintErrorMessage "CastSpellAlt: Invalid objSpell"
+        PrintErrorMessage "CastThisSpell: Invalid objSpell"
         Exit Function
     End If
     
     'remember when we tryed to cast our last spell
     m_dLastCastAttempt = g_Core.Time
     
-    Call myCastSpell(objSpell, lTargetId)
+    Call queueThisSpell(objSpell, lTargetId)
     
-    CastSpellAlt = True
+    CastThisSpell = True
     
 Fin:
     Exit Function
 ErrorHandler:
-    PrintErrorMessage "ERROR: clsSpells.CastSpellAlt - " & Err.Description
+    PrintErrorMessage "ERROR: clsSpells.CastThisSpell - " & Err.Description
     Resume Fin
 End Function
 
@@ -358,7 +372,7 @@ On Error GoTo ErrorHandler
     Else
         Set objSpell = spellList.FindSpell(sSpellFamily, iLevelWanted)
         If Valid(objSpell) Then
-            CastSpell = CastSpellAlt(objSpell, TargetId)
+            CastSpell = CastThisSpell(objSpell, TargetId)
         Else
             PrintErrorMessage "(CastSpell) Couldn't cast " & sSpellFamily & " lvl " & iLevelWanted & " - Spell not found/learned."
             CastSpell = False
@@ -389,7 +403,7 @@ On Error GoTo ErrorHandler
     Else
         Set objSpell = spellList.FindSpellByType(iType, iElement, iLevelWanted)
         If Valid(objSpell) Then
-            CastSpellType = CastSpellAlt(objSpell, TargetId)
+            CastSpellType = CastThisSpell(objSpell, TargetId)
         Else
             PrintErrorMessage "(CastSpellType) Couldn't cast " & GetSpelltypeString(iType) & " " & GetDamageString(iElement) & " " & iLevelWanted & " - Spell not found/learned."
             CastSpellType = False
@@ -756,16 +770,11 @@ End Function
 '
 '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
-Private Sub myCastSpell(ByVal objSpell As clsSpell, ByVal TargetGUID As Long)
+Private Sub queueThisSpell(ByVal objSpell As clsSpell, ByVal TargetGUID As Long)
 On Error GoTo ErrorHandler
 
-1    If Not Valid(g_Data) Then
-        PrintWarning "myCastSpell : invalid g_Data"
-        Exit Sub
-    End If
-    
-    If Not Valid(objSpell) Then
-        PrintErrorMessage "myCastSpell : Invalid objSpell"
+1   If Not Valid(objSpell) Then
+        PrintErrorMessage "queueThisSpell : Invalid objSpell"
         Exit Sub
     End If
 
@@ -777,19 +786,18 @@ On Error GoTo ErrorHandler
     
     'Make sure we are in combat mode with a Wand
 2    If Not g_Macro.ValidState(TYPE_CASTER) Then
-        locDebug "myCastSpell: Not in Combat mode - resetting"
+        locDebug "queueThisSpell: Not in Combat mode - resetting"
     End If
     
     'make sure we're able to cast
 3    If IsBusy(TurboMode) Then
-        MyDebug "myCastSpell: trying to cast while busy - IsBusy()"
+        MyDebug "queueThisSpell: trying to cast while busy - IsBusy()"
 4    'ElseIf Not m_tmrPrecastDelay.Expired Then
-     '   MyDebug "myCastSpell: tmrPrecastDelay not expired yet"
+     '   MyDebug "queueThisSpell: tmrPrecastDelay not expired yet"
      Else
-        'PrintErrorMessage "myCastSpell: casting " & SpellID & " at " & TargetGUID
+        'PrintErrorMessage "queueThisSpell: casting " & SpellID & " at " & TargetGUID
 5       Call m_tmrPrecastDelay.SetNextTime(0.5)
 6       Call m_tmrSecureCasting.SetNextTime(SECURE_CASTING_TIME)
-        'Call CastSpellfunctions.myCastSpell(g_Data.memCurrentItem1, g_Data.memCurrentItem2, g_Data.memCastSpell, SpellID, TargetGUID)
         
 7       Dim s_objSpell As New clsSpellQueueItemSimple
                         
@@ -802,13 +810,13 @@ On Error GoTo ErrorHandler
 8       Call c_SpellQueue.Add(objSpell)
         
         'Call g_Hooks.CastSpell(spellID, TargetGUID)
-        'MyDebug "myCastSpell: g_Hooks.CastSpell: " & SpellID & " : " & TargetGUID
+        'MyDebug "queueThisSpell: g_Hooks.CastSpell: " & SpellID & " : " & TargetGUID
     End If
     
 Fin:
     Exit Sub
 ErrorHandler:
-    PrintErrorMessage "clsSpells.myCastSpell " & Err.Description & "  line: " & Erl
+    PrintErrorMessage "clsSpells.queueThisSpell " & Err.Description & "  line: " & Erl
     Resume Fin
 End Sub
 
@@ -858,7 +866,7 @@ End Sub
 'Local Debug
 Private Sub locDebug(DebugMsg As String, Optional bSilent As Boolean = False)
     If DEBUG_ME Or g_Data.mDebugMode Then
-        Call MyDebug("[" & MODULE_DESCRIPTION & "] " & DebugMsg, bSilent)
+        Call MyDebug("[clsSpells] " & DebugMsg, bSilent)
     End If
 End Sub
 

@@ -19,6 +19,8 @@ Option Explicit
 ' [[                                                                         [[
 ' [[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
 
+Private Const DEBUG_ME = False
+
 Private Enum eSubStates
     STATE_HEAL_APPLY_KIT
     STATE_HEAL_DONE
@@ -330,7 +332,7 @@ On Error GoTo ErrorMessage
                             End If
                         Else
                             'use stam2health
-                            'MyDebug "Casting emergency S2H"
+                            MyDebug "Casting emergency S2H"
                             Call g_Spells.Cast_Emergency_Stam2Health
                             If g_Spells.Casting Then
                                 m_bHealing = True
@@ -345,7 +347,7 @@ On Error GoTo ErrorMessage
                         PrintMessage "Heal Spell disabled, not using."
                         Call StopHealing
                     Else
-                        'MyDebug "Casting Heal Self"
+                        MyDebug "Casting Heal Self"
                         Call g_Spells.Cast_HealSelf
                         If g_Spells.Casting Then
                             m_bHealing = True
@@ -475,3 +477,9 @@ Dim sRes As String
 End Function
 
 
+'Local Debug
+Private Sub locDebug(DebugMsg As String, Optional bSilent As Boolean = False)
+    If DEBUG_ME Or g_Data.mDebugMode Then
+        Call MyDebug("[clsMacroHealing] " & DebugMsg, bSilent)
+    End If
+End Sub

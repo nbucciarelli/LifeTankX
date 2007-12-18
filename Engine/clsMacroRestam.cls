@@ -19,6 +19,8 @@ Option Explicit
 ' [[                                                                         [[
 ' [[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
 
+Private Const DEBUG_ME = False
+
 Private Enum eSubStates
     STATE_RESTAM_READY
     STATE_RESTAMING
@@ -132,6 +134,8 @@ On Error GoTo ErrorMessage
     Dim bRet As Boolean
     bRet = False
 
+    locDebug "StartRestam..."
+    
     m_State = STATE_RESTAM_READY
     Call m_tmrSecure.SetNextTime(SECURE_TIME)
     Call g_Spells.ResetCastingFlag("StartRestam")
@@ -150,7 +154,7 @@ End Function
 Public Sub StopRestam(Optional ByVal sSource As String = "")
 On Error GoTo ErrorMessage
 
-    MyDebug "clsMacroRestam.StopRestam(" & sSource & ")"
+    locDebug "clsMacroRestam.StopRestam(" & sSource & ")"
     Call m_tmrSecure.Reset
     Call m_tmrTransition.SetNextTime(TRANSITION_DELAY)
     m_State = STATE_DONE
@@ -178,8 +182,8 @@ On Error GoTo ErrorMessage
     End If
     
     If m_tmrSecure.Expired Then
-        'PrintWarning "clsMacroRestam.m_tmrSecure_OnTimeout - Secure Restam Timer expired : exiting state."
-        'PrintWarning "Busy Timeout - Reseting Restam flags"
+        locaDebug "clsMacroRestam.m_tmrSecure_OnTimeout - Secure Restam Timer expired : exiting state."
+        locaDebug "Busy Timeout - Reseting Restam flags"
         Call StopRestam("Secure Restam Timer Expired")
         Exit Sub
     End If
@@ -212,7 +216,7 @@ On Error GoTo ErrorMessage
                         
                         If g_Macro.ValidState(TYPE_CASTER) Then
                             If Not Vitals.CastManaStamRegen Then    'Juggle mana
-                                'MyDebug "clsMacroRestam.RunState: Casting Revitalize"
+                                locDebug "clsMacroRestam.RunState: Casting Revitalize"
                                 Call g_Spells.Cast_Revitalize
                                 'move to "restaming state"
                                 m_State = STATE_RESTAMING
@@ -296,3 +300,12 @@ Dim sRes As String
     
     GetCurrentStateString = sRes
 End Function
+
+
+'Local Debug
+Private Sub locDebug(DebugMsg As String, Optional bSilent As Boolean = False)
+    If DEBUG_ME Or g_Data.mDebugMode Then
+        Call MyDebug("[clsMacroRestam] " & DebugMsg, bSilent)
+    End If
+End Sub
+
