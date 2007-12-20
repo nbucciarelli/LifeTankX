@@ -309,7 +309,7 @@ On Error GoTo ErrorMessage
                 End If
                 
                 ' Make sure we're ready to cast.
-                If g_Macro.m_bOKToCast = False Then
+                If Not g_Macro.OkToCast Then
                     GoTo Fin
                 End If
                 

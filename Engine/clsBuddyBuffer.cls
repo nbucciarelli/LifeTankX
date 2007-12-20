@@ -616,10 +616,10 @@ On Error GoTo ErrorHandler
     Else
         m_sCurSpellName = objSpell.SpellName
         
-        If Not (IsBusy) And (g_Macro.m_bOKToCast = True) Then    ' Prevent spell spamming
+        If Not (IsBusy) And g_Macro.OkToCast Then    ' Prevent spell spamming
             'MyDebug "clsBuddyBuffer.CastNextSpell: Not (IsBusy), casting: " & objSpell.SpellName
             
-            If (g_Macro.m_bOKToCast = True) And Not (g_ui.Options.chkFilterLTMsg.Checked) Then
+            If Not (g_ui.Options.chkFilterLTMsg.Checked) Then
                 If lTargetGUID = g_Objects.Player.Guid Or lTargetGUID = 0 Then
                     PrintMessage "[Rebuff] Casting " & objSpell.SpellName
                 Else

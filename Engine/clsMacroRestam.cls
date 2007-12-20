@@ -212,7 +212,7 @@ On Error GoTo ErrorMessage
                         
                     Case RESTAM_SPELL   'spell
                         ' Make sure we're ready to cast.
-                        If g_Macro.m_bOKToCast = False Then
+                        If Not g_Macro.OkToCast Then
                             GoTo Fin
                         End If
                         
@@ -239,7 +239,7 @@ On Error GoTo ErrorMessage
             If m_RestamMethod = RESTAM_SPELL And Not (g_Spells.Casting) Then
                 
                 ' Make sure we're ready to cast.
-                If g_Macro.m_bOKToCast = False Then
+                If Not g_Macro.OkToCast Then
                     GoTo Fin
                 End If
                 

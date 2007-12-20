@@ -21,6 +21,7 @@ Public SpellName As String
 Private Sub Class_Initialize()
     SpellID = -1
     TargetGUID = -1
+    SpellName = "War Spell"
 End Sub
 
 Public Function Description() As String

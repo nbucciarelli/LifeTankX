@@ -597,21 +597,21 @@ On Error GoTo ErrorHandler
         Call m_BuffQueue.Pop    'remove the bad buff from queue
         GoTo Fin
     Else
-        If (g_Macro.m_bOKToCast = True) And Not (g_ui.Options.chkFilterLTMsg.Checked) Then
-            If lTargetGUID = g_Objects.Player.Guid Or lTargetGUID = 0 Then
-                PrintMessage "[Rebuff] Casting " & objSpell.SpellName
-            Else
-                PrintMessage "[Rebuff] Casting " & objSpell.SpellName & " on " & sTargetName
+        If Not (IsBusy) And (g_Macro.OkToCast) Then ' Prevent spell spamming
+            If Not (g_ui.Options.chkFilterLTMsg.Checked) Then
+                If lTargetGUID = g_Objects.Player.Guid Or lTargetGUID = 0 Then
+                    PrintMessage "[Rebuff] Casting " & objSpell.SpellName
+                Else
+                    PrintMessage "[Rebuff] Casting " & objSpell.SpellName & " on " & sTargetName
+                End If
             End If
-        End If
         
-        m_sCurSpellName = objSpell.SpellName
+            m_sCurSpellName = objSpell.SpellName
         
-        If Not (IsBusy) And (g_Macro.m_bOKToCast = True) Then ' Prevent spell spamming
-            locDebug "clsBuffer.CastNextSpell: Not (IsBusy), casting: " & objSpell.SpellName
+            locDebug "clsBuffer.CastNextSpell: casting: " & objSpell.SpellName
             Call g_Spells.CastThisSpell(objSpell, lTargetGUID)
         Else
-            locDebug "clsBuffer.CastNextSpell: IsBusy, _not_ casting: " & objSpell.SpellName
+            locDebug "clsBuffer.CastNextSpell: IsBusy TRUE, _not_ casting: " & objSpell.SpellName
         End If
     End If
     

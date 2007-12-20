@@ -102,8 +102,8 @@ Public Sub Add(NewSpellItem As clsSpellQueueItem)
         PrintErrorMessage "SpellQueue.Add : NewSpellItem = NULL -> Ignoring."
     Else
         'add this spell to the queue
-        Call m_SpellQueue.Add(NewSpellItem)
         MyDebug "SpellQueue.Add : " & NewSpellItem.Description
+        Call m_SpellQueue.Add(NewSpellItem)
     End If
     
 End Sub
@@ -116,11 +116,11 @@ End Sub
 Public Sub AddSimple(NewSpellItem As clsSpellQueueItemSimple)
     
     If Not Valid(NewSpellItem) Then
-        PrintErrorMessage "SpellQueue.Add : NewSpellItem = NULL -> Ignoring."
+        PrintErrorMessage "SpellQueue.AddSimple : NewSpellItem = NULL -> Ignoring."
     Else
         'add this spell to the queue
+        MyDebug "SpellQueue.AddSimple : " & NewSpellItem.Description
         Call m_SpellQueue.Add(NewSpellItem)
-        'MyDebug "SpellQueue.Add : " & NewSpellItem.Description
     End If
     
 End Sub

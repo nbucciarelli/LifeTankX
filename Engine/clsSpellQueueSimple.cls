@@ -88,7 +88,7 @@ Public Function Pop() As clsSpellQueueItemSimple
         'returns it
         Set Pop = m_SpellQueue.Item(1)
         
-        MyDebug "SpellQueue.Pop : " & Pop.Description
+        MyDebug "SpellQueueSimple.Pop : " & Pop.Description
         
         'remove it from queue
         Call m_SpellQueue.Remove(1)
@@ -105,11 +105,11 @@ End Function
 Public Sub Add(NewSpellItem As clsSpellQueueItemSimple)
     
     If Not Valid(NewSpellItem) Then
-        PrintErrorMessage "SpellQueue.Add : NewSpellItem = NULL -> Ignoring."
+        PrintErrorMessage "SpellQueueSimple.Add : NewSpellItem = NULL -> Ignoring."
     Else
         'add this spell to the queue
+        MyDebug "SpellQueueSimple.Add : " & NewSpellItem.Description
         Call m_SpellQueue.Add(NewSpellItem)
-        MyDebug "SpellQueue.Add : " & NewSpellItem.Description
     End If
     
 End Sub

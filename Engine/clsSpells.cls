@@ -282,7 +282,7 @@ On Error GoTo ErrorHandler
     ' See if this spell is on the Queue, if so, pop it off
     If g_Spells.c_SpellQueue.Count > 0 Then
         Call g_Spells.c_SpellQueue.Pop ' Pop the spell off the queue
-        g_Macro.m_bOKToCast = False
+        g_Macro.OkToCast = False
         'Call g_Macro.PostCastDelayTimer.SetNextTime(CAST_TIMER)
     End If
     
@@ -324,7 +324,7 @@ On Error GoTo ErrorHandler
     
     ' Make sure we're ready to cast.
     ' TODO: This can be moved once we check that LTxi is "well behaved" with spell calls.
-    If g_Macro.m_bOKToCast = False Then
+    If Not g_Macro.OkToCast Then
         GoTo Fin
     End If
     
@@ -354,7 +354,7 @@ On Error GoTo ErrorHandler
 
     ' Make sure we're ready to cast.
     ' TODO: This can be moved once we check that LTxi is "well behaved" with spell calls.
-    If g_Macro.m_bOKToCast = False Then
+    If Not g_Macro.OkToCast Then
         GoTo Fin
     End If
                 
@@ -778,12 +778,6 @@ On Error GoTo ErrorHandler
         Exit Sub
     End If
 
-    ' Make sure we're ready to cast.
-    ' TODO: This can be moved once we check that LTxi is "well behaved" with spell calls.
-    If g_Macro.m_bOKToCast = False Then
-        GoTo Fin
-    End If
-    
     'Make sure we are in combat mode with a Wand
 2    If Not g_Macro.ValidState(TYPE_CASTER) Then
         locDebug "queueThisSpell: Not in Combat mode - resetting"
@@ -807,9 +801,9 @@ On Error GoTo ErrorHandler
             .TargetGUID = TargetGUID
         End With
             
-8       Call c_SpellQueue.Add(objSpell)
+8       Call c_SpellQueue.Add(s_objSpell)
         
-        'Call g_Hooks.CastSpell(spellID, TargetGUID)
+        'Call g_Hooks.CastSpell(objSpell.spellID, TargetGUID)
         'MyDebug "queueThisSpell: g_Hooks.CastSpell: " & SpellID & " : " & TargetGUID
     End If
     

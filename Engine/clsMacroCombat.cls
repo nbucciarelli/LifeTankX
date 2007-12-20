@@ -765,10 +765,10 @@ On Error GoTo Error_Handler
     'Do the casting
     Select Case m_Action
         Case ACT_WAR_PRIMARY
-            locDebug "clsMacroCombat.FireMageAttack: ACT_WAR_PRIMARY CastThisSpell"
+            locDebug "clsMacroCombat.FireMageAttack: ACT_WAR_PRIMARY: " & g_Spells.CurrentWarSpell.SpellName
             Call g_Spells.CastThisSpell(g_Spells.CurrentWarSpell, m_objTarget.Guid)
         Case ACT_VULN
-            locDebug "clsMacroCombat.FireMageAttack: ACT_VULN CastThisSpell"
+            locDebug "clsMacroCombat.FireMageAttack: ACT_VULN: " & g_Spells.CurrentVuln.SpellName
             Call g_Spells.CastThisSpell(g_Spells.CurrentVuln, m_objTarget.Guid)
         Case ACT_YIELDMONSTER
             locDebug "clsMacroCombat.FireMageAttack: ACT_YIELD CastCreatureDebuff"

@@ -109,7 +109,7 @@ Private m_bPaused As Boolean
 Private m_adminPaused As Boolean
 Private m_fellowNeedsHealing As Boolean
 Private m_fellowNeedsStam As Boolean
-Public m_bOKToCast As Boolean ' Triggered by m_tmrCastSpell
+Private m_bOKToCast As Boolean      'Reset by m_tmrCastSpell
 Private m_attackCritter As Boolean
 Private m_mustHeal As Boolean
 
@@ -444,6 +444,15 @@ End Property
 
 Public Property Get Fletcher() As clsMacroFletcher
     Set Fletcher = m_Fletcher
+End Property
+
+Public Property Get OkToCast() As Boolean
+    OkToCast = m_bOKToCast
+End Property
+
+Public Property Let OkToCast(ByVal bVal As Boolean)
+        m_bOKToCast = bVal
+        Call m_tmrCastSpell.SetNextTime(CAST_TIMER)
 End Property
 
 Public Property Get PostCastDelayTimer() As clsTimer
@@ -1302,7 +1311,7 @@ On Error GoTo ErrorHandler
         'Call g_Spells.c_SpellQueue.Pop ' Pop the spell off the queue
         
         ' Reset casting state
-        'm_bOKToCast = False
+        m_bOKToCast = False
         Call m_tmrCastSpell.SetNextTime(CAST_TIMER)
         
         GoTo Fin
@@ -1340,7 +1349,7 @@ On Error GoTo ErrorHandler
                 End If
                
                 'Need stam?
-                If Vitals.NeedStamina(True) Then
+                If Vitals.NeedStamina(IsMelee) Then
                     If GoRestam Then GoTo Fin
                 End If
                 
@@ -1628,11 +1637,11 @@ On Error GoTo ErrorHandler
                         If GoHealing Then GoTo Fin
                     End If
                     
-                    If (isReadyToCast(TurboMode)) And (m_bOKToCast = True) Then
+                    If isReadyToCast(TurboMode) And (m_bOKToCast = True) Then
                         locDebug "clsMacro.RunState:ST_REBUFF: isReadyToCast true, CastNextSpell"
                         Call g_Buffer.CastNextSpell
                     Else
-                        locDebug "clsMacro.RunState:ST_REBUFF: isReadyToCast NOT true"
+                        locDebug "clsMacro.RunState:ST_REBUFF: isReadyToCast: False :: m_bOKToCast: " & m_bOKToCast
                     End If
                 End If
             
@@ -2270,6 +2279,8 @@ Public Sub OnSpellCasted(Optional ByVal bSuccessfully As Boolean = True)
 
     'MyDebug "OnSpellCasted: bSucessfully: " & bSuccessfully & " :: m_iState: " & m_iState
 
+    m_bOKToCast = True
+    
     If bSuccessfully Then
         Call OnStateSpellCasted
     Else
