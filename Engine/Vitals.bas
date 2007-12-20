@@ -27,10 +27,10 @@ End Function
 ' Check to see if we Need Mana (casting state only -- Either Mage or Rebuffing melee)
 Public Function NeedMana() As Boolean
 On Error GoTo ErrorHandler
-    Dim bRes As Boolean
+    Dim bRet As Boolean
     
     If Not g_Macro.ValidState(TYPE_CASTER) Then
-        bRes = False
+        bRet = False
         GoTo Fin
     End If
     

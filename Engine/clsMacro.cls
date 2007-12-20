@@ -916,7 +916,7 @@ ErrorHandler:
     Resume Fin
 End Function
 
-Public Sub GoCombat(objTarget As acObject)
+Public Sub GoCombat()
 On Error GoTo ErrorHandler
     Dim objTarget As acObject
     
