@@ -109,9 +109,11 @@ End Sub
 Public Sub ChooseBestRestamMethod()
 On Error GoTo ErrorMessage
     
+    ' First see if we can use Stam Items
     If Vitals.CanUseStamItem Then
         m_RestamMethod = RESTAM_ITEM
     Else
+        ' Or can we use spells?
         If g_ui.Macro.chkUseHealSpell.Checked Then
             m_RestamMethod = RESTAM_SPELL
         Else
@@ -182,8 +184,8 @@ On Error GoTo ErrorMessage
     End If
     
     If m_tmrSecure.Expired Then
-        locaDebug "clsMacroRestam.m_tmrSecure_OnTimeout - Secure Restam Timer expired : exiting state."
-        locaDebug "Busy Timeout - Reseting Restam flags"
+        locDebug "clsMacroRestam.m_tmrSecure_OnTimeout - Secure Restam Timer expired : exiting state."
+        locDebug "Busy Timeout - Reseting Restam flags"
         Call StopRestam("Secure Restam Timer Expired")
         Exit Sub
     End If
@@ -303,7 +305,7 @@ End Function
 
 
 'Local Debug
-Private Sub locDebug(DebugMsg As String, Optional bSilent As Boolean = False)
+Private Sub locDebug(DebugMsg As String, Optional bSilent As Boolean = True)
     If DEBUG_ME Or g_Data.mDebugMode Then
         Call MyDebug("[clsMacroRestam] " & DebugMsg, bSilent)
     End If

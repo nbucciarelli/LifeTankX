@@ -9,6 +9,11 @@ Begin VB.Form frmTimer
    ScaleHeight     =   3150
    ScaleWidth      =   3375
    StartUpPosition =   3  'Windows Default
+   Begin VB.Timer tmrHealth 
+      Interval        =   300
+      Left            =   840
+      Top             =   720
+   End
    Begin VB.Timer tmrTarget 
       Interval        =   500
       Left            =   240

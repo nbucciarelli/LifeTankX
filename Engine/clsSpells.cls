@@ -864,7 +864,7 @@ End Sub
 '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 'Local Debug
-Private Sub locDebug(DebugMsg As String, Optional bSilent As Boolean = False)
+Private Sub locDebug(DebugMsg As String, Optional bSilent As Boolean = True)
     If DEBUG_ME Or g_Data.mDebugMode Then
         Call MyDebug("[clsSpells] " & DebugMsg, bSilent)
     End If

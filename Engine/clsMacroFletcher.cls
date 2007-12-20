@@ -249,7 +249,7 @@ Dim sRes As String
 End Function
 
 'Local Debug
-Private Sub locDebug(DebugMsg As String, Optional bSilent As Boolean = False)
+Private Sub locDebug(DebugMsg As String, Optional bSilent As Boolean = True)
     If DEBUG_ME Or g_Data.mDebugMode Then
         Call MyDebug("[clsMacroFletcher : " & GetStateString & "] " & DebugMsg, bSilent)
     End If

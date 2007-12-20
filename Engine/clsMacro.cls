@@ -36,6 +36,8 @@ Private Const MAX_NAV_FAIL = 200            'maximum number of navigation/loot f
 ' Special Timers (not clsTimer) with their own clocks
 Private WithEvents m_tmrTarget As Timer
 Attribute m_tmrTarget.VB_VarHelpID = -1
+Private WithEvents m_tmrHealth As Timer
+Attribute m_tmrHealth.VB_VarHelpID = -1
 
 Public Enum eMacroStates
     ST_IDLE = 0
@@ -108,6 +110,8 @@ Private m_adminPaused As Boolean
 Private m_fellowNeedsHealing As Boolean
 Private m_fellowNeedsStam As Boolean
 Public m_bOKToCast As Boolean ' Triggered by m_tmrCastSpell
+Private m_attackCritter As Boolean
+Private m_mustHeal As Boolean
 
 'Timers / display / Stats
 Private m_dStartTime As Double
@@ -221,7 +225,9 @@ Private Sub Class_Initialize()
 'On Error GoTo ErrorHandler
  
     Set m_tmrTarget = frmTimer.tmrTarget
+    Set m_tmrHealth = frmTimer.tmrHealth
     m_tmrTarget.Enabled = False
+    m_tmrHealth.Enabled = False
 
     Set m_tmrBusyDelay = CreateTimer
     Set m_tmrPostCastDelayTimer = CreateTimer
@@ -263,6 +269,8 @@ Private Sub Class_Initialize()
     m_adminPaused = False
     m_fellowNeedsHealing = False
     m_fellowNeedsStam = False
+    m_attackCritter = False
+    m_mustHeal = False
     
     Set m_objFellowTarget = Nothing
     
@@ -338,6 +346,7 @@ End Sub
 Private Sub Class_Terminate()
 
     Set m_tmrTarget = Nothing
+    Set m_tmrHealth = Nothing
 
     Set m_tmrCastSpell = Nothing
     Set m_tmrBusyDelay = Nothing
@@ -886,10 +895,16 @@ Private Function GoRestam() As Boolean
 On Error GoTo ErrorHandler
     Dim bRet As Boolean
     
-    bRet = m_Restam.StartRestam
-    If bRet Then
-        Call SetState(ST_RESTAM)
-        Call RunState
+    bRet = False
+    
+    Call m_Restam.ChooseBestRestamMethod
+    
+    If m_Restam.RestamMethod <> NO_RESTAM Then
+        bRet = m_Restam.StartRestam
+        If bRet Then
+            Call SetState(ST_RESTAM)
+            Call RunState
+        End If
     End If
     
 Fin:
@@ -903,6 +918,13 @@ End Function
 
 Public Sub GoCombat(objTarget As acObject)
 On Error GoTo ErrorHandler
+    Dim objTarget As acObject
+    
+    If FindBestTarget(objTarget) Then
+        ' Found one
+    ElseIf g_ui.Macro.chkVuln.Checked And FindNonDebuffedTarget(objTarget, g_ui.Macro.txtVulnRange.Text, "FindBestTarget") Then
+        ' Found non-vulned Targets within VulnRange
+    End If
 
     If Not Valid(objTarget) Then
         PrintErrorMessage "GoCombat : invalid objTarget"
@@ -1304,22 +1326,27 @@ On Error GoTo ErrorHandler
     Else
         Select Case m_iState
             Case ST_IDLE
-                If ACBusy Then GoTo Fin
-                
-                locDebug "ST_IDLE: Idle"
-                                
-                'check to see if we need to loot a rare
-                If g_bLootRare Then
-                    locDebug "ST_IDLE : Looting Rare..."
-                    If GoLooting Then
-                        locDebug "ST_IDLE : Starting Looting..."
-                        GoTo Fin
-                    End If
+                If ACBusy Then
+                    locDebug "ST_IDLE, but ACBusy is TRUE"
+                    GoTo Fin
                 End If
                 
-                'check if we need healing
-                If m_Healing.NeedHealing("ST_IDLE") Then
+                locDebug "ST_IDLE: Idle"
+                
+                'Check to see if we need Healing
+                If m_mustHeal Then
+                    locDebug "ST_IDLE: m_mustHeal is TRUE"
                     If GoHealing Then GoTo Fin
+                End If
+               
+                'Need stam?
+                If Vitals.NeedStamina(True) Then
+                    If GoRestam Then GoTo Fin
+                End If
+                
+                'Check if we need mana.
+                If Vitals.NeedMana Then
+                    If Vitals.CastManaStamRegen(False, m_RegenManaAction, m_RegenStamAction) Then GoTo Fin
                 End If
                 
                 'check to see if fellow members nearby need healing
@@ -1336,7 +1363,7 @@ On Error GoTo ErrorHandler
                 
                 'check to see if we need to loot a rare
                 If g_bLootRare Then
-                    locDebug "ST_IDLE : Looting Rare..."
+                    locDebug "ST_IDLE : g_bLootRare is TRUE"
                     If GoLooting Then
                         locDebug "ST_IDLE : Starting Looting..."
                         GoTo Fin
@@ -1372,41 +1399,12 @@ On Error GoTo ErrorHandler
                     Call ReloadArrows
                     GoTo Fin
                 End If
-            
-                'Need stam?
-                'Check to make sure that restam method has not changed.
-                Call m_Restam.ChooseBestRestamMethod 'Get new Restam Method.
-                
-                If (m_Restam.RestamMethod <> NO_RESTAM) And Vitals.NeedStamina(True) Then
-                    If Not IsBusy Then
-                        Call GoRestam
-                    Else
-                        MyDebug "ST_IDLE - Macro need stam but currently busy - waiting still..."
-                    End If
-                    GoTo Fin
-                End If
-                
-                'Check if we need mana.
-                If IsCaster Then
-                    'MyDebug "Checking if we need more stamina..."
-                    If Vitals.CastManaStamRegen(False, m_RegenManaAction, m_RegenStamAction) Then
-                        GoTo Fin
-                    End If
-                End If
                 
                 ' See if we need to change our Items with a Mana Charge
                 If m_bNeedManaCharge And g_ui.Macro.chkUseManaCharge.Checked Then
                     Call goManaCharge
                     GoTo Fin
                 End If
-                
-                
-                'If IsCaster And Not (g_ui.Loot.chkLootForcePeaceMode.Checked) Then
-                '    If Not isReadyToCast(TurboMode) Then 'make sure we keep our mana/stam up
-                '        locDebug "clsMacro.RunState: ST_IDLE: Not isReadyToCast()"
-                '        GoTo Fin
-                '    End If
-                'End If
                 
                 'Check if loot priority is boosted.
                 If g_ui.Loot.chkBoostLootPriority.Checked _
@@ -1425,29 +1423,15 @@ On Error GoTo ErrorHandler
                 
                 'Look up for targets
                 If m_Combat.Target Is Nothing Then
-                    'SPK - Added a scan timer so that we don't do more CPU-expansive scans than
-                    'what's necessary
-                    If m_tmrNextTargetScan.Expired Then
-                        Call m_tmrNextTargetScan.SetNextTime(TARGET_SCAN_INTERVAL)
-                        ' First check for Targets within Attack Range
-                        If FindBestTarget(objTarget) Then
-                            Call GoCombat(objTarget)
-                            GoTo Fin
-                        ' Now check for non-vulned Targets within VulnRange
-                        ElseIf g_ui.Macro.chkVuln.Checked Then
-                            If FindNonDebuffedTarget(objTarget, g_ui.Macro.txtVulnRange.Text, "FindBestTarget") Then
-                                Call GoCombat(objTarget)
-                                GoTo Fin
-                            End If
-                        End If
+                        
+                    ' Check to see if we should be fighting
+                    If m_attackCritter Then
+                        Call GoCombat
+                        GoTo Fin
                     End If
-                        
-                    '
-                    'Not Target Found
-                    '
-                        
-                    locDebug "ST_IDLE : m_tmrNextSalvageTime.expired: " & m_tmrNextSalvageTime.Expired & " :: " & m_tmrNextSalvageTime.RemainingTime
-                        
+                    
+                    'No Targets, so let's check all the other crap we can do
+                    
                     'Check if we should run the auto-salvager
                     If g_ui.Loot.chkEnableSalvage.Checked _
                     And m_tmrNextSalvageTime.Expired Then
@@ -1498,13 +1482,6 @@ On Error GoTo ErrorHandler
                             End If
                         End If
                         
-                        'PrintErrorMessage ("Looting not done.")
-                        
-                        'If (m_iState = ST_LOOT) Then
-                        '    PrintErrorMessage ("State.")
-                        'Else
-                        '    PrintErrorMessage ("navHold")
-                        'End If
                     Else
                         m_NavFails = 0
                         Call m_Loot.resetNavHold
@@ -1520,7 +1497,7 @@ On Error GoTo ErrorHandler
                         End If
                     End If
                 Else
-                    Call GoCombat(m_Combat.Target)  'resume combat
+                    Call GoCombat    'resume combat
                 End If
                     
                 ' Make sure we are in combat state when Idle
@@ -1530,16 +1507,12 @@ On Error GoTo ErrorHandler
                 
             Case ST_STICK_NAV   ' moving back to sticky point
                 'check if we need healing
-                If m_Healing.NeedHealing("ST_NAV") Then
+                If m_mustHeal Then
                     If GoHealing Then GoTo Fin
                 End If
-                
                 'Need stam ?
-                Call m_Restam.ChooseBestRestamMethod 'Get new Restam Method.
-                
-                If Vitals.NeedStamina(IsMelee) And (m_Restam.RestamMethod <> NO_RESTAM) Then
-                    Call GoRestam
-                    GoTo Fin
+                If Vitals.NeedStamina(IsMelee) Then
+                    If GoRestam Then GoTo Fin
                 End If
                 
                 ' Check to see if we've been running to long
@@ -1550,27 +1523,19 @@ On Error GoTo ErrorHandler
  
             Case ST_NAV 'a "in-motion" variation of ST_IDLE
                 'check if we need healing
-                If m_Healing.NeedHealing("ST_NAV") Then
+                If m_mustHeal Then
                     If GoHealing Then GoTo Fin
                 End If
-                
                 'Need stam ?
-                Call m_Restam.ChooseBestRestamMethod 'Get new Restam Method.
-                
-                If Vitals.NeedStamina(IsMelee) And (m_Restam.RestamMethod <> NO_RESTAM) Then
-                    Call GoRestam
-                    GoTo Fin
+                If Vitals.NeedStamina(IsMelee) Then
+                    If GoRestam Then GoTo Fin
                 End If
                 
                 'Look for targets
-                If m_Combat.Target Is Nothing Then
-                    If FindBestTarget(objTarget) Then
-                        locDebug "ST_NAV : found target while moving, moving to regular IDLE state for combat initialization"
-                        'go back to regular IDLE mode to ensure we're in the proper equipment/vital state
-                        Call GoIdle
-                    End If
-                Else
+                If m_attackCritter Then
+                    locDebug "ST_NAV : found target while moving, going to Idle state"
                     Call GoIdle
+                    GoTo Fin
                 End If
                 
                 ' Check to see if we've been running to long
@@ -1580,17 +1545,17 @@ On Error GoTo ErrorHandler
                 End If
                 
             Case ST_COMBAT
-                'check if we need healing
-                If m_Healing.NeedHealing("ST_COMBAT") Then
+                'check if we need Healing
+                If m_mustHeal Then
                     If GoHealing Then GoTo Fin
                 End If
-                
-                'Need stam (for melee/archer only) ?
-                Call m_Restam.ChooseBestRestamMethod 'Get new Restam Method.
-                
-                If Vitals.NeedStamina(IsMelee) And (m_Restam.RestamMethod <> NO_RESTAM) Then
-                    Call GoRestam
-                    GoTo Fin
+                'Check is we need Stam
+                If Vitals.NeedStamina(IsMelee) Then
+                    If GoRestam Then GoTo Fin
+                End If
+                'Check if we need Mana.
+                If Vitals.NeedMana Then
+                    If Vitals.CastManaStamRegen(False, m_RegenManaAction, m_RegenStamAction) Then GoTo Fin
                 End If
                 
                 'check to see if fellow members nearby need healing
@@ -1624,7 +1589,7 @@ On Error GoTo ErrorHandler
                 
             Case ST_RESTAM
                 'check if we need healing
-                If m_Healing.NeedHealing("ST_RESTAM") Then
+                If m_mustHeal Then
                     If GoHealing Then GoTo Fin
                 End If
                 
@@ -1639,7 +1604,7 @@ On Error GoTo ErrorHandler
                     GoTo Fin
                 Else
                     'check if we need healing
-                    If m_Healing.NeedHealing("ST_BUDDYREBUFF") Then
+                    If m_mustHeal Then
                         If GoHealing Then GoTo Fin
                     End If
                     
@@ -1659,7 +1624,7 @@ On Error GoTo ErrorHandler
                     GoTo Fin
                 Else
                     'check if we need healing
-                    If m_Healing.NeedHealing("ST_REBUFF") Then
+                    If m_mustHeal Then
                         If GoHealing Then GoTo Fin
                     End If
                     
@@ -1685,13 +1650,17 @@ On Error GoTo ErrorHandler
                 End If
                 
             Case ST_LOOT
-                ' See if we should be in combat
-                If m_Combat.Target Is Nothing Then
-                    If FindBestTarget(objTarget) Then
-                        locDebug "ST_LOOT : found target while LOOTing"
-                        Call GoCombat(objTarget)
-                        GoTo Fin
-                    End If
+                'check if we need healing
+                If m_mustHeal Then
+                    If GoHealing Then GoTo Fin
+                End If
+                'Check is we need Stam
+                If Vitals.NeedStamina(IsMelee) Then
+                    If GoRestam Then GoTo Fin
+                End If
+                'Check if we need mana.
+                If Vitals.NeedMana Then
+                    If Vitals.CastManaStamRegen(False, m_RegenManaAction, m_RegenStamAction) Then GoTo Fin
                 End If
 
                 'check to see if fellow members nearby need healing
@@ -1706,6 +1675,14 @@ On Error GoTo ErrorHandler
                     If GoFellowHeal(True) Then GoTo Fin
                 End If
                 
+                If Not g_bLootRare And Not g_ui.Loot.chkBoostLootPriority.Checked Then
+                    ' See if we should be fighting Critters instead of looting
+                    If m_attackCritter Then
+                            Call GoCombat
+                            GoTo Fin
+                    End If
+                End If
+                
                 If Not ACBusy Then
                     If g_ui.Loot.chkLootForcePeaceMode.Checked And (g_Hooks.CombatMode <> COMBATSTATE_PEACE) Then
                         Call g_Macro.RequestCombatStateChange(COMBATSTATE_PEACE)
@@ -1714,18 +1691,6 @@ On Error GoTo ErrorHandler
                 End If
                 
             Case ST_SALVAGE
-                'check to see if fellow members nearby need healing
-                If g_ui.Macro.chkHealFellow.Checked And g_Objects.Fellowship.Active And m_fellowNeedsHealing Then
-                    locDebug "ST_IDLE: checking for fellow members in need of healing"
-                    If GoFellowHeal Then GoTo Fin
-                End If
-                
-                'check to see if fellow members nearby need Staming
-                If g_ui.Macro.chkStamFellow.Checked And g_Objects.Fellowship.Active And m_fellowNeedsStam Then
-                    locDebug "ST_IDLE: checking for fellow members in need of Staming"
-                    If GoFellowHeal(True) Then GoTo Fin
-                End If
-                
                 If Not ACBusy Then
                     Call m_Salvager.RunState
                 End If
@@ -1737,9 +1702,10 @@ On Error GoTo ErrorHandler
             
             Case ST_MANACHARGE
                 'check if we need healing
-                If m_Healing.NeedHealing("ST_MANACHARGE") Then
+                If m_mustHeal Then
                     If GoHealing Then GoTo Fin
                 End If
+                
                 If Not ACBusy Then
                     Call UseManaCharge
                 End If
@@ -1802,7 +1768,8 @@ End Function
 Private Sub OnMacroStart()
 On Error GoTo ErrorHandler
 
-1    m_tmrTarget.Enabled = True
+1   m_tmrTarget.Enabled = True
+2   m_tmrHealth.Enabled = True
 
     'Init Strings
     m_sXpHour = "0"
@@ -1818,20 +1785,20 @@ On Error GoTo ErrorHandler
     m_sNextRebuff = "1"
 
     'turn on the macro timer
-2   m_bRunning = True
+    m_bRunning = True
     m_bDied = False
-    Call m_tmrNextStatsUpdate.Reset
-    Call m_tmrNextStatsUpdate.SetNextTime(5)
+3   Call m_tmrNextStatsUpdate.Reset
+4   Call m_tmrNextStatsUpdate.SetNextTime(5)
 
     'reset counters
-3    Call UpdateNextRebuffDisplay
-4    m_dStartTime = g_Core.ElapsedSeconds
-5    m_dLastResetTime = 1
+5    Call UpdateNextRebuffDisplay
+     m_dStartTime = g_Core.ElapsedSeconds
+     m_dLastResetTime = 1
 6    Call SetElapsedTime(1)
     
-7    m_dTotalXp = g_ds.XpTracker.TotalXp
-8    m_dXpAtStart = m_dTotalXp
-9    Call UpdateStats
+     m_dTotalXp = g_ds.XpTracker.TotalXp
+     m_dXpAtStart = m_dTotalXp
+7    Call UpdateStats
     
     'Update screen dimension
 10    Call g_Window.UpdateDimensions
@@ -1842,7 +1809,7 @@ On Error GoTo ErrorHandler
     'Start 5 Min XP timer
 12    Call m_tmr5MinTimer.SetNextTime(10)
 
-13    Call Vitals.idManaStones
+13    'Call Vitals.idManaStones
     
 14    Call RunState
     
@@ -1976,6 +1943,7 @@ Public Sub StopMacro()
     Call g_BuddyBuffer.StopService
     If Valid(g_ui) Then Call g_ui.Main.UpdateStatus
     m_tmrTarget.Enabled = False
+    m_tmrHealth.Enabled = False
 
 End Sub
 
@@ -2601,7 +2569,7 @@ On Error GoTo ErrorHandler
             sReasonOut = "Running out of Prismatic Tapers (" & iTaperCount & ")"
             bRet = True
             ' Never force logout if we need healing!
-            If g_Macro.NeedHealing("clsMacro.MustLogOut") Then bRet = False
+            If m_Healing.NeedHealing("clsMacro.MustLogOut") Then bRet = False
         End If
     End If
     
@@ -2619,12 +2587,12 @@ On Error GoTo ErrorHandler
             sReasonOut = "Running out of " & STR_ITEM_PLAT
             bRet = True
             ' Never force logout if we need healing!
-            If g_Macro.NeedHealing("clsMacro.MustLogOut") Then bRet = False
+            If m_Healing.NeedHealing("clsMacro.MustLogOut") Then bRet = False
         ElseIf g_Objects.Items.InvCntByName(STR_ITEM_PYREAL_SCARAB) <= 0 Then
             sReasonOut = "Running out of " & STR_ITEM_PYREAL_SCARAB
             bRet = True
             ' Never force logout if we need healing!
-            If g_Macro.NeedHealing("clsMacro.MustLogOut") Then bRet = False
+            If m_Healing.NeedHealing("clsMacro.MustLogOut") Then bRet = False
         End If
     End If
     
@@ -2965,22 +2933,40 @@ ErrorHandler:
     Resume Fin
 End Sub
 
+' Health check timer with it's own clock source
+Private Sub m_tmrHealth_Timer()
+On Error GoTo ErrorHandler
+
+    If g_Filters.Health <= GetPercent(g_Filters.MaxHealth, g_Data.MinHealthThreshold) Then
+        m_mustHeal = True
+    Else
+        m_mustHeal = False
+    End If
+    
+Fin:
+    Exit Sub
+ErrorHandler:
+    PrintErrorMessage "clsMacro.m_tmrHealth_Timer - " & Err.Description
+    Resume Fin
+End Sub
+
 ' Target scanner with it's own clock source
 Private Sub m_tmrTarget_Timer()
 On Error GoTo ErrorHandler
 
     If m_Combat.Target Is Nothing Then
+        m_attackCritter = False
+        
         ' First check for Targets within Attack Range
-        If FindBestTarget(objTarget) Then
-            'Call GoCombat(objTarget)
-        ' Now check for non-vulned Targets within VulnRange
+        If FindBestTarget() Then
+            m_attackCritter = True
         ElseIf g_ui.Macro.chkVuln.Checked Then
-            If FindNonDebuffedTarget(objTarget, g_ui.Macro.txtVulnRange.Text, "FindBestTarget") Then
-                'Call GoCombat(objTarget)
+            ' Now check for non-vulned Targets within VulnRange
+            If FindNonDebuffedTarget(, g_ui.Macro.txtVulnRange.Text, "tmrTarget") Then
+                m_attackCritter = True
             End If
         End If
     End If
-
 
 Fin:
     Exit Sub
@@ -2991,7 +2977,7 @@ End Sub
 
 
 'Local Debug
-Private Sub locDebug(DebugMsg As String, Optional bSilent As Boolean = False)
+Private Sub locDebug(DebugMsg As String, Optional bSilent As Boolean = True)
     If DEBUG_ME Or g_Data.mDebugMode Then
         Call MyDebug("[clsMacro : " & GetStateString & "] " & DebugMsg, bSilent)
     End If

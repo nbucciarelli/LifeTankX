@@ -24,6 +24,27 @@ ErrorHandler:
     Resume Fin
 End Function
 
+' Check to see if we Need Mana (casting state only -- Either Mage or Rebuffing melee)
+Public Function NeedMana() As Boolean
+On Error GoTo ErrorHandler
+    Dim bRes As Boolean
+    
+    If Not g_Macro.ValidState(TYPE_CASTER) Then
+        bRes = False
+        GoTo Fin
+    End If
+    
+    bRet = g_Filters.Mana <= GetPercent(g_Filters.MaxMana, g_Data.MinManaThreshold)
+    
+Fin:
+    NeedMana = bRet
+    Exit Function
+ErrorHandler:
+    bRet = False
+    PrintErrorMessage "Vitals.NeedMana - " & Err.Description
+    Resume Fin
+End Function
+
 
 '***************************************
 ' CastManaStamRegen
@@ -308,7 +329,7 @@ Fin:
     g_bFindingItem = False
     Exit Function
 ErrorMessage:
-    'PrintErrorMessage "Error in Vitals.findManaCharge: " & Err.Description & " - " & Err.Source
+    PrintErrorMessage "Error in Vitals.findManaCharge: " & Err.Description & " - " & Err.Source
     findManaCharge = False
     g_bFindingItem = False
     Exit Function
