@@ -248,19 +248,12 @@ ErrorHandler:
     Resume Fin
 End Function
 
-Public Sub OnBusyCast()
-    'We are in the process of casting a spell now
-    m_bCasting = True
-    
-    locDebug "clsSpells.OnBusyCast"
-    
-End Sub
 
 Public Sub OnSpellCastBegin()
 On Error GoTo ErrorHandler
 
     'set casting flags
-    m_bCasting = True
+    'm_bCasting = True
     'm_bReadyToCast = False
     
     locDebug "clsSpells.OnSpellCastBegin..."
@@ -602,7 +595,7 @@ On Error GoTo ErrorHandler
             ' Check to see if we are surrounded
             If FindRingSpellTarget(g_ui.Macro.txtRingRange.Text) Then
                 Set splWar = splRing
-                locDebug "clsSpells.SetupWarSpellForDamage: Using ring spell"
+                locDebug "SetupWarSpellForDamage: Using ring spell: " & splRing.SpellName
             End If
         Else
             PrintMessage "clsSpells: No valid RING spells for damage type: " & iDmg
@@ -612,6 +605,7 @@ On Error GoTo ErrorHandler
     If Valid(splWar) Then
         Set m_CurrentWarSpell = splWar
         m_CurrentDamageType = m_CurrentWarSpell.SpellElement
+        locDebug "SetupWarSpellForDamage: splWar: " & splWar.SpellName & " : " & splWar.SpellElement
         bRet = True
     Else
         Dim sMsg As String
@@ -800,7 +794,9 @@ On Error GoTo ErrorHandler
             .SpellName = objSpell.SpellName
             .TargetGUID = TargetGUID
         End With
-            
+        
+        'MyDebug "clsSpells.queueThisSpell: adding s_objSpell: " & s_objSpell.Description & " :: " & s_objSpell.SpellID
+
 8       Call c_SpellQueue.Add(s_objSpell)
         
         'Call g_Hooks.CastSpell(objSpell.spellID, TargetGUID)

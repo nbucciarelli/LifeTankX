@@ -427,7 +427,8 @@ Public Function IsBusy(Optional ByVal bTurbo As Boolean = False) As Boolean
     Dim bMacroBusy As Boolean
     bMacroBusy = False
     
-    IsBusy = (g_Spells.Casting) Or (g_ds.InPortalSpace) Or (Not g_Macro.Combat.AttackMoveCompleted)
+    'IsBusy = (g_Spells.Casting) Or (g_ds.InPortalSpace) Or (Not g_Macro.Combat.AttackMoveCompleted)
+    IsBusy = (g_ds.InPortalSpace) Or (Not g_Macro.Combat.AttackMoveCompleted)
     
     If Not bTurbo Then
         If Valid(g_Macro) Then

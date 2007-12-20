@@ -315,8 +315,8 @@ On Error GoTo Error_Handler
         
         'Add the spell to the list
         Call AddSpell(objSpell)
-        MyDebug "[clsSpellList.LoadData] Added: " & objSpell.SpellName
-        'Set objSpell = Nothing
+        'MyDebug "[clsSpellList.LoadData] Added: " & objSpell.SpellName
+        Set objSpell = Nothing
     Next dat
     
     bRet = True
