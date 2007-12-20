@@ -1,14 +1,19 @@
 VERSION 5.00
 Begin VB.Form frmTimer 
    Caption         =   "LTEngine Timers"
-   ClientHeight    =   765
+   ClientHeight    =   3150
    ClientLeft      =   60
    ClientTop       =   450
-   ClientWidth     =   5340
+   ClientWidth     =   3375
    LinkTopic       =   "Form1"
-   ScaleHeight     =   765
-   ScaleWidth      =   5340
+   ScaleHeight     =   3150
+   ScaleWidth      =   3375
    StartUpPosition =   3  'Windows Default
+   Begin VB.Timer tmrTarget 
+      Interval        =   500
+      Left            =   240
+      Top             =   720
+   End
    Begin VB.Timer tmrInputQueue 
       Interval        =   100
       Left            =   840

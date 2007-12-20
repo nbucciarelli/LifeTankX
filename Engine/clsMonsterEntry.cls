@@ -24,9 +24,9 @@ Public Enabled As Boolean 'attack monster?
 Private Sub Class_Initialize()
     MonsterName = "UnknownMonster"
     MonsterVuln = DMG_SLASHING
-    Yield = True
-    Vuln = True
-    Imperil = True
+    Yield = False
+    Vuln = False
+    Imperil = False
     Priority = 1
     Enabled = True
 End Sub

@@ -33,6 +33,10 @@ Private Const SALVAGER_CHECK_INTERVAL = 5   'check if we need to autosalvage eve
 
 Private Const MAX_NAV_FAIL = 200            'maximum number of navigation/loot failures before reset.
 
+' Special Timers (not clsTimer) with their own clocks
+Private WithEvents m_tmrTarget As Timer
+Attribute m_tmrTarget.VB_VarHelpID = -1
+
 Public Enum eMacroStates
     ST_IDLE = 0
     ST_COMBAT
@@ -93,15 +97,6 @@ Private FiveMinXPCounter As TypeFiveMinCounter
 '#
 '#####################################################################################
 
-Private m_tmrPostCastDelayTimer As clsTimer
-Private m_tmrBusyDelay As clsTimer
-Private m_tmrNextLogoutCheck As clsTimer
-Private WithEvents m_tmrWaypointDelay As clsTimer
-Attribute m_tmrWaypointDelay.VB_VarHelpID = -1
-Private WithEvents m_tmr5MinTimer As clsTimer
-Attribute m_tmr5MinTimer.VB_VarHelpID = -1
-Private WithEvents m_tmrCastSpell As clsTimer
-Attribute m_tmrCastSpell.VB_VarHelpID = -1
 
 Private m_iState As eMacroStates
 Private m_iSubState As eMacroSubStates
@@ -121,7 +116,6 @@ Private m_dLastResetTime As Double
 Private m_dTimeSpent As Double      'Time since last reset
 
 Private m_sTimeSpent As String      'formated string of the time since last reset
-'Private m_sElapsedTime As String    'formated string of the elapsed time
 Private m_sNextRebuff As String     'formated string of the time remaining until next rebuff
 
 Private m_dXpAtStart As Double
@@ -149,14 +143,11 @@ Private m_dArrowsCount As Double
 Private m_dArrowsHour As Double
 Private m_sArrowsHour As String
 
-Private m_tmrNextStatsUpdate As clsTimer       'use to update stats every 1 seconds
 
 'Regen
 Private m_RegenManaAction As eRegenActions
 Private m_RegenStamAction As eRegenActions
 Private m_bRegenVitals As Boolean           'restaming / replenishing mana
-Private m_tmrFellowHealTimer As clsTimer    'check fellow health every 30 seconds
-Private m_tmrManaChargeTimer As clsTimer    'mana charge timer
 
 'Misc
 Private m_bNeedArrows As Boolean
@@ -165,7 +156,6 @@ Private m_bUsingManaCharge As Boolean
 Private m_bDied As Boolean
 Private m_bForceRebuff As Boolean
 Private m_bForceBuddyRebuff As Boolean
-Private m_tmrNextTargetScan As clsTimer
 Private m_fStartHeading As Single
 
 'Pending Fellowship Actions
@@ -174,14 +164,30 @@ Private m_iFellowAction As eFellowshipAction
 Private m_FellowCollection As Dictionary
 
 'Looting
-Private m_tmrNextLootCheck As clsTimer
 Public m_colChargeItems As colObjects 'List of all the charge items.
 Private m_NavFails As Integer
 
 'Salvager
-Private m_tmrNextSalvageTime As clsTimer
 Private m_bForceSalvage As Boolean
 Private m_iNumItemsPickedUp As Integer  'number of items picked up since last salvaging
+
+'Timers
+Private m_tmrNextLogoutCheck As clsTimer
+Private m_tmrNextTargetScan As clsTimer
+Private m_tmrNextLootCheck As clsTimer
+Private m_tmrNextSalvageTime As clsTimer
+Private m_tmrNextStatsUpdate As clsTimer    'use to update stats every 1 seconds
+Private m_tmrNextFellowHeal As clsTimer    'check fellow health every 30 seconds
+
+Private m_tmrManaChargeTimer As clsTimer
+Private m_tmrPostCastDelayTimer As clsTimer
+Private m_tmrBusyDelay As clsTimer
+Private WithEvents m_tmrWaypointDelay As clsTimer
+Attribute m_tmrWaypointDelay.VB_VarHelpID = -1
+Private WithEvents m_tmr5MinTimer As clsTimer
+Attribute m_tmr5MinTimer.VB_VarHelpID = -1
+Private WithEvents m_tmrCastSpell As clsTimer
+Attribute m_tmrCastSpell.VB_VarHelpID = -1
 
 'Macro Extansion Modules
 Private WithEvents m_CombatMode As clsMacroChangeCM
@@ -214,6 +220,9 @@ Attribute m_Salvager.VB_VarHelpID = -1
 Private Sub Class_Initialize()
 'On Error GoTo ErrorHandler
  
+    Set m_tmrTarget = frmTimer.tmrTarget
+    m_tmrTarget.Enabled = False
+
     Set m_tmrBusyDelay = CreateTimer
     Set m_tmrPostCastDelayTimer = CreateTimer
     Set m_tmrWaypointDelay = CreateTimer
@@ -222,7 +231,7 @@ Private Sub Class_Initialize()
     Set m_tmrNextStatsUpdate = CreateTimer
     Set m_tmrNextTargetScan = CreateTimer
     Set m_tmrNextSalvageTime = CreateTimer
-    Set m_tmrFellowHealTimer = CreateTimer
+    Set m_tmrNextFellowHeal = CreateTimer
     Set m_tmrManaChargeTimer = CreateTimer
     Set m_tmr5MinTimer = CreateTimer
     Set m_tmrCastSpell = CreateTimer
@@ -233,7 +242,7 @@ Private Sub Class_Initialize()
     Call m_tmrNextLogoutCheck.Reset
     Call m_tmrNextLootCheck.Reset
     Call m_tmrNextSalvageTime.Reset
-    Call m_tmrFellowHealTimer.Reset
+    Call m_tmrNextFellowHeal.Reset
     Call m_tmrManaChargeTimer.Reset
     Call m_tmr5MinTimer.Reset
     Call m_tmrCastSpell.Reset
@@ -328,13 +337,15 @@ End Sub
 
 Private Sub Class_Terminate()
 
+    Set m_tmrTarget = Nothing
+
     Set m_tmrCastSpell = Nothing
     Set m_tmrBusyDelay = Nothing
     Set m_tmrPostCastDelayTimer = Nothing
     Set m_tmrWaypointDelay = Nothing
     Set m_tmrNextLogoutCheck = Nothing
     Set m_tmrNextLootCheck = Nothing
-    Set m_tmrFellowHealTimer = Nothing
+    Set m_tmrNextFellowHeal = Nothing
     Set m_tmrNextSalvageTime = Nothing
     Set m_tmr5MinTimer = Nothing
     Set m_tmrManaChargeTimer = Nothing
@@ -443,7 +454,6 @@ Public Property Get ElapsedTime() As Double
 End Property
 
 Public Property Get ElapsedTimeString() As String
-    'ElapsedTimeString = m_sElapsedTime
     ElapsedTimeString = m_sTimeSpent
 End Property
 
@@ -1412,7 +1422,7 @@ On Error GoTo ErrorHandler
                 End If
                 
                 'PrintErrorMessage ("Debug: Idle 3")
-                    
+                
                 'Look up for targets
                 If m_Combat.Target Is Nothing Then
                     'SPK - Added a scan timer so that we don't do more CPU-expansive scans than
@@ -1792,7 +1802,9 @@ End Function
 Private Sub OnMacroStart()
 On Error GoTo ErrorHandler
 
-1    'Init Strings
+1    m_tmrTarget.Enabled = True
+
+    'Init Strings
     m_sXpHour = "0"
     m_sTimeUntilLevel = "0"
     m_sXpHour = "0"
@@ -1805,8 +1817,8 @@ On Error GoTo ErrorHandler
     m_sTimeSpent = "1"
     m_sNextRebuff = "1"
 
-2   'turn on the macro timer
-    m_bRunning = True
+    'turn on the macro timer
+2   m_bRunning = True
     m_bDied = False
     Call m_tmrNextStatsUpdate.Reset
     Call m_tmrNextStatsUpdate.SetNextTime(5)
@@ -1825,7 +1837,7 @@ On Error GoTo ErrorHandler
 10    Call g_Window.UpdateDimensions
     
     'Start fellowship checker
-11    Call m_tmrFellowHealTimer.SetNextTime(15)
+11    Call m_tmrNextFellowHeal.SetNextTime(15)
     
     'Start 5 Min XP timer
 12    Call m_tmr5MinTimer.SetNextTime(10)
@@ -1963,6 +1975,8 @@ Public Sub StopMacro()
     Call g_Buffer.StopService
     Call g_BuddyBuffer.StopService
     If Valid(g_ui) Then Call g_ui.Main.UpdateStatus
+    m_tmrTarget.Enabled = False
+
 End Sub
 
 Public Sub PauseMacro()
@@ -2342,13 +2356,13 @@ On Error GoTo ErrorHandler
         Select Case m_iState
             Case ST_HEALING
                 If m_Healing.HealingMethod <> MET_SPELL Then
-                    'MyDebug "OnReady - OnHealingReady [MET_KIT or MET_POTION]"
+                    locDebug "OnReady - OnHealingReady [MET_KIT or MET_POTION]"
                     Call m_Healing.OnHealingReady(bSuccess)
                 End If
                 
             Case ST_RESTAM
                 If m_Restam.RestamMethod <> RESTAM_SPELL Then
-                    'MyDebug "OnReady - OnRestamReady"
+                    locDebug "OnReady - OnRestamReady"
                     Call m_Restam.OnRestamReady(bSuccess)
                 End If
                 
@@ -2951,10 +2965,36 @@ ErrorHandler:
     Resume Fin
 End Sub
 
+' Target scanner with it's own clock source
+Private Sub m_tmrTarget_Timer()
+On Error GoTo ErrorHandler
+
+    If m_Combat.Target Is Nothing Then
+        ' First check for Targets within Attack Range
+        If FindBestTarget(objTarget) Then
+            'Call GoCombat(objTarget)
+        ' Now check for non-vulned Targets within VulnRange
+        ElseIf g_ui.Macro.chkVuln.Checked Then
+            If FindNonDebuffedTarget(objTarget, g_ui.Macro.txtVulnRange.Text, "FindBestTarget") Then
+                'Call GoCombat(objTarget)
+            End If
+        End If
+    End If
+
+
+Fin:
+    Exit Sub
+ErrorHandler:
+    PrintErrorMessage "clsMacro.m_tmrTarget_Timer - " & Err.Description
+    Resume Fin
+End Sub
+
+
 'Local Debug
 Private Sub locDebug(DebugMsg As String, Optional bSilent As Boolean = False)
     If DEBUG_ME Or g_Data.mDebugMode Then
         Call MyDebug("[clsMacro : " & GetStateString & "] " & DebugMsg, bSilent)
     End If
 End Sub
+
 

@@ -207,9 +207,7 @@ On Error GoTo ErrorMessage
     Call m_tmrTransition.SetNextTime(TRANSITION_DELAY)
     Call m_tmrSecure.Reset
     Call m_tmrNextTime.Reset
-    If m_HealMethod <> MET_SPELL Then
-       m_tmrTransition.SetNextTime TRANSITION_DELAY
-    Else
+    If m_HealMethod = MET_SPELL Then
         Call m_tmrTransition.ExpireNow
     End If
 
@@ -228,7 +226,10 @@ End Sub
 Public Sub RunState()
 On Error GoTo ErrorMessage
 
-    If m_tmrTransition.Enabled Then Exit Sub
+    If m_tmrTransition.Enabled Then
+        locDebug "RunState: waiting for StopHealing to finish"
+        Exit Sub
+    End If
     
     'If Not NeedHealing Then
         'Call StopHealing("All Healed up!")
@@ -283,11 +284,10 @@ On Error GoTo ErrorMessage
                     Call g_Service.UseItemOnSelf(m_objHealingKit)
                     MyDebug "Used Kit..."
                     Call StopHealing("Finished Healing!")
-                    'Call m_tmrSecure.SetNextTime(SECURE_TIME)
                     Exit Sub
                 Else
-                    MyDebug "MET_HEALING_KIT: STATE_HEAL_APPLY_KIT: Cant find healing kit in inventory. Logging out."
                     If g_ui.Macro.chkLogoutOnKits.Checked Then
+                        MyDebug "clsMacroHealing: STATE_HEAL_APPLY_KIT: Cant find healing kit in inventory. Logging out."
                         Call g_Service.Logout("No more healing kits in inventory.")
                     End If
                     Call StopHealing("Out of healing kits")
@@ -340,6 +340,12 @@ On Error GoTo ErrorMessage
                             End If
                             GoTo Fin
                         End If
+                    End If
+                    
+                    If Not NeedHealing Then
+                        MyDebug "clsMacroHealing.RunState.NeedHealing.Check - No healing necessary."
+                        Call StopHealing("No Healing required")
+                        Exit Sub
                     End If
                     
                     'the regular way
