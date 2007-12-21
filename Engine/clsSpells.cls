@@ -249,14 +249,14 @@ ErrorHandler:
 End Function
 
 
-Public Sub OnSpellCastBegin()
+Public Sub OnSpellCastBegin(Optional ByVal aSource As String)
 On Error GoTo ErrorHandler
 
     'set casting flags
     'm_bCasting = True
     'm_bReadyToCast = False
     
-    locDebug "clsSpells.OnSpellCastBegin..."
+    locDebug "clsSpells.OnSpellCastBegin from: " & aSource
     
     ' *****  JSC - Moved to clsACEvents.OnSpellCastOn()     ******
     'If Valid(g_Macro.Combat.Target) And (g_Macro.State = ST_COMBAT_ATTACKING) Then
@@ -276,7 +276,7 @@ On Error GoTo ErrorHandler
     If g_Spells.c_SpellQueue.Count > 0 Then
         locaDebug "OnSpellCastBegin: c_SpellQueue.Count > 0, poping top off"
         Call g_Spells.c_SpellQueue.Pop ' Pop the spell off the queue
-        g_Macro.OkToCast = False
+        g_Macro.OkToCast = True
         'Call g_Macro.PostCastDelayTimer.SetNextTime(CAST_TIMER)
     End If
     
@@ -414,7 +414,7 @@ End Function
 Public Sub ResetCastingFlag(Optional sSource As String = "", Optional ByVal bResetReadyToCast As Boolean = False)
     locDebug "ResetCastingFlag - From: " & sSource
     m_bCasting = False
-    'FIXME - JSC
+    g_Macro.OkToCast = True
     Call m_tmrPrecastDelay.ExpireNow
     Call g_Macro.PostCastDelayTimer.SetNextTime(0.5)
 End Sub

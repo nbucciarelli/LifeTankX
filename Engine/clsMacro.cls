@@ -1253,8 +1253,6 @@ End Sub
 Private Sub RunState()
 On Error GoTo ErrorHandler
 
-    'If m_PluginEnabled = False Then GoTo Fin
-    
     Dim objTarget As acObject
     
     'don't do anything if in portal space
@@ -1293,7 +1291,7 @@ On Error GoTo ErrorHandler
     
     ' Check for queued spells
     If g_Spells.c_SpellQueue.Count > 0 And m_bOKToCast Then
-        locDebug "Queue has " & g_Spells.c_SpellQueue.Count & " spells"
+        locDebug "c_SpellQueue has " & g_Spells.c_SpellQueue.Count & " spells"
         'Call g_Spells.c_SpellQueue.Display
         
         Dim o_Spell As clsSpellQueueItem
@@ -1388,7 +1386,7 @@ On Error GoTo ErrorHandler
                 End If
                 
                 'check if we need to buff
-                If (g_ui.Buffs.chkEnableBuffing.Checked Or m_bForceRebuff) And (g_Buffer.BuffQueue.Count > 0) And (m_bOKToCast = True) Then
+                If (g_ui.Buffs.chkEnableBuffing.Checked Or m_bForceRebuff) And (g_Buffer.BuffQueue.Count > 0) And (m_bOKToCast) Then
                     If ValidState(TYPE_CASTER) Then
                         Call GoRebuff
                     End If
@@ -1396,7 +1394,7 @@ On Error GoTo ErrorHandler
                 End If
                 
                 'check if we need to buff our little buddy
-                If Valid(g_buffBuddy) And (g_ui.Buffs.chkEnableBuffBuddy.Checked Or m_bForceBuddyRebuff) And (g_BuddyBuffer.BuffQueue.Count > 0) And (m_bOKToCast = True) Then
+                If Valid(g_buffBuddy) And (g_ui.Buffs.chkEnableBuffBuddy.Checked Or m_bForceBuddyRebuff) And (g_BuddyBuffer.BuffQueue.Count > 0) And (m_bOKToCast) Then
                     If GoBuddyRebuff Then GoTo Fin
                 End If
                 
@@ -1634,7 +1632,7 @@ On Error GoTo ErrorHandler
                         If GoHealing Then GoTo Fin
                     End If
                     
-                    If isReadyToCast(TurboMode) And (m_bOKToCast = True) Then
+                    If isReadyToCast(TurboMode) And (m_bOKToCast) Then
                         locDebug "clsMacro.RunState:ST_REBUFF: isReadyToCast true, CastNextSpell"
                         Call g_Buffer.CastNextSpell
                     Else

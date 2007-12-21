@@ -456,9 +456,9 @@ End Sub
 Private Sub m_DSFilter_OnSpellVisible(ByVal SpellName As String)
 On Error GoTo ErrorHandler
 
-    locDebug "OnSpellVisible name: " & SpellName
+    MyDebug "OnSpellVisible name: " & SpellName
     
-    If g_Spells.Casting Then
+    If g_Spells.Casting Or Not g_Macro.OkToCast Then
         locDebug "-- DSFilter_OnSpellVisible: g_Spells.Casting --"
         Call g_Spells.OnSpellCastComplete(True, "OnSpellVisible")
     End If
@@ -476,7 +476,7 @@ On Error GoTo ErrorHandler
     MyDebug "OUTGOING: OnSpellCast event: spellID: " & SpellID
     
     ' Set spell casting start flags
-    'Call g_Spells.OnSpellCastBegin
+    Call g_Spells.OnSpellCastBegin("OnSpellCast Event")
     
 Fin:
     Exit Sub
@@ -490,8 +490,12 @@ On Error GoTo ErrorHandler
 
     MyDebug "OUTGOING: OnSpellCastOn event: spellId: " & SpellID & "  target: " & objTarget.Name
     
-    ' Set spell casting start flags
-    'Call g_Spells.OnSpellCastBegin
+    ' The problem is that this get's called as soon as the toon STARTS to cast the spell (war/vuln/yield spells)
+    
+    ' Set spell casting start flags if this a War spell we just cast
+    If g_Spells.CurrentWarSpell.SpellID = SpellID Then
+        Call g_Spells.OnSpellCastBegin("OnSpellCastOn Event")
+    End If
 
 Fin:
     Exit Sub
@@ -1109,7 +1113,7 @@ On Error GoTo ErrorHandler
             End If
             
             If InStr(bstrMsg, "You say,") Then
-                Call g_Spells.OnSpellCastBegin
+                Call g_Spells.OnSpellCastBegin("ACEvents: You cast Spell Words")
                 'bFilterMsg = True
                 If Valid(g_Macro.Combat.Target) And (g_Macro.State = ST_COMBAT_ATTACKING) Then
                     ' JSC - increment the MISSCOUNT
@@ -1269,10 +1273,10 @@ On Error GoTo ErrorHandler
         
         'If Not (pColor = 27) And Not (pColor = 28) And Not (pColor = 29) And _
         '   Not (pColor = 7) And Not (pColor = 11) And Not (pColor = 17) And Not (pColor = 21) Then
-        '    MyDebug "clsACEvents.HandleConsoleMessage:(" & pColor & ") " & Left(bstrMsg, Len(bstrMsg) - 1)
+        '    locDebug "clsACEvents.HandleConsoleMessage:(" & pColor & ") " & Left(bstrMsg, Len(bstrMsg) - 1)
         'End If
     Else
-        'MyDebug "Filtered: (" & pColor & ") " & bstrMsg
+        locDebug "clsACEvents:Filtered: (" & pColor & ") " & bstrMsg
     End If
 
 Fin:
