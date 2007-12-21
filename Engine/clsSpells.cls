@@ -23,12 +23,12 @@ Private Const DEBUG_ME = False
 
 'Deals with the game's magic mode
 Private Const MODULE_DESCRIPTION = "Spells"
-Private Const SECURE_CASTING_TIME = 5
+Private Const SECURE_CASTING_TIME = 4
 
 Public c_SpellQueue As clsSpellQueue
 
 Private m_bCasting As Boolean
-'Private m_bReadyToCast As Boolean       'in turbo mode, bReadyToCast will move back to true after m_bCasting resets
+Private m_bReadyToCast As Boolean       'in turbo mode, bReadyToCast will move back to true after m_bCasting resets
                                         'this is used to tell if the spell cast is complete (EV_READY), even
                                         'when the Cast Breaker is running
                                         
@@ -253,32 +253,16 @@ Public Sub OnSpellCastBegin(Optional ByVal aSource As String)
 On Error GoTo ErrorHandler
 
     'set casting flags
-    'm_bCasting = True
-    'm_bReadyToCast = False
-    
+    m_bCasting = True
+    m_bReadyToCast = False
+    Call m_tmrSecureCasting.SetNextTime(SECURE_CASTING_TIME)
+
     locDebug "clsSpells.OnSpellCastBegin from: " & aSource
     
-    ' *****  JSC - Moved to clsACEvents.OnSpellCastOn()     ******
-    'If Valid(g_Macro.Combat.Target) And (g_Macro.State = ST_COMBAT_ATTACKING) Then
-    '    ' JSC - increment the MISSCOUNT
-    '    Dim missCount As Integer
-    '    missCount = g_Macro.Combat.Target.UserData(INT_MISSCOUNT) + 1
-    '    Call g_Macro.Combat.Target.SetUserData(INT_MISSCOUNT, missCount)
-    '    locDebug "clsSpells.OnSpellCastBegin: +1 MISSCOUNT: " & missCount & " for: " & g_Macro.Combat.Target.Name
-    'End If
-
     'If TurboMode Then
     '    locDebug "-- Starting Cast Breaker Timer :: " & g_Data.CastBreakerTime
     '    Call m_tmrCastBreaker.SetNextTime(g_Data.CastBreakerTime)
     'End If
-
-    ' See if this spell is on the Queue, if so, pop it off
-    If g_Spells.c_SpellQueue.Count > 0 Then
-        locaDebug "OnSpellCastBegin: c_SpellQueue.Count > 0, poping top off"
-        Call g_Spells.c_SpellQueue.Pop ' Pop the spell off the queue
-        g_Macro.OkToCast = True
-        'Call g_Macro.PostCastDelayTimer.SetNextTime(CAST_TIMER)
-    End If
     
 Fin:
     Exit Sub
@@ -291,6 +275,12 @@ Public Sub OnSpellCastComplete(Optional ByVal bSuccess As Boolean = True, Option
 On Error GoTo ErrorHandler
 
     MyDebug "clsSpells.OnSpellCastComplete : " & CStr(bSuccess) & " - " & sSource
+    
+    ' See if this spell is on the Queue, if so, pop it off
+    If bSuccess And (g_Spells.c_SpellQueue.Count > 0) Then
+        locDebug "OnSpellCastBegin: c_SpellQueue.Count > 0"
+        Call g_Spells.c_SpellQueue.Pop ' Pop the spell off the queue
+    End If
     
     'reset casting flag
     Call ResetCastingFlag(sSource, Not bSuccess)    'reset the ReadyToCast flag too if spell cast failed/got interupted
@@ -316,12 +306,6 @@ End Sub
 Public Function CastThisSpell(ByVal objSpell As clsSpell, ByVal lTargetId As Long) As Boolean
 On Error GoTo ErrorHandler
     
-    ' Make sure we're ready to cast.
-    ' TODO: This can be moved once we check that LTxi is "well behaved" with spell calls.
-    If Not g_Macro.OkToCast Then
-        GoTo Fin
-    End If
-    
     CastThisSpell = False
         
     If Not Valid(objSpell) Then
@@ -345,13 +329,7 @@ End Function
 
 Public Function CastSpell(ByRef spellList As clsSpellList, ByVal sSpellFamily As String, ByVal TargetId As Long, Optional ByVal iLevelWanted As Integer = 7) As Boolean
 On Error GoTo ErrorHandler
-
-    ' Make sure we're ready to cast.
-    ' TODO: This can be moved once we check that LTxi is "well behaved" with spell calls.
-    If Not g_Macro.OkToCast Then
-        GoTo Fin
-    End If
-                
+    
     Dim objSpell As clsSpell
  
     'default return value
@@ -414,7 +392,7 @@ End Function
 Public Sub ResetCastingFlag(Optional sSource As String = "", Optional ByVal bResetReadyToCast As Boolean = False)
     locDebug "ResetCastingFlag - From: " & sSource
     m_bCasting = False
-    g_Macro.OkToCast = True
+    'g_Macro.OkToCast = True
     Call m_tmrPrecastDelay.ExpireNow
     Call g_Macro.PostCastDelayTimer.SetNextTime(0.5)
 End Sub
@@ -789,10 +767,19 @@ On Error GoTo ErrorHandler
         With s_objSpell
             .SpellID = objSpell.SpellID
             .SpellFamily = objSpell.SpellFamily
-            .SpellElement = objSpell.SpellElement
             .SpellType = objSpell.SpellType
+            .SpellElement = objSpell.SpellElement
+            .SpellSchool = objSpell.SpellSchool
             .TargetGUID = TargetGUID
         End With
+        
+        'First check to see if we already have this spell Queued up
+        If c_SpellQueue.Count > 0 Then
+            If c_SpellQueue.ReadTop.Description = s_objSpell.Description Then
+                locDebug "queueThisSpell: we already have spell in queue: " & s_objSpell.Description
+                Exit Sub
+            End If
+        End If
         
 8       MyDebug "clsSpells.queueThisSpell: adding objSpell: " & objSpell.SpellName & " :: " & objSpell.SpellID
 

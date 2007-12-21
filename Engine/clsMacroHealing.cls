@@ -308,11 +308,6 @@ On Error GoTo ErrorMessage
                    GoTo Fin
                 End If
                 
-                ' Make sure we're ready to cast.
-                If Not g_Macro.OkToCast Then
-                    GoTo Fin
-                End If
-                
                 'If we're too low on mana, get some back quickly with S2M
                 If (g_Filters.Mana <= 30) Then
                     Call g_Spells.Cast_Emergency_Stam2Mana

@@ -748,6 +748,9 @@ On Error GoTo ErrorHandler
                 Case RETIRED_EV_FELLOWSHIP_INVITATION
                     Call g_Objects.Fellowship.HandleFellowshipEvents(Message, RETIRED_EV_FELLOWSHIP_INVITATION)
                 
+                Case Else
+                    myDebug "MSG_GAME_EVENT: unknown: " & Message
+
                 End Select
                 
                 '----------- Spell Events -------------

@@ -50,6 +50,10 @@ Public Property Get Count() As Long
     Count = m_SpellQueue.Count
 End Property
 
+' Clears the queue.
+Public Sub Clear()
+    Set m_SpellQueue = New Collection
+End Sub
 '============================================================================
 ' ReadTop
 '---------------------------------------------------------------------------
@@ -83,7 +87,7 @@ Public Function Pop() As clsSpellQueueItem
         'returns it
         Set Pop = m_SpellQueue.Item(1)
         
-        MyDebug "SpellQueue.Pop : " & Pop.Description
+        MyDebug "clsSpellQueue.Pop : " & Pop.Description
         
         'remove it from queue
         Call m_SpellQueue.Remove(1)

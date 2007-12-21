@@ -23,7 +23,7 @@ Private Const DEBUG_ME = False
 
 Private Const DEFAULT_MACRO_TIMER_INTERVAL = 300   'msec
 Private Const WAYPOINT_DELAY = 2                   'seconds
-Private Const CAST_TIMER = 0.3                     'seconds
+Private Const CAST_TIMER = 0.4                     'seconds
 
 Private Const LOGOUT_CHECK_INTERVAL = 2     'check every X seconds
 Private Const LOOT_CHECK_INTERVAL = 2       'check for loot every 2 seconds in idle mode
@@ -936,12 +936,11 @@ On Error GoTo ErrorHandler
     End If
 
     If Not Valid(objTarget) Then
-        PrintErrorMessage "GoCombat : invalid objTarget"
-        objTarget = Nothing
+        MyDebug "GoCombat : invalid objTarget"
         Exit Sub
     End If
     
-    If m_Combat.EngageCombat(objTarget, "GoCombat") Then
+    If Valid(objTarget) And m_Combat.EngageCombat(objTarget, "GoCombat") Then
         Call SetState(ST_COMBAT)
         Call RunState
     Else
@@ -1256,16 +1255,16 @@ On Error GoTo ErrorHandler
     Dim objTarget As acObject
     
     'don't do anything if in portal space
-    If g_ds.InPortalSpace Then GoTo Fin
+1    If g_ds.InPortalSpace Then GoTo Fin
     
     'is the macro running?
-    If Not m_bRunning Then GoTo Fin
+2    If Not m_bRunning Then GoTo Fin
     
     'is the macro paused?
-    If m_bPaused Then GoTo Fin
+3    If m_bPaused Then GoTo Fin
     
     'Check if we need to logout
-    If m_tmrNextLogoutCheck.Expired Then
+4    If m_tmrNextLogoutCheck.Expired Then
         'If (g_AntiBan.m_bLogOut) Then
         '    Call g_Hooks.CastSpell(2023, 0)
         'End If
@@ -1281,16 +1280,16 @@ On Error GoTo ErrorHandler
     End If
     
     'If we're busy, don't do anything
-    If IsBusy(TurboMode) Then
+5    If IsBusy(TurboMode) Then
         locDebug "clsMacro.RunState: IsBusy(TurboMode) is true!"
         GoTo Fin
     End If
     
     'make sure we're not moving if we are not in ST_NAV state
-    If (m_iState <> ST_NAV) And (m_iState <> ST_STICK_NAV) Then Call CheckStopNav
+6    If (m_iState <> ST_NAV) And (m_iState <> ST_STICK_NAV) Then Call CheckStopNav
     
     ' Check for queued spells
-    If g_Spells.c_SpellQueue.Count > 0 And m_bOKToCast Then
+7    If g_Spells.c_SpellQueue.Count > 0 And m_bOKToCast Then
         locDebug "c_SpellQueue has " & g_Spells.c_SpellQueue.Count & " spells"
         'Call g_Spells.c_SpellQueue.Display
         
@@ -1298,7 +1297,7 @@ On Error GoTo ErrorHandler
         
         Set o_Spell = g_Spells.c_SpellQueue.ReadTop
                 
-        locDebug "Casting spell: " & o_Spell.Description
+        locDebug "RunState g_Hook.CastSpell: " & o_Spell.Description
         Call g_Hooks.CastSpell(o_Spell.SpellID, o_Spell.TargetGUID)
         
         ' Don't pop the spell off the Queue until we are sure it's actualy been cast
@@ -1313,7 +1312,7 @@ On Error GoTo ErrorHandler
     End If
     
     'Handle sub states first
-    If m_iSubState <> SUBST_NONE Then
+8    If m_iSubState <> SUBST_NONE Then
         Select Case m_iSubState
                 
             Case SUBST_CHANGE_COMBATMODE
@@ -1327,9 +1326,13 @@ On Error GoTo ErrorHandler
                 Call ResetSubState
                     
             End Select
-    Else
+9    Else
         Select Case m_iState
             Case ST_IDLE
+            
+                ' If we have a War spell in the queue, be sure to clear it out
+                Call ClearSpellQueue
+                
                 If ACBusy Then
                     locDebug "ST_IDLE, but ACBusy is TRUE"
                     GoTo Fin
@@ -1519,6 +1522,9 @@ On Error GoTo ErrorHandler
                     If GoRestam Then GoTo Fin
                 End If
                 
+                ' If we have a War spell in the queue, be sure to clear it out
+                Call ClearSpellQueue
+                
                 ' Check to see if we've been running to long
                 If Not g_Nav.routeCheckerRunning Then
                     locDebug "ST_STICK_NAV: routeCheckerRunning false, GoIdle"
@@ -1534,6 +1540,9 @@ On Error GoTo ErrorHandler
                 If Vitals.NeedStamina(IsMelee) Then
                     If GoRestam Then GoTo Fin
                 End If
+                
+                ' If we have a War spell in the queue, be sure to clear it out
+                Call ClearSpellQueue
                 
                 'Look for targets
                 If m_attackCritter Then
@@ -1644,11 +1653,17 @@ On Error GoTo ErrorHandler
                 Call m_Healing.RunState
                 
             Case ST_FLETCHING
+                ' If we have a War spell in the queue, be sure to clear it out
+                Call ClearSpellQueue
+                
                 If Not ACBusy Then
                     Call m_Fletcher.RunState
                 End If
                 
             Case ST_FELLOW_CMD
+                ' If we have a War spell in the queue, be sure to clear it out
+                Call ClearSpellQueue
+                
                 If Not IsBusy Then
                     Call m_FellowCmd.RunState
                 End If
@@ -1687,6 +1702,9 @@ On Error GoTo ErrorHandler
                     End If
                 End If
                 
+                ' If we have a War spell in the queue, be sure to clear it out
+                Call ClearSpellQueue
+                
                 If Not ACBusy Then
                     If g_ui.Loot.chkLootForcePeaceMode.Checked And (g_Hooks.CombatMode <> COMBATSTATE_PEACE) Then
                         Call g_Macro.RequestCombatStateChange(COMBATSTATE_PEACE)
@@ -1695,11 +1713,17 @@ On Error GoTo ErrorHandler
                 End If
                 
             Case ST_SALVAGE
+                ' If we have a War spell in the queue, be sure to clear it out
+                Call ClearSpellQueue
+                
                 If Not ACBusy Then
                     Call m_Salvager.RunState
                 End If
             
             Case ST_BUYSELL
+                ' If we have a War spell in the queue, be sure to clear it out
+                Call ClearSpellQueue
+                
                 If Not ACBusy Then
                     Call PhatLoot.RunState
                 End If
@@ -1709,6 +1733,9 @@ On Error GoTo ErrorHandler
                 If m_mustHeal Then
                     If GoHealing Then GoTo Fin
                 End If
+                
+                ' If we have a War spell in the queue, be sure to clear it out
+                Call ClearSpellQueue
                 
                 If Not ACBusy Then
                     Call UseManaCharge
@@ -1787,6 +1814,8 @@ On Error GoTo ErrorHandler
     m_sTimeSpent = "1"
     m_sNextRebuff = "1"
 
+    Call g_Spells.ResetCastingFlag("Macro Start")
+    
     'turn on the macro timer
     m_bRunning = True
     m_bDied = False
@@ -1963,9 +1992,27 @@ Public Sub ResumeMacro()
         '    PrintMessage g_String(mStrings.e_strUnableToAuth)
         '    Exit Sub
         'End If
+        Call g_Spells.ResetCastingFlag("Macro Start")
         m_bPaused = False
         PrintMessage "Macro resumed."
     End If
+End Sub
+
+Public Sub ClearSpellQueue()
+On Error GoTo ErrorHandler
+
+    ' If we have a War spell in the queue, be sure to clear it out
+    If g_Spells.c_SpellQueue.Count > 0 Then
+        If g_Spells.c_SpellQueue.ReadTop.SpellSchool = SCHOOL_WAR Then
+            locDebug "ST_IDLE: popping old war spell off Queue"
+            Call g_Spells.c_SpellQueue.Pop
+        End If
+    End If
+    
+    Exit Sub
+ErrorHandler:
+    PrintErrorMessage "clsMacro.CLearSpellQueue - " & Err.Description
+    Exit Sub
 End Sub
 
 'Make a check list of the required items to macro (wand/bow/shield/weapon, etc)
@@ -2271,9 +2318,11 @@ End Function
 'A spell is done being casted
 Public Sub OnSpellCasted(Optional ByVal bSuccessfully As Boolean = True)
 
-    'MyDebug "OnSpellCasted: bSucessfully: " & bSuccessfully & " :: m_iState: " & m_iState
+    locDebug "OnSpellCasted: bSucessfully: " & bSuccessfully & " :: m_iState: " & m_iState
 
-    m_bOKToCast = True
+    ' Force a CAST_TIMER delay after a spell is cast
+    Call m_tmrCastSpell.SetNextTime(CAST_TIMER)
+    g_Macro.OkToCast = False
     
     If bSuccessfully Then
         Call OnStateSpellCasted
@@ -2371,6 +2420,13 @@ On Error GoTo ErrorHandler
         If m_Combat.Target.Guid = objEntity.Guid Then
             'Now it's safe to release target data
             Call m_Combat.StopCombat("clsMacro.OnEntityDeath")
+            If g_Spells.Casting Or Not (g_Macro.OkToCast) Then
+                Call g_Spells.ResetCastingFlag("Death Message")
+            End If
+            If g_Spells.c_SpellQueue.Count > 0 Then
+                Call g_Spells.c_SpellQueue.Clear
+            End If
+
         End If
         
         'Call Macro.Timers(TMR_LOOT_DELAY).SetNextTime(2)    'wait a bit before looting this body, as it may not be ready yet

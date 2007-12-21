@@ -161,7 +161,7 @@ On Error GoTo ErrorHandler
     bWasCasting = False
     
     If g_Spells.Casting Then
-        'MyDebug "DSFilter_OnReady: g_Spells.Casting"
+        locDebug "DSFilter_OnReady: g_Spells.Casting is TRUE"
         bWasCasting = True
         Exit Sub
         'Call g_Spells.OnSpellCastComplete(, "OnReady")
@@ -306,6 +306,10 @@ On Error GoTo ErrorHandler
         Call g_Macro.incLoot
     End If
 
+    If g_Spells.Casting Or Not (g_Macro.OkToCast) Then
+        Call g_Spells.ResetCastingFlag("Death Message")
+    End If
+    
 '    If g_Macro.Ticking Then
 '        Call g_Macro.OnMonsterDeathMessage(DeathMessage)
 '    End If
@@ -458,10 +462,10 @@ On Error GoTo ErrorHandler
 
     MyDebug "OnSpellVisible name: " & SpellName
     
-    If g_Spells.Casting Or Not g_Macro.OkToCast Then
-        locDebug "-- DSFilter_OnSpellVisible: g_Spells.Casting --"
+    'If g_Spells.Casting Or Not g_Macro.OkToCast Then
+        locDebug "-- DSFilter_OnSpellVisible: " & SpellName
         Call g_Spells.OnSpellCastComplete(True, "OnSpellVisible")
-    End If
+    'End If
 
 Fin:
     Exit Sub
@@ -492,10 +496,8 @@ On Error GoTo ErrorHandler
     
     ' The problem is that this get's called as soon as the toon STARTS to cast the spell (war/vuln/yield spells)
     
-    ' Set spell casting start flags if this a War spell we just cast
-    If g_Spells.CurrentWarSpell.SpellID = SpellID Then
-        Call g_Spells.OnSpellCastBegin("OnSpellCastOn Event")
-    End If
+    ' Set spell casting start flags
+    Call g_Spells.OnSpellCastBegin("OnSpellCastOn Event")
 
 Fin:
     Exit Sub
@@ -987,9 +989,9 @@ On Error GoTo ErrorHandler
     
     bstrMsg = Trim(bstrMsg)
     
-    'If Not (pColor = 27) And Not (pColor = 28) And Not (pColor = 29) Then
-    '    MyDebug "clsACEvents.HandleConsoleMessage:(" & pColor & ") " & bstrMsg
-    'End If
+    If Not (pColor = 27) And Not (pColor = 28) And Not (pColor = 29) Then
+        locDebug "clsACEvents.HandleConsoleMessage:(" & pColor & ") " & bstrMsg
+    End If
     
     If InStr(bstrMsg, "Tell:IIDString") Then
         'New click to talk looks like: [Fellowship] <Tell:IIDString:1343014699:ToonName>ToonName<\Tell> says, "Shurov Thiril"
@@ -1113,7 +1115,7 @@ On Error GoTo ErrorHandler
             End If
             
             If InStr(bstrMsg, "You say,") Then
-                Call g_Spells.OnSpellCastBegin("ACEvents: You cast Spell Words")
+                Call g_Spells.OnSpellCastBegin("ACEvents: spell words BEGIN: You say")
                 'bFilterMsg = True
                 If Valid(g_Macro.Combat.Target) And (g_Macro.State = ST_COMBAT_ATTACKING) Then
                     ' JSC - increment the MISSCOUNT
@@ -1152,6 +1154,7 @@ On Error GoTo ErrorHandler
                     'Our spell did damage to critter, reset the BLACKLIST count for this target
                     If Valid(g_Macro.Combat.Target) Then
                         Call g_Macro.Combat.Target.SetUserData(INT_MISSCOUNT, 0)
+                        Call g_Macro.Combat.updateSecureTimer(3)
                         'MyDebug "clsACEvents.ConsoleMessage: reset MISSCOUNT : " & g_Macro.Combat.Target.Name
                         'MyDebug "clsACEvents.ConsoleMessage: Spell: " & Msg
                     Else

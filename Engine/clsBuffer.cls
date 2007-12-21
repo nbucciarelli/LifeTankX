@@ -592,7 +592,7 @@ On Error GoTo ErrorHandler
         Call m_BuffQueue.Pop    'remove the bad buff from queue
         GoTo Fin
     Else
-        If Not (IsBusy) And (g_Macro.OkToCast) Then ' Prevent spell spamming
+        If Not (IsBusy) Then ' Prevent spell spamming
         
             locDebug "clsBuffer.CastNextSpell: casting: " & objSpell.SpellName
             
@@ -637,6 +637,7 @@ On Error GoTo ErrorHandler
             
             If (g_Macro.State = ST_REBUFF) Then
                 Call m_BuffQueue.Pop
+                Call g_Spells.c_SpellQueue.Pop
                 'update progress bar
                 g_ui.Main.progBuffs.Value = g_ui.Main.progBuffs.Value + 1
                 m_sCurSpellName = ""
@@ -658,7 +659,7 @@ On Error GoTo ErrorHandler
         End If
     Else
         locDebug "clsBuffer.CheckCastedSpell: m_sCurSpellName is Blank"
-        If g_Spells.Casting Then
+        If g_Spells.Casting Or Not g_Macro.OkToCast Then
             locDebug "clsBuffer.CheckCastedSpell - g_Spells.Casting is true, calling OnSpellCastComplete"
             Call g_Spells.OnSpellCastComplete(True, "CheckCastedSpell")
         End If

@@ -119,6 +119,7 @@ On Error GoTo ErrorHandler
     Dim bRet As Boolean
     
     bRet = m_LootedItemsToSalvage.addObject(objItem)
+    locDebug "AddLootToSalvageList: " & bRet & " :: " & objItem.Name
 
 Fin:
     AddLootToSalvageList = bRet
@@ -327,9 +328,9 @@ On Error GoTo ErrorHandler
             bRet = False
         ElseIf objItem.HasMajors Then
             bRet = False
-        'ElseIf IsWorthAssessing(objItem.itemType) And (objItem.LastIdTime = 0) Then
+        ElseIf IsWorthAssessing(objItem.itemType) And (objItem.LastIdTime = 0) Then
             'If item hasn't been assessed return
-        '    bRet = False
+            bRet = False
         Else
             'Ok we found a salvageable item, add it to our list
             bRet = True
@@ -848,6 +849,8 @@ On Error GoTo ErrorHandler
         
         If m_LootedItemsToSalvage.Remove(objItem.Guid) Then
             locDebug "clsSalvager.OnRemoveObject - Removing " & objItem.Name & " from LootedItemsToSalvage"
+        Else
+            MyDebug "clsSalvager.OnRemoveObject - Could not remove item list Salvage list: " & objItem.Name
         End If
         
         'Are we done usting all the items ?

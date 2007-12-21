@@ -107,6 +107,10 @@ Public Property Get AttackMoveCompleted() As Boolean
     AttackMoveCompleted = m_tmrBusyCombat.Expired
 End Property
 
+Public Sub updateSecureTimer(ByVal aTime As Long)
+    'Update secure timer
+    Call m_tmrSecure.SetNextTime(SECURE_TIMER + aTime)
+End Sub
 '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 '
 '                                 Public Methods
@@ -293,6 +297,9 @@ Public Sub MageImperilLanded()
         Exit Sub
     End If
     
+    'Update secure timer
+    Call m_tmrSecure.SetNextTime(SECURE_TIMER)
+    
     locDebug "MageImperilLanded: Monster Imperiled"
     Call m_objTarget.SetUserData(INT_MISSCOUNT, 0)
     m_objTarget.Imperiled = True
@@ -304,6 +311,9 @@ Public Sub MageVulnLanded()
         Exit Sub
     End If
     
+    'Update secure timer
+    Call m_tmrSecure.SetNextTime(SECURE_TIMER)
+    
     locDebug "MageVulnLanded: Monster Vulned."
     Call m_objTarget.SetUserData(INT_MISSCOUNT, 0)
     Call m_objTarget.AddVuln(g_Spells.CurrentDamage)
@@ -314,6 +324,9 @@ Public Sub MageYieldLanded()
         MyDebug "clsMacroCombat - Yield Landing : invalid m_objTarget"
         Exit Sub
     End If
+    
+    'Update secure timer
+    Call m_tmrSecure.SetNextTime(SECURE_TIMER)
     
     'If (Not m_objTarget.Yielded) And (g_ui.Macro.chkYield.Checked) Then
      locDebug "MageYieldLanded: Monster Yielded."
@@ -327,6 +340,9 @@ Public Sub MageSpellGotResisted()
         MyDebug "clsMacroCombat - MageSpellGotResisted : invalid m_objTarget"
         Exit Sub
     End If
+    
+    'Update secure timer
+    Call m_tmrSecure.SetNextTime(SECURE_TIMER)
     
     Call m_objTarget.SetUserData(INT_MISSCOUNT, 0)
     
@@ -756,8 +772,12 @@ On Error GoTo Error_Handler
                     End If
                 Next i
             Else
+                'Critter is Vulnerable to right damage type
                 Call g_Spells.SetupWarSpellForDamage(m_objTarget.Vulnerability, fRange)
             End If
+        Else
+            'Use Vuln from UI
+            Call g_Spells.SetupWarSpellForDamage(m_objTarget.Vulnerability, fRange)
         End If
         
     End If

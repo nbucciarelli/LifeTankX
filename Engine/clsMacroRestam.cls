@@ -211,10 +211,6 @@ On Error GoTo ErrorMessage
                         End If
                         
                     Case RESTAM_SPELL   'spell
-                        ' Make sure we're ready to cast.
-                        If Not g_Macro.OkToCast Then
-                            GoTo Fin
-                        End If
                         
                         If g_Macro.ValidState(TYPE_CASTER) Then
                             If Not Vitals.CastManaStamRegen Then    'Juggle mana
@@ -237,11 +233,6 @@ On Error GoTo ErrorMessage
         Case STATE_RESTAMING
             'do nothing
             If m_RestamMethod = RESTAM_SPELL And Not (g_Spells.Casting) Then
-                
-                ' Make sure we're ready to cast.
-                If Not g_Macro.OkToCast Then
-                    GoTo Fin
-                End If
                 
                 MyDebug "clsMacroRestam.RunState:STATE_RESTAMING: spamming the spell"
                 Call g_Spells.Cast_Revitalize

@@ -13,6 +13,8 @@ Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 Option Explicit
 
+Private Const DEBUG_ME = False
+
 Private m_BuffQueue As clsSpellQueue        'list of pending buff spells
 Private m_colBuffs As Collection            'list of all the spells the buffer has to use
 Private m_iRebuffMode As Integer
@@ -583,6 +585,7 @@ On Error GoTo ErrorHandler
         If Not Valid(objItem) Then
             PrintWarning "clsBuddyBuffer.CastNextSpell : couldn't find the target object to buff. Ignoring"
             Call m_BuffQueue.Pop    'remove the bad buff from queue
+            Call g_Macro.GoIdle     'Reset State
             GoTo Fin
         End If
         
@@ -611,7 +614,8 @@ On Error GoTo ErrorHandler
     Else
         m_sCurSpellName = objSpell.SpellName
         
-        If Not (IsBusy) And g_Macro.OkToCast Then    ' Prevent spell spamming
+        If Not (IsBusy) Then    ' Prevent spell spamming
+        
             MyDebug "clsBuddyBuffer.CastNextSpell: Not (IsBusy), casting: " & objSpell.SpellName
             
             If Not (g_ui.Options.chkFilterLTMsg.Checked) Then
@@ -649,6 +653,7 @@ On Error GoTo ErrorHandler
             
             If (g_Macro.State = ST_BUDDYREBUFF) Then
                 Call m_BuffQueue.Pop
+                Call g_Spells.c_SpellQueue.Pop
                 'update progress bar
                 g_ui.Main.progBuffs.Value = g_ui.Main.progBuffs.Value + 1
                 m_sCurSpellName = ""
@@ -669,9 +674,9 @@ On Error GoTo ErrorHandler
             End If
         End If
     Else
-        MyDebug "clsBuddyBuffer.CheckCastedSpell: m_sCurSpellName is Blank"
+        locDebug "clsBuddyBuffer.CheckCastedSpell: m_sCurSpellName is Blank"
         If g_Spells.Casting Then
-            'MyDebug "clsBuddyBuffer.CheckCastedSpell - g_Spells.Casting is true, calling OnSpellCastComplete"
+            locDebug "clsBuddyBuffer.CheckCastedSpell - g_Spells.Casting is true, calling OnSpellCastComplete"
             Call g_Spells.OnSpellCastComplete(True, "CheckCastedSpell")
         End If
 
@@ -684,3 +689,10 @@ ErrorHandler:
     Resume Fin
 End Sub
 
+
+'Local Debug
+Private Sub locDebug(DebugMsg As String, Optional bSilent As Boolean = True)
+    If DEBUG_ME Or g_Data.mDebugMode Then
+        Call MyDebug("[clsBuddyBuffer] " & DebugMsg, bSilent)
+    End If
+End Sub

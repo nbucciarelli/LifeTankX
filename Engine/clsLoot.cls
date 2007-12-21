@@ -737,8 +737,8 @@ On Error GoTo Error_Handler
     End If
     
     'Look for targets
-    If g_Macro.Combat.Target Is Nothing Then
-        If FindBestTarget() And g_bLootRare = False Then
+    If Not g_bLootRare And (g_Macro.Combat.Target Is Nothing) Then
+        If FindBestTarget() Then
             locDebug "clsLoot.Runstate : found target, moving to regular IDLE state for combat initialization"
             'go back to regular IDLE mode to ensure we're in the proper equipment/vital state
             Call SetSubState(ST_LOOT_STOP)
@@ -1117,6 +1117,12 @@ On Error GoTo ErrorHandler
 
     Dim bRet As Boolean
 
+    ' If we might have a rare, ID everything!
+    If g_bLootRare Then
+        bRet = True
+        GoTo Fin
+    End If
+    
     'Only Assess if ID time expired
     'If bRet Then bRet = ((g_ds.Time - objItem.LastIDTime) > ID_EXPIRATION_TIME)
     If IsWorthAssessing(objItem.itemType) Then
