@@ -75,7 +75,6 @@ On Error GoTo NotFound
     Set tmpMob = m_colMonsters(bMonsterName)
     MonsterExist = True
 Fin:
-    Set tmpMob = Nothing
     Exit Function
 NotFound:
     MonsterExist = False
@@ -97,7 +96,6 @@ On Error GoTo ErrorHandler
 
     Set AddMonster = newMob
 Fin:
-    Set newMob = Nothing
     Exit Function
 ErrorHandler:
     PrintWarning "dbMonsters.AddMonster(" & bMonsterName & ") - " & Err.Description

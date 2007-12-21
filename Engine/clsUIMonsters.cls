@@ -394,7 +394,6 @@ On Error GoTo ErrorHandler
     
     Call SelectMonsterLine(i, True)
     bListModified = True
-    Set mobEntry = Nothing
 
 Fin:
     Exit Sub

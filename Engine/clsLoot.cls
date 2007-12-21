@@ -707,7 +707,6 @@ On Error GoTo ErrorHandler
 
 Fin:
     CheckPickup = bRet
-    Set objItem = Nothing
     Exit Function
 ErrorHandler:
     bRet = False
@@ -843,7 +842,6 @@ On Error GoTo Error_Handler
                                 strPending = strPending & objItem.Name & ", "
                             End If
                         Next objItem
-                        Set objItem = Nothing
                     
                         locDebug "Waiting for pending corpse objects creation : " & strPending
                         'locDebug "Waiting for pending corpse objects creation : " & m_ItemsPending.GetObjectsList
@@ -1043,7 +1041,6 @@ On Error GoTo Error_Handler
 
 Fin:
     FoundGroundItemToLoot = bRet
-    Set tmpObj = Nothing
     Exit Function
 Error_Handler:
     PrintErrorMessage "clsLoot.FoundGroundItemsToLoot - " & Err.Description
@@ -1085,7 +1082,6 @@ On Error GoTo Error_Handler
 
 Fin:
     FoundCorpseToLoot = bRet
-    Set tmpObj = Nothing
     Exit Function
 Error_Handler:
     PrintErrorMessage "clsLoot.FoundCorpseToLoot - " & Err.Description

@@ -363,7 +363,6 @@ On Error GoTo ErrorHandler
     bRet = True
     
 Fin:
-    Set objItem = Nothing
     ScanPlayer = bRet
     Exit Function
 ErrorHandler:
@@ -403,7 +402,6 @@ On Error GoTo ErrorHandler
     End If
 
 Fin:
-    Set objItem = Nothing
     GetItemsInscriptions = sRet
     Exit Function
 ErrorHandler:
@@ -482,7 +480,6 @@ On Error GoTo ErrorHandler
     End If
 
 Fin:
-    Set objItem = Nothing
     GetWieldedItems = sRet
     Exit Function
 ErrorHandler:
@@ -508,7 +505,6 @@ On Error GoTo ErrorHandler
     sRet = "Could not find player " & sPlayerName & ". Unable to list wielded items."
 
 Fin:
-    Set objPlayer = Nothing
     GetPlayerWieldedItems = sRet
     Exit Function
 ErrorHandler:
@@ -552,7 +548,6 @@ On Error GoTo ErrorHandler
     If sRet = "" Then sRet = "None"
     
 Fin:
-    Set objPlayer = Nothing
     GetNearbyPlayersList = sRet
     Exit Function
 ErrorHandler:

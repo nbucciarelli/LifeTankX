@@ -1142,9 +1142,6 @@ On Error GoTo ErrorHandler
         
 NextObj:
     Next objFellow
-    'Next i
-    
-    Set objFellow = Nothing
 
 Fin:
     GoFellowHeal = bRet
@@ -1213,7 +1210,7 @@ Dim bRet As Boolean
     'locDebug "clsMacro.isReadyToCast bTurbo: " & bTurbo & " IsBusy: " & IsBusy(bTurbo) & "  g_spells.Casting: " & g_Spells.Casting
     
     If IsBusy(bTurbo) Or g_Spells.Casting Then
-        locDebug "clsMacro.isReadyToCast: IsBusy: " & IsBusy(bTurbo) & " : or g_Spells.Casting"
+        locDebug "clsMacro.isReadyToCast: IsBusy: " & IsBusy(bTurbo) & " :: g_Spells.Casting: " & g_Spells.Casting
         bRet = False
     ElseIf Not (g_Spells.tmrPrecastDelay.Expired) Then
         locDebug "clsMacro.isReadyToCast: tmrPrecastDelay not Expired"
@@ -1299,14 +1296,14 @@ On Error GoTo ErrorHandler
         locDebug "Queue has " & g_Spells.c_SpellQueue.Count & " spells"
         'Call g_Spells.c_SpellQueue.Display
         
-        Dim o_Spell As clsSpellQueueItemSimple
+        Dim o_Spell As clsSpellQueueItem
         
         Set o_Spell = g_Spells.c_SpellQueue.ReadTop
                 
         locDebug "Casting spell: " & o_Spell.Description
         Call g_Hooks.CastSpell(o_Spell.SpellID, o_Spell.TargetGUID)
         
-        ' Don't pop the spell off the Queue untill we are sure it's actualy been cast
+        ' Don't pop the spell off the Queue until we are sure it's actualy been cast
         ' So, moved this to clsSpells.OnSpellCastBegin
         'Call g_Spells.c_SpellQueue.Pop ' Pop the spell off the queue
         
@@ -1430,7 +1427,7 @@ On Error GoTo ErrorHandler
                 
                 'PrintErrorMessage ("Debug: Idle 3")
                 
-                'Look up for targets
+                'Look for targets
                 If m_Combat.Target Is Nothing Then
                         
                     ' Check to see if we should be fighting
@@ -1617,7 +1614,7 @@ On Error GoTo ErrorHandler
                         If GoHealing Then GoTo Fin
                     End If
                     
-                    If (isReadyToCast(TurboMode)) And (m_bOKToCast = True) Then
+                    If isReadyToCast(TurboMode) And (m_bOKToCast) Then
                         locDebug "clsMacro.RunState:ST_BUDDYREBUFF: isReadyToCast true, CastNextSpell"
                         Call g_BuddyBuffer.CastNextSpell
                     Else
@@ -1723,7 +1720,6 @@ On Error GoTo ErrorHandler
     End If
     
 Fin:
-    Set objTarget = Nothing
     Exit Sub
 ErrorHandler:
     PrintErrorMessage "clsMacro.RunState - " & Err.Description
@@ -2542,7 +2538,6 @@ On Error GoTo ErrorHandler
     
 Fin:
     m_bNeedArrows = False   'reset flag once this function has been called
-    Set objArrow = Nothing
     Exit Sub
 ErrorHandler:
     PrintErrorMessage "clsMacro.OnOutOfArrow - " & Err.Description

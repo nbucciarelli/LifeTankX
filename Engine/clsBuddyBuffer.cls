@@ -176,7 +176,6 @@ On Error GoTo ErrorHandler
     Call m_colBuffs.Add(objBuff, CStr(objBuff.Index))
     
 Fin:
-    Set objBuff = Nothing
     Exit Sub
 ErrorHandler:
     PrintErrorMessage "AddBuffToList"
@@ -207,7 +206,6 @@ On Error GoTo ErrorHandler
     End If
 
 Fin:
-    Set objBuff = Nothing
     Exit Sub
 ErrorHandler:
     PrintErrorMessage "CheckItemBuff"
@@ -232,7 +230,6 @@ On Error GoTo ErrorHandler
     End If
     
 Fin:
-    Set objItem = Nothing
     Exit Sub
 ErrorHandler:
     PrintErrorMessage "CheckCollectionBanes"
@@ -363,7 +360,6 @@ On Error GoTo ErrorHandler
     End If
     
 Fin:
-    Set objBuff = Nothing
     Exit Sub
 ErrorHandler:
     PrintErrorMessage "AddBanes"
@@ -459,7 +455,6 @@ On Error GoTo ErrorHandler
     MyDebug "BuildBuffList: total spells: " & m_colBuffs.Count
 
 Fin:
-    Set objItem = Nothing
     Exit Sub
 ErrorHandler:
     PrintErrorMessage "clsBuddyBuffer.BuildBuffList - " & Err.Description & " line: " & Erl
@@ -617,7 +612,7 @@ On Error GoTo ErrorHandler
         m_sCurSpellName = objSpell.SpellName
         
         If Not (IsBusy) And g_Macro.OkToCast Then    ' Prevent spell spamming
-            'MyDebug "clsBuddyBuffer.CastNextSpell: Not (IsBusy), casting: " & objSpell.SpellName
+            MyDebug "clsBuddyBuffer.CastNextSpell: Not (IsBusy), casting: " & objSpell.SpellName
             
             If Not (g_ui.Options.chkFilterLTMsg.Checked) Then
                 If lTargetGUID = g_Objects.Player.Guid Or lTargetGUID = 0 Then
@@ -635,10 +630,6 @@ On Error GoTo ErrorHandler
     
     
 Fin:
-    Set spellList = Nothing
-    Set objItem = Nothing
-    Set objBuff = Nothing
-    Set objSpell = Nothing
     Exit Sub
 ErrorHandler:
     PrintErrorMessage "CastNextSpell"

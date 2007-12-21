@@ -125,7 +125,6 @@ On Error GoTo ErrorHandler
     Next objMonster
     
 Fin:
-    Set objMonster = Nothing
     Exit Sub
 ErrorHandler:
     PrintErrorMessage "UpdateMonstersInWorld - " & Err.Description

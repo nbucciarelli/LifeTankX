@@ -25,7 +25,7 @@ Private Const DEBUG_ME = False
 Private Const MODULE_DESCRIPTION = "Spells"
 Private Const SECURE_CASTING_TIME = 5
 
-Public c_SpellQueue As clsSpellQueueSimple
+Public c_SpellQueue As clsSpellQueue
 
 Private m_bCasting As Boolean
 'Private m_bReadyToCast As Boolean       'in turbo mode, bReadyToCast will move back to true after m_bCasting resets
@@ -77,7 +77,7 @@ Private Sub Class_Initialize()
     
     Set m_dicSpellNames = New Dictionary
     
-    Set c_SpellQueue = New clsSpellQueueSimple
+    Set c_SpellQueue = New clsSpellQueue
 
     Call Reset
     
@@ -274,6 +274,7 @@ On Error GoTo ErrorHandler
 
     ' See if this spell is on the Queue, if so, pop it off
     If g_Spells.c_SpellQueue.Count > 0 Then
+        locaDebug "OnSpellCastBegin: c_SpellQueue.Count > 0, poping top off"
         Call g_Spells.c_SpellQueue.Pop ' Pop the spell off the queue
         g_Macro.OkToCast = False
         'Call g_Macro.PostCastDelayTimer.SetNextTime(CAST_TIMER)
@@ -622,8 +623,6 @@ On Error GoTo ErrorHandler
     End If
     
 Fin:
-    Set splWar = Nothing
-    Set splArc = Nothing
     SetupWarSpellForDamage = bRet
     Exit Function
 ErrorHandler:
@@ -662,7 +661,6 @@ On Error GoTo ErrorHandler
     End If
 
 Fin:
-    Set splVuln = Nothing
     SetupVulnForDamage = bRet
     Exit Function
 ErrorHandler:
@@ -773,35 +771,36 @@ On Error GoTo ErrorHandler
     End If
 
     'Make sure we are in combat mode with a Wand
-2    If Not g_Macro.ValidState(TYPE_CASTER) Then
+2   If Not g_Macro.ValidState(TYPE_CASTER) Then
         locDebug "queueThisSpell: Not in Combat mode - resetting"
     End If
     
-    'make sure we're able to cast
-3    If IsBusy(TurboMode) Then
-        MyDebug "queueThisSpell: trying to cast while busy - IsBusy()"
-4    'ElseIf Not m_tmrPrecastDelay.Expired Then
-     '   MyDebug "queueThisSpell: tmrPrecastDelay not expired yet"
-     Else
-        'PrintErrorMessage "queueThisSpell: casting " & SpellID & " at " & TargetGUID
-5       Call m_tmrPrecastDelay.SetNextTime(0.5)
-6       Call m_tmrSecureCasting.SetNextTime(SECURE_CASTING_TIME)
+'    'make sure we're able to cast
+'3    If IsBusy(TurboMode) Then
+'        MyDebug "queueThisSpell: trying to cast while busy - IsBusy()"
+'4    'ElseIf Not m_tmrPrecastDelay.Expired Then
+'     '   MyDebug "queueThisSpell: tmrPrecastDelay not expired yet"
+'     Else
+'        'PrintErrorMessage "queueThisSpell: casting " & SpellID & " at " & TargetGUID
+'5       Call m_tmrPrecastDelay.SetNextTime(0.5)
+'6       Call m_tmrSecureCasting.SetNextTime(SECURE_CASTING_TIME)
         
-7       Dim s_objSpell As New clsSpellQueueItemSimple
-                        
+7       Dim s_objSpell As New clsSpellQueueItem
         With s_objSpell
             .SpellID = objSpell.SpellID
-            .SpellName = objSpell.SpellName
+            .SpellFamily = objSpell.SpellFamily
+            .SpellElement = objSpell.SpellElement
+            .SpellType = objSpell.SpellType
             .TargetGUID = TargetGUID
         End With
         
-        'MyDebug "clsSpells.queueThisSpell: adding s_objSpell: " & s_objSpell.Description & " :: " & s_objSpell.SpellID
+8       MyDebug "clsSpells.queueThisSpell: adding objSpell: " & objSpell.SpellName & " :: " & objSpell.SpellID
 
-8       Call c_SpellQueue.Add(s_objSpell)
+9       Call c_SpellQueue.Add(s_objSpell)
         
         'Call g_Hooks.CastSpell(objSpell.spellID, TargetGUID)
-        'MyDebug "queueThisSpell: g_Hooks.CastSpell: " & SpellID & " : " & TargetGUID
-    End If
+        'MyDebug "queueThisSpell: g_Hooks.CastSpell: " & objSpell.SpellID & " : " & TargetGUID
+'    End If
     
 Fin:
     Exit Sub
@@ -853,6 +852,24 @@ End Sub
 '
 '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
+Private Sub m_tmrCastBreaker_OnTimeout()
+    If m_bCasting Then
+        MyDebug "--- Cast Breaker ! ---"
+        'Call g_Core.SendKeyHold(g_Keys.KeyJump)
+        Call OnSpellCastComplete(, "tmrCastBreaker_OnTimeout")
+        'Call g_Core.SendKeyRelease(g_Keys.KeyJump)
+    End If
+End Sub
+
+Private Sub m_tmrSecureCasting_OnTimeout()
+    If m_bCasting Then
+        'Call g_Hooks.FaceHeading(g_Hooks.HeadingDegrees + 30, False)
+        locDebug "tmrSecureCasting timer expired. Resetting casting flags."
+        Call ResetCastingFlag(, True)
+    End If
+End Sub
+
+'
 'Local Debug
 Private Sub locDebug(DebugMsg As String, Optional bSilent As Boolean = True)
     If DEBUG_ME Or g_Data.mDebugMode Then
@@ -860,19 +877,3 @@ Private Sub locDebug(DebugMsg As String, Optional bSilent As Boolean = True)
     End If
 End Sub
 
-Private Sub m_tmrCastBreaker_OnTimeout()
-    If m_bCasting Then
-        MyDebug "--- Cast Breaker ! ---"
-        'Call g_Core.SendKeyHold(g_Keys.KeyJump)
-        Call OnSpellCastComplete(, "CastBreak_OnTimeout")
-        'Call g_Core.SendKeyRelease(g_Keys.KeyJump)
-    End If
-End Sub
-
-Private Sub m_tmrSecureCasting_OnTimeout()
-    If m_bCasting Then
-        Call g_Hooks.FaceHeading(g_Hooks.HeadingDegrees + 30, False)
-        'PrintWarning "Secure casting timer expired. Resetting casting flags."
-        Call ResetCastingFlag(, True)
-    End If
-End Sub

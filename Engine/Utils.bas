@@ -713,7 +713,6 @@ On Error GoTo ErrorHandler
     End If
        
 Fin:
-    Set objPlayer = Nothing
     Exit Sub
 ErrorHandler:
     PrintErrorMessage "RecruitPlayerByGUID - " & Err.Description
