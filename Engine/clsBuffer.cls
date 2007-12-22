@@ -202,7 +202,7 @@ Private Sub CheckItemBanes(ByVal bChecked As Boolean, objItem As acObject)
     End If
 End Sub
 
-Private Sub CheckCollectionBanes(ByVal bChecked As Boolean, colItems As colObjects)
+Private Sub CheckCollectionBanes(ByVal bChecked As Boolean, colItems As colobjects)
 On Error GoTo ErrorHandler
     
     Dim objItem As acObject
@@ -446,12 +446,52 @@ On Error GoTo ErrorHandler
     End With
 
     MyDebug "BuildBuffList: total spells: " & m_colBuffs.Count
+    
+    Call existingSpellList
 
 Fin:
     Exit Sub
 ErrorHandler:
     PrintErrorMessage "BuildBuffList - " & Err.Description
     Resume Fin
+End Sub
+
+Public Sub existingSpellList()
+    
+    Dim sOut As String
+    Dim newSpell As clsSpell
+    Dim oldSpell As clsSpell
+    'Dim objItem As acObject
+    Dim spellList As clsSpellList
+    Dim i As Integer
+    Dim collSpell As colobjects
+
+    MyDebug "Displaying Existing Spells:"
+    MyDebug "-------- Total : " & g_Filters.ActiveSpellsCount
+
+    Set collSpell = New colobjects
+    Set spellList = New clsSpellList
+    
+    For i = 0 To g_Filters.ActiveSpellsCount
+        Set newSpell = g_Spells.FindSpellByID(g_Filters.ActiveSpell(i).SpellID)
+        If Valid(newSpell) Then
+            newSpell.SpellIcon = g_Filters.ActiveSpell(i).TimeRemaining
+            Set oldSpell = spellList.FindSpellByID(g_Filters.ActiveSpell(i).SpellID)
+            If Valid(oldSpell) Then
+            Else
+                Call spellList.Add
+            End If
+        
+        
+                If spellList.FindSpell(g_Filters.ActiveSpell(i).Family, , , True) Then
+        Else
+            Call collSpell.Add(g_Filters.ActiveSpell(i).Family, g_Filters.ActiveSpell(i).TimeRemaining)
+        End If
+        sOut = g_Filters.ActiveSpell(i).SpellID & " :: " & g_Filters.ActiveSpell(i).TimeRemaining & " :: " & g_Filters.ActiveSpell(i).Family
+        MyDebug sOut
+    Next i
+
+    
 End Sub
 
 Public Sub DebugList()

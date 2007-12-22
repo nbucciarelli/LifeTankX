@@ -2998,6 +2998,7 @@ Private Sub m_tmrHealth_Timer()
 On Error GoTo ErrorHandler
 
     If g_Filters.Health <= GetPercent(g_Filters.MaxHealth, g_Data.MinHealthThreshold) Then
+        MyDebug "tmrHealth: mustHeal: " & g_Filters.Health
         m_mustHeal = True
     Else
         m_mustHeal = False
