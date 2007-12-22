@@ -22,6 +22,7 @@ Public SpellID As Long
 Public SpellType As Integer
 Public SpellElement As Integer
 Public LevelWanted As Integer
+Public TimeRemaining As Long
 Public TargetGUID As Long
 Public TargetName As String
 
@@ -34,6 +35,7 @@ Private Sub Class_Initialize()
     TargetName = "NoTarget"
     LevelWanted = 7
     SpellSchool = SCHOOL_CREATURE
+    TimeRemaining = 0
 End Sub
 
 Public Function Description() As String

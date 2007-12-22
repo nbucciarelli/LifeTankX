@@ -17,6 +17,7 @@ Private Const DEBUG_ME = False
 
 Private m_BuffQueue As clsSpellQueue        'list of pending buff spells
 Private m_colBuffs As Collection            'list of all the spells the buffer has to use
+Private m_existBuffs As Collection          'list of existing buffs and their times
 Private m_iRebuffMode As Integer
 
 Private WithEvents m_tmrNextRebuff As clsTimer
@@ -202,7 +203,7 @@ Private Sub CheckItemBanes(ByVal bChecked As Boolean, objItem As acObject)
     End If
 End Sub
 
-Private Sub CheckCollectionBanes(ByVal bChecked As Boolean, colItems As colobjects)
+Private Sub CheckCollectionBanes(ByVal bChecked As Boolean, colItems As colObjects)
 On Error GoTo ErrorHandler
     
     Dim objItem As acObject
@@ -457,41 +458,66 @@ ErrorHandler:
 End Sub
 
 Public Sub existingSpellList()
+On Error GoTo ErrorHandler
     
-    Dim sOut As String
-    Dim newSpell As clsSpell
-    Dim oldSpell As clsSpell
-    'Dim objItem As acObject
-    Dim spellList As clsSpellList
-    Dim i As Integer
-    Dim collSpell As colobjects
+    Dim newSpell As New clsSpellQueueItem
+    Dim oldSpell As New clsSpellQueueItem
+    Dim isFound As Boolean
+    Dim i As Long
+    Dim iSpell As Long
 
-    MyDebug "Displaying Existing Spells:"
-    MyDebug "-------- Total : " & g_Filters.ActiveSpellsCount
+    MyDebug "Displaying Existing Spells: " & g_Filters.ActiveSpellsCount
 
-    Set collSpell = New colobjects
-    Set spellList = New clsSpellList
+    Set m_existBuffs = New Collection
     
-    For i = 0 To g_Filters.ActiveSpellsCount
-        Set newSpell = g_Spells.FindSpellByID(g_Filters.ActiveSpell(i).SpellID)
-        If Valid(newSpell) Then
-            newSpell.SpellIcon = g_Filters.ActiveSpell(i).TimeRemaining
-            Set oldSpell = spellList.FindSpellByID(g_Filters.ActiveSpell(i).SpellID)
-            If Valid(oldSpell) Then
-            Else
-                Call spellList.Add
-            End If
+    For i = 0 To (g_Filters.ActiveSpellsCount - 1)
+        'g_Filters.ActiveSpell(i).SpellID
+        'g_Filters.ActiveSpell(i).Family
+        'g_Filters.ActiveSpell(i).Layer
+        'g_Filters.ActiveSpell(i).TimeRemaining
+
+        Set newSpell = New clsSpellQueueItem
         
+        newSpell.SpellID = g_Filters.ActiveSpell(i).SpellID
+        newSpell.SpellFamily = g_Filters.ActiveSpell(i).Family
+        newSpell.TimeRemaining = g_Filters.ActiveSpell(i).TimeRemaining
         
-                If spellList.FindSpell(g_Filters.ActiveSpell(i).Family, , , True) Then
-        Else
-            Call collSpell.Add(g_Filters.ActiveSpell(i).Family, g_Filters.ActiveSpell(i).TimeRemaining)
+        If m_existBuffs.Count = 0 Then
+            Call m_existBuffs.Add(newSpell)
         End If
-        sOut = g_Filters.ActiveSpell(i).SpellID & " :: " & g_Filters.ActiveSpell(i).TimeRemaining & " :: " & g_Filters.ActiveSpell(i).Family
-        MyDebug sOut
+        
+        isFound = False
+        
+        For iSpell = 1 To m_existBuffs.Count
+             Set oldSpell = m_existBuffs.Item(iSpell)
+                If (oldSpell.SpellFamily = newSpell.SpellFamily) Then
+                    isFound = True
+                    If (oldSpell.TimeRemaining < newSpell.TimeRemaining) Then
+                        Call m_existBuffs.Add(newSpell, , , iSpell) 'add newSpell after existing one
+                        Call m_existBuffs.Remove(iSpell) ' remove existing one
+                    End If
+                End If
+        Next iSpell
+        
+        If Not isFound Then
+            Call m_existBuffs.Add(newSpell)
+        End If
+        
+        'MyDebug "ID: " & g_Filters.ActiveSpell(i).SpellID & " :F: " & g_Filters.ActiveSpell(i).Family & " :T: " & g_Filters.ActiveSpell(i).TimeRemaining & " :D: " & g_Filters.ActiveSpell(i).Duration
+        'MyDebug "NID: " & newSpell.SpellID & " :F: " & newSpell.SpellFamily & " :T: " & newSpell.TimeRemaining
+    
     Next i
 
-    
+    For iSpell = 1 To m_existBuffs.Count
+        Set oldSpell = m_existBuffs.Item(iSpell)
+        'MyDebug "SpellID: " & oldSpell.SpellID & " :F: " & oldSpell.SpellFamily & " :T: " & oldSpell.TimeRemaining
+    Next iSpell
+
+Fin:
+    Exit Sub
+ErrorHandler:
+    PrintErrorMessage "existingSpellList - " & Err.Description & " - line: " & Erl
+    Resume Fin
 End Sub
 
 Public Sub DebugList()

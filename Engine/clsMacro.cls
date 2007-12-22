@@ -2904,6 +2904,9 @@ On Error GoTo ErrorHandler
             End Select
         End If
         
+        If g_Spells.Casting Then sRet = sRet & " (casting)"
+        If IsBusy(TurboMode) Then sRet = sRet & " <!>"
+        
     End If
     GetStateString = sRet
 
