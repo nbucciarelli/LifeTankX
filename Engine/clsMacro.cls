@@ -112,6 +112,7 @@ Private m_fellowNeedsStam As Boolean
 Private m_bOKToCast As Boolean      'Reset by m_tmrCastSpell
 Private m_attackCritter As Boolean
 Private m_mustHeal As Boolean
+Private m_logoutSpellCast As Boolean
 
 'Timers / display / Stats
 Private m_dStartTime As Double
@@ -1270,11 +1271,23 @@ On Error GoTo ErrorHandler
         'End If
     
         Dim sReason As String
-        If MustLogOut(sReason) Then
-            MyDebug "RunState - MustLogOut returned true !"
-            Call StopMacro
-            Call g_Service.Logout(sReason)
-            GoTo Fin
+        Dim castSpell As Boolean
+        If MustLogOut(sReason, castSpell) Then
+            If castSpell And Not m_logoutSpellCast Then
+                MyDebug "RunState - Cast LOGOUT Spell: " & g_ui.Macro.chLogoutSpell.Text(g_ui.Macro.chLogoutSpell.Selected)
+                'Put the spell at top of Queue. It will get cast down below
+                Call g_Spells.c_SpellQueue.Clear
+                Dim outSpell As New clsSpell
+                Set outSpell = g_Spells.Items.FindSpell(g_ui.Macro.chLogoutSpell.Text(g_ui.Macro.chLogoutSpell.Selected), 3, , True)
+                Call g_Spells.CastThisSpell(outSpell)
+                m_logoutSpellCast = True
+                m_bOKToCast = True
+            Else
+                MyDebug "RunState - MustLogOut returned true !"
+                Call StopMacro
+                Call g_Service.Logout(sReason)
+                GoTo Fin
+            End If
         End If
         Call m_tmrNextLogoutCheck.SetNextTime(LOGOUT_CHECK_INTERVAL)
     End If
@@ -1287,6 +1300,14 @@ On Error GoTo ErrorHandler
     
     'make sure we're not moving if we are not in ST_NAV state
 6    If (m_iState <> ST_NAV) And (m_iState <> ST_STICK_NAV) Then Call CheckStopNav
+
+    'ST_COMBAT or ST_IDLE
+    If (g_Spells.c_SpellQueue.Count > 0) And ((m_iState <> ST_COMBAT) And (m_iState <> ST_IDLE)) Then
+        If g_Spells.c_SpellQueue.ReadTop.SpellSchool = SCHOOL_WAR Then
+            MyDebug "RunState: m_iState !Combat or !Idle, popping war spell off Queue"
+            Call g_Spells.c_SpellQueue.Pop
+        End If
+    End If
     
     ' Check for queued spells
 7    If g_Spells.c_SpellQueue.Count > 0 And m_bOKToCast Then
@@ -1298,7 +1319,7 @@ On Error GoTo ErrorHandler
         Set o_Spell = g_Spells.c_SpellQueue.ReadTop
                 
         locDebug "RunState g_Hook.CastSpell: " & o_Spell.Description
-        Call g_Hooks.CastSpell(o_Spell.SpellID, o_Spell.TargetGUID)
+        Call g_Hooks.castSpell(o_Spell.SpellID, o_Spell.TargetGUID)
         
         ' Don't pop the spell off the Queue until we are sure it's actualy been cast
         ' So, moved this to clsSpells.OnSpellCastBegin
@@ -2611,7 +2632,7 @@ End Sub
 '#####################################################################################
 
 'Check logout conditions
-Public Function MustLogOut(Optional ByRef sReasonOut As String) As Boolean
+Public Function MustLogOut(Optional ByRef sReasonOut As String, Optional ByRef castSpell As Boolean) As Boolean
 On Error GoTo ErrorHandler
     Dim bRet As Boolean
     
@@ -2628,6 +2649,9 @@ On Error GoTo ErrorHandler
         If iTaperCount < 50 Then
             sReasonOut = "Running out of Prismatic Tapers (" & iTaperCount & ")"
             bRet = True
+            If g_ui.Macro.chkLogoutCastSpell.Checked Then
+                castSpell = True
+            End If
             ' Never force logout if we need healing!
             If m_Healing.NeedHealing("clsMacro.MustLogOut") Then bRet = False
         End If
@@ -2638,6 +2662,9 @@ On Error GoTo ErrorHandler
             If Not Valid(Vitals.findHealItem) Then
                 sReasonOut = "Out of Healing Items"
                 bRet = True
+                If g_ui.Macro.chkLogoutCastSpell.Checked Then
+                    castSpell = True
+                End If
             End If
         End If
     End If
@@ -2646,11 +2673,17 @@ On Error GoTo ErrorHandler
         If g_Objects.Items.InvCntByName(STR_ITEM_PLAT) <= 0 Then
             sReasonOut = "Running out of " & STR_ITEM_PLAT
             bRet = True
+            If g_ui.Macro.chkLogoutCastSpell.Checked Then
+                castSpell = True
+            End If
             ' Never force logout if we need healing!
             If m_Healing.NeedHealing("clsMacro.MustLogOut") Then bRet = False
         ElseIf g_Objects.Items.InvCntByName(STR_ITEM_PYREAL_SCARAB) <= 0 Then
             sReasonOut = "Running out of " & STR_ITEM_PYREAL_SCARAB
             bRet = True
+            If g_ui.Macro.chkLogoutCastSpell.Checked Then
+                castSpell = True
+            End If
             ' Never force logout if we need healing!
             If m_Healing.NeedHealing("clsMacro.MustLogOut") Then bRet = False
         End If

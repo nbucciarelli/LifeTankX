@@ -74,6 +74,11 @@ Public chkLogoutOnKits As DecalControls.CheckBox
 Public chkLogoutOnScarabs As DecalControls.CheckBox
 Public chkLogoutOnArrows As DecalControls.CheckBox
 
+'Should we cast a spell first?
+Public chkLogoutCastSpell As DecalControls.CheckBox
+Public chLogoutSpell As DecalControls.Choice
+Attribute chLogoutSpell.VB_VarHelpID = -1
+
 'Mage tab
 Public WithEvents txtMageRadius As DecalControls.Edit
 Attribute txtMageRadius.VB_VarHelpID = -1
@@ -277,6 +282,9 @@ On Error GoTo ErrorHandler
     Set chkLogoutOnScarabs = g_MainView.Control("chkLogoutOnScarabs")
     Set chkLogoutOnArrows = g_MainView.Control("chkLogoutOnArrows")
     
+    Set chkLogoutCastSpell = g_MainView.Control("chkLogoutCastSpell")
+    Set chLogoutSpell = g_MainView.Control("chLogoutSpell")
+
     'Nav tab
     Set chkEnableNav = g_MainView.Control("chkEnableNav")
     Set cmdShowNavEditor = g_MainView.Control("cmdShowNavEditor")
@@ -425,6 +433,20 @@ On Error GoTo Error_Handler
         chkLogoutOnScarabs.Checked = g_Settings.GetValue("chkLogoutOnScarabs", True)
         chkLogoutOnArrows.Checked = g_Settings.GetValue("chkLogoutOnArrows", False)
         
+        chkLogoutCastSpell.Checked = g_Settings.GetValue("chkLogoutCastSpell", False)
+        
+        Dim objFam As clsSpellFamily
+        
+        Call chLogoutSpell.Clear
+        For Each objFam In g_Spells.Items.Families
+            If objFam.mType = SPELLTYPE_TRANSPORT Then
+                Call chLogoutSpell.AddChoice(objFam.mFamily)
+            End If
+        Next objFam
+        If chLogoutSpell.ChoiceCount > 0 Then
+            chLogoutSpell.Selected = 0
+        End If
+
         chkUseHealSpell.Checked = g_Settings.GetValue("chkUseHealSpell", True)
         chkUseHealingKits.Checked = g_Settings.GetValue("chkUseHealingKits", True)
         chkUseHealthPotion.Checked = g_Settings.GetValue("chkUseHealthPotion", True)
@@ -500,6 +522,8 @@ On Error GoTo Error_Handler
         .SaveCheckbox chkLogoutOnKits, "chkLogoutOnKits"
         .SaveCheckbox chkLogoutOnScarabs, "chkLogoutOnScarabs"
         .SaveCheckbox chkLogoutOnArrows, "chkLogoutOnArrows"
+        
+        .SaveCheckbox chkLogoutCastSpell, "chkLogoutCastSpell"
         
         'Spells lvl
         .SaveChoice chMacroSpellsLevel, "chMacroSpellsLevel"
