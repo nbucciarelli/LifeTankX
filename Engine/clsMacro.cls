@@ -25,7 +25,7 @@ Private Const DEFAULT_MACRO_TIMER_INTERVAL = 300   'msec
 Private Const WAYPOINT_DELAY = 2                   'seconds
 Private Const CAST_TIMER = 0.4                     'seconds
 
-Private Const LOGOUT_CHECK_INTERVAL = 2     'check every X seconds
+Private Const LOGOUT_CHECK_INTERVAL = 10    'check every 10 seconds
 Private Const LOOT_CHECK_INTERVAL = 2       'check for loot every 2 seconds in idle mode
 Private Const TARGET_SCAN_INTERVAL = 2      'check for targets every X seconds when in idle mode unless
                                             'timer gets reset when creatures are spawning nearby
@@ -1279,7 +1279,7 @@ On Error GoTo ErrorHandler
                 Call g_Spells.c_SpellQueue.Clear
                 Dim outSpell As New clsSpell
                 Set outSpell = g_Spells.Items.FindSpell(g_ui.Macro.chLogoutSpell.Text(g_ui.Macro.chLogoutSpell.Selected), 3, , True)
-                Call g_Spells.CastThisSpell(outSpell)
+                Call g_Spells.CastThisSpell(outSpell, 0)
                 m_logoutSpellCast = True
                 m_bOKToCast = True
             Else
