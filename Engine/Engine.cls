@@ -359,6 +359,12 @@ On Error GoTo ErrorHandler
     
     'LogEvent "Login Complete", True
 
+    If g_Filters.playerName = "LocalPlayer" Then
+        PrintMessage "ERROR: === Could not find player name. Exiting LifeTank ==="
+        IEngine_OnLoginComplete = False
+        Exit Function
+    End If
+    
     Call g_Filters.TestFilters
     Call g_Window.UpdateDimensions
     Call g_Spells.FindAndSetDefaultDamage
