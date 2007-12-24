@@ -19,9 +19,9 @@ Private m_colItems As colObjects
 Private Sub Class_Initialize()
 On Error GoTo ErrorHandler
 
-MyDebug "clsExceptions.Initialize"
+    MyDebug "clsExceptions.Initialize"
     Set m_colItems = New colObjects
-MyDebug "clsExceptions.Init done"
+    MyDebug "clsExceptions.Init done"
 
 Fin:
     Exit Sub
