@@ -508,10 +508,10 @@ On Error GoTo ErrorHandler
     
     Next i
 
-    For iSpell = 1 To m_existBuffs.Count
-        Set oldSpell = m_existBuffs.Item(iSpell)
-        'MyDebug "SpellID: " & oldSpell.SpellID & " :F: " & oldSpell.SpellFamily & " :T: " & oldSpell.TimeRemaining
-    Next iSpell
+    'For iSpell = 1 To m_existBuffs.Count
+    '    Set oldSpell = m_existBuffs.Item(iSpell)
+    '    MyDebug "SpellID: " & oldSpell.SpellID & " :F: " & oldSpell.SpellFamily & " :T: " & oldSpell.TimeRemaining
+    'Next iSpell
 
 Fin:
     Exit Sub
@@ -690,8 +690,69 @@ ErrorHandler:
     Resume Fin
 End Sub
 
-'Read the AC Console to figure out if we have casted the current buff spell,
-'And pop it from the queue
+'Look for "has expired" messages to make sure we don't drop any buffs
+Public Sub CheckExpiredSpell(ByVal sCastMsg As String)
+On Error GoTo ErrorHandler
+
+'   The spell Cragstone's Will on Opal Blunt Baton has expired.
+'   Adja's Blessing has Expired
+
+    Dim sSpellName As String, aString As String, bString As String
+    Dim newSpell As clsSpellQueueItem
+    Dim objSpell As clsSpell
+    
+    sSpellName = Replace(sCastMsg, " has expired", "")
+    MyDebug "CheckExpiredSpell: " & sSpellName
+    
+    objSpell = g_Spells.sBuffs.FindSpellByName(sSpellName)
+    
+    If Not Valid(objSpell) Then
+        ' Can't find this spell anywhere
+        MyDebug "CheckExpiredSpell: not a valid spell name: " & sSpellName
+        Exit Sub
+    End If
+
+    'First, check to see if we have this spell still active on us
+    For i = 0 To (g_Filters.ActiveSpellsCount - 1)
+        
+        If g_Filters.ActiveSpell(i).SpellID = objSpell.SpellID Then
+            ' Yep, found active spell, so we are A-OK!
+            MyDebug "CheckExpiredSpell: found active spell!"
+            Exit Sub
+        End If
+    
+    Next i
+    
+    'If not then we need to see if it's in the Buff Queue
+    Dim objBuff As clsSpellQueueItem
+    Dim i As Long
+    
+    For i = m_lCurBuff To m_iNumBuffs
+            
+        If FindBuff(i, objBuff) Then
+            If objBuff.SpellID = objSpell.SpellID Then
+                Call m_BuffQueue.Add(objBuff)
+                MyDebug "CheckExpiredSpell: found in m_colBuffs, adding to current Queue"
+                Exit Sub
+            End If
+        End If
+    Next i
+    
+    'For Each objBuff In m_colBuffs
+    '    'objBuff.Description
+    '    If objBuff.SpellID = objSpell.SpellID Then
+    '    End If
+    'Next objBuff
+
+Fin:
+    Exit Sub
+ErrorHandler:
+    PrintErrorMessage "CheckExpiredSpell - " & Err.Description
+    Resume Fin
+End Sub
+        
+        
+'Read the AC Console to figure out if we have cast the current buff spell, if so pop it from the queue
 'ex: You cast Adja's Blessing you yourself
 Public Sub CheckCastedSpell(ByVal sCastMsg As String)
 On Error GoTo ErrorHandler
@@ -702,6 +763,7 @@ On Error GoTo ErrorHandler
             locDebug "clsBuffer.CheckCastedSpell - Current spell " & m_sCurSpellName & " has been cast"
             
             If (g_Macro.State = ST_REBUFF) Then
+                MyDebug "clsBuffer.CheckCastedSpell: poping m_sCurSpellName off BuffQueue"
                 Call m_BuffQueue.Pop
                 Call g_Spells.c_SpellQueue.Pop
                 'update progress bar
@@ -712,9 +774,6 @@ On Error GoTo ErrorHandler
             If g_Spells.Casting Then
                 locDebug "clsBuffer.CheckCastedSpell - g_Spells.Casting is true, calling OnSpellCastComplete"
                 Call g_Spells.OnSpellCastComplete(True, "CheckCastedSpell")
-                'g_Spells.ReadyToCast = True
-            Else
-                locDebug "clsBuffer.CheckCastedSpell - NOT g_Spells.Casting"
             End If
         Else
             locDebug "clsBuffer.CheckCastedSpell doesn't match: " & m_sCurSpellName & " : " & sCastMsg

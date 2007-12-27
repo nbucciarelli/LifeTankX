@@ -1107,8 +1107,21 @@ On Error GoTo ErrorHandler
         If (pColor = CHAT_SPELL_CASTING Or pColor = CHAT_SPELL_WORDS Or pColor = CHAT_SPELL_RESULTS) Then     'magic cast messages
             Msg = LCase(bstrMsg)
             
+            'Look for "has expired" messages to make sure we don't drop any buffs
+            '   The spell Cragstone's Will on Opal Blunt Baton has expired.
+            '   Adja's Blessing has Expired
+            If InStr(bstrMsg, "has expired") Then
+                'See if it's an Item spell
+                If InStr(bstrMsg, "The spell") Then
+                    'Call g_Buffer.CheckExpiredItemSpell(bStrMsg)
+                Else
+                    Call g_Buffer.CheckExpiredSpell(bstrMsg)
+                End If
+            End If
+            
             If InStr(Msg, "prismatic taper") Then
                 Call g_Macro.TapersCount(1)
+                Call g_Spells.OnSpellCastComplete(True, "ACEvents: taper consumed")
             End If
             If InStr(Msg, "platinum scarab") Then
                 Call g_Macro.PlatsCount(1)
@@ -1157,15 +1170,19 @@ On Error GoTo ErrorHandler
                         Call g_Macro.Combat.updateSecureTimer(3)
                         'MyDebug "clsACEvents.ConsoleMessage: reset MISSCOUNT : " & g_Macro.Combat.Target.Name
                         'MyDebug "clsACEvents.ConsoleMessage: Spell: " & Msg
+                        Call g_Spells.OnSpellCastComplete(True, "ACEvents: Spell damage")
                     Else
                         MyDebug "clsACEvents.ConsoleMessage: points with, but no Valid Target"
                     End If
-                ElseIf InStr(bstrMsg, "You cast") Then
-                    ' Must be Restamming or Healing
-                    Call g_Spells.OnSpellCastComplete(True, "ACEvents: You Cast")
                 End If
 
             End If
+            
+            If InStr(bstrMsg, "You cast") Then
+                ' Must be Restamming or Healing
+                Call g_Spells.OnSpellCastComplete(True, "ACEvents: You Cast")
+            End If
+
         End If
         
         '=====================================

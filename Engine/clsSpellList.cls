@@ -221,6 +221,35 @@ ErrorHandler:
     Resume Fin
 End Function
 
+Public Function FindSpellByName(ByVal sName As String) As clsSpell
+On Error GoTo ErrorHandler
+
+    Dim objFamily As clsSpellFamily
+    Dim objSpell As clsSpell
+        
+    For Each objFamily In m_colFamily
+        For Each objSpell In objFamily
+            If objSpell.SpellName = sName Then
+                GoTo Fin
+            End If
+        Next objSpell
+    Next objFamily
+    
+    'not found
+    Set objSpell = Nothing
+    
+Fin:
+    Set FindSpellByName = objSpell
+    Set objSpell = Nothing
+    Set objFamily = Nothing
+    Exit Function
+ErrorHandler:
+    Set FindSpellByID = Nothing
+    PrintErrorMessage Description & ".FindSpellByID"
+    Resume Fin
+End Function
+
+
 Public Function FindSpellByID(ByVal lSpellID As Long) As clsSpell
 On Error GoTo ErrorHandler
 

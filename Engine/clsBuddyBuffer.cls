@@ -662,9 +662,6 @@ On Error GoTo ErrorHandler
             If g_Spells.Casting Then
                 'MyDebug "clsBuddyBuffer.CheckCastedSpell - g_Spells.Casting is true, calling OnSpellCastComplete"
                 Call g_Spells.OnSpellCastComplete(True, "CheckCastedSpell")
-                'g_Spells.ReadyToCast = True
-            Else
-                'MyDebug "clsBuddyBuffer.CheckCastedSpell - NOT g_Spells.Casting"
             End If
         Else
             MyDebug "clsBuddyBuffer.CheckCastedSpell doesn't match: " & m_sCurSpellName & " : " & sCastMsg

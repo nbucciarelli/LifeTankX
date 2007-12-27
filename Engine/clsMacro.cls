@@ -23,7 +23,7 @@ Private Const DEBUG_ME = False
 
 Private Const DEFAULT_MACRO_TIMER_INTERVAL = 300   'msec
 Private Const WAYPOINT_DELAY = 2                   'seconds
-Private Const CAST_TIMER = 0.4                     'seconds
+Private Const CAST_TIMER = 0.3                     'seconds
 
 Private Const LOGOUT_CHECK_INTERVAL = 15    'check need to Logout every X seconds
 Private Const LOOT_CHECK_INTERVAL = 2       'check for loot every X seconds in idle mode
@@ -182,7 +182,7 @@ Private m_tmrNextTargetScan As clsTimer
 Private m_tmrNextLootCheck As clsTimer
 Private m_tmrNextSalvageTime As clsTimer
 Private m_tmrNextStatsUpdate As clsTimer    'use to update stats every 1 seconds
-Private m_tmrNextFellowHeal As clsTimer    'check fellow health every 30 seconds
+Private m_tmrNextFellowHeal As clsTimer     'check fellow health every 30 seconds
 
 Private m_tmrManaChargeTimer As clsTimer
 Private m_tmrPostCastDelayTimer As clsTimer
@@ -502,6 +502,10 @@ End Property
 
 Public Property Get NeedHealing(Optional ByVal sSource As String = "") As Boolean
     NeedHealing = m_Healing.NeedHealing(sSource)
+End Property
+
+Public Property Get MustHeal() As Boolean
+    MustHeal = m_mustHeal
 End Property
 
 Public Property Get Loot() As clsLoot
@@ -1245,11 +1249,25 @@ Public Sub CheckStopNav()
 End Sub
 
 
+'*****************************************************************************
 '***************************************
+'
+'
+'
+'
+'
+'
 ' RunState
 '
 ' Main macro function - Runs the current state
+'
+'
+'
+'
+'
+'
 '***************************************
+'*****************************************************************************
 Private Sub RunState()
 On Error GoTo ErrorHandler
 
@@ -1263,7 +1281,26 @@ On Error GoTo ErrorHandler
     
     'is the macro paused?
 3    If m_bPaused Then GoTo Fin
-    
+
+    ' Check for Priority queued spells
+     If g_Spells.c_PrioritySpellQueue.Count > 0 And m_bOKToCast Then
+        locDebug "c_PrioritySpellQueue has " & g_Spells.c_PrioritySpellQueue.Count & " spells"
+        'Call g_Spells.c_PrioritySpellQueue.Display
+        
+        Dim o_Spell As clsSpellQueueItem
+        
+        Set o_Spell = g_Spells.c_PrioritySpellQueue.ReadTop
+                
+        locDebug "RunState g_Hook.CastSpell: " & o_Spell.Description
+        Call g_Hooks.CastSpell(o_Spell.SpellID, o_Spell.TargetGUID)
+        
+        ' Reset casting state
+        m_bOKToCast = False
+        Call m_tmrCastSpell.SetNextTime(CAST_TIMER)
+        
+        GoTo Fin
+    End If
+
     'Check if we need to logout
 4    If m_tmrNextLogoutCheck.Expired Then
         'If (g_AntiBan.m_bLogOut) Then
@@ -1275,11 +1312,11 @@ On Error GoTo ErrorHandler
         If MustLogOut(sReason, bWillCast) Then
             If bWillCast And Not m_logoutSpellCast Then
                 MyDebug "RunState - Cast LOGOUT Spell: " & g_ui.Macro.chLogoutSpell.Text(g_ui.Macro.chLogoutSpell.Selected)
-                'Put the spell at top of Queue. It will get cast down below
+                'Put the spell at top of the Priority Queue
                 Call g_Spells.c_SpellQueue.Clear
                 Dim outSpell As New clsSpell
                 Set outSpell = g_Spells.Items.FindSpell(g_ui.Macro.chLogoutSpell.Text(g_ui.Macro.chLogoutSpell.Selected), 3, , True)
-                Call g_Spells.CastThisSpell(outSpell, 0)
+                Call g_Spells.CastThisSpell(outSpell, 0, True)
                 m_logoutSpellCast = True
                 m_bOKToCast = True
             Else
@@ -2446,7 +2483,7 @@ On Error GoTo ErrorHandler
                 Call g_Spells.ResetCastingFlag("Death Message")
             End If
             If g_Spells.c_SpellQueue.Count > 0 Then
-                Call g_Spells.c_SpellQueue.Clear
+                Call ClearSpellQueue
             End If
 
         End If
@@ -2890,7 +2927,7 @@ On Error GoTo ErrorHandler
                 sRet = "Buddy Rebuff"
                             
             Case ST_COMBAT
-                sRet = "Fighting"
+                sRet = "Kill"
                 If Valid(m_Combat.Target) Then
                     sRet = sRet & " " & m_Combat.Target.Name
                 End If
@@ -2939,7 +2976,7 @@ On Error GoTo ErrorHandler
         End If
         
         If g_Spells.Casting Then sRet = sRet & " (casting)"
-        If IsBusy(TurboMode) Then sRet = sRet & " <!>"
+        If IsBusy(TurboMode) Or Not m_bOKToCast Then sRet = sRet & " <!>"
         
     End If
     GetStateString = sRet

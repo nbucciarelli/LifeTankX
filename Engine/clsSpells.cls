@@ -26,6 +26,7 @@ Private Const MODULE_DESCRIPTION = "Spells"
 Private Const SECURE_CASTING_TIME = 4
 
 Public c_SpellQueue As clsSpellQueue
+Public c_PrioritySpellQueue As clsSpellQueue
 
 Private m_bCasting As Boolean
 Private m_bReadyToCast As Boolean       'in turbo mode, bReadyToCast will move back to true after m_bCasting resets
@@ -78,6 +79,7 @@ Private Sub Class_Initialize()
     Set m_dicSpellNames = New Dictionary
     
     Set c_SpellQueue = New clsSpellQueue
+    Set c_PrioritySpellQueue = New clsSpellQueue
 
     Call Reset
     
@@ -117,6 +119,7 @@ End Sub
 
 Private Sub Class_Terminate()
     Set c_SpellQueue = Nothing
+    Set c_PrioritySpellQueue = Nothing
     
     Set m_Vitals = Nothing
     Set m_sBuffs = Nothing
@@ -282,6 +285,12 @@ On Error GoTo ErrorHandler
         Call g_Spells.c_SpellQueue.Pop ' Pop the spell off the queue
     End If
     
+    'c_PrioritySpellQueue
+    If bSuccess And (g_Spells.c_PrioritySpellQueue.Count > 0) Then
+        locDebug "OnSpellCastBegin: c_PrioritySpellQueue.Count > 0"
+        Call g_Spells.c_PrioritySpellQueue.Pop ' Pop the spell off the queue
+    End If
+    
     'reset casting flag
     Call ResetCastingFlag(sSource, Not bSuccess)    'reset the ReadyToCast flag too if spell cast failed/got interupted
 
@@ -303,7 +312,40 @@ Public Sub OnSpellCastFailed(Optional ByVal sSource As String = "")
     Call OnSpellCastComplete(False, sSource)
 End Sub
 
-Public Function CastThisSpell(ByVal objSpell As clsSpell, ByVal lTargetId As Long) As Boolean
+' Priority Spell cast
+Public Function CastPrioritySpell(ByRef spellList As clsSpellList, ByVal sSpellFamily As String, ByVal TargetId As Long, Optional ByVal iLevelWanted As Integer = 7) As Boolean
+On Error GoTo ErrorHandler
+    
+    Dim objSpell As clsSpell
+ 
+    'default return value
+    CastPrioritySpell = False
+    
+    If Not m_bSpellsLoaded Then
+        PrintErrorMessage "CastPrioritySpell: spells lists not loaded"
+        Exit Function
+    ElseIf Not Valid(spellList) Then
+        PrintErrorMessage "CastPrioritySpell: invalid spelllist"
+        Exit Function
+    Else
+        Set objSpell = spellList.FindSpell(sSpellFamily, iLevelWanted)
+        If Valid(objSpell) Then
+            CastPrioritySpell = CastThisSpell(objSpell, TargetId, True)
+        Else
+            PrintErrorMessage "(CastPrioritySpell) Couldn't cast " & sSpellFamily & " lvl " & iLevelWanted & " - Spell not found/learned."
+            CastSpell = False
+        End If
+    End If
+    
+Fin:
+    Exit Function
+ErrorHandler:
+    PrintErrorMessage "ERROR: clsSpells.CastPrioritySpell - " & Err.Description
+    Resume Fin
+End Function
+
+'
+Public Function CastThisSpell(ByVal objSpell As clsSpell, ByVal lTargetId As Long, Optional ByVal bPriority As Boolean = False) As Boolean
 On Error GoTo ErrorHandler
     
     CastThisSpell = False
@@ -316,7 +358,7 @@ On Error GoTo ErrorHandler
     'remember when we tryed to cast our last spell
     m_dLastCastAttempt = g_Core.Time
     
-    Call queueThisSpell(objSpell, lTargetId)
+    Call queueThisSpell(objSpell, lTargetId, bPriority)
     
     CastThisSpell = True
     
@@ -327,6 +369,7 @@ ErrorHandler:
     Resume Fin
 End Function
 
+'
 Public Function CastSpell(ByRef spellList As clsSpellList, ByVal sSpellFamily As String, ByVal TargetId As Long, Optional ByVal iLevelWanted As Integer = 7) As Boolean
 On Error GoTo ErrorHandler
     
@@ -398,8 +441,9 @@ Public Sub ResetCastingFlag(Optional sSource As String = "", Optional ByVal bRes
 End Sub
 
 Public Function CastVitalSpell(ByVal SpellBaseName As String, Optional ByVal SpellLevelWanted As Integer = 7, Optional ByVal TargetId As Long = 0) As Boolean
-    Call g_Spells.c_SpellQueue.Clear
-    CastVitalSpell = CastSpell(m_Vitals, SpellBaseName, TargetId, SpellLevelWanted)
+    'Call g_Spells.c_SpellQueue.Clear
+    Call g_Spells.c_PrioritySpellQueue.Clear
+    CastVitalSpell = CastPrioritySpell(m_Vitals, SpellBaseName, TargetId, SpellLevelWanted)
 End Function
 
 Public Function CastWarSpell(ByVal SpellBaseName As String, Optional ByVal SpellLevelWanted As Integer = 7, Optional ByVal TargetId As Long = 0) As Boolean
@@ -740,7 +784,7 @@ End Function
 '
 '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
-Private Sub queueThisSpell(ByVal objSpell As clsSpell, ByVal TargetGUID As Long)
+Private Sub queueThisSpell(ByVal objSpell As clsSpell, ByVal TargetGUID As Long, Optional ByVal bPriority As Boolean = False)
 On Error GoTo ErrorHandler
 
 1   If Not Valid(objSpell) Then
@@ -756,23 +800,27 @@ On Error GoTo ErrorHandler
 '    'make sure we're able to cast
 '3    If IsBusy(TurboMode) Then
 '        MyDebug "queueThisSpell: trying to cast while busy - IsBusy()"
+'        Exit Sub
 '4    'ElseIf Not m_tmrPrecastDelay.Expired Then
-'     '   MyDebug "queueThisSpell: tmrPrecastDelay not expired yet"
+'        MyDebug "queueThisSpell: tmrPrecastDelay not expired yet"
+'        Exit Sub
 '     Else
 '        'PrintErrorMessage "queueThisSpell: casting " & SpellID & " at " & TargetGUID
 '5       Call m_tmrPrecastDelay.SetNextTime(0.5)
 '6       Call m_tmrSecureCasting.SetNextTime(SECURE_CASTING_TIME)
+'     End if
+
+    Dim s_objSpell As New clsSpellQueueItem
+    With s_objSpell
+        .SpellID = objSpell.SpellID
+        .SpellFamily = objSpell.SpellFamily
+        .SpellType = objSpell.SpellType
+        .SpellElement = objSpell.SpellElement
+        .SpellSchool = objSpell.SpellSchool
+        .TargetGUID = TargetGUID
+    End With
         
-7       Dim s_objSpell As New clsSpellQueueItem
-        With s_objSpell
-            .SpellID = objSpell.SpellID
-            .SpellFamily = objSpell.SpellFamily
-            .SpellType = objSpell.SpellType
-            .SpellElement = objSpell.SpellElement
-            .SpellSchool = objSpell.SpellSchool
-            .TargetGUID = TargetGUID
-        End With
-        
+    If bPriority Then
         'First check to see if we already have this spell Queued up
         If c_SpellQueue.Count > 0 Then
             If c_SpellQueue.ReadTop.Description = s_objSpell.Description Then
@@ -780,14 +828,22 @@ On Error GoTo ErrorHandler
                 Exit Sub
             End If
         End If
+        MyDebug "clsSpells.queueThisSpell: adding objSpell: " & objSpell.SpellName & " :: " & objSpell.SpellID
+        Call c_SpellQueue.Add(s_objSpell)
+    Else
+        'First check to see if we already have this spell Queued up
+        If c_PrioritySpellQueue.Count > 0 Then
+            If c_PrioritySpellQueue.ReadTop.Description = s_objSpell.Description Then
+                locDebug "queueThisSpell: we already have spell in PRIORITY queue: " & s_objSpell.Description
+                Exit Sub
+            End If
+        End If
+        MyDebug "clsSpells.queueThisSpell: adding PRIORITY objSpell: " & objSpell.SpellName & " :: " & objSpell.SpellID
+        Call c_PrioritySpellQueue.Add(s_objSpell)
+    End If
         
-8       MyDebug "clsSpells.queueThisSpell: adding objSpell: " & objSpell.SpellName & " :: " & objSpell.SpellID
-
-9       Call c_SpellQueue.Add(s_objSpell)
-        
-        'Call g_Hooks.CastSpell(objSpell.spellID, TargetGUID)
-        'MyDebug "queueThisSpell: g_Hooks.CastSpell: " & objSpell.SpellID & " : " & TargetGUID
-'    End If
+    'Call g_Hooks.CastSpell(objSpell.spellID, TargetGUID)
+    'MyDebug "queueThisSpell: g_Hooks.CastSpell: " & objSpell.SpellID & " : " & TargetGUID
     
 Fin:
     Exit Sub

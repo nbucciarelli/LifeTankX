@@ -211,6 +211,11 @@ On Error GoTo ErrorMessage
         Exit Sub
     End If
 
+    If g_Macro.MustHeal Then
+        Call StopCombat("Must Heal")
+        Exit Sub
+    End If
+    
     Select Case m_State
 
         'Called before the each new attack
