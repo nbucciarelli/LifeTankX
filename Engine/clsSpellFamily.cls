@@ -88,17 +88,17 @@ NotFound:
     Resume Fin
 End Function
 
-Public Function FindSpellByName(ByVal sSpellName As String, Optional ByRef objSpellOut As clsSpell) As Boolean
+Public Function FamilySpellByName(ByVal sSpellName As String, Optional ByRef objSpellOut As clsSpell) As Boolean
 On Error GoTo ErrorHandler
 
     Set objSpellOut = GetSpell(sSpellName)
-    FindSpellByName = Valid(objSpellOut)
+    FamilySpellByName = Valid(objSpellOut)
     
 Fin:
     Exit Function
 ErrorHandler:
-    FindSpellByName = False
-    PrintErrorMessage "clsFamily.FindSpellByName - " & Err.Description
+    FamilySpellByName = False
+    PrintErrorMessage "clsFamily.FamilySpellByName - " & Err.Description
     Resume Fin
 End Function
 
@@ -124,7 +124,7 @@ On Error GoTo ErrorHandler
     ElseIf objSpell.SpellSchool <> mSchool Then
         PrintWarning "SpellFamily.AddSpell : spell school " & GetSchoolString(objSpell.SpellSchool) & " is different from " & GetSchoolString(mSchool)
         bRet = False
-    ElseIf FindSpellByName(objSpell.SpellName) Then
+    ElseIf FamilySpellByName(objSpell.SpellName) Then
         PrintWarning "SpellFamily.AddSpell : spell " & objSpell.SpellName & " is already in the collection"
         bRet = False
     Else

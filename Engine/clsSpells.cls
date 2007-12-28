@@ -333,7 +333,7 @@ On Error GoTo ErrorHandler
             CastPrioritySpell = CastThisSpell(objSpell, TargetId, True)
         Else
             PrintErrorMessage "(CastPrioritySpell) Couldn't cast " & sSpellFamily & " lvl " & iLevelWanted & " - Spell not found/learned."
-            CastSpell = False
+            CastPrioritySpell = False
         End If
     End If
     
@@ -822,16 +822,6 @@ On Error GoTo ErrorHandler
         
     If bPriority Then
         'First check to see if we already have this spell Queued up
-        If c_SpellQueue.Count > 0 Then
-            If c_SpellQueue.ReadTop.Description = s_objSpell.Description Then
-                locDebug "queueThisSpell: we already have spell in queue: " & s_objSpell.Description
-                Exit Sub
-            End If
-        End If
-        MyDebug "clsSpells.queueThisSpell: adding objSpell: " & objSpell.SpellName & " :: " & objSpell.SpellID
-        Call c_SpellQueue.Add(s_objSpell)
-    Else
-        'First check to see if we already have this spell Queued up
         If c_PrioritySpellQueue.Count > 0 Then
             If c_PrioritySpellQueue.ReadTop.Description = s_objSpell.Description Then
                 locDebug "queueThisSpell: we already have spell in PRIORITY queue: " & s_objSpell.Description
@@ -840,6 +830,16 @@ On Error GoTo ErrorHandler
         End If
         MyDebug "clsSpells.queueThisSpell: adding PRIORITY objSpell: " & objSpell.SpellName & " :: " & objSpell.SpellID
         Call c_PrioritySpellQueue.Add(s_objSpell)
+    Else
+        'First check to see if we already have this spell Queued up
+        If c_SpellQueue.Count > 0 Then
+            If c_SpellQueue.ReadTop.Description = s_objSpell.Description Then
+                locDebug "queueThisSpell: we already have spell in queue: " & s_objSpell.Description
+                Exit Sub
+            End If
+        End If
+        MyDebug "clsSpells.queueThisSpell: adding objSpell: " & objSpell.SpellName & " :: " & objSpell.SpellID
+        Call c_SpellQueue.Add(s_objSpell)
     End If
         
     'Call g_Hooks.CastSpell(objSpell.spellID, TargetGUID)

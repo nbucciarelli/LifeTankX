@@ -77,9 +77,9 @@ Private Const CLOCK_TIMER_INTERVAL = 100 'msec
 Private Const CHECK_TIMER_INTERVAL = 15000 'msec -- 15 seconds
 Private WithEvents m_tmrClock As Timer
 Attribute m_tmrClock.VB_VarHelpID = -1
-Private m_fLastTime As Double
 Public WithEvents m_tmrCheck As Timer
 Attribute m_tmrCheck.VB_VarHelpID = -1
+Private m_fLastTime As Double
 Private m_fLastCheckTime As Double
 
 
@@ -128,6 +128,10 @@ End Sub
 Private Sub Class_Terminate()
     Call ResetVolatileData
     Call cleanCollections
+    
+    m_tmrClock.Enabled = False
+    m_tmrCheck.Enabled = False
+
     Set m_Log = Nothing
     Set m_tmrClock = Nothing
     Set m_tmrCheck = Nothing
@@ -244,15 +248,7 @@ On Error GoTo ErrorHandler
         GoTo Fin
     End If
     
-    ' Get the elapsed time as a TimeSpan value.
-    'Dim ts As TimeSpan = stopWatch.Elapsed
-
-    ' Format and display the TimeSpan value.
-    'labelTime.Text = String.Format("{0:00}:{1:00}:{2:00}.{3:00}", _
-    'ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds/10)
-    
     'Init Clock
-    
     m_fLastTime = timeGetTime
     g_Time = 0
     m_tmrClock.Enabled = True
@@ -273,12 +269,15 @@ End Sub
 
 Private Sub INetworkFilter2_Terminate()
 
+    m_tmrClock.Enabled = False
+    m_tmrCheck.Enabled = False
+    m_bLoaded = False
+    
     Set m_acHooks = Nothing
     Set m_XpTracker = Nothing
     Set m_Account = Nothing
     Set m_Allegiance = Nothing
     Set m_GameObjects = Nothing
-    m_bLoaded = False
     
     Set g_Objects = Nothing
     Set g_Const = Nothing
@@ -748,20 +747,21 @@ On Error GoTo ErrorHandler
                 Case RETIRED_EV_FELLOWSHIP_INVITATION
                     Call g_Objects.Fellowship.HandleFellowshipEvents(Message, RETIRED_EV_FELLOWSHIP_INVITATION)
                 
-                'Case Else
-                '    myDebug "MSG_GAME_EVENT: unknown: " & Message
+                '----------- Unknown Game Event -------------
+                Case Else
+                    myDebug "MSG_GAME_EVENT: unknown: Event: " & Message.Value("event")
 
                 End Select
                 
                 '----------- Spell Events -------------
 '                    Case RETIRED_EV_ADD_SPELL
-'                        Call OnAddSpell(pMsg.Value("spell"))
+'                        Call OnAddSpell(Message.Value("spell"))
 '
-'                    Case RETIRED_EV_ADD_ENCHANTMENT
-'                        Call OnAddEnchantment(pMsg)
+'                    Case EV_ADD_ENCHANTMENT
+'                        Call OnAddEnchantment(Message)
 '
-'                    Case RETIRED_EV_REMOVE_ENCHANTMENT
-'                        Call OnRemoveEnchantment(pMsg)
+'                    Case EV_REMOVE_ENCHANTMENT
+'                        Call OnRemoveEnchantment(Message)
                     
         '---------------- Other Messages --------------------
 
@@ -1495,9 +1495,6 @@ End Sub
 Private Sub NetAction_CastSpell(ByVal pMsg As DecalNet.IMessage2)
 On Error GoTo ErrorHandler
 
-    Dim objAttacker As acObject
-    Dim objTarget As acObject
-    
     Dim spellID As Long
     
     spellID = pMsg.Value("spell")
@@ -1536,8 +1533,6 @@ ErrorHandler:
 End Sub
 
 
-
-
 'Private Sub OnAddSpell(ByVal iSpellId As Integer)
 'On Error GoTo ErrorHandler
 '
@@ -1549,55 +1544,55 @@ End Sub
 '    myError "OnAddSpell(" & iSpellId & ")"
 '    Resume fin
 'End Sub
-'
-'Private Sub OnAddEnchantment(ByVal pMsg As DecalNet.IMessage2)
-'On Error GoTo ErrorHandler
-'
-'    Dim iSpellId As Integer
-'    Dim iLayer As Integer
-'    Dim lFamily As Long
-'    Dim dTimeElapsed As Double
-'    Dim dDuration As Double
-'    Dim dStartTime As Double
-'    Dim lSourceGUID As Long
-'    Dim fAdjust As Single
-'
-'    'MyDebug "clsACEvents.OnAddEnchantment : " & g_Spells.GetSpellName(iSpellId) & " (" & iSpellId & ")"
-'    With pMsg.struct("enchantment")
-'        iSpellId = .Value("spell")
-'        iLayer = .Value("layers")
-'        lFamily = .Value("family")
-'        dTimeElapsed = .Value("timeElapsed")
-'        dDuration = .Value("duration")
-'        lSourceGUID = .Value("source")
-'        dStartTime = .Value("startTime")
-'        fAdjust = .Value("adjustment")
-'    End With
-'
-'    MyDebug "OnAddEnchantment: spell=" & g_Spells.GetSpellName(iSpellId) & " (" & iSpellId & "), Family=" & lFamily & ", TimeElapsed=" & dTimeElapsed & "(" & myFormatTime(dTimeElapsed) & "), Duration=" & dDuration & ", startTime=" & dStartTime & ", Source=" & g_Objects.FindObject(lSourceGUID).Name & ", Adjust=" & fAdjust & ", Layer=" & iLayer
-'
-'fin:
-'    Exit Sub
-'ErrorHandler:
-'    myError "OnAddEnchantment"
-'    Resume fin
-'End Sub
-'
-'Private Sub OnRemoveEnchantment(ByVal pMsg As DecalNet.IMessage2)
-'On Error GoTo ErrorHandler
-'
-'    Dim iSpellId As Integer
-'    Dim iLayer As Integer
-'
-'    iSpellId = pMsg.Value("spell")
-'    iLayer = pMsg.Value("layer")
-'
-'    MyDebug "OnRemoveEnchantment: spell" & g_Spells.GetSpellName(iSpellId) & " (" & iSpellId & "), Layer=" & iLayer
-'
-'fin:
-'    Exit Sub
-'ErrorHandler:
-'    myError "OnRemoveEnchantment"
-'    Resume fin
-'End Sub
+
+Private Sub OnAddEnchantment(ByVal pMsg As DecalNet.IMessage2)
+On Error GoTo ErrorHandler
+
+    Dim iSpellId As Integer
+    Dim iLayer As Integer
+    Dim lFamily As Long
+    Dim dTimeElapsed As Double
+    Dim dDuration As Double
+    Dim dStartTime As Double
+    Dim lSourceGUID As Long
+    Dim fAdjust As Single
+
+    With pMsg.Struct("enchantment")
+        iSpellId = .Value("spell")
+        iLayer = .Value("layer")
+        lFamily = .Value("family")
+        dTimeElapsed = .Value("elapsedTime")
+        dDuration = .Value("duration")
+        lSourceGUID = .Value("caster")
+        dStartTime = .Value("startTime")
+        fAdjust = .Value("value")
+    End With
+    
+    'myDebug "OnAddEnchantment : " & g_Spells.GetSpellName(iSpellId) & " (" & iSpellId & ")"
+    'myDebug "OnAddEnchantment: spell=" & g_Spells.GetSpellName(iSpellId) & " (" & iSpellId & "), Family=" & lFamily & ", TimeElapsed=" & dTimeElapsed & "(" & myFormatTime(dTimeElapsed) & "), Duration=" & dDuration & ", startTime=" & dStartTime & ", Source=" & g_Objects.FindObject(lSourceGUID).Name & ", Adjust=" & fAdjust & ", Layer=" & iLayer
+
+Fin:
+    Exit Sub
+ErrorHandler:
+    myError "OnAddEnchantment - " & Err.Description
+    Resume Fin
+End Sub
+
+Private Sub OnRemoveEnchantment(ByVal pMsg As DecalNet.IMessage2)
+On Error GoTo ErrorHandler
+
+    Dim iSpellId As Integer
+    Dim iLayer As Integer
+
+    iSpellId = pMsg.Value("spell")
+    iLayer = pMsg.Value("layer")
+
+    'myDebug "OnRemoveEnchantment: spell" & g_Spells.GetSpellName(iSpellId) & " (" & iSpellId & "), Layer=" & iLayer
+
+Fin:
+    Exit Sub
+ErrorHandler:
+    myError "OnRemoveEnchantment - " & Err.Description
+    Resume Fin
+End Sub
 

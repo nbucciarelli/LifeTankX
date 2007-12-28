@@ -244,7 +244,7 @@ Fin:
     Set objFamily = Nothing
     Exit Function
 ErrorHandler:
-    Set FindSpellByID = Nothing
+    Set FindSpellByName = Nothing
     PrintErrorMessage Description & ".FindSpellByID"
     Resume Fin
 End Function

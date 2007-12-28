@@ -1272,6 +1272,7 @@ Private Sub RunState()
 On Error GoTo ErrorHandler
 
     Dim objTarget As acObject
+    Dim o_Spell As clsSpellQueueItem
     
     'don't do anything if in portal space
 1    If g_ds.InPortalSpace Then GoTo Fin
@@ -1286,8 +1287,6 @@ On Error GoTo ErrorHandler
      If g_Spells.c_PrioritySpellQueue.Count > 0 And m_bOKToCast Then
         locDebug "c_PrioritySpellQueue has " & g_Spells.c_PrioritySpellQueue.Count & " spells"
         'Call g_Spells.c_PrioritySpellQueue.Display
-        
-        Dim o_Spell As clsSpellQueueItem
         
         Set o_Spell = g_Spells.c_PrioritySpellQueue.ReadTop
                 
@@ -1350,8 +1349,6 @@ On Error GoTo ErrorHandler
 7    If g_Spells.c_SpellQueue.Count > 0 And m_bOKToCast Then
         locDebug "c_SpellQueue has " & g_Spells.c_SpellQueue.Count & " spells"
         'Call g_Spells.c_SpellQueue.Display
-        
-        Dim o_Spell As clsSpellQueueItem
         
         Set o_Spell = g_Spells.c_SpellQueue.ReadTop
                 

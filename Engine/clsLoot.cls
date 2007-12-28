@@ -105,20 +105,20 @@ On Error GoTo ErrorHandler
     m_bLootGround = False
     g_bLootRare = False
     Set m_rareCorpse = Nothing
-    Set m_tmrSecure = CreateTimer
-    Set m_tmrNextTime = CreateTimer
-    Set m_tmrTransition = CreateTimer
-    Set m_tmrExportInv = CreateTimer
+1    Set m_tmrSecure = CreateTimer
+2    Set m_tmrNextTime = CreateTimer
+3    Set m_tmrTransition = CreateTimer
+4    Set m_tmrExportInv = CreateTimer
     
-    Set m_corpseList = New colObjects
-    Set m_IdQueue = New colObjects
-    Set m_ItemsIdQueue = New colObjects
+5    Set m_corpseList = New colObjects
+6    Set m_IdQueue = New colObjects
+7    Set m_ItemsIdQueue = New colObjects
   
-    Set m_dicCorpseToIgnore = New Dictionary
+8    Set m_dicCorpseToIgnore = New Dictionary
     
-    m_NavHold = 0
+     m_NavHold = 0
 
-    Call Reset
+9    Call Reset
 
 Fin:
     Exit Sub
@@ -700,7 +700,7 @@ On Error GoTo ErrorHandler
     If g_Objects.Items.Exists(ObjGUID, objItem) Then
         If (objItem.Guid = PickupGUID) Or (bOnAdjustStackSize And SameText(objItem.Name, PickupItemName)) Then
             Call objItem.SetUserData(B_MACO_PICKUP, True)
-            Call OnCurrentItemPickupedUp
+            Call OnCurrentItemPickUp
             bRet = True
         End If
     End If
@@ -1259,22 +1259,22 @@ ErrorHandler:
     Resume Fin
 End Sub
 
-Private Sub OnCurrentItemPickupedUp()
+Private Sub OnCurrentItemPickUp()
 On Error GoTo Error_Handler
     
     If Not Valid(m_curItem) Then
-        PrintErrorMessage "clsLoot.OnCurrentItemPickupedUp - invalid m_curItem, ignoring"
+        PrintErrorMessage "clsLoot.OnCurrentItemPickUp - invalid m_curItem, ignoring"
     Else
-        locDebug "OnCurrentItemPickupedUp - " & m_curItem.Name & " picked up."
+        locDebug "OnCurrentItemPickUp - " & m_curItem.Name & " picked up."
         RaiseEvent OnItemLooted(m_curItem)
         Call RemoveItemFromCorpse(m_curItem)
         Call m_tmrNextTime.ExpireNow
         Call SetSubState(ST_LOOT_ITEM_PICKED_UP)
         If PhatLoot.PassActiveFilters(m_curItem, True, False, False, False, False, False) And g_Macro.Salvager.CheckValidSalvageItem(m_curItem) Then
-            MyDebug "clsLoot: OnCurrentItemPickedUp: Passed Salvage Filters, adding to List"
+            MyDebug "clsLoot: OnCurrentItemPickUp: Adding to SalvageList: " & m_curItem.Name
             Call g_Macro.Salvager.AddLootToSalvageList(m_curItem)
         Else
-            MyDebug "clsLoot: onCurrentItemPickedUp: did NOT pass salvage Filters: " & m_curItem.Name
+            MyDebug "clsLoot: OnCurrentItemPickUp: did NOT pass salvage Filters: " & m_curItem.Name
             MyDebug "clsLoot: PhatLoot: " & PhatLoot.PassActiveFilters(m_curItem, True, False, False, False, False, False)
             MyDebug "clsLoot: ValidSalvage: " & g_Macro.Salvager.CheckValidSalvageItem(m_curItem)
         End If
@@ -1284,7 +1284,7 @@ On Error GoTo Error_Handler
 Fin:
     Exit Sub
 Error_Handler:
-    PrintErrorMessage "clsLoot.OnCurrentItemPickupedUp - " & Err.Description
+    PrintErrorMessage "clsLoot.OnCurrentItemPickUp - " & Err.Description
     Resume Fin
 End Sub
 
@@ -1364,7 +1364,7 @@ On Error GoTo Error_Handler
         Set m_curItem = Nothing
     ElseIf g_Objects.Items.InInventory(m_curItem.Guid) Then
         locDebug "DoPickupItem - " & m_curItem.Name & " already in inventory, ignoring pickup request."
-        Call OnCurrentItemPickupedUp
+        Call OnCurrentItemPickUp
         DoPickupItem = True
     Else
         If m_bGroundPickup Then

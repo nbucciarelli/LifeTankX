@@ -694,17 +694,18 @@ End Sub
 Public Sub CheckExpiredSpell(ByVal sCastMsg As String)
 On Error GoTo ErrorHandler
 
+    Dim sSpellName As String
+    Dim objBuff As clsSpellQueueItem
+    Dim objSpell As clsSpell
+    Dim i As Long
+    
 '   The spell Cragstone's Will on Opal Blunt Baton has expired.
 '   Adja's Blessing has Expired
-
-    Dim sSpellName As String, aString As String, bString As String
-    Dim newSpell As clsSpellQueueItem
-    Dim objSpell As clsSpell
     
-    sSpellName = Replace(sCastMsg, " has expired", "")
+    sSpellName = Replace(sCastMsg, " has expired.", "")
     MyDebug "CheckExpiredSpell: " & sSpellName
     
-    objSpell = g_Spells.sBuffs.FindSpellByName(sSpellName)
+    Set objSpell = g_Spells.sBuffs.FindSpellByName(sSpellName)
     
     If Not Valid(objSpell) Then
         ' Can't find this spell anywhere
@@ -724,8 +725,6 @@ On Error GoTo ErrorHandler
     Next i
     
     'If not then we need to see if it's in the Buff Queue
-    Dim objBuff As clsSpellQueueItem
-    Dim i As Long
     
     For i = m_lCurBuff To m_iNumBuffs
             

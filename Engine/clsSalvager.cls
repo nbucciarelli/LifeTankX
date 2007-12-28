@@ -19,7 +19,7 @@ Option Explicit
 ' [[                                                                         [[
 ' [[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
 
-Private Const DEBUG_ME = False
+Private Const DEBUG_ME = True
 
 Private Enum eSubStates
     ST_NONE
@@ -119,7 +119,7 @@ On Error GoTo ErrorHandler
     Dim bRet As Boolean
     
     bRet = m_LootedItemsToSalvage.addObject(objItem)
-    locDebug "AddLootToSalvageList: " & bRet & " :: " & objItem.Name
+    MyDebug "AddLootToSalvageList: " & bRet & " :: " & objItem.Name
 
 Fin:
     AddLootToSalvageList = bRet
@@ -850,7 +850,7 @@ On Error GoTo ErrorHandler
         If m_LootedItemsToSalvage.Remove(objItem.Guid) Then
             locDebug "clsSalvager.OnRemoveObject - Removing " & objItem.Name & " from LootedItemsToSalvage"
         Else
-            MyDebug "clsSalvager.OnRemoveObject - Could not remove item list Salvage list: " & objItem.Name
+            locDebug "clsSalvager.OnRemoveObject - Could not remove item list Salvage list: " & objItem.Name
         End If
         
         'Are we done usting all the items ?
