@@ -19,7 +19,7 @@ Option Explicit
 ' [[                                                                         [[
 ' [[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
 
-Private Const DEBUG_ME = False
+Private Const DEBUG_ME = True
 
 'Contants
 Private Const LOOT_MAX_SEARCH_CORPSE_TIME = 3
@@ -376,7 +376,7 @@ On Error GoTo ErrorHandler
 
     If Valid(objItem) Then
         If Not m_ItemsToLoot.Exists(objItem.Guid) Then
-            locDebug "AddItemToLoot - Added " & objItem.Name
+            MyDebug "AddItemToLoot - Added: " & objItem.Name
             Call m_ItemsToLoot.addObject(objItem)
         Else
             PrintWarning "clsLoot.AddItemToLoot - " & objItem.Name & " is already in m_ItemsToLoot. Ignoring."
@@ -700,7 +700,7 @@ On Error GoTo ErrorHandler
     If g_Objects.Items.Exists(ObjGUID, objItem) Then
         If (objItem.Guid = PickupGUID) Or (bOnAdjustStackSize And SameText(objItem.Name, PickupItemName)) Then
             Call objItem.SetUserData(B_MACO_PICKUP, True)
-            Call OnCurrentItemPickUp
+            Call OnItemPickup(m_curItem)
             bRet = True
         End If
     End If
@@ -818,6 +818,8 @@ On Error GoTo Error_Handler
                     ' JSC -- filter check
                     If Not g_ui.Options.chkFilterLootMsg.Checked Then
                         PrintMessage sLootString
+                    Else
+                        MyDebug "clsLoot.RunState: " & sLootString
                     End If
                     Call SetSubState(ST_LOOT_PICKUP_ITEM)
                 Else
@@ -1248,6 +1250,7 @@ On Error GoTo ErrorHandler
     If Valid(objItem) Then
         Call m_ItemsOnCorpse.Remove(objItem.Guid)  'remove item from list of items on corpse, if present
         Call m_ItemsToLoot.Remove(objItem.Guid)    'remove item from list of items to loot, if present
+        locDebug "RemoveItemFromCorpse: removed from corpse: " & objItem.Name
     Else
         PrintErrorMessage "clsLoot.RemoveItemFromCorpse - Invalid objItem"
     End If
@@ -1259,24 +1262,28 @@ ErrorHandler:
     Resume Fin
 End Sub
 
-Private Sub OnCurrentItemPickUp()
+Public Sub OnItemPickup(ByVal curItem As acObject)
 On Error GoTo Error_Handler
     
-    If Not Valid(m_curItem) Then
-        PrintErrorMessage "clsLoot.OnCurrentItemPickUp - invalid m_curItem, ignoring"
+    If Not Valid(curItem) Then
+        PrintErrorMessage "clsLoot.OnItemPickup - invalid curItem, ignoring"
     Else
-        locDebug "OnCurrentItemPickUp - " & m_curItem.Name & " picked up."
-        RaiseEvent OnItemLooted(m_curItem)
-        Call RemoveItemFromCorpse(m_curItem)
+        MyDebug "OnItemPickup - " & curItem.Name & " picked up."
+        If curItem.LastIdTime < g_ds.Time Then
+            Call g_Hooks.IDQueueAdd(curItem.Guid) 'Make sure we ID it
+        End If
+
+        RaiseEvent OnItemLooted(curItem)
+        Call RemoveItemFromCorpse(curItem)
         Call m_tmrNextTime.ExpireNow
         Call SetSubState(ST_LOOT_ITEM_PICKED_UP)
-        If PhatLoot.PassActiveFilters(m_curItem, True, False, False, False, False, False) And g_Macro.Salvager.CheckValidSalvageItem(m_curItem) Then
-            MyDebug "clsLoot: OnCurrentItemPickUp: Adding to SalvageList: " & m_curItem.Name
-            Call g_Macro.Salvager.AddLootToSalvageList(m_curItem)
+        If PhatLoot.PassActiveFilters(curItem, True, False, False, False, False, False) And g_Macro.Salvager.CheckValidSalvageItem(curItem) Then
+            MyDebug "clsLoot: OnItemPickup: Adding to SalvageList: " & curItem.Name
+            Call g_Macro.Salvager.AddLootToSalvageList(curItem)
         Else
-            MyDebug "clsLoot: OnCurrentItemPickUp: did NOT pass salvage Filters: " & m_curItem.Name
-            MyDebug "clsLoot: PhatLoot: " & PhatLoot.PassActiveFilters(m_curItem, True, False, False, False, False, False)
-            MyDebug "clsLoot: ValidSalvage: " & g_Macro.Salvager.CheckValidSalvageItem(m_curItem)
+            locDebug "clsLoot: OnItemPickup: did NOT pass salvage Filters: " & curItem.Name
+            locDebug "clsLoot: PhatLoot: " & PhatLoot.PassActiveFilters(curItem, True, False, False, False, False, False)
+            locDebug "clsLoot: ValidSalvage: " & g_Macro.Salvager.CheckValidSalvageItem(curItem)
         End If
 
     End If
@@ -1284,7 +1291,7 @@ On Error GoTo Error_Handler
 Fin:
     Exit Sub
 Error_Handler:
-    PrintErrorMessage "clsLoot.OnCurrentItemPickUp - " & Err.Description
+    PrintErrorMessage "clsLoot.OnItemPickup - " & Err.Description
     Resume Fin
 End Sub
 
@@ -1364,7 +1371,7 @@ On Error GoTo Error_Handler
         Set m_curItem = Nothing
     ElseIf g_Objects.Items.InInventory(m_curItem.Guid) Then
         locDebug "DoPickupItem - " & m_curItem.Name & " already in inventory, ignoring pickup request."
-        Call OnCurrentItemPickUp
+        'Call OnItemPickup(m_curItem)
         DoPickupItem = True
     Else
         If m_bGroundPickup Then
@@ -1375,7 +1382,6 @@ On Error GoTo Error_Handler
         End If
         
         Call g_Service.UseItem(m_curItem) 'UseItemOnSelf
-        Call g_Hooks.IDQueueAdd(m_curItem.Guid) 'Make sure we ID it
 
         Call m_tmrNextTime.SetNextTime(1)
         DoPickupItem = True
@@ -1404,11 +1410,6 @@ On Error GoTo ErrorHandler
             MyDebug "A rare still needs to be looted!"
         End If
         
-        'Call cleanCorpseList
-        
-        'Remove it from the corpse list
-        'If m_corpseList.Remove(m_curCorpse.Guid) Then locDebug "SetBodyLooted: removing: " & m_curCorpse.Name & " : " & m_curCorpse.Guid
-        
         'Make sure to unset rare stuff
         Set m_rareCorpse = Nothing
         g_bLootRare = False
@@ -1421,6 +1422,10 @@ ErrorHandler:
     Resume Fin
 End Sub
 
+Public Sub IgnoreCurrentCorpse()
+    If Not Valid(m_curCorpse) Then Exit Sub
+    Call AddCorpseToIgnore(m_curCorpse)
+End Sub
 
 'Bodies to Ignore
 'GUID -> Time when added to the list

@@ -1896,7 +1896,7 @@ On Error GoTo ErrorHandler
     'Start 5 Min XP timer
 12    Call m_tmr5MinTimer.SetNextTime(10)
 
-13    'Call Vitals.idManaStones
+13    Call Vitals.idManaStones
     
 14    Call RunState
     

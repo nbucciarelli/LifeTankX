@@ -659,7 +659,7 @@ Private Sub m_Objects_OnRareDetected(ByVal obj As DarksideFilter.acObject)
 On Error Resume Next
     If g_ui.Loot.chkEnableLooting.Checked Then
         PrintMessage "*** [Rare Detected] ***  " & obj.Name
-        Call PlaySound(SOUND_RARE)
+        'Call PlaySound(SOUND_RARE)
     End If
 End Sub
 
@@ -790,6 +790,9 @@ On Error GoTo ErrorHandler
     If g_Macro.State = ST_BUYSELL Then
         Call PhatLoot.vendorEvent("OnReceiveItem")
     End If
+
+    'Make sure we update the Loot list so items make it onto salvage list (if needed)
+    Call g_Macro.Loot.OnItemPickup(objItem)
 
 Fin:
     Exit Sub
@@ -1068,6 +1071,7 @@ On Error GoTo ErrorHandler
     '***********************************************************************
     If g_Macro.Ticking Then
      
+        'Rare discovery messages
         If InStr(LCase(bstrMsg), "has discovered the") And (pColor = 5) Then
             MyDebug "clsACEvents.HandleConsoleMessage: OnRareFound: (" & pColor & ") " & Left(bstrMsg, Len(bstrMsg) - 1)
             'Play the rare notification sounds
@@ -1077,6 +1081,11 @@ On Error GoTo ErrorHandler
             'Call g_Macro.Loot.OnRareFound(bstrMsg)
         End If
     
+        'The Corpse of Pestilence Rat is already in use by someone else
+        If InStr(LCase(bstrMsg), "is already in use by someone else") And g_Macro.State = ST_LOOT Then
+            Call g_Macro.Loot.IgnoreCurrentCorpse
+        End If
+        
         '==============================
         'Green Message (System Message)
         '==============================
@@ -1113,7 +1122,7 @@ On Error GoTo ErrorHandler
             If InStr(bstrMsg, "has expired") Then
                 'See if it's an Item spell
                 If InStr(bstrMsg, "The spell") Then
-                    'Call g_Buffer.CheckExpiredItemSpell(bStrMsg)
+                    Call g_Buffer.CheckExpiredItemSpell(Left(bstrMsg, Len(bstrMsg) - 1))
                 Else
                     Call g_Buffer.CheckExpiredSpell(Left(bstrMsg, Len(bstrMsg) - 1)) ' get rid of char(10) on end
                 End If

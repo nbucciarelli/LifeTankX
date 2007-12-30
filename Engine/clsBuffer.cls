@@ -690,6 +690,87 @@ ErrorHandler:
     Resume Fin
 End Sub
 
+Public Sub CheckExpiredItemSpell(ByVal sCastMsg As String)
+On Error GoTo ErrorHandler
+
+    Dim sSpellName As String
+    Dim sTargetName As String
+    Dim objBuff As clsSpellQueueItem
+    Dim objSpell As clsSpell
+    Dim buffSpell As clsSpell
+    Dim iSpell As clsSpell
+    Dim objItem As acObject
+    Dim bFound As Boolean
+    Dim i As Long
+    
+'   The spell Cragstone's Will on Opal Blunt Baton has expired.
+'   Adja's Blessing has Expired
+    
+    Dim iLen As Integer, aPos As Integer, bPos As Integer
+    Dim idString As String, aString As String, bString As String
+    
+    idString = Replace(sCastMsg, "The spell ", "")
+    idString = Replace(idString, " has expired.", "")
+'   Cragstone's Will on Opal Blunt Baton
+    MyDebug "CheckExpiredItemSpell: idString: " & idString
+    aPos = InStr(idString, " on ")
+    iLen = Len(idString)
+    If (aPos <= 0) Then aPos = 1
+    sSpellName = Left(idString, aPos - 1)
+    sTargetName = Right(idString, (iLen - aPos - 4))
+    
+    MyDebug "CheckExpiredItemSpell: sSpellName: " & sSpellName
+    MyDebug "CheckExpiredItemSpell: sTargetName: " & sTargetName
+    
+    bFound = False
+    
+    Set objSpell = g_Spells.Items.FindSpellByName(sSpellName)
+    
+    If Not Valid(objSpell) Then
+        ' Can't find this spell anywhere
+        MyDebug "CheckExpiredItemSpell: not a valid Item spell: " & sSpellName
+        Exit Sub
+    End If
+
+    'Find the item and see if it still has that spell active on it
+    
+    For Each objItem In g_Objects.Items.Inv
+        If Valid(objItem) Then
+            If (objItem.Name = sTargetName) And objItem.Equiped Then
+                bFound = True
+                For Each iSpell In objItem.Spells
+                        If iSpell.SpellName = sSpellName Then
+                            ' Found it!
+                            MyDebug "CheckExpiredItemSpell: Found spell on item"
+                            Exit Sub
+                        End If
+                Next iSpell
+            End If
+        End If
+    Next objItem
+    
+    If Not bFound Then Exit Sub
+    
+    'If not then we need to see if it's a buff we would cast (in the buff queue/list)
+    For Each objBuff In m_colBuffs
+        Set buffSpell = g_Spells.Items.FindSpellByType(objBuff.SpellType, objBuff.SpellElement, g_Data.BuffsSpellsLevel)
+        If Valid(buffSpell) Then
+            If buffSpell.SpellID = objSpell.SpellID Then
+                Call m_BuffQueue.Add(objBuff)
+                MyDebug "CheckExpiredSpell: found in m_colBuffs, adding to current Queue"
+                Exit Sub
+            End If
+        End If
+    Next objBuff
+
+
+Fin:
+    Exit Sub
+ErrorHandler:
+    PrintErrorMessage "CheckExpiredItemSpell - " & Err.Description
+    Resume Fin
+End Sub
+
 'Look for "has expired" messages to make sure we don't drop any buffs
 Public Sub CheckExpiredSpell(ByVal sCastMsg As String)
 On Error GoTo ErrorHandler
@@ -697,6 +778,7 @@ On Error GoTo ErrorHandler
     Dim sSpellName As String
     Dim objBuff As clsSpellQueueItem
     Dim objSpell As clsSpell
+    Dim buffSpell As clsSpell
     Dim i As Long
     
 '   The spell Cragstone's Will on Opal Blunt Baton has expired.
@@ -715,34 +797,37 @@ On Error GoTo ErrorHandler
 
     'First, check to see if we have this spell still active on us
     For i = 0 To (g_Filters.ActiveSpellsCount - 1)
-        
-        If g_Filters.ActiveSpell(i).SpellID = objSpell.SpellID Then
+        If g_Filters.ActiveSpell(i).SpellID = objSpell.SpellID _
+         And g_Filters.ActiveSpell(i).TimeRemaining > 200 Then
             ' Yep, found active spell, so we are A-OK!
-            MyDebug "CheckExpiredSpell: found active spell!"
+            MyDebug "CheckExpiredSpell: found active spell: " & g_Filters.ActiveSpell(i).TimeRemaining
             Exit Sub
         End If
-    
     Next i
     
-    'If not then we need to see if it's in the Buff Queue
+    'If not then we need to see if it's a buff we would cast (in the buff queue/list)
+    'For i = 1 To m_iNumBuffs
+    '    If FindBuff(i, objBuff) Then
+    '        If objBuff.SpellID = objSpell.SpellID Then
+    '            Call m_BuffQueue.Add(objBuff)
+    '            MyDebug "CheckExpiredSpell: found in m_colBuffs, adding to current Queue"
+    '            Exit Sub
+    '        End If
+    '    End If
+    'Next i
     
-    For i = m_lCurBuff To m_iNumBuffs
-            
-        If FindBuff(i, objBuff) Then
-            If objBuff.SpellID = objSpell.SpellID Then
+    'If not then we need to see if it's a buff we would cast (in the buff queue/list)
+    For Each objBuff In m_colBuffs
+        Set buffSpell = g_Spells.sBuffs.FindSpell(objBuff.SpellFamily, g_Data.BuffsSpellsLevel)
+        If Valid(buffSpell) Then
+            If buffSpell.SpellID = objSpell.SpellID Then
                 Call m_BuffQueue.Add(objBuff)
                 MyDebug "CheckExpiredSpell: found in m_colBuffs, adding to current Queue"
                 Exit Sub
             End If
         End If
-    Next i
+    Next objBuff
     
-    'For Each objBuff In m_colBuffs
-    '    'objBuff.Description
-    '    If objBuff.SpellID = objSpell.SpellID Then
-    '    End If
-    'Next objBuff
-
 Fin:
     Exit Sub
 ErrorHandler:

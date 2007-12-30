@@ -266,7 +266,7 @@ End Sub
 ' have Mana Charges in inventory
 Public Function findManaCharge() As Boolean
 On Error GoTo ErrorMessage
-        
+    
     Dim objItem As acObject
     Dim smallestMana As Double
     Dim found As Boolean
