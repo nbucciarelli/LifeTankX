@@ -25,7 +25,7 @@ Private Const DEFAULT_MACRO_TIMER_INTERVAL = 300   'msec
 Private Const WAYPOINT_DELAY = 2                   'seconds
 Private Const CAST_TIMER = 0.3                     'seconds
 
-Private Const LOGOUT_CHECK_INTERVAL = 15    'check need to Logout every X seconds
+Private Const LOGOUT_CHECK_INTERVAL = 20    'check need to Logout every X seconds
 Private Const LOOT_CHECK_INTERVAL = 2       'check for loot every X seconds in idle mode
 Private Const TARGET_SCAN_INTERVAL = 2      'check for targets every X seconds when in idle mode unless
                                             'timer gets reset when creatures are spawning nearby

@@ -208,7 +208,7 @@ On Error GoTo ErrorHandler
     If FindFamily(sFamilyName, objFamily) Then
         Set FindSpell = FindSpellInFamily(objFamily, iWantedLevel, sSpellName, bIgnoreSkillReq)
     Else
-        PrintWarning Description & ".FindSpell : couldn't find spell family " & sFamilyName
+        MyDebug Description & ".FindSpell : couldn't find spell family " & sFamilyName
         Set FindSpell = Nothing
     End If
     

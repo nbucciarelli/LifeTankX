@@ -751,14 +751,25 @@ On Error GoTo ErrorHandler
     
     If Not bFound Then Exit Sub
     
+    'Find the spell infos
+    If objBuff.SpellType <> SPELLTYPE_NORMAL Then   'if it's a typed spell (i.e banes)
+        Set objSpell = spellList.FindSpellByType(objBuff.SpellType, objBuff.SpellElement, g_Data.BuffsSpellsLevel)
+        locDebug "clsBuffer.NextSpell:Typed Spell: wanted: " & objBuff.SpellType
+    Else
+        Set objSpell = spellList.FindSpell(objBuff.SpellFamily, g_Data.BuffsSpellsLevel)
+        locDebug "clsBuffer.NextSpell: SpellFamily: " & objBuff.SpellFamily
+    End If
+    
     'If not then we need to see if it's a buff we would cast (in the buff queue/list)
     For Each objBuff In m_colBuffs
-        Set buffSpell = g_Spells.Items.FindSpellByType(objBuff.SpellType, objBuff.SpellElement, g_Data.BuffsSpellsLevel)
-        If Valid(buffSpell) Then
-            If buffSpell.SpellID = objSpell.SpellID Then
-                Call m_BuffQueue.Add(objBuff)
-                MyDebug "CheckExpiredSpell: found in m_colBuffs, adding to current Queue"
-                Exit Sub
+        If objBuff.SpellType <> SPELLTYPE_NORMAL Then   'if it's a typed spell (i.e banes)
+            Set buffSpell = g_Spells.Items.FindSpellByType(objBuff.SpellType, objBuff.SpellElement, g_Data.BuffsSpellsLevel)
+            If Valid(buffSpell) Then
+                If buffSpell.SpellID = objSpell.SpellID Then
+                    Call m_BuffQueue.Add(objBuff)
+                    MyDebug "CheckExpiredSpell: found in m_colBuffs, adding to current Queue"
+                    Exit Sub
+                End If
             End If
         End If
     Next objBuff
@@ -818,12 +829,14 @@ On Error GoTo ErrorHandler
     
     'If not then we need to see if it's a buff we would cast (in the buff queue/list)
     For Each objBuff In m_colBuffs
-        Set buffSpell = g_Spells.sBuffs.FindSpell(objBuff.SpellFamily, g_Data.BuffsSpellsLevel)
-        If Valid(buffSpell) Then
-            If buffSpell.SpellID = objSpell.SpellID Then
-                Call m_BuffQueue.Add(objBuff)
-                MyDebug "CheckExpiredSpell: found in m_colBuffs, adding to current Queue"
-                Exit Sub
+        If objBuff.SpellType = SPELLTYPE_NORMAL Then
+            Set buffSpell = g_Spells.sBuffs.FindSpell(objBuff.SpellFamily, g_Data.BuffsSpellsLevel)
+            If Valid(buffSpell) Then
+                If buffSpell.SpellID = objSpell.SpellID Then
+                    Call m_BuffQueue.Add(objBuff)
+                    MyDebug "CheckExpiredSpell: found in m_colBuffs, adding to current Queue"
+                    Exit Sub
+                End If
             End If
         End If
     Next objBuff
