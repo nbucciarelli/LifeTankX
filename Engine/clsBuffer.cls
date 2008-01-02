@@ -322,7 +322,7 @@ On Error GoTo ErrorHandler
             End If
             
             If FindBuff(m_lCurBuff, objBuff) Then
-                Call m_BuffQueue.Add(objBuff)
+                Call addBuffToQueue(objBuff)
             Else
                 PrintWarning "FillBuffQueue - CONTINUOUS - Couldn't find Buff #" & m_lCurBuff
             End If
@@ -335,7 +335,7 @@ On Error GoTo ErrorHandler
         
         'copy all the spells from the buff list to the pending buffs queue
         For Each objBuff In m_colBuffs
-            Call m_BuffQueue.Add(objBuff)
+            Call addBuffToQueue(objBuff)
         Next objBuff
         
     End If
@@ -343,7 +343,32 @@ On Error GoTo ErrorHandler
 Fin:
     Exit Sub
 ErrorHandler:
-    PrintErrorMessage "AddBanes"
+    PrintErrorMessage "AddBanes - " & Err.Description
+    Resume Fin
+End Sub
+
+'Adds a buff to the Queue if it's not already there
+Private Sub addBuffToQueue(ByVal aBuff As clsSpellQueueItem)
+On Error GoTo ErrorHandler
+    Dim aSpell As clsSpellQueueItem
+    Dim i As Integer
+
+    For Each aSpell In m_BuffQueue.SpellQueue
+        If aSpell.SpellFamily = aBuff.SpellFamily Then
+            'Already on the list, so exit sub
+            Exit Sub
+        End If
+    Next aSpell
+    
+    MyDebug "clsBuffer: Adding to BuffQueue: " & aBuff.Description
+    
+    'Not found on Queue, so add it
+    Call m_BuffQueue.Add(aBuff)
+    
+Fin:
+    Exit Sub
+ErrorHandler:
+    PrintErrorMessage "addBuffToQueue - " & Err.Description
     Resume Fin
 End Sub
 
@@ -448,8 +473,6 @@ On Error GoTo ErrorHandler
 
     MyDebug "BuildBuffList: total spells: " & m_colBuffs.Count
     
-    Call existingSpellList
-
 Fin:
     Exit Sub
 ErrorHandler:
@@ -457,7 +480,51 @@ ErrorHandler:
     Resume Fin
 End Sub
 
-Public Sub existingSpellList()
+'Walks Buff List and makes sure that spell is currently active on this toon
+Private Sub existingSpellList()
+On Error GoTo ErrorHandler
+    
+    Dim objBuff As New clsSpellQueueItem
+    Dim objSpell As clsSpell
+    Dim isFound As Boolean
+    Dim i As Long
+
+    locDebug "existingSpellList: Existing Spells: " & g_Filters.ActiveSpellsCount
+
+    'copy all the spells from the buff list to the pending buffs queue
+    For Each objBuff In m_colBuffs
+
+        If objBuff.SpellType = SPELLTYPE_NORMAL Then
+            isFound = False
+            Set objSpell = g_Spells.sBuffs.FindSpell(objBuff.SpellFamily, g_Data.BuffsSpellsLevel)
+            If Valid(objSpell) Then
+                For i = 0 To (g_Filters.ActiveSpellsCount - 1)
+                    'MyDebug "ID: " & g_Filters.ActiveSpell(i).SpellID & " :F: " & g_Filters.ActiveSpell(i).Family & " :T: " & g_Filters.ActiveSpell(i).TimeRemaining
+                    If g_Filters.ActiveSpell(i).SpellID = objSpell.SpellID Then
+                        isFound = True
+                        GoTo found
+                    End If
+                Next i
+            Else
+                isFound = True
+            End If
+found:
+            If Not isFound Then
+                 locDebug "existingSpellList: Missing spell, add BuffQueue: " & objBuff.Description
+                 Call addBuffToQueue(objBuff)
+            End If
+        End If
+    
+    Next objBuff
+
+Fin:
+    Exit Sub
+ErrorHandler:
+    PrintErrorMessage "existingSpellList - " & Err.Description & " - line: " & Erl
+    Resume Fin
+End Sub
+
+Public Sub existingSpellsOnPlayer()
 On Error GoTo ErrorHandler
     
     Dim newSpell As New clsSpellQueueItem
@@ -466,7 +533,7 @@ On Error GoTo ErrorHandler
     Dim i As Long
     Dim iSpell As Long
 
-    MyDebug "Displaying Existing Spells: " & g_Filters.ActiveSpellsCount
+    locDebug "Displaying Existing Spells: " & g_Filters.ActiveSpellsCount
 
     Set m_existBuffs = New Collection
     
@@ -516,7 +583,7 @@ On Error GoTo ErrorHandler
 Fin:
     Exit Sub
 ErrorHandler:
-    PrintErrorMessage "existingSpellList - " & Err.Description & " - line: " & Erl
+    PrintErrorMessage "existingSpellsOnPlayer - " & Err.Description & " - line: " & Erl
     Resume Fin
 End Sub
 
@@ -572,6 +639,8 @@ On Error GoTo ErrorHandler
     If bPushBuffsNow Then
         MyDebug "StartService - Pushing buffs to list"
         Call PushBuffs(False, True)
+        'Make sure we also cast any spells that are missing from the Player
+        Call existingSpellList
     End If
     
     'setup next rebuff time if required
@@ -698,7 +767,6 @@ On Error GoTo ErrorHandler
     Dim objBuff As clsSpellQueueItem
     Dim objSpell As clsSpell
     Dim buffSpell As clsSpell
-    Dim iSpell As clsSpell
     Dim objItem As acObject
     Dim bFound As Boolean
     Dim i As Long
@@ -712,64 +780,64 @@ On Error GoTo ErrorHandler
     idString = Replace(sCastMsg, "The spell ", "")
     idString = Replace(idString, " has expired.", "")
 '   Cragstone's Will on Opal Blunt Baton
-    MyDebug "CheckExpiredItemSpell: idString: " & idString
+    locDebug "CheckExpiredItemSpell: idString: " & idString
     aPos = InStr(idString, " on ")
     iLen = Len(idString)
     If (aPos <= 0) Then aPos = 1
     sSpellName = Left(idString, aPos - 1)
-    sTargetName = Right(idString, (iLen - aPos - 4))
+    sTargetName = Right(idString, (iLen - aPos - 3))
     
-    MyDebug "CheckExpiredItemSpell: sSpellName: " & sSpellName
-    MyDebug "CheckExpiredItemSpell: sTargetName: " & sTargetName
+    locDebug "CheckExpiredItemSpell: sSpellName: " & sSpellName & " :T: " & sTargetName
     
     bFound = False
     
     Set objSpell = g_Spells.Items.FindSpellByName(sSpellName)
-    
+1
     If Not Valid(objSpell) Then
         ' Can't find this spell anywhere
-        MyDebug "CheckExpiredItemSpell: not a valid Item spell: " & sSpellName
+        locDebug "CheckExpiredItemSpell: not a valid Item spell: " & sSpellName
+        Exit Sub
+    End If
+2
+    'Find the item and see if it still has that spell active on it
+3
+    Set objItem = g_Objects.Items.FindByName(sTargetName, True)
+    If Valid(objItem) Then
+        If (objItem.Name = sTargetName) And objItem.Equiped Then
+4
+            bFound = True
+            If objItem.Spells.Count > 0 And objItem.Spells.Exists(sSpellName) Then
+5                ' Found it!
+                locDebug "CheckExpiredItemSpell: Found spell on item: " & sSpellName
+                Exit Sub
+            End If
+        End If
+    End If
+6
+    If Not bFound Then
+        MyDebug "CheckExpiredItemSpell: Could not find item: " & sTargetName
         Exit Sub
     End If
 
-    'Find the item and see if it still has that spell active on it
-    
-    For Each objItem In g_Objects.Items.Inv
-        If Valid(objItem) Then
-            If (objItem.Name = sTargetName) And objItem.Equiped Then
-                bFound = True
-                For Each iSpell In objItem.Spells
-                        If iSpell.SpellName = sSpellName Then
-                            ' Found it!
-                            MyDebug "CheckExpiredItemSpell: Found spell on item"
-                            Exit Sub
-                        End If
-                Next iSpell
-            End If
-        End If
-    Next objItem
-    
-    If Not bFound Then Exit Sub
-    
+7
     'If not then we need to see if it's a buff we would cast (in the buff queue/list)
     For Each objBuff In m_colBuffs
         If objBuff.SpellType <> SPELLTYPE_NORMAL Then   'if it's a typed spell (i.e banes)
             Set buffSpell = g_Spells.Items.FindSpellByType(objBuff.SpellType, objBuff.SpellElement, g_Data.BuffsSpellsLevel)
             If Valid(buffSpell) Then
-                If buffSpell.SpellID = objSpell.SpellID Then
-                    Call m_BuffQueue.Add(objBuff)
-                    MyDebug "CheckExpiredSpell: found in m_colBuffs, adding to current Queue"
+                If (buffSpell.SpellID = objSpell.SpellID) And (m_BuffQueue.ReadTop.SpellFamily <> objBuff.SpellFamily) Then
+                    MyDebug "CheckExpiredItemSpell: Queing objBuff: " & objBuff.Description & " :: " & objBuff.TargetName
+                    Call addBuffToQueue(objBuff)
                     Exit Sub
                 End If
             End If
         End If
     Next objBuff
 
-
 Fin:
     Exit Sub
 ErrorHandler:
-    PrintErrorMessage "CheckExpiredItemSpell - " & Err.Description
+    'PrintErrorMessage "CheckExpiredItemSpell - " & Err.Description & " - line: " & Erl
     Resume Fin
 End Sub
 
@@ -787,7 +855,7 @@ On Error GoTo ErrorHandler
 '   Adja's Blessing has Expired
     
     sSpellName = Replace(sCastMsg, " has expired.", "")
-    MyDebug "CheckExpiredSpell: " & sSpellName
+    locDebug "CheckExpiredSpell: " & sSpellName
     
     Set objSpell = g_Spells.sBuffs.FindSpellByName(sSpellName)
     
@@ -802,7 +870,7 @@ On Error GoTo ErrorHandler
         If g_Filters.ActiveSpell(i).SpellID = objSpell.SpellID _
          And g_Filters.ActiveSpell(i).TimeRemaining > 200 Then
             ' Yep, found active spell, so we are A-OK!
-            MyDebug "CheckExpiredSpell: found active spell: " & g_Filters.ActiveSpell(i).TimeRemaining
+            locDebug "CheckExpiredSpell: found active spell: " & g_Filters.ActiveSpell(i).TimeRemaining
             Exit Sub
         End If
     Next i
@@ -811,7 +879,7 @@ On Error GoTo ErrorHandler
     'For i = 1 To m_iNumBuffs
     '    If FindBuff(i, objBuff) Then
     '        If objBuff.SpellID = objSpell.SpellID Then
-    '            Call m_BuffQueue.Add(objBuff)
+    '            Call addBuffToQueue(objBuff)
     '            MyDebug "CheckExpiredSpell: found in m_colBuffs, adding to current Queue"
     '            Exit Sub
     '        End If
@@ -824,8 +892,8 @@ On Error GoTo ErrorHandler
             Set buffSpell = g_Spells.sBuffs.FindSpell(objBuff.SpellFamily, g_Data.BuffsSpellsLevel)
             If Valid(buffSpell) Then
                 If buffSpell.SpellID = objSpell.SpellID Then
-                    Call m_BuffQueue.Add(objBuff)
-                    MyDebug "CheckExpiredSpell: found in m_colBuffs, adding to current Queue"
+                    MyDebug "CheckExpiredSpell: adding to current Queue: " & objBuff.Description
+                    Call addBuffToQueue(objBuff)
                     Exit Sub
                 End If
             End If
@@ -851,7 +919,7 @@ On Error GoTo ErrorHandler
             locDebug "clsBuffer.CheckCastedSpell - Current spell " & m_sCurSpellName & " has been cast"
             
             If (g_Macro.State = ST_REBUFF) Then
-                MyDebug "clsBuffer.CheckCastedSpell: poping m_sCurSpellName off BuffQueue"
+                MyDebug "clsBuffer.CheckCastedSpell: poping off BuffQueue: " & m_sCurSpellName
                 Call m_BuffQueue.Pop
                 Call g_Spells.c_SpellQueue.Pop
                 'update progress bar

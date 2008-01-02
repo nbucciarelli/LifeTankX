@@ -460,12 +460,12 @@ End Sub
 Private Sub m_DSFilter_OnSpellVisible(ByVal SpellName As String)
 On Error GoTo ErrorHandler
 
-    MyDebug "OnSpellVisible name: " & SpellName
+    'locDebug "OnSpellVisible name: " & SpellName
     
-    'If g_Spells.Casting Or Not g_Macro.OkToCast Then
+    If g_Spells.Casting Or Not g_Macro.OkToCast Then
         locDebug "-- DSFilter_OnSpellVisible: " & SpellName
         Call g_Spells.OnSpellCastComplete(True, "OnSpellVisible")
-    'End If
+    End If
 
 Fin:
     Exit Sub
@@ -477,7 +477,7 @@ End Sub
 Private Sub m_DSFilter_OnSpellCast(ByVal SpellID As Long)
 On Error GoTo ErrorHandler
 
-    MyDebug "OUTGOING: OnSpellCast event: spellID: " & SpellID
+    locDebug "OUTGOING: OnSpellCast event: spellID: " & SpellID
     
     ' Set spell casting start flags
     Call g_Spells.OnSpellCastBegin("OnSpellCast Event")
@@ -539,7 +539,7 @@ On Error GoTo ErrorHandler
 
     If Not Valid(obj) Then Exit Sub
     
-    'MyDebug "clsACEvents.OnCreateObject: " & obj.Name & " : " & obj.Guid
+    locDebug "clsACEvents.OnCreateObject: " & obj.Name & " : " & obj.Guid
     
 1    Select Case obj.ObjectType
         Case TYPE_PLAYER
@@ -643,7 +643,7 @@ On Error GoTo ErrorHandler
     If Not Valid(obj) Then Exit Sub
     
     ' Setup the Vendor Object and inventory
-    MyDebug "OnApproachVendor: Vendor:" & obj.Name
+    locDebug "OnApproachVendor: Vendor:" & obj.Name
     
     Call PhatLoot.setVendor(obj)
     Call PhatLoot.setVendorInv(vendorInv)
@@ -678,7 +678,7 @@ End Sub
 Private Sub m_Objects_OnObjectDeath(ByVal obj As DarksideFilter.acObject)
 On Error GoTo ErrorHandler
  
-    'MyDebug "clsACEvent.OnObjectDeath: " & obj.Name & " : " & obj.Guid
+    locDebug "clsACEvent.OnObjectDeath: " & obj.Name & " : " & obj.Guid
  
     'Always call this, even when macro is not "runing"
     Call g_Macro.OnEntityDeath(obj)
@@ -695,7 +695,7 @@ On Error GoTo ErrorHandler
 
     If Not Valid(obj) Then Exit Sub
  
-    'MyDebug "clsACEvent.OnRemoveObject: " & obj.Name & " : " & obj.Guid
+    locDebug "clsACEvent.OnRemoveObject: " & obj.Name & " : " & obj.Guid
     
     'Always call this, even when macro is not "running"
     Call g_Macro.OnEntityNoLongerAvailable(obj)
@@ -853,7 +853,7 @@ Private Sub m_Fellowship_OnQuit(ByVal objFellow As acObject)
 On Error Resume Next
     
     If g_Objects.IsSelf(objFellow) Then
-        'MyDebug "You have left the fellowship: " & g_Objects.Fellowship.Name
+        locDebug "You have left the fellowship: " & g_Objects.Fellowship.Name
         Call g_FellowList.Clear
     Else
         MyDebug objFellow.Name & " has left your fellowship: " & g_Objects.Fellowship.Name
@@ -867,7 +867,7 @@ End Sub
 Private Sub m_Fellowship_OnRecruit(ByVal objFellow As acObject)
 On Error Resume Next
     
-    'MyDebug objFellow.Name & " joined the fellowship"
+    MyDebug objFellow.Name & " joined the fellowship"
     
     If (g_FellowList.Count > 0) And g_FellowList.checkOnList(objFellow.Name) Then
         Call g_FellowList.removeFromLine(objFellow.Name)
@@ -896,12 +896,12 @@ On Error Resume Next
                 
                 If (objFellow.Health <= GetPercent(objFellow.MaxHealth, g_Data.FellowHealthThreshold)) Then
                     'Set global FellowNeedsHealing flag
-                    'MyDebug "OnUpdateFellowStats: needs healing: " & objFellow.Name
+                    locDebug "OnUpdateFellowStats: needs healing: " & objFellow.Name
                     Call g_Macro.SetFellowNeedsHealing(True)
                 End If
                 If (objFellow.Stamina <= GetPercent(objFellow.MaxStamina, g_Data.FellowStamThreshold)) Then
                     'Set global FellowNeedsStam flag
-                    'MyDebug "OnUpdateFellowStats: needs Staming: " & objFellow.Name
+                    locDebug "OnUpdateFellowStats: needs Staming: " & objFellow.Name
                     Call g_Macro.SetFellowNeedsStam(True)
                 End If
             End If

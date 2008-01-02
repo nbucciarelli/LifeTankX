@@ -201,20 +201,20 @@ End Function
 Public Sub MyDebug(strMsg As String, Optional bSilent As Boolean = False)
 On Error GoTo ErrorHandler
 
-1    If Valid(g_debugLog) Then
-2        xWriteMessageToFile g_debugLog, strMsg
-3    Else
-4        WriteMessageToFile GetDebugLogPath, strMsg
-5    End If
-    
-6    If (Not bSilent) And Valid(g_PluginSite) And Valid(g_Core) Then
-7        If Valid(g_Core.Engine) Then
-8            If g_Core.Engine.DebugMode Then
-                'g_Hooks.AddChatTextRaw "[LTx Dbg] ", COLOR_PURPLE, 0
-9                g_Hooks.AddChatText "[LTx] " & strMsg, COLOR_PURPLE, 0
-            End If
-        End If
+    If Valid(g_debugLog) Then
+        xWriteMessageToFile g_debugLog, strMsg
+    Else
+        WriteMessageToFile GetDebugLogPath, strMsg
     End If
+    
+    'If (Not bSilent) And Valid(g_PluginSite) And Valid(g_Core) Then
+    '    If Valid(g_Core.Engine) Then
+    '        If g_Core.Engine.DebugMode Then
+    '            'g_Hooks.AddChatTextRaw "[LTx Dbg] ", COLOR_PURPLE, 0
+    '            g_Hooks.AddChatText "[LTx] " & strMsg, COLOR_PURPLE, 0
+    '        End If
+    '    End If
+    'End If
 
 Fin:
     Exit Sub

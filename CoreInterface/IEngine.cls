@@ -55,7 +55,7 @@ End Function
 Public Sub HandleMouseMoveHUD(ByVal x As Long, ByVal y As Long)
 End Sub
 
-Public Function StartMacro(ByVal iMode As Integer, ByVal iCombatType As Integer) As Boolean
+Public Function StartMacro(ByVal iCombatType As Integer) As Boolean
 End Function
 
 Public Sub OnTick()

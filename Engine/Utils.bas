@@ -544,7 +544,7 @@ On Error GoTo ErrorHandler
     g_ui.Main.chkEnable.Checked = False
     
     If bOn Then
-        Call g_Engine.FireStartMacro(g_ui.Main.chMacroMode.Selected, g_ui.Main.chCombatType.Selected)
+        Call g_Engine.FireStartMacro(g_ui.Main.chCombatType.Selected)
     Else
         PrintMessage "Macro Stopped."
         Call g_Macro.StopMacro

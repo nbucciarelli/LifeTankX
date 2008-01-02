@@ -25,7 +25,7 @@ Private Const DEFAULT_MACRO_TIMER_INTERVAL = 300   'msec
 Private Const WAYPOINT_DELAY = 2                   'seconds
 Private Const CAST_TIMER = 0.3                     'seconds
 
-Private Const LOGOUT_CHECK_INTERVAL = 20    'check need to Logout every X seconds
+Private Const LOGOUT_CHECK_INTERVAL = 30    'check need to Logout every X seconds
 Private Const LOOT_CHECK_INTERVAL = 2       'check for loot every X seconds in idle mode
 Private Const TARGET_SCAN_INTERVAL = 2      'check for targets every X seconds when in idle mode unless
                                             'timer gets reset when creatures are spawning nearby
@@ -399,9 +399,9 @@ Public Property Get SubState() As Integer
     SubState = m_iSubState
 End Property
 
-Public Property Get Mode() As Integer
-    Mode = m_iMode
-End Property
+'Public Property Get Mode() As Integer
+'    Mode = m_iMode
+'End Property
 
 Public Property Get RegenVitals() As Boolean
     RegenVitals = m_bRegenVitals
@@ -1302,28 +1302,12 @@ On Error GoTo ErrorHandler
 
     'Check if we need to logout
 4    If m_tmrNextLogoutCheck.Expired Then
-        'If (g_AntiBan.m_bLogOut) Then
-        '    Call g_Hooks.CastSpell(2023, 0)
-        'End If
-    
         Dim sReason As String
-        Dim bWillCast As Boolean
-        If MustLogOut(sReason, bWillCast) Then
-            If bWillCast And Not m_logoutSpellCast Then
-                MyDebug "RunState - Cast LOGOUT Spell: " & g_ui.Macro.chLogoutSpell.Text(g_ui.Macro.chLogoutSpell.Selected)
-                'Put the spell at top of the Priority Queue
-                Call g_Spells.c_SpellQueue.Clear
-                Dim outSpell As New clsSpell
-                Set outSpell = g_Spells.Items.FindSpell(g_ui.Macro.chLogoutSpell.Text(g_ui.Macro.chLogoutSpell.Selected), 3, , True)
-                Call g_Spells.CastThisSpell(outSpell, 0, True)
-                m_logoutSpellCast = True
-                m_bOKToCast = True
-            Else
-                MyDebug "RunState - MustLogOut returned true !"
-                Call StopMacro
-                Call g_Service.Logout(sReason)
-                GoTo Fin
-            End If
+        If MustLogOut(sReason) Then
+            MyDebug "RunState - MustLogOut returned true !"
+            Call StopMacro
+            Call g_Service.Logout(sReason)
+            GoTo Fin
         End If
         Call m_tmrNextLogoutCheck.SetNextTime(LOGOUT_CHECK_INTERVAL)
     End If
@@ -1874,6 +1858,8 @@ On Error GoTo ErrorHandler
     'turn on the macro timer
     m_bRunning = True
     m_bDied = False
+    m_logoutSpellCast = False
+
 3   Call m_tmrNextStatsUpdate.Reset
 4   Call m_tmrNextStatsUpdate.SetNextTime(5)
 
@@ -1925,7 +1911,8 @@ On Error GoTo ErrorHandler
 
     m_bForceRebuff = True
     Call g_Buffer.BuildBuffList 'update buffs list
-    Call g_Engine.FireStartMacro(MODE_REBUFF, g_ui.Main.chCombatType.Selected)
+    'Call g_Engine.FireStartMacro(MODE_REBUFF, g_ui.Main.chCombatType.Selected)
+    Call g_Engine.FireStartMacro(g_ui.Main.chCombatType.Selected)
     
 Fin:
     Exit Sub
@@ -1940,17 +1927,16 @@ End Sub
 '#
 '#####################################################################################
 
-Public Function StartMacro(Optional ByVal iMode As Integer = MODE_NORMAL, Optional ByVal iCombatType As Integer = TYPE_CASTER) As Boolean
+Public Function StartMacro(Optional ByVal iCombatType As Integer = TYPE_CASTER) As Boolean
 On Error GoTo ErrorHandler
     
     Dim bRet As Boolean
     Dim sReason As String
-    Dim bWillCast As Boolean
     
     bRet = True
 
-1    g_Core.TimerInterval = DEFAULT_MACRO_TIMER_INTERVAL
-2    m_iCombatType = iCombatType
+    g_Core.TimerInterval = DEFAULT_MACRO_TIMER_INTERVAL
+    m_iCombatType = iCombatType
 
     'If mAuth.m_PluginEnabled = False Then
     '    PrintMessage g_String(mStrings.e_strUnableToAuth)
@@ -1959,7 +1945,7 @@ On Error GoTo ErrorHandler
     'End If
     
     'Make sure we are all ready to go
-    If MustLogOut(sReason, bWillCast) Then
+    If MustLogOut(sReason) Then
     PrintMessage "Unable to start macro : " & sReason
         bRet = False
         GoTo Fin
@@ -1970,8 +1956,8 @@ On Error GoTo ErrorHandler
         
     'is macro already running?
     If Ticking Then
-        If iMode = MODE_REBUFF Then
-3            Call g_Buffer.PushBuffs(True, True)   'just push the whole buff list to the buff queue
+        If m_bForceRebuff Then
+            Call g_Buffer.PushBuffs(True, True)   'just push the whole buff list to the buff queue
         End If
     Else
         'make sure we have set all the required macro items first
@@ -1980,36 +1966,31 @@ On Error GoTo ErrorHandler
             GoTo Fin
         End If
         
-        m_iMode = iMode
-        
-        Select Case m_iMode
-            Case MODE_REBUFF
-                m_iMode = MODE_REBUFF
-4                Call g_Buffer.StartService(REBUFF_FULL, , False)
-5                Call GoRebuff
-            
-            Case Else
-                If g_ui.Buffs.chkEnableBuffing.Checked Then
-                    Dim iBuffMode As Integer
-                    
-                    If g_ui.Buffs.chkContinuousBuffing.Checked Then
-                        iBuffMode = REBUFF_CONTINUOUS
-                    Else
-                        iBuffMode = REBUFF_FULL
-                    End If
-                
-6                    Call g_Buffer.StartService(iBuffMode, g_Data.RebuffInterval, True, g_ui.Buffs.chkRebuffOnStart.Checked, g_Data.NumContinuousBuffs)
-                    
-                    If Valid(g_buffBuddy) Then
-7                        Call g_BuddyBuffer.StartService(iBuffMode, g_Data.RebuffInterval, True, g_ui.Buffs.chkRebuffOnStart.Checked, g_Data.NumContinuousBuffs)
-                    End If
+        If m_bForceRebuff Then
+            m_iMode = MODE_REBUFF
+            Call g_Buffer.StartService(REBUFF_FULL, , False)
+            Call GoRebuff
+        Else
+            If g_ui.Buffs.chkEnableBuffing.Checked Then
+                Dim iBuffMode As Integer
+                If g_ui.Buffs.chkContinuousBuffing.Checked Then
+                    iBuffMode = REBUFF_CONTINUOUS
+                Else
+                    iBuffMode = REBUFF_FULL
                 End If
+
+                Call g_Buffer.StartService(iBuffMode, g_Data.RebuffInterval, True, g_ui.Buffs.chkRebuffOnStart.Checked, g_Data.NumContinuousBuffs)
                 
-8                Call GoIdle
+                If Valid(g_buffBuddy) Then
+                   Call g_BuddyBuffer.StartService(iBuffMode, g_Data.RebuffInterval, True, g_ui.Buffs.chkRebuffOnStart.Checked, g_Data.NumContinuousBuffs)
+                End If
+            End If
                 
-        End Select
-        
-9       Call OnMacroStart
+            Call GoIdle
+                
+        End If
+
+        Call OnMacroStart
         
     End If
 
@@ -2293,7 +2274,7 @@ On Error GoTo ErrorHandler
     Select Case iFailureId
         Case FAIL_TOO_BUSY, FAIL_BUSY
             ' Do nothing
-            MyDebug "-- Fail: Busy --"
+            locDebug "-- Fail: Busy --"
             If m_iState <> ST_COMBAT Then
                 'Call g_Core.SendKeyHold(g_Keys.KeyJump)
                 Call ResetSubState
@@ -2667,7 +2648,7 @@ End Sub
 '#####################################################################################
 
 'Check logout conditions
-Public Function MustLogOut(Optional ByRef sReasonOut As String, Optional ByRef bWillCast As Boolean) As Boolean
+Public Function MustLogOut(Optional ByRef sReasonOut As String) As Boolean
 On Error GoTo ErrorHandler
     Dim bRet As Boolean
     
@@ -2676,6 +2657,7 @@ On Error GoTo ErrorHandler
     If (Not bRet) And g_ui.Macro.chkLogoutOnDeath.Checked And m_bDied Then
         sReasonOut = "Macro died"
         bRet = True
+        GoTo Fin
     End If
     
     If (Not bRet) And g_ui.Macro.chkLogoutOnTapers.Checked Then
@@ -2684,9 +2666,6 @@ On Error GoTo ErrorHandler
         If iTaperCount < 50 Then
             sReasonOut = "Running out of Prismatic Tapers (" & iTaperCount & ")"
             bRet = True
-            If g_ui.Macro.chkLogoutCastSpell.Checked Then
-                bWillCast = True
-            End If
             ' Never force logout if we need healing!
             If m_Healing.NeedHealing("clsMacro.MustLogOut") Then bRet = False
         End If
@@ -2697,9 +2676,6 @@ On Error GoTo ErrorHandler
             If Not Valid(Vitals.findHealItem) Then
                 sReasonOut = "Out of Healing Items"
                 bRet = True
-                If g_ui.Macro.chkLogoutCastSpell.Checked Then
-                    bWillCast = True
-                End If
             End If
         End If
     End If
@@ -2708,17 +2684,11 @@ On Error GoTo ErrorHandler
         If g_Objects.Items.InvCntByName(STR_ITEM_PLAT) <= 0 Then
             sReasonOut = "Running out of " & STR_ITEM_PLAT
             bRet = True
-            If g_ui.Macro.chkLogoutCastSpell.Checked Then
-                bWillCast = True
-            End If
             ' Never force logout if we need healing!
             If m_Healing.NeedHealing("clsMacro.MustLogOut") Then bRet = False
         ElseIf g_Objects.Items.InvCntByName(STR_ITEM_PYREAL_SCARAB) <= 0 Then
             sReasonOut = "Running out of " & STR_ITEM_PYREAL_SCARAB
             bRet = True
-            If g_ui.Macro.chkLogoutCastSpell.Checked Then
-                bWillCast = True
-            End If
             ' Never force logout if we need healing!
             If m_Healing.NeedHealing("clsMacro.MustLogOut") Then bRet = False
         End If
@@ -2736,6 +2706,20 @@ On Error GoTo ErrorHandler
         bRet = True
     End If
     
+    If bRet And g_ui.Macro.chkLogoutCastSpell.Checked Then
+        If Not m_logoutSpellCast Then
+            MyDebug "MustLogOut - Will Cast LOGOUT Spell: " & g_ui.Macro.chLogoutSpell.Text(g_ui.Macro.chLogoutSpell.Selected)
+            'Put the spell at top of the Priority Queue
+            Call g_Spells.c_SpellQueue.Clear
+            Dim outSpell As New clsSpell
+            Set outSpell = g_Spells.Items.FindSpell(g_ui.Macro.chLogoutSpell.Text(g_ui.Macro.chLogoutSpell.Selected), 3, , True)
+            Call g_Spells.CastThisSpell(outSpell, 0, True)
+            m_logoutSpellCast = True
+            m_bOKToCast = True
+            bRet = False
+        End If
+    End If
+
 Fin:
     MustLogOut = bRet
     Exit Function

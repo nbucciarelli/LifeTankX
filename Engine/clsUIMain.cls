@@ -28,8 +28,6 @@ Attribute chkEnable.VB_VarHelpID = -1
 
 Public WithEvents btnPause As PushButton
 Attribute btnPause.VB_VarHelpID = -1
-Public WithEvents chMacroMode As DecalControls.Choice
-Attribute chMacroMode.VB_VarHelpID = -1
 Public WithEvents chCombatType As DecalControls.Choice
 Attribute chCombatType.VB_VarHelpID = -1
 
@@ -94,7 +92,6 @@ On Error GoTo Error_Handler
     
     'Decal Controls initialisation
 1    Set chkEnable = g_MainView.Control("chkEnable")
-2    Set chMacroMode = g_MainView.Control("chMacroMode")
     
     Set chMacroProfile = g_MainView.Control("chMacroProfile")
     Set chBuffsProfile = g_MainView.Control("chBuffsProfile")
@@ -138,7 +135,6 @@ On Error GoTo Error_Handler
     
     'Default Control Initialization
 23  chkEnable.Checked = False
-    chMacroMode.Selected = 0
     progBuffs.DecalDrawText = False
     progBuffs.PreText = "Buffs : "
     chkSellAll.Checked = True
@@ -163,7 +159,6 @@ On Error GoTo Error_Handler
     
     '***************************************************************************
     chkEnable.Checked = False
-    chMacroMode.Selected = g_Settings.Profile.MacroCfg.GetValue("chMacroMode", 0)
     chCombatType.Selected = g_Settings.Profile.MacroCfg.GetValue("chCombatType", 0)
     
     'Puts the different buff profiles available with the current profile in the Buffs Profile choice list
@@ -195,7 +190,6 @@ On Error GoTo Error_Handler
     MyDebug "[" & InterfaceName & "] Saving controls settings"
     
     With g_Settings.Profile.MacroCfg
-        .SaveChoice chMacroMode, "chMacroMode"
         .SaveChoice chCombatType, "chCombatType"
     End With
     
@@ -217,7 +211,6 @@ On Error GoTo Error_Handler
     Set chkEnable = Nothing
     
     Set btnPause = Nothing
-    Set chMacroMode = Nothing
     Set stVersion = Nothing
     Set lblStatus = Nothing
     Set lblBuyTarget = Nothing
@@ -357,33 +350,6 @@ Private Sub Class_Terminate()
     Call Unload
 End Sub
 
-
-Private Sub chMacroMode_Change(ByVal nID As Long, ByVal nIndex As Long)
-'Dim OldCombatType As Integer
-'
-'    'save some data
-'    OldCombatType = Macro.CombatType
-'
-'    If nIndex = TYPE_MAGE Then
-'        Call ChangeCombatType(TYPE_MAGE)
-'        PrintMessage "Macro Mode set to Mage Mode"
-'
-'    ElseIf nIndex = TYPE_MELEE Then
-'        Call ChangeCombatType(TYPE_MELEE)
-'        PrintMessage "Macro Mode set to Melee Mode"
-'
-'    ElseIf nIndex = TYPE_ARCHER Then
-'        Call ChangeCombatType(TYPE_ARCHER)
-'        PrintMessage "Macro Mode set to Archer Mode"
-'
-'    Else
-'        PrintMessage "Unknown Macro Mode. Ignoring."
-'        Exit Sub
-'
-'    End If
-        
-    
-End Sub
 Public Sub ResetBuffsProgressBar()
     progBuffs.MaxValue = 0
     progBuffs.Value = 0

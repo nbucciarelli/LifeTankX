@@ -97,9 +97,9 @@ On Error Resume Next
         
 End Sub
 
-Friend Sub FireStartMacro(ByVal iMode As Integer, ByVal iCombatType As Integer)
+Friend Sub FireStartMacro(ByVal iCombatType As Integer)
 On Error Resume Next
-    Call g_Core.OnStartMacro(iMode, iCombatType, 0)
+    Call g_Core.OnStartMacro(iCombatType)
 End Sub
 
 Friend Sub FireStopMacro()
@@ -242,7 +242,7 @@ ErrorHandler:
     Resume Fin
 End Sub
 
-Private Function IEngine_StartMacro(ByVal iMode As Integer, ByVal iCombatType As Integer) As Boolean
+Private Function IEngine_StartMacro(ByVal iCombatType As Integer) As Boolean
 On Error GoTo ErrorHandler
     
     If Not m_bEngineObjectsLoaded Then Exit Function
@@ -255,19 +255,17 @@ On Error GoTo ErrorHandler
     '    GoTo Fin
     'End If
     
-    bStarted = g_Macro.StartMacro(iMode, iCombatType)
+    bStarted = g_Macro.StartMacro(iCombatType)
     
-    If iMode = MODE_NORMAL Then
-        g_ui.Main.chkEnable.Checked = bStarted
-        If bStarted Then
-            PrintMessage "Macro Started [TurboMode : " & CStr(TurboMode) & "]"
-            If Valid(g_HUD) Then
-                Call g_HUD.createAllHuds
-                Call g_HUD.StartHUDs
-            End If
-        Else
-            MyDebug "Macro failed to start!"
+    g_ui.Main.chkEnable.Checked = bStarted
+    If bStarted Then
+        PrintMessage "Macro Started [TurboMode : " & CStr(TurboMode) & "]"
+        If Valid(g_HUD) Then
+            Call g_HUD.createAllHuds
+            Call g_HUD.StartHUDs
         End If
+    Else
+        MyDebug "Macro failed to start!"
     End If
   
 Fin:

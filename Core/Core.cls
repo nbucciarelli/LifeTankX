@@ -138,10 +138,10 @@ End Sub
 '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 'Start the macro heart beat
-Private Sub ICore_OnStartMacro(ByVal iMode As Integer, ByVal iCombatType As Integer, ByVal iAltMode As Integer)
+Private Sub ICore_OnStartMacro(ByVal iCombatType As Integer)
 On Error GoTo ErrorHandler
 
-    If m_engine.StartMacro(iMode, iCombatType) Then
+    If m_engine.StartMacro(iCombatType) Then
         m_tmrMacro.Enabled = True
     End If
         

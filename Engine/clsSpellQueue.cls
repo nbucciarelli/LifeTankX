@@ -21,6 +21,8 @@ Option Explicit
 
 'Used to queue up buff spells for instance
 
+Private Const DEBUG_ME = False
+
 Private m_SpellQueue As Collection   'the spell stack
 
 
@@ -46,6 +48,10 @@ Error_Handler:
     Resume Fin
 End Sub
 
+Public Property Get SpellQueue() As Collection
+    Set SpellQueue = m_SpellQueue
+End Property
+
 Public Property Get Count() As Long
     Count = m_SpellQueue.Count
 End Property
@@ -68,7 +74,7 @@ Public Function ReadTop() As clsSpellQueueItem
         'returns it
         Set ReadTop = m_SpellQueue.Item(1)
         
-        MyDebug "SpellQueue.ReadTop : " & ReadTop.Description
+        locDebug "SpellQueue.ReadTop : " & ReadTop.Description
     End If
     
 End Function
@@ -87,7 +93,7 @@ Public Function Pop() As clsSpellQueueItem
         'returns it
         Set Pop = m_SpellQueue.Item(1)
         
-        MyDebug "clsSpellQueue.Pop : " & Pop.Description
+        locDebug "clsSpellQueue.Pop : " & Pop.Description
         
         'remove it from queue
         Call m_SpellQueue.Remove(1)
@@ -106,7 +112,7 @@ Public Sub Add(NewSpellItem As clsSpellQueueItem)
         PrintErrorMessage "SpellQueue.Add : NewSpellItem = NULL -> Ignoring."
     Else
         'add this spell to the queue
-        MyDebug "SpellQueue.Add : " & NewSpellItem.Description
+        locDebug "SpellQueue.Add : " & NewSpellItem.Description
         Call m_SpellQueue.Add(NewSpellItem)
     End If
     
@@ -123,7 +129,7 @@ Public Sub AddSimple(NewSpellItem As clsSpellQueueItemSimple)
         PrintErrorMessage "SpellQueue.AddSimple : NewSpellItem = NULL -> Ignoring."
     Else
         'add this spell to the queue
-        MyDebug "SpellQueue.AddSimple : " & NewSpellItem.Description
+        locDebug "SpellQueue.AddSimple : " & NewSpellItem.Description
         Call m_SpellQueue.Add(NewSpellItem)
     End If
     
@@ -178,6 +184,14 @@ Public Sub Display()
         Counter = Counter + 1
     Next spell
     
+End Sub
+
+
+'Local Debug
+Private Sub locDebug(DebugMsg As String, Optional bSilent As Boolean = True)
+    If DEBUG_ME Or g_Data.mDebugMode Then
+        Call MyDebug("[clsSpellQueue] " & DebugMsg, bSilent)
+    End If
 End Sub
 
 
