@@ -264,8 +264,6 @@ On Error GoTo ErrorHandler
             Call g_HUD.createAllHuds
             Call g_HUD.StartHUDs
         End If
-    Else
-        MyDebug "Macro failed to start!"
     End If
   
 Fin:

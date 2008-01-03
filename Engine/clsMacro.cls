@@ -1023,6 +1023,8 @@ On Error GoTo ErrorHandler
     If m_iMode = MODE_REBUFF Then
         PrintMessage "Buff Cycle Completed."
         Call StopMacro
+        m_iMode = MODE_NORMAL
+        m_bForceRebuff = False
     Else
         locDebug "OnRebuffComplete - Buff cycle completed, moving back to idle mode"
         m_bForceRebuff = False
@@ -1958,6 +1960,7 @@ On Error GoTo ErrorHandler
     If Ticking Then
         If m_bForceRebuff Then
             Call g_Buffer.PushBuffs(True, True)   'just push the whole buff list to the buff queue
+            bRet = False
         End If
     Else
         'make sure we have set all the required macro items first
@@ -1970,6 +1973,7 @@ On Error GoTo ErrorHandler
             m_iMode = MODE_REBUFF
             Call g_Buffer.StartService(REBUFF_FULL, , False)
             Call GoRebuff
+            bRet = False
         Else
             If g_ui.Buffs.chkEnableBuffing.Checked Then
                 Dim iBuffMode As Integer
@@ -2007,6 +2011,8 @@ Public Sub StopMacro()
     MyDebug "StopMacro - Stopping Engine."
     Call g_Engine.FireStopMacro
     m_bRunning = False
+    m_bForceRebuff = False
+    m_iMode = MODE_NORMAL
     Call CheckStopNav
     Call g_Buffer.StopService
     Call g_BuddyBuffer.StopService
