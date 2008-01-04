@@ -1947,8 +1947,8 @@ On Error GoTo ErrorHandler
     'End If
     
     'Make sure we are all ready to go
-    If MustLogOut(sReason) Then
-    PrintMessage "Unable to start macro : " & sReason
+    If MustLogOut(sReason, False) Then
+        PrintMessage "Unable to start macro : " & sReason
         bRet = False
         GoTo Fin
     End If
@@ -2654,7 +2654,7 @@ End Sub
 '#####################################################################################
 
 'Check logout conditions
-Public Function MustLogOut(Optional ByRef sReasonOut As String) As Boolean
+Public Function MustLogOut(Optional ByRef sReasonOut As String, Optional ByVal bCheckSpell As Boolean = True) As Boolean
 On Error GoTo ErrorHandler
     Dim bRet As Boolean
     
@@ -2712,7 +2712,7 @@ On Error GoTo ErrorHandler
         bRet = True
     End If
     
-    If bRet And g_ui.Macro.chkLogoutCastSpell.Checked Then
+    If bRet And g_ui.Macro.chkLogoutCastSpell.Checked And bCheckSpell Then
         If Not m_logoutSpellCast Then
             MyDebug "MustLogOut - Will Cast LOGOUT Spell: " & g_ui.Macro.chLogoutSpell.Text(g_ui.Macro.chLogoutSpell.Selected)
             'Put the spell at top of the Priority Queue

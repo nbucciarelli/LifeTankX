@@ -494,7 +494,9 @@ On Error GoTo ErrorHandler
     'copy all the spells from the buff list to the pending buffs queue
     For Each objBuff In m_colBuffs
 
-        If objBuff.SpellType = SPELLTYPE_NORMAL Then
+        If objBuff.SpellType <> SPELLTYPE_NORMAL Then
+            'Do nothing
+        Else
             isFound = False
             Set objSpell = g_Spells.sBuffs.FindSpell(objBuff.SpellFamily, g_Data.BuffsSpellsLevel)
             If Valid(objSpell) Then
@@ -822,10 +824,10 @@ On Error GoTo ErrorHandler
 7
     'If not then we need to see if it's a buff we would cast (in the buff queue/list)
     For Each objBuff In m_colBuffs
-        If objBuff.SpellType <> SPELLTYPE_NORMAL Then   'if it's a typed spell (i.e banes)
+        If objBuff.SpellSchool = SCHOOL_ITEM Then   'if it's an Item spell (i.e banes)
             Set buffSpell = g_Spells.Items.FindSpellByType(objBuff.SpellType, objBuff.SpellElement, g_Data.BuffsSpellsLevel)
             If Valid(buffSpell) Then
-                If (buffSpell.SpellID = objSpell.SpellID) And (m_BuffQueue.ReadTop.SpellFamily <> objBuff.SpellFamily) Then
+                If (buffSpell.SpellID = objSpell.SpellID) Then
                     MyDebug "CheckExpiredItemSpell: Queing objBuff: " & objBuff.Description & " :: " & objBuff.TargetName
                     Call addBuffToQueue(objBuff)
                     Exit Sub
@@ -838,6 +840,7 @@ Fin:
     Exit Sub
 ErrorHandler:
     'PrintErrorMessage "CheckExpiredItemSpell - " & Err.Description & " - line: " & Erl
+    MyDebug "CheckExpiredItemSpell: ERROR: - " & Err.Description & " - line: " & Erl
     Resume Fin
 End Sub
 
@@ -888,7 +891,7 @@ On Error GoTo ErrorHandler
     
     'If not then we need to see if it's a buff we would cast (in the buff queue/list)
     For Each objBuff In m_colBuffs
-        If objBuff.SpellType = SPELLTYPE_NORMAL Then
+        If objBuff.SpellSchool <> SCHOOL_ITEM Then
             Set buffSpell = g_Spells.sBuffs.FindSpell(objBuff.SpellFamily, g_Data.BuffsSpellsLevel)
             If Valid(buffSpell) Then
                 If buffSpell.SpellID = objSpell.SpellID Then
