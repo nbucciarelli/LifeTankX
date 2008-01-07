@@ -2145,13 +2145,13 @@ On Error GoTo Error_Handler
             End If
         
             'check if valid equipment
-            If Not g_Data.Weapon.Equiped Then
-                MyDebug "ValidState : Melee Weapon not equipped, equipping now."
-                Call RequestEquipItem(g_Data.Weapon)
-                GoTo Fin
-            ElseIf Not g_Data.Shield.Equiped Then
+            If Not g_Data.Shield.Equiped Then
                 MyDebug "ValidState : Shield not equipped, equipping now."
                 Call RequestEquipItem(g_Data.Shield)
+                GoTo Fin
+            ElseIf Not g_Data.Weapon.Equiped Then
+                MyDebug "ValidState : Melee Weapon not equipped, equipping now."
+                Call RequestEquipItem(g_Data.Weapon)
                 GoTo Fin
             Else
                 If m_CombatMode.CurrentCombatState <> COMBATSTATE_MELEE And m_Healing.NeedHealing = False Then

@@ -18,7 +18,7 @@ Private Enum eSubStates
     ST_EQUIP_RUNNING
 End Enum
 
-Private Const TRANSITION_DELAY = 0.5    'seconds
+Private Const TRANSITION_DELAY = 0.5     'seconds
 Private Const SECURE_TIME = 5            'seconds
 Private Const RETRY_DELAY = 2            'seconds
 
