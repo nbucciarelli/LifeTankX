@@ -264,6 +264,7 @@ On Error GoTo Error_Handler
     
     CmdReportString = "Elapsed Time: " & g_Macro.ElapsedTimeString _
                     & " - Xp/Hour: " & g_Macro.XpHourString _
+                    & " - 5min Xp/Hour: " & g_Macro.FiveMinXpHourString _
                     & " - Xp Earned: " & g_Macro.XpEarnedString _
                     & " - Killed: " & g_TotalKilled _
                     & " - Lvl: " & g_ds.XpTracker.Level _

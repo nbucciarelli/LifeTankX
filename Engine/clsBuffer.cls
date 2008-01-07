@@ -829,26 +829,6 @@ On Error GoTo ErrorHandler
     'MyDebug "CheckExpiredItemSpell:  objSpell: " & objSpell.SpellName & " : " & objSpell.SpellFamily
 
     'If not then we need to see if it's a buff we would cast (in the buff queue/list)
-    'For i = 1 To m_colBuffs.Count
-    '    'Set objBuff = m_colBuffs.Item(i)
-    '    If FindBuff(i, objBuff) Then
-    '        If objBuff.SpellSchool = SCHOOL_ITEM Then   'if it's an Item spell (i.e banes)
-    '            Set buffSpell = g_Spells.Items.FindSpellByType(objBuff.SpellType, objBuff.SpellElement, g_Data.BuffsSpellsLevel)
-    '            If Valid(buffSpell) Then
-    '                If (buffSpell.SpellFamily = objSpell.SpellFamily) Then
-    '                    MyDebug "CheckExpiredItemSpell: Queing objBuff: " & objBuff.Description & " :: " & objBuff.TargetName
-    '                    MyDebug "CheckExpiredItemSpell: objBuff: " & objBuff.Index & ":" & objBuff.SpellElement & ":" & objBuff.SpellFamily & ":" & objBuff.SpellSchool
-    '                    MyDebug "CheckExpiredItemSpell: buffSpell.Spellname: " & buffSpell.SpellName & " : " & buffSpell.SpellFamily
-    '                    Call addBuffToQueue(objBuff)
-    '                    'Call m_BuffQueue.Add(objBuff)
-    '                    Exit Sub
-    '                End If
-    '            End If
-    '        End If
-    '    End If
-    'Next i
-
-    'If not then we need to see if it's a buff we would cast (in the buff queue/list)
     For Each objBuff In m_colBuffs
         If objBuff.SpellSchool = SCHOOL_ITEM Then   'if it's an Item spell (i.e banes)
             'Set buffSpell = g_Spells.Items.FindSpellByType(objBuff.SpellType, objBuff.SpellElement, g_Data.BuffsSpellsLevel)
