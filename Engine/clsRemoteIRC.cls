@@ -232,7 +232,11 @@ On Error GoTo ErrorHandler
             MyDebug "RemoteRedirectoChatToIRC: (" & pColor & ") is being filtered"
             Exit Sub
         End If
-    
+        If g.ui.Irc.chkIrcFilterGlobalChat.Checked And (pColor = CHAT_GLOBAL_GENERAL Or pColor = CHAT_GLOBAL_TRADE) Then
+            MyDebug "RemoteRedirecttoChatToIRC: (" & pColor & ") is being filtered"
+            Exit Sub
+        End If
+        
         If m_sRemoteName = "" Then
             PrintErrorMessage "RemoteRedirectChatToIRC : RemoteUserName is empty!"
             GoTo Fin

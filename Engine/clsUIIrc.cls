@@ -52,6 +52,7 @@ Public chkEnableRemoteControl As DecalControls.CheckBox
 Public txtRemotePassword As DecalControls.Edit
 Public chkIrcFilterMelee As DecalControls.CheckBox
 Public chkIrcFilterSpellCasting As DecalControls.CheckBox
+Public chkIrcFilterGlobalChat As DecalControls.CheckBox
 
 
 'IRC object
@@ -96,6 +97,7 @@ On Error GoTo Error_Handler
     Set txtRemotePassword = g_MainView.Control("txtRemotePassword")
     Set chkIrcFilterMelee = g_MainView.Control("chkIrcFilterMelee")
     Set chkIrcFilterSpellCasting = g_MainView.Control("chkIrcFilterSpellCasting")
+    Set chkIrcFilterGlobalChat = g_MainView.Control("chkIrcFilterGlobalChat")
     
     Set txtIRCPrefix = g_MainView.Control("txtIRCPrefix")
     
@@ -154,6 +156,7 @@ On Error GoTo Error_Handler
     chkNoPasswordOnAdmin.Checked = g_Settings.GetValue("chkNoPasswordOnAdmin", False)
     chkIrcFilterMelee.Checked = g_Settings.GetValue("chkIrcFilterMelee", True)
     chkIrcFilterSpellCasting.Checked = g_Settings.GetValue("chkIrcFilterSpellCasting", True)
+    chkIrcFilterGlobalChat.Checked = g_Settings.GetValue("chkIrcFilterGlobalChat", True)
     txtRemotePassword.Text = g_Settings.GetValue("txtRemotePassword", "CHANGEME")
     
     '***************************************************************************
@@ -188,6 +191,7 @@ On Error GoTo Error_Handler
         .SaveCheckbox chkNoPasswordOnAdmin, "chkNoPasswordOnAdmin"
         .SaveCheckbox chkIrcFilterMelee, "chkIrcFilterMelee"
         .SaveCheckbox chkIrcFilterSpellCasting, "chkIrcFilterSpellCasting"
+        .SaveCheckbox chkIrcFilterGlobalChat, "chkIrcFilterGlobalChat"
         .SaveTextbox txtRemotePassword, "txtRemotePassword"
         
         .SaveTextbox txtIRCPrefix, "txtIRCPrefix"
@@ -235,6 +239,7 @@ On Error GoTo Error_Handler
     Set chkEnableRemoteControl = Nothing
     Set txtRemotePassword = Nothing
     Set chkIrcFilterMelee = Nothing
+    Set chkIrcFilterGlobalChat = Nothing
     Set chkIrcFilterSpellCasting = Nothing
     
     
