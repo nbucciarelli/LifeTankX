@@ -138,6 +138,18 @@ Public Const SPELL_DEF = "Defender"
 Public Const SPELL_HERMETIC_LINK = "Hermetic Link"
 Public Const SPELL_SPIRIT_DRINKER = "Spirit Drinker"
 
+Public Const SPELL_IMPEN = "Impenetrability"
+
+Public Const SPELL_BANE_ACID = "Acid Bane"
+Public Const SPELL_BANE_COLD = "Frost Bane"
+Public Const SPELL_BANE_LIGHTNING = "Lightning Bane"
+Public Const SPELL_BANE_FIRE = "Flame Bane"
+
+Public Const SPELL_BANE_BLUDEONING = "Bludgeon Bane"
+Public Const SPELL_BANE_SLASHING = "Blade Bane"
+Public Const SPELL_BANE_PIERCING = "Piercing Bane"
+
+
 '=============================================================
 '                       Misc
 '=============================================================

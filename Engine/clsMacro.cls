@@ -1904,7 +1904,7 @@ On Error GoTo ErrorHandler
 Fin:
     Exit Sub
 ErrorHandler:
-    PrintErrorMessage "ForceRebuff"
+    PrintErrorMessage "ForceBuddyBuff"
     Resume Fin
 End Sub
 
@@ -1960,7 +1960,8 @@ On Error GoTo ErrorHandler
     If Ticking Then
         If m_bForceRebuff Then
             Call g_Buffer.PushBuffs(True, True)   'just push the whole buff list to the buff queue
-            bRet = False
+            bRet = True
+            GoTo Fin
         End If
     Else
         'make sure we have set all the required macro items first
@@ -1973,7 +1974,7 @@ On Error GoTo ErrorHandler
             m_iMode = MODE_REBUFF
             Call g_Buffer.StartService(REBUFF_FULL, , False)
             Call GoRebuff
-            bRet = False
+            bRet = True
         Else
             If g_ui.Buffs.chkEnableBuffing.Checked Then
                 Dim iBuffMode As Integer

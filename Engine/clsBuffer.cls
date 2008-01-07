@@ -221,9 +221,9 @@ ErrorHandler:
     Resume Fin
 End Sub
 
-Private Sub CheckAddBane(ByVal iElement As Integer, ByVal bChecked As Boolean, objItem As acObject)
+Private Sub CheckAddBane(ByVal iElement As Integer, ByVal bChecked As Boolean, objItem As acObject, ByVal aFamily As String)
     If bChecked Then
-        Call AddBuffToList(, SPELLTYPE_BANE, iElement, objItem, , SCHOOL_ITEM)
+        Call AddBuffToList(aFamily, SPELLTYPE_BANE, iElement, objItem, , SCHOOL_ITEM)
     End If
 End Sub
 
@@ -237,14 +237,14 @@ On Error GoTo ErrorHandler
     End If
     
     With g_ui.Buffs
-        Call CheckAddBane(DMG_NONE, .chkItmBaneImpen.Checked, objItem)
-        Call CheckAddBane(DMG_SLASHING, .chkItmBaneSlash.Checked, objItem)
-        Call CheckAddBane(DMG_PIERCING, .chkItmBanePierce.Checked, objItem)
-        Call CheckAddBane(DMG_BLUDGEONING, .chkItmBaneBludg.Checked, objItem)
-        Call CheckAddBane(DMG_FIRE, .chkItmBaneFire.Checked, objItem)
-        Call CheckAddBane(DMG_COLD, .chkItmBaneFrost.Checked, objItem)
-        Call CheckAddBane(DMG_ACID, .chkItmBaneAcid.Checked, objItem)
-        Call CheckAddBane(DMG_LIGHTNING, .chkItmBaneLightning.Checked, objItem)
+        Call CheckAddBane(DMG_NONE, .chkItmBaneImpen.Checked, objItem, SPELL_IMPEN)
+        Call CheckAddBane(DMG_SLASHING, .chkItmBaneSlash.Checked, objItem, SPELL_BANE_SLASHING)
+        Call CheckAddBane(DMG_PIERCING, .chkItmBanePierce.Checked, objItem, SPELL_BANE_PIERCING)
+        Call CheckAddBane(DMG_BLUDGEONING, .chkItmBaneBludg.Checked, objItem, SPELL_BANE_BLUDEONING)
+        Call CheckAddBane(DMG_FIRE, .chkItmBaneFire.Checked, objItem, SPELL_BANE_FIRE)
+        Call CheckAddBane(DMG_COLD, .chkItmBaneFrost.Checked, objItem, SPELL_BANE_COLD)
+        Call CheckAddBane(DMG_ACID, .chkItmBaneAcid.Checked, objItem, SPELL_BANE_ACID)
+        Call CheckAddBane(DMG_LIGHTNING, .chkItmBaneLightning.Checked, objItem, SPELL_BANE_LIGHTNING)
     End With
 
 Fin:
@@ -322,7 +322,8 @@ On Error GoTo ErrorHandler
             End If
             
             If FindBuff(m_lCurBuff, objBuff) Then
-                Call addBuffToQueue(objBuff)
+                'Call addBuffToQueue(objBuff)
+                Call m_BuffQueue.Add(objBuff)
             Else
                 PrintWarning "FillBuffQueue - CONTINUOUS - Couldn't find Buff #" & m_lCurBuff
             End If
@@ -335,7 +336,8 @@ On Error GoTo ErrorHandler
         
         'copy all the spells from the buff list to the pending buffs queue
         For Each objBuff In m_colBuffs
-            Call addBuffToQueue(objBuff)
+            'Call addBuffToQueue(objBuff)
+            Call m_BuffQueue.Add(objBuff)
         Next objBuff
         
     End If
@@ -348,17 +350,18 @@ ErrorHandler:
 End Sub
 
 'Adds a buff to the Queue if it's not already there
-Private Sub addBuffToQueue(ByVal aBuff As clsSpellQueueItem)
+Private Sub addBuffToQueue(aBuff As clsSpellQueueItem)
 On Error GoTo ErrorHandler
-    Dim aSpell As clsSpellQueueItem
+    Dim objBuff As clsSpellQueueItem
     Dim i As Integer
 
-    For Each aSpell In m_BuffQueue.SpellQueue
-        If aSpell.SpellFamily = aBuff.SpellFamily Then
+    For Each objBuff In m_BuffQueue.SpellQueue
+        If objBuff.SpellFamily = aBuff.SpellFamily Then
             'Already on the list, so exit sub
+            MyDebug "clsBuffer: Already in BuffQueue: " & aBuff.Description
             Exit Sub
         End If
-    Next aSpell
+    Next objBuff
     
     MyDebug "clsBuffer: Adding to BuffQueue: " & aBuff.Description
     
@@ -409,9 +412,9 @@ On Error GoTo ErrorHandler
     With g_ui.Buffs
     
         'Buff Wand 1st
-        CheckItemBuff .chkItmWandHL.Checked, SPELL_HERMETIC_LINK, g_Data.Wand
-        CheckItemBuff .chkItmWandDef.Checked, SPELL_DEF, g_Data.Wand
-        CheckItemBuff .chkItmWandSD.Checked, SPELL_SPIRIT_DRINKER, g_Data.Wand
+        Call CheckItemBuff(.chkItmWandHL.Checked, SPELL_HERMETIC_LINK, g_Data.Wand)
+        Call CheckItemBuff(.chkItmWandDef.Checked, SPELL_DEF, g_Data.Wand)
+        Call CheckItemBuff(.chkItmWandSD.Checked, SPELL_SPIRIT_DRINKER, g_Data.Wand)
         
         If .chkEnableCreatureBuffs.Checked Then
             For i = 0 To .lstCreature.Count - 1
@@ -437,15 +440,15 @@ On Error GoTo ErrorHandler
         'SPK -  Added option to use the new item banes system, where you only have to select yourself
         '       to cast the spells
         If .chkItmSelectSelf.Checked Then
-            CheckItemBanes .chkItmSelectSelf.Checked, g_Objects.Player
+            Call CheckItemBanes(.chkItmSelectSelf.Checked, g_Objects.Player)
         Else
-            CheckItemBanes .chkItmArmorHead.Checked, g_Objects.Equipment.head
-            CheckItemBanes .chkItmArmorHands.Checked, g_Objects.Equipment.Hands
-            CheckItemBanes .chkItmArmorFeet.Checked, g_Objects.Equipment.Feet
-            CheckItemBanes .chkItmArmorTopUndie.Checked, g_Objects.Equipment.TopUndie
-            CheckItemBanes .chkItmArmorBottomUndie.Checked, g_Objects.Equipment.BottomUndie
-            CheckCollectionBanes .chkItmArmorTop.Checked, g_Objects.Equipment.Top
-            CheckCollectionBanes .chkItmArmorBottom.Checked, g_Objects.Equipment.Bottom
+            Call CheckItemBanes(.chkItmArmorHead.Checked, g_Objects.Equipment.head)
+            Call CheckItemBanes(.chkItmArmorHands.Checked, g_Objects.Equipment.Hands)
+            Call CheckItemBanes(.chkItmArmorFeet.Checked, g_Objects.Equipment.Feet)
+            Call CheckItemBanes(.chkItmArmorTopUndie.Checked, g_Objects.Equipment.TopUndie)
+            Call CheckItemBanes(.chkItmArmorBottomUndie.Checked, g_Objects.Equipment.BottomUndie)
+            Call CheckCollectionBanes(.chkItmArmorTop.Checked, g_Objects.Equipment.Top)
+            Call CheckCollectionBanes(.chkItmArmorBottom.Checked, g_Objects.Equipment.Bottom)
         End If
         
         '*****************************************************************************
@@ -458,15 +461,15 @@ On Error GoTo ErrorHandler
             
             If g_Macro.CombatType = TYPE_MELEE Then
                 Set objWeapon = g_Data.Weapon
-                CheckItemBanes .chkItmArmorShield.Checked, g_Data.Shield
-                CheckItemBuff .chkItmWeapHS.Checked, SPELL_HS, objWeapon
+                Call CheckItemBanes(.chkItmArmorShield.Checked, g_Data.Shield)
+                Call CheckItemBuff(.chkItmWeapHS.Checked, SPELL_HS, objWeapon)
             Else    'Archer
                 Set objWeapon = g_Data.Bow
             End If
             
-            CheckItemBuff .chkItmWeapBD.Checked, SPELL_BD, objWeapon
-            CheckItemBuff .chkItmWeapSK.Checked, SPELL_SK, objWeapon
-            CheckItemBuff .chkItmWeapDE.Checked, SPELL_DEF, objWeapon
+            Call CheckItemBuff(.chkItmWeapBD.Checked, SPELL_BD, objWeapon)
+            Call CheckItemBuff(.chkItmWeapSK.Checked, SPELL_SK, objWeapon)
+            Call CheckItemBuff(.chkItmWeapDE.Checked, SPELL_DEF, objWeapon)
         End If
 
     End With
@@ -810,7 +813,7 @@ On Error GoTo ErrorHandler
             bFound = True
             If objItem.Spells.Count > 0 And objItem.Spells.Exists(sSpellName) Then
 5                ' Found it!
-                locDebug "CheckExpiredItemSpell: Found spell on item: " & sSpellName
+                MyDebug "CheckExpiredItemSpell: Found spell on item: " & sSpellName
                 Exit Sub
             End If
         End If
@@ -822,12 +825,35 @@ On Error GoTo ErrorHandler
     End If
 
 7
+
+    'MyDebug "CheckExpiredItemSpell:  objSpell: " & objSpell.SpellName & " : " & objSpell.SpellFamily
+
+    'If not then we need to see if it's a buff we would cast (in the buff queue/list)
+    'For i = 1 To m_colBuffs.Count
+    '    'Set objBuff = m_colBuffs.Item(i)
+    '    If FindBuff(i, objBuff) Then
+    '        If objBuff.SpellSchool = SCHOOL_ITEM Then   'if it's an Item spell (i.e banes)
+    '            Set buffSpell = g_Spells.Items.FindSpellByType(objBuff.SpellType, objBuff.SpellElement, g_Data.BuffsSpellsLevel)
+    '            If Valid(buffSpell) Then
+    '                If (buffSpell.SpellFamily = objSpell.SpellFamily) Then
+    '                    MyDebug "CheckExpiredItemSpell: Queing objBuff: " & objBuff.Description & " :: " & objBuff.TargetName
+    '                    MyDebug "CheckExpiredItemSpell: objBuff: " & objBuff.Index & ":" & objBuff.SpellElement & ":" & objBuff.SpellFamily & ":" & objBuff.SpellSchool
+    '                    MyDebug "CheckExpiredItemSpell: buffSpell.Spellname: " & buffSpell.SpellName & " : " & buffSpell.SpellFamily
+    '                    Call addBuffToQueue(objBuff)
+    '                    'Call m_BuffQueue.Add(objBuff)
+    '                    Exit Sub
+    '                End If
+    '            End If
+    '        End If
+    '    End If
+    'Next i
+
     'If not then we need to see if it's a buff we would cast (in the buff queue/list)
     For Each objBuff In m_colBuffs
         If objBuff.SpellSchool = SCHOOL_ITEM Then   'if it's an Item spell (i.e banes)
-            Set buffSpell = g_Spells.Items.FindSpellByType(objBuff.SpellType, objBuff.SpellElement, g_Data.BuffsSpellsLevel)
-            If Valid(buffSpell) Then
-                If (buffSpell.SpellID = objSpell.SpellID) Then
+            'Set buffSpell = g_Spells.Items.FindSpellByType(objBuff.SpellType, objBuff.SpellElement, g_Data.BuffsSpellsLevel)
+            If Valid(objSpell) Then
+                If (objBuff.SpellFamily = objSpell.SpellFamily) Then
                     MyDebug "CheckExpiredItemSpell: Queing objBuff: " & objBuff.Description & " :: " & objBuff.TargetName
                     Call addBuffToQueue(objBuff)
                     Exit Sub

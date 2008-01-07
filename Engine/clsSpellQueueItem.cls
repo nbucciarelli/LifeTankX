@@ -39,9 +39,9 @@ Private Sub Class_Initialize()
 End Sub
 
 Public Function Description() As String
-    If SpellType = SPELLTYPE_NORMAL Then
+    'If SpellType = SPELLTYPE_NORMAL Then
         Description = SpellFamily
-    Else
-        Description = GetDamageString(SpellElement) & " " & GetSpelltypeString(SpellType)
-    End If
+    'Else
+    '    Description = GetDamageString(SpellElement) & " " & GetSpelltypeString(SpellType)
+    'End If
 End Function

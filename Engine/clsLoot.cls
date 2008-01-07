@@ -1331,8 +1331,9 @@ End Function
 
 Private Function DoOpenCorpse() As Boolean
 On Error GoTo Error_Handler
-    MyDebug "Opening corpse..."
+    MyDebug "clsLoot.DoOpenCorpse: Opening corpse..."
     
+    Dim iCount As Integer
     Dim bRet As Boolean
     
     If (m_curCorpse Is Nothing) _
@@ -1350,7 +1351,9 @@ On Error GoTo Error_Handler
     Else
         bRet = True
         Call g_Service.UseItem(m_curCorpse)    'UseItemOnSelf
-        Call m_tmrNextTime.SetNextTime(3)   'Next corpse open try
+        Call m_tmrNextTime.SetNextTime(3)      'Next corpse open try
+        iCount = m_curCorpse.UserData(INT_BLISTCOUNT) + 1
+        Call m_curCorpse.SetUserData(INT_BLISTCOUNT, iCount)
     End If
     
 Fin:
