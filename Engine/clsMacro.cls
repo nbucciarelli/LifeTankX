@@ -2137,6 +2137,7 @@ On Error GoTo Error_Handler
     
     If CombatType = TYPE_NOTYPE Then
         CombatType = m_iCombatType
+        MyDebug "clsMacro.ValidState: CombatType set to: " & CombatType
     End If
     
     Select Case CombatType
