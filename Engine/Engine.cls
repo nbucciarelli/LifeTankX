@@ -97,9 +97,9 @@ On Error Resume Next
         
 End Sub
 
-Friend Sub FireStartMacro(ByVal iCombatType As Integer)
+Friend Sub FireStartMacro()
 On Error Resume Next
-    Call g_Core.OnStartMacro(iCombatType)
+    Call g_Core.OnStartMacro
 End Sub
 
 Friend Sub FireStopMacro()
@@ -242,7 +242,7 @@ ErrorHandler:
     Resume Fin
 End Sub
 
-Private Function IEngine_StartMacro(ByVal iCombatType As Integer) As Boolean
+Private Function IEngine_StartMacro() As Boolean
 On Error GoTo ErrorHandler
     
     If Not m_bEngineObjectsLoaded Then Exit Function
@@ -255,7 +255,7 @@ On Error GoTo ErrorHandler
     '    GoTo Fin
     'End If
     
-    bStarted = g_Macro.StartMacro(iCombatType)
+    bStarted = g_Macro.StartMacro()
     
     g_ui.Main.chkEnable.Checked = bStarted
     If bStarted Then

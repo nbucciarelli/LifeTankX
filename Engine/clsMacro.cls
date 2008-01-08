@@ -846,6 +846,7 @@ On Error GoTo ErrorHandler
         Call g_BuddyBuffer.StopService
         Set g_buffBuddy = Nothing
         GoBuddyRebuff = False
+        Exit Function
     End If
     
     If ValidState(TYPE_CASTER) Then
@@ -1913,8 +1914,8 @@ On Error GoTo ErrorHandler
 
     m_bForceRebuff = True
     Call g_Buffer.BuildBuffList 'update buffs list
-    'Call g_Engine.FireStartMacro(MODE_REBUFF, g_ui.Main.chCombatType.Selected)
-    Call g_Engine.FireStartMacro(g_ui.Main.chCombatType.Selected)
+    'Call g_Engine.FireStartMacro(MODE_REBUFF)
+    Call g_Engine.FireStartMacro
     
 Fin:
     Exit Sub
@@ -1929,7 +1930,7 @@ End Sub
 '#
 '#####################################################################################
 
-Public Function StartMacro(Optional ByVal iCombatType As Integer = TYPE_CASTER) As Boolean
+Public Function StartMacro(Optional ByVal iBuffMode As Integer) As Boolean
 On Error GoTo ErrorHandler
     
     Dim bRet As Boolean
@@ -1938,7 +1939,9 @@ On Error GoTo ErrorHandler
     bRet = True
 
     g_Core.TimerInterval = DEFAULT_MACRO_TIMER_INTERVAL
-    m_iCombatType = iCombatType
+    m_iCombatType = g_ui.Main.chCombatType.Selected
+    
+    MyDebug "clsMacro.StartMacro: CombatType: " & g_ui.Main.chCombatType.Selected
 
     'If mAuth.m_PluginEnabled = False Then
     '    PrintMessage g_String(mStrings.e_strUnableToAuth)

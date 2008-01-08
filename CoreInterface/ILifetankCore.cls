@@ -101,7 +101,7 @@ End Sub
 Public Sub OnLogChatMessage(ByVal sMessage As String)
 End Sub
 
-Public Sub OnStartMacro(ByVal iCombatType As Integer)
+Public Sub OnStartMacro()
 End Sub
 
 Public Sub OnStopMacro()
