@@ -2063,7 +2063,7 @@ ErrorHandler:
 End Sub
 
 'Make a check list of the required items to macro (wand/bow/shield/weapon, etc)
-Public Function ValidMacroItems(Optional ByVal iCombatType = TYPE_NOTYPE) As Boolean
+Public Function ValidMacroItems(Optional ByVal iCombatType As eMacroCombatType = TYPE_NOTYPE) As Boolean
 On Error GoTo ErrorHandler
     Dim bRet As Boolean
     bRet = True 'default to ok
