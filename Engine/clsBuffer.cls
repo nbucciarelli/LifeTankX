@@ -835,7 +835,7 @@ On Error GoTo ErrorHandler
             If Valid(objSpell) Then
                 If (objBuff.SpellFamily = objSpell.SpellFamily) Then
                     MyDebug "CheckExpiredItemSpell: Queing objBuff: " & objBuff.Description & " :: " & objBuff.TargetName
-                    Call addBuffToQueue(objBuff)
+                    'Call addBuffToQueue(objBuff)
                     Exit Sub
                 End If
             End If

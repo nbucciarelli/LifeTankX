@@ -232,7 +232,7 @@ On Error GoTo ErrorHandler
             MyDebug "RemoteRedirectoChatToIRC: (" & pColor & ") is being filtered"
             Exit Sub
         End If
-        If g.ui.Irc.chkIrcFilterGlobalChat.Checked And (pColor = CHAT_GLOBAL_GENERAL Or pColor = CHAT_GLOBAL_TRADE) Then
+        If g_ui.Irc.chkIrcFilterGlobalChat.Checked And (pColor = CHAT_GLOBAL_GENERAL Or pColor = CHAT_GLOBAL_TRADE) Then
             MyDebug "RemoteRedirecttoChatToIRC: (" & pColor & ") is being filtered"
             Exit Sub
         End If
@@ -268,7 +268,7 @@ On Error GoTo Error_Handler
     
     CmdReportString = "Elapsed Time: " & g_Macro.ElapsedTimeString _
                     & " - Xp/Hour: " & g_Macro.XpHourString _
-                    & " - 5min Xp/Hour: " & g_Macro.FiveMinXpHourString _
+                    & " - 5min Xp: " & g_Macro.XpMinuteString _
                     & " - Xp Earned: " & g_Macro.XpEarnedString _
                     & " - Killed: " & g_TotalKilled _
                     & " - Lvl: " & g_ds.XpTracker.Level _
