@@ -1394,7 +1394,7 @@ On Error GoTo ErrorHandler
                 End If
                 
                 'Check if we need mana.
-                If Vitals.NeedMana Then
+                If Vitals.NeedMana(IsMelee) Then
                     If Vitals.CastManaStamRegen(False, m_RegenManaAction, m_RegenStamAction) Then GoTo Fin
                 End If
                 
@@ -1609,7 +1609,7 @@ On Error GoTo ErrorHandler
                     If GoRestam Then GoTo Fin
                 End If
                 'Check if we need Mana.
-                If Vitals.NeedMana Then
+                If Vitals.NeedMana(IsMelee) Then
                     If Vitals.CastManaStamRegen(False, m_RegenManaAction, m_RegenStamAction) Then GoTo Fin
                 End If
                 
@@ -1720,7 +1720,7 @@ On Error GoTo ErrorHandler
                     If GoRestam Then GoTo Fin
                 End If
                 'Check if we need mana.
-                If Vitals.NeedMana Then
+                If Vitals.NeedMana(IsMelee) Then
                     If Vitals.CastManaStamRegen(False, m_RegenManaAction, m_RegenStamAction) Then GoTo Fin
                 End If
 
@@ -1930,7 +1930,7 @@ End Sub
 '#
 '#####################################################################################
 
-Public Function StartMacro(Optional ByVal iBuffMode As Integer) As Boolean
+Public Function StartMacro(Optional ByVal iMode As Integer) As Boolean
 On Error GoTo ErrorHandler
     
     Dim bRet As Boolean
@@ -2149,13 +2149,13 @@ On Error GoTo Error_Handler
             End If
         
             'check if valid equipment
-            If Not g_Data.Shield.Equiped Then
-                MyDebug "ValidState : Shield not equipped, equipping now."
-                Call RequestEquipItem(g_Data.Shield)
-                GoTo Fin
-            ElseIf Not g_Data.Weapon.Equiped Then
+            If Not g_Data.Weapon.Equiped Then
                 MyDebug "ValidState : Melee Weapon not equipped, equipping now."
                 Call RequestEquipItem(g_Data.Weapon)
+                GoTo Fin
+            ElseIf Not g_Data.Shield.Equiped Then
+                MyDebug "ValidState : Shield not equipped, equipping now."
+                Call RequestEquipItem(g_Data.Shield)
                 GoTo Fin
             Else
                 If m_CombatMode.CurrentCombatState <> COMBATSTATE_MELEE And m_Healing.NeedHealing = False Then

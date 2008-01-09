@@ -25,16 +25,29 @@ ErrorHandler:
 End Function
 
 ' Check to see if we Need Mana (casting state only -- Either Mage or Rebuffing melee)
-Public Function NeedMana() As Boolean
+Public Function NeedMana(Optional bIsMelee As Boolean = False) As Boolean
 On Error GoTo ErrorHandler
     Dim bRet As Boolean
     
-    If Not g_Macro.ValidState(TYPE_CASTER) Then
-        bRet = False
-        GoTo Fin
+    If (bIsMelee) Then
+        'Only worry about mana if we are buffing (Melee or Archer)
+        If (g_ui.Buffs.chkEnableBuffing.Checked) And (g_Buffer.BuffQueue.Count > 0) Then
+            'Ok, we should check
+            bRet = g_Filters.Mana <= GetPercent(g_Filters.MaxMana, g_Data.MinManaThreshold)
+        Else
+            'Nope, don't worry about mana
+            bRet = False
+            GoTo Fin
+        End If
+    Else
+        'Mages need to worry about mana all the time
+        bRet = g_Filters.Mana <= GetPercent(g_Filters.MaxMana, g_Data.MinManaThreshold)
     End If
     
-    bRet = g_Filters.Mana <= GetPercent(g_Filters.MaxMana, g_Data.MinManaThreshold)
+    'If Not g_Macro.ValidState(TYPE_CASTER) Then
+    '    bRet = False
+    '    GoTo Fin
+    'End If
     
 Fin:
     NeedMana = bRet
