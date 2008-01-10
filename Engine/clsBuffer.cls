@@ -18,15 +18,21 @@ Private Const DEBUG_ME = False
 Private m_BuffQueue As clsSpellQueue        'list of pending buff spells
 Private m_colBuffs As Collection            'list of all the spells the buffer has to use
 Private m_existBuffs As Collection          'list of existing buffs and their times
-Private m_iRebuffMode As Integer
 
-Private WithEvents m_tmrNextRebuff As clsTimer
-Attribute m_tmrNextRebuff.VB_VarHelpID = -1
+Private m_droppedQueue As clsSpellQueue     'list of dropped buff spells
+Private m_buffItems As colObjects           'list of Items that need to be buffed
+Private WithEvents m_tmrDroppedRebuff As clsTimer
+Attribute m_tmrDroppedRebuff.VB_VarHelpID = -1
+
+Private m_iRebuffMode As Integer
 Private m_dRebuffInterval As Double         'time in seconds
 Private m_dBuffCycleLen As Double           'time for a full buff cycle, in seconds
 Private m_bRepeat As Boolean                'repeat buff cycles?
 
 Private m_sCurSpellName As String           'Current spell name
+
+Private WithEvents m_tmrNextRebuff As clsTimer
+Attribute m_tmrNextRebuff.VB_VarHelpID = -1
 
 'Continuous Rebuff Mode
 Private m_lCurBuff As Long      'index of the current buff
@@ -46,6 +52,7 @@ Public mNumBuffsToCast As Integer
 '#####################################################################################
 Private Sub Class_Initialize()
     Set m_tmrNextRebuff = CreateTimer
+    Set m_tmrDroppedRebuff = CreateTimer
     
     'default rebuff mode
     m_iRebuffMode = REBUFF_FULL
@@ -54,6 +61,9 @@ Private Sub Class_Initialize()
     m_bRepeat = True
     mNumBuffsToCast = 0
     
+    Set m_droppedQueue = New clsSpellQueue
+    Set m_buffItems = New colObjects
+  
     Call Reset
 End Sub
 
@@ -70,6 +80,8 @@ Private Sub Class_Terminate()
     Set m_BuffQueue = Nothing
     Set m_colBuffs = Nothing
     Set m_tmrNextRebuff = Nothing
+    Set m_buffItems = Nothing
+    Set m_tmrDroppedRebuff = Nothing
 End Sub
 
 '#####################################################################################
@@ -135,7 +147,7 @@ End Property
 Private Sub AddBuffToList(Optional ByVal sFamily As String = "", _
                     Optional ByVal iType As Integer = SPELLTYPE_NORMAL, _
                     Optional ByVal iElement As Integer = DMG_NONE, _
-                    Optional objTarget As acObject = Nothing, _
+                    Optional objTarget As ACObject = Nothing, _
                     Optional ByVal iLevelWanted = 7, _
                     Optional ByVal iSchool As Integer = SCHOOL_CREATURE)
 On Error GoTo ErrorHandler
@@ -182,7 +194,7 @@ NotFound:
 End Function
 
 
-Private Sub CheckItemBuff(ByVal bChecked As Boolean, ByVal sSpellFamily As String, objItem As acObject)
+Private Sub CheckItemBuff(ByVal bChecked As Boolean, ByVal sSpellFamily As String, objItem As ACObject)
 On Error GoTo ErrorHandler
     Dim objBuff As clsSpellQueueItem
     
@@ -197,7 +209,7 @@ ErrorHandler:
     Resume Fin
 End Sub
 
-Private Sub CheckItemBanes(ByVal bChecked As Boolean, objItem As acObject)
+Private Sub CheckItemBanes(ByVal bChecked As Boolean, objItem As ACObject)
     If bChecked And Valid(objItem) Then
         Call AddBanes(objItem)
     End If
@@ -206,7 +218,7 @@ End Sub
 Private Sub CheckCollectionBanes(ByVal bChecked As Boolean, colItems As colObjects)
 On Error GoTo ErrorHandler
     
-    Dim objItem As acObject
+    Dim objItem As ACObject
 
     If bChecked Then
         For Each objItem In colItems
@@ -221,14 +233,14 @@ ErrorHandler:
     Resume Fin
 End Sub
 
-Private Sub CheckAddBane(ByVal iElement As Integer, ByVal bChecked As Boolean, objItem As acObject, ByVal aFamily As String)
+Private Sub CheckAddBane(ByVal iElement As Integer, ByVal bChecked As Boolean, objItem As ACObject, ByVal aFamily As String)
     If bChecked Then
         Call AddBuffToList(aFamily, SPELLTYPE_BANE, iElement, objItem, , SCHOOL_ITEM)
     End If
 End Sub
 
 
-Private Sub AddBanes(objItem As acObject)
+Private Sub AddBanes(objItem As ACObject)
 On Error GoTo ErrorHandler
 
     If Not Valid(objItem) Then
@@ -375,6 +387,33 @@ ErrorHandler:
     Resume Fin
 End Sub
 
+
+'Adds a buff to the Dropped Buff Queue if it's not already there
+Private Sub addDroppedBuffToQueue(aBuff As clsSpellQueueItem)
+On Error GoTo ErrorHandler
+    Dim objBuff As clsSpellQueueItem
+    Dim i As Integer
+
+    For Each objBuff In m_droppedQueue.SpellQueue
+        If objBuff.SpellFamily = aBuff.SpellFamily Then
+            'Already on the list, so exit sub
+            locDebug "clsBuffer.addDropped: In m_droppedQueue: " & aBuff.Description
+            Exit Sub
+        End If
+    Next objBuff
+    
+    MyDebug "clsBuffer.addDropped: Add to m_droppedQueue: " & aBuff.Description
+    
+    'Not found on Queue, so add it
+    Call m_droppedQueue.Add(aBuff)
+    
+Fin:
+    Exit Sub
+ErrorHandler:
+    PrintErrorMessage "addDroppedBuffToQueue - " & Err.Description
+    Resume Fin
+End Sub
+
 Private Sub PrepareNextRebuffTime()
     'setup timer
     m_tmrNextRebuff.SetNextTime m_dRebuffInterval
@@ -392,6 +431,47 @@ Private Sub m_tmrNextRebuff_OnTimeout()
     End If
 End Sub
 
+Private Sub m_tmrDroppedRebuff_OnTimeout()
+On Error GoTo ErrorHandler
+    
+    Dim objBuff As clsSpellQueueItem
+    Dim buffSpell As clsSpell
+    Dim objItem As ACObject
+    Dim bMissingSpell As Boolean
+    
+    MyDebug "tmrDroppedRebuff OnTimeout"
+    
+    bMissingSpell = False
+    
+    'List of dropped Item buffs
+    For Each objBuff In m_droppedQueue
+        Set buffSpell = g_Spells.Items.FindSpellByType(objBuff.SpellType, objBuff.SpellElement, g_Data.BuffsSpellsLevel)
+        If Valid(buffSpell) Then
+            'Go through all the Equipped Items and see if this spell is missing from them
+            For Each objItem In m_buffItems
+                If objItem.Spells.Count > 0 And Not objItem.Spells.Exists(buffSpell.SpellName) Then
+                    MyDebug "m_tmrDroppedRebuff: Missing Spell from: " & objBuff.Description & " : " & objItem.Name
+                    bMissingSpell = True
+                End If
+            Next objItem
+            If bMissingSpell Then
+                MyDebug "CheckExpiredItemSpell: Queing objBuff: " & objBuff.Description & " :: " & objBuff.TargetName
+                Call addBuffToQueue(objBuff)
+            End If
+        End If
+    Next objBuff
+    
+    Call m_tmrDroppedRebuff.Reset
+
+Fin:
+    Set m_droppedQueue = New clsSpellQueue
+    Set m_buffItems = New colObjects
+    Exit Sub
+ErrorHandler:
+    PrintErrorMessage "m_tmrDroppedRebuff_OnTimeout - " & Err.Description
+    Resume Fin
+End Sub
+
 '#####################################################################################
 '#
 '#                                PUBLIC
@@ -404,11 +484,12 @@ On Error GoTo ErrorHandler
     Dim i As Integer
     Dim sSpellFam As String
     Dim bChecked As Boolean
-    Dim objItem As acObject
+    Dim objItem As ACObject
     
     Call g_Objects.Equipment.Update
     
     Set m_colBuffs = New Collection
+    
     With g_ui.Buffs
     
         'Buff Wand 1st
@@ -457,7 +538,7 @@ On Error GoTo ErrorHandler
         
         'Weapon / Bow / Shield
         If IsMelee Then
-            Dim objWeapon As acObject
+            Dim objWeapon As ACObject
             
             If g_Macro.CombatType = TYPE_MELEE Then
                 Set objWeapon = g_Data.Weapon
@@ -672,7 +753,7 @@ On Error GoTo ErrorHandler
 
     Dim objBuff As clsSpellQueueItem
     Dim objSpell As clsSpell
-    Dim objItem As acObject                'pointer to the object to cast on
+    Dim objItem As ACObject                'pointer to the object to cast on
     Dim spellList As clsSpellList
     
     Dim lTargetGUID As Long
@@ -764,6 +845,7 @@ ErrorHandler:
     Resume Fin
 End Sub
 
+'Receives text from Events and figures out if we need to recast an Item buff
 Public Sub CheckExpiredItemSpell(ByVal sCastMsg As String)
 On Error GoTo ErrorHandler
 
@@ -772,7 +854,7 @@ On Error GoTo ErrorHandler
     Dim objBuff As clsSpellQueueItem
     Dim objSpell As clsSpell
     Dim buffSpell As clsSpell
-    Dim objItem As acObject
+    Dim objItem As ACObject
     Dim bFound As Boolean
     Dim i As Long
     
@@ -810,6 +892,9 @@ On Error GoTo ErrorHandler
     If Valid(objItem) Then
         If (objItem.Name = sTargetName) And objItem.Equiped Then
 4
+            If Not m_buffItems.Exists(objItem.Guid) Then
+                Call m_buffItems.addObject(objItem)
+            End If
             bFound = True
             If objItem.Spells.Count > 0 And objItem.Spells.Exists(sSpellName) Then
 5                ' Found it!
@@ -836,6 +921,9 @@ On Error GoTo ErrorHandler
                 If (objBuff.SpellFamily = objSpell.SpellFamily) Then
                     MyDebug "CheckExpiredItemSpell: Queing objBuff: " & objBuff.Description & " :: " & objBuff.TargetName
                     'Call addBuffToQueue(objBuff)
+                    Call addDroppedBuffToQueue(objBuff)
+                    Call m_tmrDroppedRebuff.SetNextTime(1)
+                    Call m_tmrDroppedRebuff.Enabled
                     Exit Sub
                 End If
             End If
