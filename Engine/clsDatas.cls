@@ -43,6 +43,22 @@ Private m_sArrows As String
 Private m_sArrowHead As String
 Private m_sArrowShaft As String
 
+Public WeapBludge As acObject
+Public WeapBludgeGUID As Long
+Public WeapSlash As acObject
+Public WeapSlashGUID As Long
+Public WeapPierce As acObject
+Public WeapPierceGUID As Long
+Public WeapFire As acObject
+Public WeapFireGUID As Long
+Public WeapCold As acObject
+Public WeapColdGUID As Long
+Public WeapAcid As acObject
+Public WeapAcidGUID As Long
+Public WeapLight As acObject
+Public WeapLightGUID As Long
+
+
 '#####################################################################################
 '#
 '#                          CONSTRUCTOR / DESTRUCTOR
@@ -69,6 +85,21 @@ On Error GoTo ErrorHandler
     Set m_objWeapon = Nothing
     Set m_objWand = Nothing
 
+    Set WeapBludge = Nothing
+    WeapBludgeGUID = 0
+    Set WeapSlash = Nothing
+    WeapSlashGUID = 0
+    Set WeapPierce = Nothing
+    WeapPierceGUID = 0
+    Set WeapFire = Nothing
+    WeapFireGUID = 0
+    Set WeapCold = Nothing
+    WeapColdGUID = 0
+    Set WeapAcid = Nothing
+    WeapAcidGUID = 0
+    Set WeapLight = Nothing
+    WeapLightGUID = 0
+    
     Set mdbMonsters = New dbMonsters
     Set m_LootFilters = New clsLootFiltersManager
     Set m_Exceptions = New clsExceptions
@@ -260,6 +291,29 @@ End Property
 Public Property Let WandGUID(ByVal lVal As Long)
     Call SetGUID(lVal, m_WandGUID, m_objWand)
 End Property
+
+Public Property Let SetWeapBludgeGUID(ByVal lVal As Long)
+    Call SetGUID(lVal, WeapBludgeGUID, WeapBludge)
+End Property
+Public Property Let SetWeapSlashGUID(ByVal lVal As Long)
+    Call SetGUID(lVal, WeapSlashGUID, WeapSlash)
+End Property
+Public Property Let SetWeapPierceGUID(ByVal lVal As Long)
+    Call SetGUID(lVal, WeapPierceGUID, WeapPierce)
+End Property
+Public Property Let SetWeapFireGUID(ByVal lVal As Long)
+    Call SetGUID(lVal, WeapFireGUID, WeapFire)
+End Property
+Public Property Let SetWeapColdGUID(ByVal lVal As Long)
+    Call SetGUID(lVal, WeapColdGUID, WeapCold)
+End Property
+Public Property Let SetWeapAcidGUID(ByVal lVal As Long)
+    Call SetGUID(lVal, WeapAcidGUID, WeapAcid)
+End Property
+Public Property Let SetWeapLightGUID(ByVal lVal As Long)
+    Call SetGUID(lVal, WeapLightGUID, WeapLight)
+End Property
+
 
 '#####################################################################################
 '#

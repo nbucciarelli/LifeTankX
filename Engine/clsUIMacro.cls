@@ -157,6 +157,37 @@ Public chkAttackPK As DecalControls.CheckBox
 Public chkDangerZone As DecalControls.CheckBox
 Public txtDangerZone As DecalControls.Edit
 
+'Weapons
+Public WithEvents cmdWeapBludge As DecalControls.PushButton
+Attribute cmdWeapBludge.VB_VarHelpID = -1
+Public chkWeapBludge As DecalControls.CheckBox
+Public lblWeapBludge As DecalControls.StaticText
+Public WithEvents cmdWeapSlash As DecalControls.PushButton
+Attribute cmdWeapSlash.VB_VarHelpID = -1
+Public chkWeapSlash As DecalControls.CheckBox
+Public lblWeapSlash As DecalControls.StaticText
+Public WithEvents cmdWeapPierce As DecalControls.PushButton
+Attribute cmdWeapPierce.VB_VarHelpID = -1
+Public chkWeapPierce As DecalControls.CheckBox
+Public lblWeapPierce As DecalControls.StaticText
+Public WithEvents cmdWeapFlame As DecalControls.PushButton
+Attribute cmdWeapFlame.VB_VarHelpID = -1
+Public chkWeapFire As DecalControls.CheckBox
+Public lblWeapFire As DecalControls.StaticText
+Public WithEvents cmdWeapCold As DecalControls.PushButton
+Attribute cmdWeapCold.VB_VarHelpID = -1
+Public chkWeapCold As DecalControls.CheckBox
+Public lblWeapCold As DecalControls.StaticText
+Public WithEvents cmdWeapAcid As DecalControls.PushButton
+Attribute cmdWeapAcid.VB_VarHelpID = -1
+Public chkWeapAcid As DecalControls.CheckBox
+Public lblWeapAcid As DecalControls.StaticText
+Public WithEvents cmdWeapLight As DecalControls.PushButton
+Attribute cmdWeapLight.VB_VarHelpID = -1
+Public chkWeapLight As DecalControls.CheckBox
+Public lblWeapLight As DecalControls.StaticText
+
+
 'Fellow
 Public chkEnableAutoFellow As DecalControls.CheckBox
 Public txtFellowPassword As DecalControls.Edit
@@ -419,6 +450,22 @@ On Error GoTo Error_Handler
         g_Data.Arrows = .GetValue(ID_ARROWS, TAG_NOT_SET)
         g_Data.ArrowHead = .GetValue(ID_ARROWHEAD, TAG_NOT_SET)
         g_Data.ArrowShaft = .GetValue(ID_ARROWSHAFT, TAG_NOT_SET)
+        
+        g_Data.SetWeapBludgeGUID = .GetValue("WeapBludge", 0)
+        chkWeapBludge.Checked = g_Settings.GetValue("chkWeapBludge", False)
+        g_Data.SetWeapSlashGUID = .GetValue("WeapSlash", 0)
+        chkWeapSlash.Checked = g_Settings.GetValue("chkWeapSlash", False)
+        g_Data.SetWeapPierceGUID = .GetValue("WeapPierce", 0)
+        chkWeapPierce.Checked = g_Settings.GetValue("chkWeapPierce", False)
+        g_Data.SetWeapFireGUID = .GetValue("WeapFire", 0)
+        chkWeapFire.Checked = g_Settings.GetValue("chkWeapFire", False)
+        g_Data.SetWeapColdGUID = .GetValue("WeapCold", 0)
+        chkWeapCold.Checked = g_Settings.GetValue("chkWeapCold", False)
+        g_Data.SetWeapAcidGUID = .GetValue("WeapAcid", 0)
+        chkWeapAcid.Checked = g_Settings.GetValue("chkWeapAcid", False)
+        g_Data.SetWeapLightGUID = .GetValue("WeapLight", 0)
+        chkWeapLight.Checked = g_Settings.GetValue("chkWeapLight", False)
+        
         Call UpdateMacroItemsLabels
         
         'SPK
@@ -606,6 +653,22 @@ On Error GoTo Error_Handler
         .SaveValue ID_ARROWS, g_Data.Arrows
         .SaveValue ID_ARROWHEAD, g_Data.ArrowHead
         .SaveValue ID_ARROWSHAFT, g_Data.ArrowShaft
+        
+        'Weapons
+        .SaveValue "WeapBludge", g_Data.WeapBludgeGUID
+        .SaveCheckbox chkWeapBludge, "chkWeapBludge"
+        .SaveValue "WeapSlash", g_Data.WeapSlashGUID
+        .SaveCheckbox chkWeapSlash, "chkWeapSlash"
+        .SaveValue "WeapPierce", g_Data.WeapPierceGUID
+        .SaveCheckbox chkWeapPierce, "chkWeapPierce"
+        .SaveValue "WeapFire", g_Data.WeapFireGUID
+        .SaveCheckbox chkWeapFire, "chkWeapFire"
+        .SaveValue "WeapCold", g_Data.WeapColdGUID
+        .SaveCheckbox chkWeapCold, "chkWeapCold"
+        .SaveValue "WeapAcid", g_Data.WeapAcidGUID
+        .SaveCheckbox chkWeapAcid, "chkWeapAcid"
+        .SaveValue "WeapLight", g_Data.WeapLightGUID
+        .SaveCheckbox chkWeapLight, "chkWeapLight"
         
         'Nav
         .SaveCheckbox chkEnableNav, "chkEnableNav"
@@ -973,6 +1036,14 @@ On Error GoTo ErrorHandler
     Call UpdateItemLabel(g_Data.Shield, lblShield)
     Call UpdateItemLabel(g_Data.Bow, lblBow)
     
+    Call UpdateItemLabel(g_Data.WeapBludge, lblWeapBludge)
+    Call UpdateItemLabel(g_Data.WeapSlash, lblWeapSlash)
+    Call UpdateItemLabel(g_Data.WeapPierce, lblWeapPierce)
+    Call UpdateItemLabel(g_Data.WeapBludge, lblWeapBludge)
+    Call UpdateItemLabel(g_Data.WeapBludge, lblWeapBludge)
+    Call UpdateItemLabel(g_Data.WeapBludge, lblWeapBludge)
+    Call UpdateItemLabel(g_Data.WeapBludge, lblWeapBludge)
+    
     lblArrows.Text = g_Data.Arrows
     lblArrowHead.Text = g_Data.ArrowHead
     lblArrowShaft.Text = g_Data.ArrowShaft
@@ -1050,6 +1121,36 @@ End Sub
 Private Sub cmdSetWand_Accepted(ByVal nID As Long)
     g_Data.WandGUID = GetInventorySelection("Wand")
     Call UpdateItemLabel(g_Data.Wand, lblWand)
+End Sub
+
+'cmdWeapBludge
+Private Sub cmdWeapBludge_Accepted(ByVal nID As Long)
+    Call GetInventorySelection("Bludge Weapon", g_Data.WeapBludge)
+    Call UpdateItemLabel(g_Data.WeapBludge, lblWeapBludge)
+End Sub
+Private Sub cmdWeapSlash_Accepted(ByVal nID As Long)
+    Call GetInventorySelection("Slash Weapon", g_Data.WeapSlash)
+    Call UpdateItemLabel(g_Data.WeapSlash, lblWeapSlash)
+End Sub
+Private Sub cmdWeapPierce_Accepted(ByVal nID As Long)
+    Call GetInventorySelection("Pierce Weapon", g_Data.WeapPierce)
+    Call UpdateItemLabel(g_Data.WeapPierce, lblWeapPierce)
+End Sub
+Private Sub cmdWeapFire_Accepted(ByVal nID As Long)
+    Call GetInventorySelection("Fire Weapon", g_Data.WeapFire)
+    Call UpdateItemLabel(g_Data.WeapFire, lblWeapFire)
+End Sub
+Private Sub cmdWeapCold_Accepted(ByVal nID As Long)
+    Call GetInventorySelection("Cold Weapon", g_Data.WeapCold)
+    Call UpdateItemLabel(g_Data.WeapCold, lblWeapCold)
+End Sub
+Private Sub cmdWeapAcid_Accepted(ByVal nID As Long)
+    Call GetInventorySelection("Acid Weapon", g_Data.WeapAcid)
+    Call UpdateItemLabel(g_Data.WeapAcid, lblWeapAcid)
+End Sub
+Private Sub cmdWeapLight_Accepted(ByVal nID As Long)
+    Call GetInventorySelection("Light Weapon", g_Data.WeapLight)
+    Call UpdateItemLabel(g_Data.WeapLight, lblWeapLight)
 End Sub
 
 Private Sub cmdShowNavEditor_Accepted(ByVal nID As Long)
