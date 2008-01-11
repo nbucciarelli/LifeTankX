@@ -445,9 +445,9 @@ On Error GoTo ErrorHandler
     
     bMissingSpell = False
 
-    Set m_buffItems = New colObjects
+1    Set m_buffItems = New colObjects
     
-    Call m_buffItems.addObject(g_Objects.Equipment.Top)
+2    Call m_buffItems.addObject(g_Objects.Equipment.Top)
     Call m_buffItems.addObject(g_Objects.Equipment.Bottom)
     Call m_buffItems.addObject(g_Objects.Equipment.head)
     Call m_buffItems.addObject(g_Objects.Equipment.Hands)
@@ -456,24 +456,24 @@ On Error GoTo ErrorHandler
     Call m_buffItems.addObject(g_Objects.Equipment.BottomUndie)
  
     'List of dropped Item buffs
-    For Each objBuff In m_droppedQueue.SpellQueue
-        Set buffSpell = g_Spells.Items.FindSpellByType(objBuff.SpellType, objBuff.SpellElement, g_Data.BuffsSpellsLevel)
+3    For Each objBuff In m_droppedQueue.SpellQueue
+4        Set buffSpell = g_Spells.Items.FindSpellByType(objBuff.SpellType, objBuff.SpellElement, g_Data.BuffsSpellsLevel)
         If Valid(buffSpell) Then
             'Go through all the Equipped Items and see if this spell is missing from them
             MyDebug "tmrDroppedRebuff: buffSpell: " & buffSpell.SpellName
 
-            For Each objItem In m_buffItems
+5            For Each objItem In m_buffItems
                 If Valid(objItem) Then
-                    If objItem.Spells.Exists(buffSpell.SpellName) Then
+6                    If objItem.Spells.Exists(buffSpell.SpellName) Then
                         MyDebug "m_tmrDroppedRebuff: Buff Exists on: " & objBuff.Description & " : " & objItem.Name
                     Else
                         MyDebug "m_tmrDroppedRebuff: Missing Spell from: " & objBuff.Description & " : " & objItem.Name
                         bMissingSpell = True
                     End If
                 End If
-            Next objItem
+7            Next objItem
             
-            If bMissingSpell Then
+8            If bMissingSpell Then
                 MyDebug "m_tmrDroppedRebuff: Queing objBuff: " & objBuff.Description & " :: " & objBuff.TargetName
                 Call addBuffToQueue(objBuff)
             Else
@@ -482,7 +482,7 @@ On Error GoTo ErrorHandler
         End If
     Next objBuff
     
-    m_tmrDroppedRebuff.Enabled = False
+9    m_tmrDroppedRebuff.Enabled = False
 
 Fin:
     Set m_droppedQueue = New clsSpellQueue
@@ -916,8 +916,10 @@ On Error GoTo ErrorHandler
             'If Not m_buffItems.Exists(objItem.Guid) Then
             '    Call m_buffItems.addObject(objItem)
             'End If
-            Call g_Hooks.IDQueueAdd(objItem.Guid)
+            'Call g_Hooks.IDQueueAdd(objItem.Guid)
+            
             bFound = True
+            
             If objItem.Spells.Count > 0 And objItem.Spells.Exists(sSpellName) Then
 5                ' Found it!
                 MyDebug "CheckExpiredItemSpell: Found spell on item: " & sSpellName

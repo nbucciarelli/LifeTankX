@@ -170,8 +170,8 @@ Public WithEvents cmdWeapPierce As DecalControls.PushButton
 Attribute cmdWeapPierce.VB_VarHelpID = -1
 Public chkWeapPierce As DecalControls.CheckBox
 Public lblWeapPierce As DecalControls.StaticText
-Public WithEvents cmdWeapFlame As DecalControls.PushButton
-Attribute cmdWeapFlame.VB_VarHelpID = -1
+Public WithEvents cmdWeapFire As DecalControls.PushButton
+Attribute cmdWeapFire.VB_VarHelpID = -1
 Public chkWeapFire As DecalControls.CheckBox
 Public lblWeapFire As DecalControls.StaticText
 Public WithEvents cmdWeapCold As DecalControls.PushButton
@@ -307,6 +307,29 @@ On Error GoTo ErrorHandler
     Set cmdSetShield = g_MainView.Control("cmdSetShield")
     Set lblWeapon = g_MainView.Control("lblWeapon")
     Set lblShield = g_MainView.Control("lblShield")
+    
+    'Weapons Tab
+    Set cmdWeapBludge = g_MainView.Control("cmdWeapBludge")
+    Set chkWeapBludge = g_MainView.Control("chkWeapBludge")
+    Set lblWeapBludge = g_MainView.Control("lblWeapBludge")
+    Set cmdWeapSlash = g_MainView.Control("cmdWeapSlash")
+    Set chkWeapSlash = g_MainView.Control("chkWeapSlash")
+    Set lblWeapSlash = g_MainView.Control("lblWeapSlash")
+    Set cmdWeapPierce = g_MainView.Control("cmdWeapPierce")
+    Set chkWeapPierce = g_MainView.Control("chkWeapPierce")
+    Set lblWeapPierce = g_MainView.Control("lblWeapPierce")
+    Set cmdWeapFire = g_MainView.Control("cmdWeapFire")
+    Set chkWeapFire = g_MainView.Control("chkWeapFire")
+    Set lblWeapFire = g_MainView.Control("lblWeapFire")
+    Set cmdWeapCold = g_MainView.Control("cmdWeapCold")
+    Set chkWeapCold = g_MainView.Control("chkWeapCold")
+    Set lblWeapCold = g_MainView.Control("lblWeapCold")
+    Set cmdWeapAcid = g_MainView.Control("cmdWeapAcid")
+    Set chkWeapAcid = g_MainView.Control("chkWeapAcid")
+    Set lblWeapAcid = g_MainView.Control("lblWeapAcid")
+    Set cmdWeapLight = g_MainView.Control("cmdWeapLight")
+    Set chkWeapLight = g_MainView.Control("chkWeapLight")
+    Set lblWeapLight = g_MainView.Control("lblWeapLight")
 
     Set chkLogoutOnTapers = g_MainView.Control("chkLogoutOnTapers")
     Set chkLogoutOnKits = g_MainView.Control("chkLogoutOnKits")
