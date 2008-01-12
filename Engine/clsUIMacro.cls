@@ -1062,10 +1062,10 @@ On Error GoTo ErrorHandler
     Call UpdateItemLabel(g_Data.WeapBludge, lblWeapBludge)
     Call UpdateItemLabel(g_Data.WeapSlash, lblWeapSlash)
     Call UpdateItemLabel(g_Data.WeapPierce, lblWeapPierce)
-    Call UpdateItemLabel(g_Data.WeapBludge, lblWeapBludge)
-    Call UpdateItemLabel(g_Data.WeapBludge, lblWeapBludge)
-    Call UpdateItemLabel(g_Data.WeapBludge, lblWeapBludge)
-    Call UpdateItemLabel(g_Data.WeapBludge, lblWeapBludge)
+    Call UpdateItemLabel(g_Data.WeapFire, lblWeapFire)
+    Call UpdateItemLabel(g_Data.WeapCold, lblWeapCold)
+    Call UpdateItemLabel(g_Data.WeapAcid, lblWeapAcid)
+    Call UpdateItemLabel(g_Data.WeapLight, lblWeapLight)
     
     lblArrows.Text = g_Data.Arrows
     lblArrowHead.Text = g_Data.ArrowHead

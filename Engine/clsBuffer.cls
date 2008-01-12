@@ -20,6 +20,7 @@ Private m_colBuffs As Collection            'list of all the spells the buffer h
 Private m_existBuffs As Collection          'list of existing buffs and their times
 
 Private m_droppedQueue As clsSpellQueue     'list of dropped buff spells
+Private m_buffItems As colObjects           'list of Items that need to be buffed
 Private WithEvents m_tmrDroppedRebuff As clsTimer
 Attribute m_tmrDroppedRebuff.VB_VarHelpID = -1
 
@@ -62,7 +63,8 @@ Private Sub Class_Initialize()
     mNumBuffsToCast = 0
     
     Set m_droppedQueue = New clsSpellQueue
-  
+    Set m_buffItems = New colObjects
+    
     Call Reset
 End Sub
 
@@ -78,6 +80,8 @@ End Sub
 Private Sub Class_Terminate()
     Set m_BuffQueue = Nothing
     Set m_colBuffs = Nothing
+    Set m_buffItems = Nothing
+    Set m_droppedQueue = Nothing
     Set m_tmrNextRebuff = Nothing
     Set m_tmrDroppedRebuff = Nothing
 End Sub
@@ -435,7 +439,6 @@ End Sub
 Private Sub m_tmrDroppedRebuff_OnTimeout()
 On Error GoTo ErrorHandler
     
-    Dim m_buffItems As colObjects           'list of Items that need to be buffed
     Dim objBuff As clsSpellQueueItem
     Dim buffSpell As clsSpell
     Dim objItem As acObject
@@ -445,15 +448,15 @@ On Error GoTo ErrorHandler
     
     bMissingSpell = False
 
-1    Set m_buffItems = New colObjects
+    'Set m_buffItems = New colObjects
     
-2    Call m_buffItems.addObject(g_Objects.Equipment.Top)
-    Call m_buffItems.addObject(g_Objects.Equipment.Bottom)
-    Call m_buffItems.addObject(g_Objects.Equipment.head)
-    Call m_buffItems.addObject(g_Objects.Equipment.Hands)
-    Call m_buffItems.addObject(g_Objects.Equipment.Feet)
-    Call m_buffItems.addObject(g_Objects.Equipment.TopUndie)
-    Call m_buffItems.addObject(g_Objects.Equipment.BottomUndie)
+    'Call m_buffItems.addObject(g_Objects.Equipment.Top)
+    'Call m_buffItems.addObject(g_Objects.Equipment.Bottom)
+    'Call m_buffItems.addObject(g_Objects.Equipment.head)
+    'Call m_buffItems.addObject(g_Objects.Equipment.Hands)
+    'Call m_buffItems.addObject(g_Objects.Equipment.Feet)
+    'Call m_buffItems.addObject(g_Objects.Equipment.TopUndie)
+    'Call m_buffItems.addObject(g_Objects.Equipment.BottomUndie)
  
     'List of dropped Item buffs
 3    For Each objBuff In m_droppedQueue.SpellQueue
@@ -913,9 +916,10 @@ On Error GoTo ErrorHandler
     If Valid(objItem) Then
         If (objItem.Name = sTargetName) And objItem.Equiped Then
 4
-            'If Not m_buffItems.Exists(objItem.Guid) Then
-            '    Call m_buffItems.addObject(objItem)
-            'End If
+            If Not m_buffItems.Exists(objItem.Guid) Then
+                Call m_buffItems.addObject(objItem)
+            End If
+            
             'Call g_Hooks.IDQueueAdd(objItem.Guid)
             
             bFound = True
