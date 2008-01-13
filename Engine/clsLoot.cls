@@ -737,7 +737,10 @@ On Error GoTo Error_Handler
     End If
     
     'Look for targets
-    If Not g_bLootRare And (g_Macro.Combat.Target Is Nothing) Then
+    If Not g_ui.Loot.chkBoostLootPriority.Checked _
+    And Not g_ui.Loot.chkEnableLooting.Checked _
+    And Not g_bLootRare _
+    And (g_Macro.Combat.Target Is Nothing) Then
         If FindBestTarget() Then
             locDebug "clsLoot.Runstate : found target, moving to regular IDLE state for combat initialization"
             'go back to regular IDLE mode to ensure we're in the proper equipment/vital state
@@ -881,7 +884,9 @@ On Error GoTo Error_Handler
             
             'The item was successfully picked up
             Case ST_LOOT_ITEM_PICKED_UP
+                If Valid(m_curItem) Then
 13                locDebug m_curItem.Name & " successfully picked up. Searching for another item to pickup."
+                End If
     
                 '1 second delay before next pickup
                 Call m_tmrNextTime.SetNextTime(1)
@@ -919,19 +924,19 @@ Private Function SetSubState(ByVal iNewState As Integer)
     'Add error checking timer for each state
     Select Case m_State
         Case ST_LOOT_SEARCH
-            m_tmrSecure.SetNextTime LOOT_MAX_SEARCH_CORPSE_TIME
+            Call m_tmrSecure.SetNextTime(LOOT_MAX_SEARCH_CORPSE_TIME)
     
         Case ST_LOOT_OPEN_CORPSE
-            m_tmrSecure.SetNextTime LOOT_MAX_CORPSE_OPEN_ATTEMPT_TIME
+            Call m_tmrSecure.SetNextTime(LOOT_MAX_CORPSE_OPEN_ATTEMPT_TIME)
             
         Case ST_LOOT_SEARCH_ITEM
-            m_tmrSecure.SetNextTime LOOT_MAX_SEARCH_ITEM_TIME + 2 * m_ItemsIdQueue.Count
+            Call m_tmrSecure.SetNextTime(LOOT_MAX_SEARCH_ITEM_TIME + 2 * m_ItemsIdQueue.Count)
             
         Case ST_LOOT_PICKUP_ITEM
-            m_tmrSecure.SetNextTime LOOT_MAX_PICKUP_TIME
+            Call m_tmrSecure.SetNextTime(LOOT_MAX_PICKUP_TIME)
         
         Case Else
-            m_tmrSecure.SetNextTime 8
+            Call m_tmrSecure.SetNextTime(8)
     End Select
     
 End Function
@@ -1268,24 +1273,28 @@ On Error GoTo Error_Handler
     If Not Valid(curItem) Then
         PrintErrorMessage "clsLoot.OnItemPickup - invalid curItem, ignoring"
     Else
-        MyDebug "OnItemPickup - " & curItem.Name & " picked up."
-        If curItem.LastIdTime < g_ds.Time Then
-            Call g_Hooks.IDQueueAdd(curItem.Guid) 'Make sure we ID it
-        End If
+        If Valid(m_curItem) Then
+            ' Check to see if the Item we just looted was the item we ment to pick up
+            If m_curItem.Guid = curItem.Guid Then
+                MyDebug "OnItemPickup - " & curItem.Name & " picked up."
+                If curItem.LastIdTime < g_ds.Time Then
+                    Call g_Hooks.IDQueueAdd(curItem.Guid) 'Make sure we ID it
+                End If
 
-        RaiseEvent OnItemLooted(curItem)
-        Call RemoveItemFromCorpse(curItem)
-        Call m_tmrNextTime.ExpireNow
-        Call SetSubState(ST_LOOT_ITEM_PICKED_UP)
-        If PhatLoot.PassActiveFilters(curItem, True, False, False, False, False, False) And g_Macro.Salvager.CheckValidSalvageItem(curItem) Then
-            MyDebug "clsLoot: OnItemPickup: Adding to SalvageList: " & curItem.Name
-            Call g_Macro.Salvager.AddLootToSalvageList(curItem)
-        Else
-            locDebug "clsLoot: OnItemPickup: did NOT pass salvage Filters: " & curItem.Name
-            locDebug "clsLoot: PhatLoot: " & PhatLoot.PassActiveFilters(curItem, True, False, False, False, False, False)
-            locDebug "clsLoot: ValidSalvage: " & g_Macro.Salvager.CheckValidSalvageItem(curItem)
+                RaiseEvent OnItemLooted(curItem)
+                Call RemoveItemFromCorpse(curItem)
+                Call m_tmrNextTime.ExpireNow
+                Call SetSubState(ST_LOOT_ITEM_PICKED_UP)
+                If PhatLoot.PassActiveFilters(curItem, True, False, False, False, False, False) And g_Macro.Salvager.CheckValidSalvageItem(curItem) Then
+                    MyDebug "clsLoot: OnItemPickup: Adding to SalvageList: " & curItem.Name
+                    Call g_Macro.Salvager.AddLootToSalvageList(curItem)
+                Else
+                    locDebug "clsLoot: OnItemPickup: did NOT pass salvage Filters: " & curItem.Name
+                    locDebug "clsLoot: PhatLoot: " & PhatLoot.PassActiveFilters(curItem, True, False, False, False, False, False)
+                    locDebug "clsLoot: ValidSalvage: " & g_Macro.Salvager.CheckValidSalvageItem(curItem)
+                End If
+            End If
         End If
-
     End If
     
 Fin:

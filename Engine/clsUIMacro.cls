@@ -459,7 +459,8 @@ On Error GoTo Error_Handler
         MyDebug "---- NavType : " & g_Nav.NavType
         If RouteExist(g_Nav.Route.Description) Then
             If g_Nav.Route.LoadRoute(GetRouteFilePath(g_Nav.Route.Description)) Then
-                PrintMessage "Loaded route : " & g_Nav.Route.Description & " (" & g_Nav.Route.NumWP & " waypoints)"
+                MyDebug "Loaded route : " & g_Nav.Route.Description & " (" & g_Nav.Route.NumWP & " waypoints)"
+                'PrintMessage "Loaded route : " & g_Nav.Route.Description & " (" & g_Nav.Route.NumWP & " waypoints)"
             Else
                 PrintErrorMessage "Failed to load route : " & g_Nav.Route.Description
             End If
@@ -1148,32 +1149,70 @@ End Sub
 
 'cmdWeapBludge
 Private Sub cmdWeapBludge_Accepted(ByVal nID As Long)
-    Call GetInventorySelection("Bludge Weapon", g_Data.WeapBludge)
-    Call UpdateItemLabel(g_Data.WeapBludge, lblWeapBludge)
+On Error GoTo Error_Handler
+    Dim objItem As acObject
+    Call GetInventorySelection("Bludge Weapon", objItem)
+    If Valid(objItem) Then
+        MyDebug "clsUIMacro.cmdWeapBludge: " & objItem.Name
+        g_Data.SetWeapBludgeGUID = objItem.Guid
+        Call UpdateMacroItemsLabels
+    Else
+        MyDebug "clsUIMacro.cmdWeapBludge not set"
+    End If
+
+Fin:
+    Exit Sub
+Error_Handler:
+    PrintErrorMessage "clsUIMacro.cmdWeapBludge_accepted - " & Err.Description
+    Resume Fin
 End Sub
 Private Sub cmdWeapSlash_Accepted(ByVal nID As Long)
-    Call GetInventorySelection("Slash Weapon", g_Data.WeapSlash)
-    Call UpdateItemLabel(g_Data.WeapSlash, lblWeapSlash)
+    Dim objItem As acObject
+    Call GetInventorySelection("Weapon", objItem)
+    If Valid(objItem) Then
+        g_Data.SetWeapSlashGUID = objItem.Guid
+        Call UpdateMacroItemsLabels
+    End If
 End Sub
 Private Sub cmdWeapPierce_Accepted(ByVal nID As Long)
-    Call GetInventorySelection("Pierce Weapon", g_Data.WeapPierce)
-    Call UpdateItemLabel(g_Data.WeapPierce, lblWeapPierce)
+    Dim objItem As acObject
+    Call GetInventorySelection("Weapon", objItem)
+    If Valid(objItem) Then
+        g_Data.SetWeapPierceGUID = objItem.Guid
+        Call UpdateMacroItemsLabels
+    End If
 End Sub
 Private Sub cmdWeapFire_Accepted(ByVal nID As Long)
-    Call GetInventorySelection("Fire Weapon", g_Data.WeapFire)
-    Call UpdateItemLabel(g_Data.WeapFire, lblWeapFire)
+    Dim objItem As acObject
+    Call GetInventorySelection("Weapon", objItem)
+    If Valid(objItem) Then
+        g_Data.SetWeapFireGUID = objItem.Guid
+        Call UpdateMacroItemsLabels
+    End If
 End Sub
 Private Sub cmdWeapCold_Accepted(ByVal nID As Long)
-    Call GetInventorySelection("Cold Weapon", g_Data.WeapCold)
-    Call UpdateItemLabel(g_Data.WeapCold, lblWeapCold)
+    Dim objItem As acObject
+    Call GetInventorySelection("Weapon", objItem)
+    If Valid(objItem) Then
+        g_Data.SetWeapColdGUID = objItem.Guid
+        Call UpdateMacroItemsLabels
+    End If
 End Sub
 Private Sub cmdWeapAcid_Accepted(ByVal nID As Long)
-    Call GetInventorySelection("Acid Weapon", g_Data.WeapAcid)
-    Call UpdateItemLabel(g_Data.WeapAcid, lblWeapAcid)
+    Dim objItem As acObject
+    Call GetInventorySelection("Weapon", objItem)
+    If Valid(objItem) Then
+        g_Data.SetWeapAcidGUID = objItem.Guid
+        Call UpdateMacroItemsLabels
+    End If
 End Sub
 Private Sub cmdWeapLight_Accepted(ByVal nID As Long)
-    Call GetInventorySelection("Light Weapon", g_Data.WeapLight)
-    Call UpdateItemLabel(g_Data.WeapLight, lblWeapLight)
+    Dim objItem As acObject
+    Call GetInventorySelection("Weapon", objItem)
+    If Valid(objItem) Then
+        g_Data.SetWeapLightGUID = objItem.Guid
+        Call UpdateMacroItemsLabels
+    End If
 End Sub
 
 Private Sub cmdShowNavEditor_Accepted(ByVal nID As Long)

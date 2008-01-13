@@ -1251,7 +1251,7 @@ Public Sub CheckStopNav()
     End If
 End Sub
 
-
+'***************************************
 '*****************************************************************************
 '***************************************
 '
@@ -1271,6 +1271,7 @@ End Sub
 '
 '***************************************
 '*****************************************************************************
+'***************************************
 Private Sub RunState()
 On Error GoTo ErrorHandler
 
@@ -1460,12 +1461,12 @@ On Error GoTo ErrorHandler
                 And g_ui.Loot.chkEnableLooting.Checked _
                 And (Not g_Objects.Items.BackpackFull) _
                 And m_tmrNextLootCheck.Expired Then
-                    'locDebug "ST_IDLE : Checking Loot..."
+                    locDebug "ST_IDLE : Checking PRIORITY Loot..."
+                    Call m_tmrNextLootCheck.SetNextTime(LOOT_CHECK_INTERVAL)
                     If GoLooting Then
                         locDebug "ST_IDLE : Starting Looting..."
                         GoTo Fin
                     End If
-                    Call m_tmrNextLootCheck.SetNextTime(LOOT_CHECK_INTERVAL)
                 End If
                 
                 'PrintErrorMessage ("Debug: Idle 3")

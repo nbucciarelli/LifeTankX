@@ -443,6 +443,7 @@ On Error GoTo ErrorHandler
     Dim buffSpell As clsSpell
     Dim objItem As acObject
     Dim bMissingSpell As Boolean
+    Dim bFoundSpell As Boolean
     
     MyDebug "tmrDroppedRebuff OnTimeout: m_buffItems.count: " & m_buffItems.Count & " :dQ: " & m_droppedQueue.Count
     
@@ -468,19 +469,26 @@ On Error GoTo ErrorHandler
 5            For Each objItem In m_buffItems
                 If Valid(objItem) Then
 6                    If objItem.Spells.Exists(buffSpell.SpellName) Then
-                        MyDebug "m_tmrDroppedRebuff: Buff Exists on: " & objBuff.Description & " : " & objItem.Name
+                        MyDebug "m_tmrDroppedRebuff: ** Buff Exists **: " & objBuff.Description & " : " & objItem.Name
+                        bFoundSpell = True
                     Else
-                        MyDebug "m_tmrDroppedRebuff: Missing Spell from: " & objBuff.Description & " : " & objItem.Name
+                        MyDebug "m_tmrDroppedRebuff: Missing Buff: " & objBuff.Description & " : " & objItem.Name
                         bMissingSpell = True
                     End If
                 End If
 7            Next objItem
             
-8            If bMissingSpell Then
+            'If bMissingSpell Then
+            '    MyDebug "m_tmrDroppedRebuff: Queing objBuff: " & objBuff.Description & " :: " & objBuff.TargetName
+            '    Call addBuffToQueue(objBuff)
+            'Else
+            '    MyDebug "m_tmrDroppedRebuff: no missing spells found for: " & buffSpell.SpellName
+            'End If
+            If bFoundSpell Then
+                MyDebug "m_tmrDroppedRebuff: Found an active spell: " & buffSpell.SpellName
+            Else
                 MyDebug "m_tmrDroppedRebuff: Queing objBuff: " & objBuff.Description & " :: " & objBuff.TargetName
                 Call addBuffToQueue(objBuff)
-            Else
-                MyDebug "m_tmrDroppedRebuff: no missing spells found for: " & buffSpell.SpellName
             End If
         End If
     Next objBuff

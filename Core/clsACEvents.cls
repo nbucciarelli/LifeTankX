@@ -128,7 +128,8 @@ On Error GoTo ErrorHandler
         
         g_Hooks.AddChatText "[" & PLUG_NAME & "] Version " & App.Major & "." & App.Minor & " - Rev: " & App.Revision, COLOR_CYAN, 0
         g_Hooks.AddChatText "Original plugin by Spax/Spk of WintersEbb", COLOR_CYAN, 0
-        g_Hooks.AddChatText "Developed by Xeon Xarid, C'relic, Swordz ", COLOR_BRIGHT_YELLOW, 0
+        g_Hooks.AddChatText "Additional Code by C'relic and Swordz", COLOR_CYAN, 0
+        g_Hooks.AddChatText "Now Developed by Xeon Xarid / Xeonx", COLOR_BRIGHT_YELLOW, 0
         
         'Print MOTD
         'PrintMessage MOTD

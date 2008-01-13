@@ -330,6 +330,7 @@ Private Sub SetGUID(ByVal lVal As Long, ByRef lGUID As Long, ByRef objItem As ac
         If g_Objects.Items.Inv.Exists(lVal) Then
             Set objItem = g_Objects.Items.Inv(lVal)
         Else
+            MyDebug "clsDatas.SetGUID: lVal does not exist: " & lVal
             Set objItem = Nothing
         End If
     Else
