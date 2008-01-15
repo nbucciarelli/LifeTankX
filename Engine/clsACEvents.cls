@@ -666,13 +666,13 @@ End Sub
 
 Private Sub m_Objects_OnMajorDetected(ByVal obj As DarksideFilter.acObject, ByVal sSpellName As String)
 On Error Resume Next
-    If g_ui.Options.chkFilterIdMsg.Checked Then Exit Sub
+    If g_ui.Options.chkFilterIdMsg.Checked Or g_Macro.Loot.silentID Then Exit Sub
     If ((g_Hooks.CurrentSelection = obj.Guid) Or (obj.Wielder <> 0)) And g_ui.Loot.chkPickupMajors.Checked Then PrintMessage "[Major Detected] " & obj.Name & " : " & sSpellName
 End Sub
 
 Private Sub m_Objects_OnMinorDetected(ByVal obj As DarksideFilter.acObject, ByVal sSpellName As String)
 On Error Resume Next
-    If g_ui.Options.chkFilterIdMsg.Checked Then Exit Sub
+    If g_ui.Options.chkFilterIdMsg.Checked Or g_Macro.Loot.silentID Then Exit Sub
     If ((g_Hooks.CurrentSelection = obj.Guid) Or (obj.Wielder <> 0)) And g_ui.Loot.chkPickupMinors.Checked Then PrintMessage "[Minor Detected] " & obj.Name & " : " & sSpellName
 End Sub
 

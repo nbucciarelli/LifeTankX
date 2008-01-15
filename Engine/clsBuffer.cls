@@ -535,7 +535,7 @@ On Error GoTo ErrorHandler
     m_tmrDroppedRebuff.Enabled = False
 
 Fin:
-    Call g_Macro.Loot.silentID(False)
+    Call g_Macro.Loot.SetSilentID(False)
     Set m_droppedQueue = New clsSpellQueue
     Set m_buffItems = New colObjects
     Exit Sub
@@ -968,7 +968,7 @@ On Error GoTo ErrorHandler
                 Call m_buffItems.addObject(objItem)
             End If
             
-            Call g_Macro.Loot.silentID(True)
+            Call g_Macro.Loot.SetSilentID(True)
             Call g_Hooks.IDQueueAdd(objItem.Guid)
             
             bFound = True

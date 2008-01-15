@@ -516,7 +516,7 @@ On Error GoTo ErrorHandler
         If bEatKey Then MyDebug "Found a HUD to move"
     End If
     
-    Call g_Macro.Loot.silentID(False)
+    Call g_Macro.Loot.SetSilentID(False)
 
 Fin:
     IEngine_HandleMouseClick = bEatKey

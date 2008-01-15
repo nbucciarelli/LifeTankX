@@ -170,9 +170,13 @@ End Property
 ' Public Methods
 '------------------------------------------------------------------------------------
 
-Public Sub silentID(ByVal aBool As Boolean)
+Public Sub SetSilentID(ByVal aBool As Boolean)
     m_silentID = aBool
 End Sub
+
+Public Function silentID() As Boolean
+    silentID = m_silentID
+End Function
 
 Public Function canLoot() As Boolean
 On Error GoTo ErrorHandler
