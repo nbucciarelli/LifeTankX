@@ -30,6 +30,7 @@ Private Const LOOT_CHECK_INTERVAL = 2       'check for loot every X seconds in i
 Private Const TARGET_SCAN_INTERVAL = 2      'check for targets every X seconds when in idle mode unless
                                             'timer gets reset when creatures are spawning nearby
 Private Const SALVAGER_CHECK_INTERVAL = 5   'check if we need to autosalvage every 5 seconds
+Private Const FELLOWHEAL_CHECK_INTERVAL = 5 'check if we need to autosalvage every 5 seconds
 
 Private Const MAX_NAV_FAIL = 200            'maximum number of navigation/loot failures before reset.
 
@@ -182,8 +183,8 @@ Private m_tmrNextLogoutCheck As clsTimer
 Private m_tmrNextTargetScan As clsTimer
 Private m_tmrNextLootCheck As clsTimer
 Private m_tmrNextSalvageTime As clsTimer
-Private m_tmrNextStatsUpdate As clsTimer    'use to update stats every 1 seconds
-Private m_tmrNextFellowHeal As clsTimer     'check fellow health every 30 seconds
+Private m_tmrNextStatsUpdate As clsTimer    'use to update stats every X seconds
+Private m_tmrNextFellowHeal As clsTimer     'check fellow health every X seconds
 
 Private m_tmrManaChargeTimer As clsTimer
 Private m_tmrPostCastDelayTimer As clsTimer
@@ -260,6 +261,7 @@ Private Sub Class_Initialize()
     Call m_tmrCastSpell.SetNextTime(CAST_TIMER)
     Call m_tmrNextSalvageTime.SetNextTime(SALVAGER_CHECK_INTERVAL)
     Call m_tmrNextLootCheck.SetNextTime(LOOT_CHECK_INTERVAL)
+    Call m_tmrNextFellowHeal.SetNextTime(FELLOWHEAL_CHECK_INTERVAL)
     
     g_Core.TimerInterval = DEFAULT_MACRO_TIMER_INTERVAL
     
@@ -1152,11 +1154,11 @@ NextObj:
     Next objFellow
 
 Fin:
-    GoFellowHeal = bRet
+    DoFellowHeal = bRet
     Exit Function
 ErrorHandler:
-    GoFellowHeal = False
-    PrintErrorMessage "clsMacro.GoFellowHeal() - " & Err.Description
+    DoFellowHeal = False
+    PrintErrorMessage "clsMacro.DoFellowHeal() - " & Err.Description
     Exit Function
 End Function
 
@@ -1457,18 +1459,22 @@ On Error GoTo ErrorHandler
                     If Vitals.CastManaStamRegen(False, m_RegenManaAction, m_RegenStamAction) Then GoTo Fin
                 End If
                 
-                'check to see if fellow members nearby need healing
-                If g_ui.Macro.chkHealFellow.Checked And g_Objects.Fellowship.Active And m_fellowNeedsHealing Then
-                    locDebug "ST_IDLE: checking for fellow members in need of healing"
-                    If GoFellowHeal Then GoTo Fin
-                End If
+                'Every bit, check to see if fellow members need healing/staming
+                If m_tmrNextFellowHeal.Expired Then
+                    Call m_tmrNextFellowHeal.SetNextTime(FELLOWHEAL_CHECK_INTERVAL)
+                    'check to see if fellow members nearby need healing
+                    If g_ui.Macro.chkHealFellow.Checked And g_Objects.Fellowship.Active And m_fellowNeedsHealing Then
+                        locDebug "ST_IDLE: checking for fellow members in need of healing"
+                        If GoFellowHeal Then GoTo Fin
+                    End If
                 
-                'check to see if fellow members nearby need Staming
-                If g_ui.Macro.chkStamFellow.Checked And g_Objects.Fellowship.Active And m_fellowNeedsStam Then
-                    locDebug "ST_IDLE: checking for fellow members in need of Staming"
-                    If GoFellowHeal(True) Then GoTo Fin
+                    'check to see if fellow members nearby need Staming
+                    If g_ui.Macro.chkStamFellow.Checked And g_Objects.Fellowship.Active And m_fellowNeedsStam Then
+                        locDebug "ST_IDLE: checking for fellow members in need of Staming"
+                        If GoFellowHeal(True) Then GoTo Fin
+                    End If
                 End If
-                
+
                 'check to see if we need to loot a rare
                 If g_bLootRare Then
                     locDebug "ST_IDLE : g_bLootRare is TRUE"
@@ -1519,6 +1525,23 @@ On Error GoTo ErrorHandler
                 And g_ui.Loot.chkEnableLooting.Checked _
                 And (Not g_Objects.Items.BackpackFull) _
                 And m_tmrNextLootCheck.Expired Then
+                
+                    'Make sure we salvage when in Priority loot mode
+                    If g_ui.Loot.chkEnableSalvage.Checked _
+                    And m_tmrNextSalvageTime.Expired Then
+                        If m_bForceSalvage _
+                        Or g_Objects.Items.BackpackFull _
+                        Or (g_ui.Loot.chkSalvageFrequency.Checked And (m_iNumItemsPickedUp >= g_Data.SalvagerFrequency)) Then
+                            locDebug "ST_IDLE : before GoSalvage... "
+                            Call m_tmrNextSalvageTime.SetNextTime(SALVAGER_CHECK_INTERVAL)
+                            If GoSalvage Then
+                                locDebug "ST_IDLE : Starting AutoSalvager..."
+                                GoTo Fin
+                            End If
+                        End If
+                        Call m_tmrNextSalvageTime.SetNextTime(SALVAGER_CHECK_INTERVAL)
+                    End If
+
                     locDebug "ST_IDLE : Checking PRIORITY Loot..."
                     Call m_tmrNextLootCheck.SetNextTime(LOOT_CHECK_INTERVAL)
                     If GoLooting Then
@@ -1672,16 +1695,20 @@ On Error GoTo ErrorHandler
                     If Vitals.CastManaStamRegen(False, m_RegenManaAction, m_RegenStamAction) Then GoTo Fin
                 End If
                 
-                'check to see if fellow members nearby need healing
-                If g_ui.Macro.chkHealFellow.Checked And g_Objects.Fellowship.Active And m_fellowNeedsHealing Then
-                    locDebug "ST_IDLE: checking for fellow members in need of healing"
-                    If GoFellowHeal Then GoTo Fin
-                End If
+                'Every bit, check to see if fellow members need healing/staming
+                If m_tmrNextFellowHeal.Expired Then
+                    Call m_tmrNextFellowHeal.SetNextTime(FELLOWHEAL_CHECK_INTERVAL)
+                    'check to see if fellow members nearby need healing
+                    If g_ui.Macro.chkHealFellow.Checked And g_Objects.Fellowship.Active And m_fellowNeedsHealing Then
+                        locDebug "ST_IDLE: checking for fellow members in need of healing"
+                        If GoFellowHeal Then GoTo Fin
+                    End If
                 
-                'check to see if fellow members nearby need Staming
-                If g_ui.Macro.chkStamFellow.Checked And g_Objects.Fellowship.Active And m_fellowNeedsStam Then
-                    locDebug "ST_IDLE: checking for fellow members in need of Staming"
-                    If GoFellowHeal(True) Then GoTo Fin
+                    'check to see if fellow members nearby need Staming
+                    If g_ui.Macro.chkStamFellow.Checked And g_Objects.Fellowship.Active And m_fellowNeedsStam Then
+                        locDebug "ST_IDLE: checking for fellow members in need of Staming"
+                        If GoFellowHeal(True) Then GoTo Fin
+                    End If
                 End If
                 
                 If ValidState Then
@@ -1805,16 +1832,20 @@ On Error GoTo ErrorHandler
                     If Vitals.CastManaStamRegen(False, m_RegenManaAction, m_RegenStamAction) Then GoTo Fin
                 End If
 
-                'check to see if fellow members nearby need healing
-                If g_ui.Macro.chkHealFellow.Checked And g_Objects.Fellowship.Active And m_fellowNeedsHealing Then
-                    locDebug "ST_IDLE: checking for fellow members in need of healing"
-                    If GoFellowHeal Then GoTo Fin
-                End If
+                'Every bit, check to see if fellow members need healing/staming
+                If m_tmrNextFellowHeal.Expired Then
+                    Call m_tmrNextFellowHeal.SetNextTime(FELLOWHEAL_CHECK_INTERVAL)
+                    'check to see if fellow members nearby need healing
+                    If g_ui.Macro.chkHealFellow.Checked And g_Objects.Fellowship.Active And m_fellowNeedsHealing Then
+                        locDebug "ST_IDLE: checking for fellow members in need of healing"
+                        If GoFellowHeal Then GoTo Fin
+                    End If
                 
-                'check to see if fellow members nearby need Staming
-                If g_ui.Macro.chkStamFellow.Checked And g_Objects.Fellowship.Active And m_fellowNeedsStam Then
-                    locDebug "ST_IDLE: checking for fellow members in need of Staming"
-                    If GoFellowHeal(True) Then GoTo Fin
+                    'check to see if fellow members nearby need Staming
+                    If g_ui.Macro.chkStamFellow.Checked And g_Objects.Fellowship.Active And m_fellowNeedsStam Then
+                        locDebug "ST_IDLE: checking for fellow members in need of Staming"
+                        If GoFellowHeal(True) Then GoTo Fin
+                    End If
                 End If
                 
                 If Not g_bLootRare And Not g_ui.Loot.chkBoostLootPriority.Checked Then
@@ -1961,7 +1992,7 @@ On Error GoTo ErrorHandler
 10    Call g_Window.UpdateDimensions
     
     'Start fellowship checker
-11    Call m_tmrNextFellowHeal.SetNextTime(15)
+11    Call m_tmrNextFellowHeal.SetNextTime(FELLOWHEAL_CHECK_INTERVAL)
     
     'Start 5 Min XP timer
 12    Call m_tmr5MinTimer.SetNextTime(10)
