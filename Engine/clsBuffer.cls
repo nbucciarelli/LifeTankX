@@ -535,7 +535,6 @@ On Error GoTo ErrorHandler
     m_tmrDroppedRebuff.Enabled = False
 
 Fin:
-    Call g_Macro.Loot.SetSilentID(False)
     Set m_droppedQueue = New clsSpellQueue
     Set m_buffItems = New colObjects
     Exit Sub

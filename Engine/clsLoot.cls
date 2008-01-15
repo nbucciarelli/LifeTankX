@@ -90,7 +90,7 @@ Private Sub Reset()
     Set m_curItem = Nothing
     
     m_bGroundPickup = False
-    m_silentID = False
+    m_silentID = True
     
     Call m_tmrNextTime.Reset
     Call m_tmrSecure.Reset
@@ -559,6 +559,7 @@ On Error GoTo Error_Handler
         ((g_Hooks.CurrentSelection = objItem.Guid) Or (objItem.Wielder <> 0)) Then
             MyDebug "ID'ing selected item"
             Call printIdString(objItem)
+            Call SetSilentID(True)
     End If
     
     If m_IdQueue.Count > 0 Then
@@ -1881,7 +1882,6 @@ Private Sub m_tmrExportInv_OnTimeOut()
         PrintMessage "Export: " & m_IdQueue.Count & " items left"
     Else
         Call writeInventoryExport
-        Call SetSilentID(False)
     End If
 End Sub
 
