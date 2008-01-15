@@ -73,6 +73,8 @@ Attribute m_tmrExportInv.VB_VarHelpID = -1
 
 Private m_NavHold As Long
 
+Private m_silentID As Boolean
+
 Public Event OnItemLooted(objItem As acObject)
 Public Event OnLootingComplete()
 
@@ -88,6 +90,7 @@ Private Sub Reset()
     Set m_curItem = Nothing
     
     m_bGroundPickup = False
+    m_silentID = False
     
     Call m_tmrNextTime.Reset
     Call m_tmrSecure.Reset
@@ -163,10 +166,13 @@ Public Property Get PickupItemName() As String
     End If
 End Property
 
-
 '------------------------------------------------------------------------------------
 ' Public Methods
 '------------------------------------------------------------------------------------
+
+Public Sub silentID(ByVal aBool As Boolean)
+    m_silentID = aBool
+End Sub
 
 Public Function canLoot() As Boolean
 On Error GoTo ErrorHandler
@@ -545,7 +551,7 @@ On Error GoTo Error_Handler
         Call g_RareTracker.SendStats(objItem.Name, objItem.RareNumber, objItem.ActivateSkill, objItem.ActivateSkillVal, objItem.ArmorLevel, objItem.ArmorType, objItem.AssociatedSpellId, objItem.AttackBonus, objItem.Burden, objItem.Coverage3, objItem.DamageFlags, objItem.DamageModifier, objItem.DefenseBonus, objItem.Description, objItem.ElementBonusDamage, lowDmg, objItem.HighDamage, objItem.Imbue, objItem.LoreReq, objItem.MagicDefense, objItem.MaxMana, objItem.ManaConvMod, objItem.MaterialType, objItem.MissileDefense, objItem.PvMBonus, objItem.RaceReq, objItem.RankReq, objItem.SkillReqID, objItem.SkillUsed, objItem.Spells, objItem.Spellcraft, objItem.TotalUses, objItem.UsesLeft, objItem.Value, objItem.Variance, objItem.WieldReqID, objItem.WieldReqType, objItem.WieldReqVal, objItem.Workmanship, objItem.BitingStrike, objItem.CrushingBlow, objItem.ShortDesc, objItem.UsageInstructions)
     End If
         
-    If Not g_ui.Options.chkFilterIdMsg.Checked And _
+    If Not g_ui.Options.chkFilterIdMsg.Checked And Not m_silentID And _
         ((g_Hooks.CurrentSelection = objItem.Guid) Or (objItem.Wielder <> 0)) Then
             MyDebug "ID'ing selected item"
             Call printIdString(objItem)

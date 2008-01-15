@@ -442,12 +442,15 @@ On Error GoTo ErrorHandler
     Dim objBuff As clsSpellQueueItem
     Dim buffSpell As clsSpell
     Dim objItem As acObject
+    Dim testItem As WorldObject
     Dim bMissingSpell As Boolean
     Dim bFoundSpell As Boolean
+    Dim iCount As Integer
     
     MyDebug "tmrDroppedRebuff OnTimeout: m_buffItems.count: " & m_buffItems.Count & " :dQ: " & m_droppedQueue.Count
     
     bMissingSpell = False
+    iCount = 0
 
     'Set m_buffItems = New colObjects
     
@@ -467,27 +470,52 @@ On Error GoTo ErrorHandler
             MyDebug "tmrDroppedRebuff: buffSpell: " & buffSpell.SpellName
 
 5            For Each objItem In m_buffItems
-                Dim testItem As acObject
+                bMissingSpell = False
+                bFoundSpell = False
+                
                 Set testItem = g_Filters.g_worldFilter.Item(objItem.Guid)
                 If Valid(testItem) Then
-                    If testItem.Spells.Exists(buffSpell.SpellName) Then
-                        MyDebug "m_tmrDroppedRebuff: TEST ITEM ** Buff Exists **: " & objBuff.Description & " : " & testItem.Name
-                        bFoundSpell = True
+                    If testItem.Longs(keyActiveSpellCount) > 0 Then
+                        Dim spellCount As Integer
+                        Dim i As Integer
+                        spellCount = testItem.Longs(keyActiveSpellCount)
+                        MyDebug "tmrDroppedRebuff: ActiveSpellCount:  " & spellCount
+                        For i = 0 To spellCount - 1
+                            MyDebug "tmrDroppedRebuff: testItem.ActiveSpell(): " & testItem.ActiveSpell(i)
+                            If testItem.ActiveSpell(i) = buffSpell.SpellID Then
+                                'SpellID = wObj.spell(i)
+                                MyDebug "m_tmrDroppedRebuff: ** TEST Buff Exists **: " & objBuff.Description & " : " & testItem.Name
+                                bMissingSpell = False
+                            End If
+                        Next i
                     Else
-                        MyDebug "m_tmrDroppedRebuff: TEST ITEM Missing Buff: " & objBuff.Description & " : " & testItem.Name
+                        'No Active spells, so must be missing them
+                        MyDebug "m_tmrDroppedRebuff: ** TEST Missing Buff **: " & objBuff.Description & " : " & testItem.Name
                         bMissingSpell = True
+                        iCount = iCount + 1
                     End If
                 End If
+                
                 If Valid(objItem) Then
 6                    If objItem.Spells.Exists(buffSpell.SpellName) Then
                         MyDebug "m_tmrDroppedRebuff: ** Buff Exists **: " & objBuff.Description & " : " & objItem.Name
-                        bFoundSpell = True
+                        'bMissingSpell = False
                     Else
                         MyDebug "m_tmrDroppedRebuff: Missing Buff: " & objBuff.Description & " : " & objItem.Name
-                        bMissingSpell = True
+                        'bMissingSpell = True
                     End If
                 End If
+                If bMissingSpell Then
+                    iCount = iCount + 1
+                End If
 7            Next objItem
+            
+            If iCount >= (m_buffItems.Count / 2) Then
+                MyDebug "m_tmrDroppedRebuff: Queing objBuff: " & objBuff.Description & " :: " & objBuff.TargetName
+                Call addBuffToQueue(objBuff)
+            Else
+                MyDebug "m_tmrDroppedRebuff: no missing spells found for: " & buffSpell.SpellName
+            End If
             
             'If bMissingSpell Then
             '    MyDebug "m_tmrDroppedRebuff: Queing objBuff: " & objBuff.Description & " :: " & objBuff.TargetName
@@ -495,18 +523,19 @@ On Error GoTo ErrorHandler
             'Else
             '    MyDebug "m_tmrDroppedRebuff: no missing spells found for: " & buffSpell.SpellName
             'End If
-            If bFoundSpell Then
-                MyDebug "m_tmrDroppedRebuff: Found an active spell: " & buffSpell.SpellName
-            Else
-                MyDebug "m_tmrDroppedRebuff: Queing objBuff: " & objBuff.Description & " :: " & objBuff.TargetName
-                Call addBuffToQueue(objBuff)
-            End If
+            'If bFoundSpell Then
+            '    MyDebug "m_tmrDroppedRebuff: Found an active spell: " & buffSpell.SpellName
+            'Else
+            '    MyDebug "m_tmrDroppedRebuff: Queing objBuff: " & objBuff.Description & " :: " & objBuff.TargetName
+            '    Call addBuffToQueue(objBuff)
+            'End If
         End If
     Next objBuff
     
-9    m_tmrDroppedRebuff.Enabled = False
+    m_tmrDroppedRebuff.Enabled = False
 
 Fin:
+    Call g_Macro.Loot.silentID(False)
     Set m_droppedQueue = New clsSpellQueue
     Set m_buffItems = New colObjects
     Exit Sub
@@ -939,7 +968,8 @@ On Error GoTo ErrorHandler
                 Call m_buffItems.addObject(objItem)
             End If
             
-            'Call g_Hooks.IDQueueAdd(objItem.Guid)
+            Call g_Macro.Loot.silentID(True)
+            Call g_Hooks.IDQueueAdd(objItem.Guid)
             
             bFound = True
             
