@@ -1853,6 +1853,7 @@ Public Sub exportInventory()
     'start a new ID queue
     Set m_IdQueue = New colObjects
     
+    Call SetSilentID(True)
     For Each objItem In g_Objects.Items.Inv
         If Valid(objItem) Then
             Call m_IdQueue.Add(objItem.Guid, objItem.Name)
@@ -1880,6 +1881,7 @@ Private Sub m_tmrExportInv_OnTimeOut()
         PrintMessage "Export: " & m_IdQueue.Count & " items left"
     Else
         Call writeInventoryExport
+        Call SetSilentID(False)
     End If
 End Sub
 
