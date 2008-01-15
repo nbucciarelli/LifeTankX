@@ -46,6 +46,7 @@ Public Enum eMacroStates
     ST_BUDDYREBUFF
     ST_HEALING
     ST_RESTAM
+    ST_FELLOWHEAL
     ST_FLETCHING
     ST_STICK_NAV
     ST_NAV
@@ -1097,6 +1098,68 @@ ErrorHandler:
     Resume Fin
 End Function
 
+'DoFellowHeal
+Private Function DoFellowHeal(Optional ByVal bStam As Boolean) As Boolean
+On Error GoTo ErrorHandler
+    Dim bRet As Boolean
+   
+    bRet = False
+
+    If Not g_Objects.Fellowship.Active Then GoTo Fin
+
+    Dim objFellow As acObject
+    
+    Set objFellow = Nothing
+    
+    For Each objFellow In g_Objects.Fellowship
+        
+        If Not Valid(objFellow) Then GoTo NextObj
+        If (objFellow.Name = g_Filters.playerName) Then GoTo NextObj
+        
+        'MyDebug "clsMacro.DoFellowHeal: " & objFellow.Name & ":health:" & objFellow.Health & " out of " & objFellow.MaxHealth
+        
+        If (objFellow.Health <= 0) Then GoTo Fin
+        
+        If (bStam) Then
+            If (objFellow.Stamina <= GetPercent(objFellow.MaxStamina, g_Data.FellowStamThreshold)) Then
+                If Not ValidRangeTo(objFellow, g_ui.Macro.txtAssistRange.Text) Then
+                    'MyDebug "clsMacro.DoFellowHeal: out of range: " & objFellow.Name & " : " & objFellow.GetRange
+                    GoTo NextObj
+                End If
+                'Heal them!
+                MyDebug "clsMacro.DoFellowHeal: Staming " & objFellow.Name & " :guid: " & objFellow.Guid
+                Call g_Spells.Cast_StamOther(objFellow.Guid)
+                m_fellowNeedsStam = False
+                bRet = True
+            End If
+        Else
+            If (objFellow.Health <= GetPercent(objFellow.MaxHealth, g_Data.FellowHealthThreshold)) Then
+                'MyDebug "clsMacro.DoFellowHeal: " & objFellow.Name & ":health:" & objFellow.Health & " at " & GetPercent(objFellow.MaxHealth, g_Data.FellowHealthThreshold)
+            
+                If Not ValidRangeTo(objFellow, g_ui.Macro.txtAssistRange.Text) Then
+                    'MyDebug "clsMacro.DoFellowHeal: out of range: " & objFellow.Name & " : " & objFellow.GetRange
+                    GoTo NextObj
+                End If
+                'Heal them!
+                MyDebug "clsMacro.DoFellowHeal: healing " & objFellow.Name & " :guid: " & objFellow.Guid
+                Call g_Spells.Cast_HealOther(objFellow.Guid)
+                m_fellowNeedsHealing = False
+                bRet = True
+            End If
+        End If
+        
+NextObj:
+    Next objFellow
+
+Fin:
+    GoFellowHeal = bRet
+    Exit Function
+ErrorHandler:
+    GoFellowHeal = False
+    PrintErrorMessage "clsMacro.GoFellowHeal() - " & Err.Description
+    Exit Function
+End Function
+
 ' See if any fellow members nearby need healing
 Private Function GoFellowHeal(Optional ByVal bStam As Boolean) As Boolean
 On Error GoTo ErrorHandler
@@ -1125,24 +1188,15 @@ On Error GoTo ErrorHandler
                     'MyDebug "clsMacro.GoFellowHeal: out of range: " & objFellow.Name & " : " & objFellow.GetRange
                     GoTo NextObj
                 End If
-                'Heal them!
-                MyDebug "clsMacro.GoFellowHeal: Staming " & objFellow.Name & " :guid: " & objFellow.Guid
-                Call g_Spells.Cast_StamOther(objFellow.Guid)
-                m_fellowNeedsStam = False
                 bRet = True
             End If
         Else
             If (objFellow.Health <= GetPercent(objFellow.MaxHealth, g_Data.FellowHealthThreshold)) Then
                 'MyDebug "clsMacro.GoFellowHeal: " & objFellow.Name & ":health:" & objFellow.Health & " at " & GetPercent(objFellow.MaxHealth, g_Data.FellowHealthThreshold)
-            
                 If Not ValidRangeTo(objFellow, g_ui.Macro.txtAssistRange.Text) Then
                     'MyDebug "clsMacro.GoFellowHeal: out of range: " & objFellow.Name & " : " & objFellow.GetRange
                     GoTo NextObj
                 End If
-                'Heal them!
-                MyDebug "clsMacro.GoFellowHeal: healing " & objFellow.Name & " :guid: " & objFellow.Guid
-                Call g_Spells.Cast_HealOther(objFellow.Guid)
-                m_fellowNeedsHealing = False
                 bRet = True
             End If
         End If
@@ -1254,10 +1308,12 @@ End Sub
 '***************************************
 '*****************************************************************************
 '***************************************
-'
-'
-'
-'
+'***************************************
+'*****************************************************************************
+'***************************************
+'***************************************
+'*****************************************************************************
+'***************************************
 '
 '
 ' RunState
@@ -1265,10 +1321,12 @@ End Sub
 ' Main macro function - Runs the current state
 '
 '
-'
-'
-'
-'
+'***************************************
+'*****************************************************************************
+'***************************************
+'***************************************
+'*****************************************************************************
+'***************************************
 '***************************************
 '*****************************************************************************
 '***************************************
@@ -1695,6 +1753,28 @@ On Error GoTo ErrorHandler
             Case ST_HEALING
                 Call m_Healing.RunState
                 
+            Case ST_FELLOWHEAL
+                'check to see if fellow members nearby need healing
+                If g_ui.Macro.chkHealFellow.Checked And g_Objects.Fellowship.Active And m_fellowNeedsHealing Then
+                    locDebug "ST_FELLOWHEAL: checking for fellow members in need of healing"
+                    If GoFellowHeal Then
+                        Call DoFellowHeal
+                        GoTo Fin
+                    End If
+                End If
+                
+                'check to see if fellow members nearby need Staming
+                If g_ui.Macro.chkStamFellow.Checked And g_Objects.Fellowship.Active And m_fellowNeedsStam Then
+                    locDebug "ST_FELLOWHEAL: checking for fellow members in need of Staming"
+                    If GoFellowHeal(True) Then
+                        Call DoFellowHeal(True)
+                        GoTo Fin
+                    End If
+                End If
+                
+                'Ok, then go back to Idle state so we can figure out what to do
+                Call GoIdle
+            
             Case ST_FLETCHING
                 ' If we have a War spell in the queue, be sure to clear it out
                 Call ClearSpellQueue
@@ -2931,6 +3011,9 @@ On Error GoTo ErrorHandler
             Case ST_RESTAM
                 sRet = "Restaming " & m_Restam.GetCurrentStateString
             
+            Case ST_FELLOWHEAL
+                sRet = "Fellow Heal"
+
             Case ST_FLETCHING
                 sRet = "Fletching (" & m_Fletcher.GetStateString & ")"
                 

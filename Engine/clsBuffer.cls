@@ -467,6 +467,17 @@ On Error GoTo ErrorHandler
             MyDebug "tmrDroppedRebuff: buffSpell: " & buffSpell.SpellName
 
 5            For Each objItem In m_buffItems
+                Dim testItem As acObject
+                Set testItem = g_Filters.g_worldFilter.Item(objItem.Guid)
+                If Valid(testItem) Then
+                    If testItem.Spells.Exists(buffSpell.SpellName) Then
+                        MyDebug "m_tmrDroppedRebuff: TEST ITEM ** Buff Exists **: " & objBuff.Description & " : " & testItem.Name
+                        bFoundSpell = True
+                    Else
+                        MyDebug "m_tmrDroppedRebuff: TEST ITEM Missing Buff: " & objBuff.Description & " : " & testItem.Name
+                        bMissingSpell = True
+                    End If
+                End If
                 If Valid(objItem) Then
 6                    If objItem.Spells.Exists(buffSpell.SpellName) Then
                         MyDebug "m_tmrDroppedRebuff: ** Buff Exists **: " & objBuff.Description & " : " & objItem.Name

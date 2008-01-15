@@ -657,6 +657,7 @@ End Sub
 
 Private Sub m_Objects_OnRareDetected(ByVal obj As DarksideFilter.acObject)
 On Error Resume Next
+    If g_ui.Options.chkFilterIdMsg.Checked Then Exit Sub
     If g_ui.Loot.chkEnableLooting.Checked Then
         PrintMessage "*** [Rare Detected] ***  " & obj.Name
         'Call PlaySound(SOUND_RARE)
@@ -666,13 +667,13 @@ End Sub
 Private Sub m_Objects_OnMajorDetected(ByVal obj As DarksideFilter.acObject, ByVal sSpellName As String)
 On Error Resume Next
     If g_ui.Options.chkFilterIdMsg.Checked Then Exit Sub
-    If g_ui.Loot.chkPickupMajors.Checked Then PrintMessage "[Major Detected] " & obj.Name & " : " & sSpellName
+    If ((g_Hooks.CurrentSelection = obj.Guid) Or (obj.Wielder <> 0)) And g_ui.Loot.chkPickupMajors.Checked Then PrintMessage "[Major Detected] " & obj.Name & " : " & sSpellName
 End Sub
 
 Private Sub m_Objects_OnMinorDetected(ByVal obj As DarksideFilter.acObject, ByVal sSpellName As String)
 On Error Resume Next
     If g_ui.Options.chkFilterIdMsg.Checked Then Exit Sub
-    If g_ui.Loot.chkPickupMinors.Checked Then PrintMessage "[Minor Detected] " & obj.Name & " : " & sSpellName
+    If ((g_Hooks.CurrentSelection = obj.Guid) Or (obj.Wielder <> 0)) And g_ui.Loot.chkPickupMinors.Checked Then PrintMessage "[Minor Detected] " & obj.Name & " : " & sSpellName
 End Sub
 
 Private Sub m_Objects_OnObjectDeath(ByVal obj As DarksideFilter.acObject)
@@ -1153,6 +1154,10 @@ On Error GoTo ErrorHandler
             ElseIf g_Macro.State = ST_BUDDYREBUFF Then
                 If InStr(bstrMsg, "You cast") Then
                     Call g_BuddyBuffer.CheckCastedSpell(bstrMsg)
+                End If
+            ElseIf g_Macro.State = ST_FELLOWHEAL Then
+                If InStr(bstrMsg, "You cast") Then
+                    Call g_Spells.OnSpellCastComplete(True, "ACEvents: You cast")
                 End If
             Else
             

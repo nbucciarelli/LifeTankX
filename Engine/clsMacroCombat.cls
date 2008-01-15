@@ -216,6 +216,16 @@ On Error GoTo ErrorMessage
         Exit Sub
     End If
     
+    ' *** FIXME :: need to add a high priority buff UI check box first ***
+    'If we are a spell caster, then can buff while killing
+    'If IsCaster Then
+    '    'check if we need to buff
+    '    If (g_ui.Buffs.chkEnableBuffing.Checked) And (g_Buffer.BuffQueue.Count > 0) Then
+    '        Call StopCombat("Caster needs to buff")
+    '        Exit Sub
+    '    End If
+    'End If
+    
     Select Case m_State
 
         'Called before the each new attack
