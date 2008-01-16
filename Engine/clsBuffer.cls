@@ -315,6 +315,9 @@ Private Sub OnRestartBuffCycle()
     'rebuild the bufflist
     Call BuildBuffList
     
+    'See if we need to buff any weapons
+    'Call BuffWeapons
+    
     m_lCurBuff = -1
 End Sub
 
@@ -452,16 +455,6 @@ On Error GoTo ErrorHandler
     bMissingSpell = False
     iCount = 0
 
-    'Set m_buffItems = New colObjects
-    
-    'Call m_buffItems.addObject(g_Objects.Equipment.Top)
-    'Call m_buffItems.addObject(g_Objects.Equipment.Bottom)
-    'Call m_buffItems.addObject(g_Objects.Equipment.head)
-    'Call m_buffItems.addObject(g_Objects.Equipment.Hands)
-    'Call m_buffItems.addObject(g_Objects.Equipment.Feet)
-    'Call m_buffItems.addObject(g_Objects.Equipment.TopUndie)
-    'Call m_buffItems.addObject(g_Objects.Equipment.BottomUndie)
- 
     'List of dropped Item buffs
 3    For Each objBuff In m_droppedQueue.SpellQueue
 4        Set buffSpell = g_Spells.Items.FindSpellByType(objBuff.SpellType, objBuff.SpellElement, g_Data.BuffsSpellsLevel)
@@ -473,28 +466,30 @@ On Error GoTo ErrorHandler
                 bMissingSpell = False
                 bFoundSpell = False
                 
-                Set testItem = g_Filters.g_worldFilter.Item(objItem.Guid)
-                If Valid(testItem) Then
-                    If testItem.Longs(keyActiveSpellCount) > 0 Then
-                        Dim spellCount As Integer
-                        Dim i As Integer
-                        spellCount = testItem.Longs(keyActiveSpellCount)
-                        MyDebug "tmrDroppedRebuff: ActiveSpellCount:  " & spellCount
-                        For i = 0 To spellCount - 1
-                            MyDebug "tmrDroppedRebuff: testItem.ActiveSpell(): " & testItem.ActiveSpell(i)
-                            If testItem.ActiveSpell(i) = buffSpell.SpellID Then
-                                'SpellID = wObj.spell(i)
-                                MyDebug "m_tmrDroppedRebuff: ** TEST Buff Exists **: " & objBuff.Description & " : " & testItem.Name
-                                bMissingSpell = False
-                            End If
-                        Next i
-                    Else
-                        'No Active spells, so must be missing them
-                        MyDebug "m_tmrDroppedRebuff: ** TEST Missing Buff **: " & objBuff.Description & " : " & testItem.Name
-                        bMissingSpell = True
-                        iCount = iCount + 1
-                    End If
-                End If
+                'Set testItem = g_Filters.g_worldFilter.Item(objItem.Guid)
+                'If Valid(testItem) Then
+                '    If testItem.Longs(keyActiveSpellCount) > 0 Then
+                '        Dim spellCount As Integer
+                '        Dim i As Integer
+                '        spellCount = testItem.Longs(keyActiveSpellCount)
+                '        MyDebug "tmrDroppedRebuff: ActiveSpellCount:  " & spellCount
+                '        For i = 0 To spellCount - 1
+                '            If testItem.ActiveSpell(i) = buffSpell.SpellID Then
+                '                'SpellID = wObj.spell(i)
+                '                MyDebug "m_tmrDroppedRebuff: ** TEST Buff Exists **: " & objBuff.Description & " : " & testItem.Name
+                '                bMissingSpell = False
+                '            End If
+                '        Next i
+                '    Else
+                '        'No Active spells, so must be missing them
+                '        MyDebug "m_tmrDroppedRebuff: ** TEST Missing Buff **: " & objBuff.Description & " : " & testItem.Name
+                '        bMissingSpell = True
+                '        iCount = iCount + 1
+                '    End If
+                'End If
+                'If bMissingSpell Then
+                '    iCount = iCount + 1
+                'End If
                 
                 If Valid(objItem) Then
 6                    If objItem.Spells.Exists(buffSpell.SpellName) Then
@@ -502,11 +497,9 @@ On Error GoTo ErrorHandler
                         'bMissingSpell = False
                     Else
                         MyDebug "m_tmrDroppedRebuff: Missing Buff: " & objBuff.Description & " : " & objItem.Name
-                        'bMissingSpell = True
+                        bMissingSpell = True
+                        iCount = iCount + 1
                     End If
-                End If
-                If bMissingSpell Then
-                    iCount = iCount + 1
                 End If
 7            Next objItem
             
@@ -514,7 +507,7 @@ On Error GoTo ErrorHandler
                 MyDebug "m_tmrDroppedRebuff: Queing objBuff: " & objBuff.Description & " :: " & objBuff.TargetName
                 Call addBuffToQueue(objBuff)
             Else
-                MyDebug "m_tmrDroppedRebuff: no missing spells found for: " & buffSpell.SpellName
+                MyDebug "m_tmrDroppedRebuff: Only missing (" & iCount & "): " & buffSpell.SpellName
             End If
             
             'If bMissingSpell Then
@@ -681,7 +674,34 @@ ErrorHandler:
     Resume Fin
 End Sub
 
-Public Sub existingSpellsOnPlayer()
+'See if this Family of spell is active on the player
+Public Function existingSpellFamilyOnPlayer(ByVal aFamily As String) As Boolean
+On Error GoTo ErrorHandler
+    
+    Dim isFound As Boolean
+    Dim i As Long
+
+    isFound = False
+    
+    For i = 0 To (g_Filters.ActiveSpellsCount - 1)
+    
+        MyDebug "existingSpellFamily: " & g_Filters.ActiveSpell(i).Family & " :vs: " & aFamily
+        
+        If g_Filters.ActiveSpell(i).Family = aFamily Then
+            isFound = True
+            GoTo Fin
+        End If
+    Next i
+
+Fin:
+    existingSpellFamilyOnPlayer = isFound
+    Exit Function
+ErrorHandler:
+    PrintErrorMessage "existingSpellFamilyOnPlayer - " & Err.Description & " - line: " & Erl
+    Resume Fin
+End Function
+
+Public Function existingSpellsOnPlayer(ByVal aFamily As String) As Boolean
 On Error GoTo ErrorHandler
     
     Dim newSpell As New clsSpellQueueItem
@@ -738,11 +758,12 @@ On Error GoTo ErrorHandler
     'Next iSpell
 
 Fin:
-    Exit Sub
+    existingSpellsOnPlayer = isFound
+    Exit Function
 ErrorHandler:
     PrintErrorMessage "existingSpellsOnPlayer - " & Err.Description & " - line: " & Erl
     Resume Fin
-End Sub
+End Function
 
 Public Sub DebugList()
     MyDebug "Displaying BuffList"
@@ -792,6 +813,12 @@ On Error GoTo ErrorHandler
     'Set the length of a complete buff cycle
     BuffCycleLen = CDbl(iRebuffInterval_min * 60)
 
+    'See if we need any "pre-buffs"
+    Call PreBuffCheck
+    
+    'See if we need to buff up Any weapons
+    'Call BuffWeapons
+    
     'push buffs to the queue if required
     If bPushBuffsNow Then
         MyDebug "StartService - Pushing buffs to list"
@@ -815,6 +842,167 @@ End Sub
 Public Sub StopService()
     MyDebug "clsBuffer.StopService()"
     Call Reset
+End Sub
+
+'Check to see if we need to pre-buff certain spells
+Private Sub PreBuffCheck()
+On Error GoTo ErrorHandler
+    Dim objBuff As clsSpellQueueItem
+    Dim aFamily As String
+
+    'First check critter buffs
+    If g_ui.Buffs.chkEnableCreatureBuffs Then
+        'First check critter
+        aFamily = "Creature Enchantment Mastery Self"
+        If Not existingSpellFamilyOnPlayer(aFamily) Then
+            objBuff.SpellFamily = aFamily
+            objBuff.SpellType = SPELLTYPE_NORMAL
+            objBuff.TargetName = "Self"
+            objBuff.TargetGUID = 0
+            objBuff.SpellSchool = SCHOOL_CREATURE
+            Call addBuffToQueue(objBuff)
+        End If
+        'Then check Will
+        aFamily = "Willpower Self"
+        If Not existingSpellFamilyOnPlayer(aFamily) Then
+            objBuff.SpellFamily = aFamily
+            objBuff.SpellType = SPELLTYPE_NORMAL
+            objBuff.TargetName = "Self"
+            objBuff.TargetGUID = 0
+            objBuff.SpellSchool = SCHOOL_CREATURE
+            Call addBuffToQueue(objBuff)
+        End If
+        'Then check Focus
+        aFamily = "Focus Self"
+        If Not existingSpellFamilyOnPlayer(aFamily) Then
+            objBuff.SpellFamily = aFamily
+            objBuff.SpellType = SPELLTYPE_NORMAL
+            objBuff.TargetName = "Self"
+            objBuff.TargetGUID = 0
+            objBuff.SpellSchool = SCHOOL_CREATURE
+            Call addBuffToQueue(objBuff)
+        End If
+        'Then check Life
+        aFamily = "Life Magic Mastery Self"
+        If Not existingSpellFamilyOnPlayer(aFamily) Then
+            objBuff.SpellFamily = aFamily
+            objBuff.SpellType = SPELLTYPE_NORMAL
+            objBuff.TargetName = "Self"
+            objBuff.TargetGUID = 0
+            objBuff.SpellSchool = SCHOOL_CREATURE
+            Call addBuffToQueue(objBuff)
+        End If
+        'And last check Item
+        aFamily = "Item Enchantment Mastery Self"
+        If Not existingSpellFamilyOnPlayer(aFamily) Then
+            objBuff.SpellFamily = aFamily
+            objBuff.SpellType = SPELLTYPE_NORMAL
+            objBuff.TargetName = "Self"
+            objBuff.TargetGUID = 0
+            objBuff.SpellSchool = SCHOOL_CREATURE
+            Call addBuffToQueue(objBuff)
+        End If
+    End If
+    
+        'Buff Wand 1st
+        'Call CheckItemBuff(g_ui.Buffs.chkItmWandHL.Checked, SPELL_HERMETIC_LINK, g_Data.Wand)
+        'Call CheckItemBuff(g_ui.Buffs.chkItmWandDef.Checked, SPELL_DEF, g_Data.Wand)
+        'Call CheckItemBuff(g_ui.Buffs.chkItmWandSD.Checked, SPELL_SPIRIT_DRINKER, g_Data.Wand)
+
+Fin:
+    Exit Sub
+ErrorHandler:
+    PrintErrorMessage "PreBuffCheck - " & Err.Description & " - line: " & Erl
+    Resume Fin
+End Sub
+
+Private Sub buffItem(ByVal isChecked As Boolean, ByVal sFamily As String, ByVal objItem As acObject)
+On Error GoTo ErrorHandler
+    Dim objBuff As New clsSpellQueueItem
+    
+    If isChecked Then
+        objBuff.SpellFamily = sFamily
+        objBuff.SpellType = SPELLTYPE_NORMAL
+        objBuff.LevelWanted = 7
+        objBuff.TargetName = objItem.Name
+        objBuff.TargetGUID = objItem.Guid
+        objBuff.SpellSchool = SCHOOL_ITEM
+        Call addBuffToQueue(objBuff)
+    End If
+
+Fin:
+    Exit Sub
+ErrorHandler:
+    PrintErrorMessage "buffItem - " & Err.Description & " - line: " & Erl
+    Resume Fin
+End Sub
+
+' Buff all the extra weapons
+Public Sub BuffWeapons()
+On Error GoTo ErrorHandler
+    Dim aWeap As acObject
+    Dim i As Integer
+        
+    'Buff extra Weapons/Wands
+    For i = DMG_SLASHING To DMG_LIGHTNING
+    
+        Set aWeap = Nothing
+        
+        Select Case i
+            Case DMG_SLASHING
+                If g_ui.Macro.chkWeapSlash.Checked Then
+                    Set aWeap = g_Data.WeapSlash
+                End If
+            Case DMG_BLUDGEONING
+                If g_ui.Macro.chkWeapBludge.Checked Then
+                    Set aWeap = g_Data.WeapBludge
+                End If
+            Case DMG_PIERCING
+                If g_ui.Macro.chkWeapPierce.Checked Then
+                    Set aWeap = g_Data.WeapPierce
+                End If
+            Case DMG_FIRE
+                If g_ui.Macro.chkWeapFire.Checked Then
+                    Set aWeap = g_Data.WeapFire
+                End If
+            Case DMG_COLD
+                If g_ui.Macro.chkWeapCold.Checked Then
+                    Set aWeap = g_Data.WeapCold
+                End If
+            Case DMG_ACID
+                If g_ui.Macro.chkWeapAcid.Checked Then
+                    Set aWeap = g_Data.WeapAcid
+                End If
+            Case DMG_LIGHTNING
+                If g_ui.Macro.chkWeapLight.Checked Then
+                    Set aWeap = g_Data.WeapLight
+                End If
+        End Select
+        
+        If Valid(aWeap) Then
+            If g_Macro.CombatType = TYPE_CASTER Then
+                Call buffItem(g_ui.Buffs.chkItmWandHL.Checked, SPELL_HERMETIC_LINK, aWeap)
+                Call buffItem(g_ui.Buffs.chkItmWandDef.Checked, SPELL_DEF, aWeap)
+                Call buffItem(g_ui.Buffs.chkItmWandSD.Checked, SPELL_SPIRIT_DRINKER, aWeap)
+            ElseIf g_Macro.CombatType = TYPE_MELEE Then
+                Call CheckItemBuff(g_ui.Buffs.chkItmWeapHS.Checked, SPELL_HS, aWeap)
+                Call CheckItemBuff(g_ui.Buffs.chkItmWeapBD.Checked, SPELL_BD, aWeap)
+                Call CheckItemBuff(g_ui.Buffs.chkItmWeapSK.Checked, SPELL_SK, aWeap)
+                Call CheckItemBuff(g_ui.Buffs.chkItmWeapDE.Checked, SPELL_DEF, aWeap)
+            Else    'Archer
+                Call CheckItemBuff(g_ui.Buffs.chkItmWeapBD.Checked, SPELL_BD, aWeap)
+                Call CheckItemBuff(g_ui.Buffs.chkItmWeapSK.Checked, SPELL_SK, aWeap)
+                Call CheckItemBuff(g_ui.Buffs.chkItmWeapDE.Checked, SPELL_DEF, aWeap)
+            End If
+        End If
+        
+    Next i
+
+Fin:
+    Exit Sub
+ErrorHandler:
+    PrintErrorMessage "WeaponBuff - " & Err.Description & " - line: " & Erl
+    Resume Fin
 End Sub
 
 'Casts the next spell in the buff queue
@@ -912,7 +1100,7 @@ Fin:
     Set objSpell = Nothing
     Exit Sub
 ErrorHandler:
-    PrintErrorMessage "CastNextSpell"
+    PrintErrorMessage "CastNextSpell - " & Err.Description & " - line: " & Erl
     Resume Fin
 End Sub
 
@@ -972,11 +1160,11 @@ On Error GoTo ErrorHandler
             
             bFound = True
             
-            If objItem.Spells.Count > 0 And objItem.Spells.Exists(sSpellName) Then
-5                ' Found it!
-                MyDebug "CheckExpiredItemSpell: Found spell on item: " & sSpellName
-                Exit Sub
-            End If
+            'If objItem.Spells.Count > 0 And objItem.Spells.Exists(sSpellName) Then
+5           '     ' Found it!
+            '    MyDebug "CheckExpiredItemSpell: Found spell on item: " & sSpellName
+            '    Exit Sub
+            'End If
         End If
     End If
 6
@@ -984,8 +1172,6 @@ On Error GoTo ErrorHandler
         MyDebug "CheckExpiredItemSpell: Could not find item: " & sTargetName
         Exit Sub
     End If
-
-7
 
     'MyDebug "CheckExpiredItemSpell:  objSpell: " & objSpell.SpellName & " : " & objSpell.SpellFamily
 

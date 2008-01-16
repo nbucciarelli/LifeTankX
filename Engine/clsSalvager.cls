@@ -331,6 +331,9 @@ On Error GoTo ErrorHandler
         ElseIf IsWorthAssessing(objItem.itemType) And (objItem.LastIdTime = 0) Then
             'If item hasn't been assessed return
             bRet = False
+        ElseIf PassActiveFilters(objItem, False) Then
+            'Passed some other filter
+            bRet = False
         Else
             'Ok we found a salvageable item, add it to our list
             bRet = True

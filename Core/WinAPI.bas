@@ -48,9 +48,11 @@ Public Const WA_ACTIVATE = &H1
 Public Const TabKey = &H9&
 Public Const WM_PASTE = &H302
 
+Public Const WM_MOUSEMOVE = &H200
 Public Const WM_LBUTTONDOWN = &H201
 Public Const WM_LBUTTONUP = &H202
-Public Const WM_MOUSEMOVE = &H200
+Public Const WM_RBUTTONDOWN = &H204
+Public Const WM_RBUTTONUP = &H205
 
 Public Type POINTAPI
   x As Long

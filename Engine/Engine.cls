@@ -505,6 +505,8 @@ On Error GoTo ErrorHandler
     
     If Not m_bEngineObjectsLoaded Then GoTo Fin
 
+    Call g_Macro.Loot.SetSilentID(False)
+
     If Not Valid(g_HUD) Then GoTo Fin
     
     If g_ui.Options.chkLockHuds.Checked Then
@@ -516,7 +518,6 @@ On Error GoTo ErrorHandler
         If bEatKey Then MyDebug "Found a HUD to move"
     End If
     
-    Call g_Macro.Loot.SetSilentID(False)
 
 Fin:
     IEngine_HandleMouseClick = bEatKey

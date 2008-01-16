@@ -107,21 +107,24 @@ On Error GoTo ErrorHandler
     m_bLootCorpses = True
     m_bLootGround = False
     g_bLootRare = False
-    Set m_rareCorpse = Nothing
-1    Set m_tmrSecure = CreateTimer
-2    Set m_tmrNextTime = CreateTimer
-3    Set m_tmrTransition = CreateTimer
-4    Set m_tmrExportInv = CreateTimer
     
-5    Set m_corpseList = New colObjects
-6    Set m_IdQueue = New colObjects
-7    Set m_ItemsIdQueue = New colObjects
+    Set m_rareCorpse = Nothing
+    Set m_tmrSecure = CreateTimer
+    Set m_tmrNextTime = CreateTimer
+    Set m_tmrTransition = CreateTimer
+    Set m_tmrExportInv = CreateTimer
+    
+    Set m_corpseList = New colObjects
+    Set m_IdQueue = New colObjects
+    Set m_ItemsIdQueue = New colObjects
   
-8    Set m_dicCorpseToIgnore = New Dictionary
+    Set m_dicCorpseToIgnore = New Dictionary
     
      m_NavHold = 0
 
-9    Call Reset
+    Call Reset
+
+    m_silentID = False
 
 Fin:
     Exit Sub
@@ -559,7 +562,9 @@ On Error GoTo Error_Handler
         ((g_Hooks.CurrentSelection = objItem.Guid) Or (objItem.Wielder <> 0)) Then
             MyDebug "ID'ing selected item"
             Call printIdString(objItem)
-            Call SetSilentID(True)
+            If g_Macro.Running Then
+                Call SetSilentID(True)
+            End If
     End If
     
     If m_IdQueue.Count > 0 Then

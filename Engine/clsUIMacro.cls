@@ -476,19 +476,19 @@ On Error GoTo Error_Handler
         g_Data.ArrowShaft = .GetValue(ID_ARROWSHAFT, TAG_NOT_SET)
         
         g_Data.SetWeapBludgeGUID = .GetValue("WeapBludge", 0)
-        chkWeapBludge.Checked = g_Settings.GetValue("chkWeapBludge", False)
+        chkWeapBludge.Checked = .GetValue("chkWeapBludge", False)
         g_Data.SetWeapSlashGUID = .GetValue("WeapSlash", 0)
-        chkWeapSlash.Checked = g_Settings.GetValue("chkWeapSlash", False)
+        chkWeapSlash.Checked = .GetValue("chkWeapSlash", False)
         g_Data.SetWeapPierceGUID = .GetValue("WeapPierce", 0)
-        chkWeapPierce.Checked = g_Settings.GetValue("chkWeapPierce", False)
+        chkWeapPierce.Checked = .GetValue("chkWeapPierce", False)
         g_Data.SetWeapFireGUID = .GetValue("WeapFire", 0)
-        chkWeapFire.Checked = g_Settings.GetValue("chkWeapFire", False)
+        chkWeapFire.Checked = .GetValue("chkWeapFire", False)
         g_Data.SetWeapColdGUID = .GetValue("WeapCold", 0)
-        chkWeapCold.Checked = g_Settings.GetValue("chkWeapCold", False)
+        chkWeapCold.Checked = .GetValue("chkWeapCold", False)
         g_Data.SetWeapAcidGUID = .GetValue("WeapAcid", 0)
-        chkWeapAcid.Checked = g_Settings.GetValue("chkWeapAcid", False)
+        chkWeapAcid.Checked = .GetValue("chkWeapAcid", False)
         g_Data.SetWeapLightGUID = .GetValue("WeapLight", 0)
-        chkWeapLight.Checked = g_Settings.GetValue("chkWeapLight", False)
+        chkWeapLight.Checked = .GetValue("chkWeapLight", False)
         
         Call UpdateMacroItemsLabels
         

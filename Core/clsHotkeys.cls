@@ -66,6 +66,15 @@ On Error GoTo ErrorHandler
             If (lKey >= 0) And (lKey <= 255) Then 'valid keyrange
                 m_Key(lKey).Pushed = False
             End If
+        Case WM_RBUTTONDOWN
+            If Valid(g_Core) Then
+                x = GET_X_LPARAM(lParam)
+                y = GET_Y_LPARAM(lParam)
+                bEatKey = g_Core.Engine.HandleMouseClick(x, y)
+                If bEatKey Then
+                    bMoveHUD = True
+                End If
+            End If
         Case WM_LBUTTONDOWN
             If Valid(g_Core) Then
                 x = GET_X_LPARAM(lParam)
