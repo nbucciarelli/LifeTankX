@@ -1123,7 +1123,7 @@ On Error GoTo ErrorHandler
             If InStr(bstrMsg, "has expired") Then
                 'See if it's an Item spell
                 If InStr(bstrMsg, "The spell") Then
-                    Call g_Buffer.CheckExpiredItemSpell(Left(bstrMsg, Len(bstrMsg) - 1))
+                    'Call g_Buffer.CheckExpiredItemSpell(Left(bstrMsg, Len(bstrMsg) - 1))
                 Else
                     Call g_Buffer.CheckExpiredSpell(Left(bstrMsg, Len(bstrMsg) - 1)) ' get rid of char(10) on end
                 End If

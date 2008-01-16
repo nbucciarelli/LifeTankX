@@ -457,7 +457,8 @@ On Error GoTo ErrorHandler
 
     'List of dropped Item buffs
 3    For Each objBuff In m_droppedQueue.SpellQueue
-4        Set buffSpell = g_Spells.Items.FindSpellByType(objBuff.SpellType, objBuff.SpellElement, g_Data.BuffsSpellsLevel)
+        'Set buffSpell = g_Spells.Items.FindSpellByType(objBuff.SpellType, objBuff.SpellElement, objBuff.LevelWanted)
+4        Set buffSpell = g_Spells.Items.FindSpell(objBuff.SpellFamily)
         If Valid(buffSpell) Then
             'Go through all the Equipped Items and see if this spell is missing from them
             MyDebug "tmrDroppedRebuff: buffSpell: " & buffSpell.SpellName
@@ -561,29 +562,7 @@ On Error GoTo ErrorHandler
         Call CheckItemBuff(.chkItmWandDef.Checked, SPELL_DEF, g_Data.Wand)
         Call CheckItemBuff(.chkItmWandSD.Checked, SPELL_SPIRIT_DRINKER, g_Data.Wand)
         
-        If .chkEnableCreatureBuffs.Checked Then
-            For i = 0 To .lstCreature.Count - 1
-                bChecked = .lstCreature.Data(2, i, 0)
-                sSpellFam = .lstCreature.Data(1, i, 0)
-                If bChecked Then
-                    Call AddBuffToList(sSpellFam)
-                End If
-            Next i
-        End If
-        
-        If .chkEnableLifeBuffs.Checked Then
-            For i = 0 To .lstLifePros.Count - 1
-                bChecked = .lstLifePros.Data(2, i, 0)
-                sSpellFam = .lstLifePros.Data(1, i, 0)
-                If bChecked Then
-                    Call AddBuffToList(sSpellFam)
-                End If
-            Next i
-        End If
-        
         'Armor Banes
-        'SPK -  Added option to use the new item banes system, where you only have to select yourself
-        '       to cast the spells
         If .chkItmSelectSelf.Checked Then
             Call CheckItemBanes(.chkItmSelectSelf.Checked, g_Objects.Player)
         Else
@@ -595,10 +574,6 @@ On Error GoTo ErrorHandler
             Call CheckCollectionBanes(.chkItmArmorTop.Checked, g_Objects.Equipment.Top)
             Call CheckCollectionBanes(.chkItmArmorBottom.Checked, g_Objects.Equipment.Bottom)
         End If
-        
-        '*****************************************************************************
-        'Special macro items which may not be currently equipped but need to be buffed
-        '*****************************************************************************
         
         'Weapon / Bow / Shield
         If IsMelee Then
@@ -615,6 +590,28 @@ On Error GoTo ErrorHandler
             Call CheckItemBuff(.chkItmWeapBD.Checked, SPELL_BD, objWeapon)
             Call CheckItemBuff(.chkItmWeapSK.Checked, SPELL_SK, objWeapon)
             Call CheckItemBuff(.chkItmWeapDE.Checked, SPELL_DEF, objWeapon)
+        End If
+        
+        'Critter Buffs
+        If .chkEnableCreatureBuffs.Checked Then
+            For i = 0 To .lstCreature.Count - 1
+                bChecked = .lstCreature.Data(2, i, 0)
+                sSpellFam = .lstCreature.Data(1, i, 0)
+                If bChecked Then
+                    Call AddBuffToList(sSpellFam)
+                End If
+            Next i
+        End If
+        
+        'Life Pro's
+        If .chkEnableLifeBuffs.Checked Then
+            For i = 0 To .lstLifePros.Count - 1
+                bChecked = .lstLifePros.Data(2, i, 0)
+                sSpellFam = .lstLifePros.Data(1, i, 0)
+                If bChecked Then
+                    Call AddBuffToList(sSpellFam)
+                End If
+            Next i
         End If
 
     End With
@@ -904,11 +901,6 @@ On Error GoTo ErrorHandler
         End If
     End If
     
-        'Buff Wand 1st
-        'Call CheckItemBuff(g_ui.Buffs.chkItmWandHL.Checked, SPELL_HERMETIC_LINK, g_Data.Wand)
-        'Call CheckItemBuff(g_ui.Buffs.chkItmWandDef.Checked, SPELL_DEF, g_Data.Wand)
-        'Call CheckItemBuff(g_ui.Buffs.chkItmWandSD.Checked, SPELL_SPIRIT_DRINKER, g_Data.Wand)
-
 Fin:
     Exit Sub
 ErrorHandler:
