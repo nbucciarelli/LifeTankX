@@ -204,7 +204,7 @@ End Function
 Public Function TargetScanner(ByVal colTargets As colObjects) As Boolean
 On Error GoTo ErrorHandler
     Dim fSearchRadius As Integer
-    Dim objTarget As acObject
+    Dim objEntity As acObject
 
     If g_Macro.CombatType = TYPE_ARCHER Then
             fSearchRadius = g_ui.Macro.txtArcherRadius.Text
