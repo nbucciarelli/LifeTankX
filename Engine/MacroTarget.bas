@@ -71,9 +71,7 @@ ErrorHandler:
     Resume Fin
 End Function
 
-Public Function IsValidTarget(ByVal Target As acObject, _
-        Optional bMustBeInList As Boolean = False, _
-        Optional bIgnoreBlacklist As Boolean = False) As Boolean
+Public Function IsValidTarget(ByVal Target As acObject, Optional bMustBeInList As Boolean = False, Optional bIgnoreBlacklist As Boolean = False) As Boolean
 On Error GoTo ErrorHandler
     
     'default ret val
@@ -201,6 +199,55 @@ ErrorHandler:
     PrintErrorMessage "BetterTargetAvailable - " & Err.Description
     Resume Fin
 End Function
+
+'Target scanner function that looks for a Valid target within Range
+Public Function TargetScanner(ByVal colTargets As colObjects) As Boolean
+On Error GoTo ErrorHandler
+    Dim fSearchRadius As Integer
+    Dim objTarget As acObject
+
+    If g_Macro.CombatType = TYPE_ARCHER Then
+            fSearchRadius = g_ui.Macro.txtArcherRadius.Text
+    ElseIf g_Macro.CombatType = TYPE_MELEE Then
+            fSearchRadius = g_ui.Macro.txtMeleeRadius.Text
+    Else
+        fSearchRadius = g_ui.Macro.txtMageRadius.Text
+        If g_ui.Macro.chkVuln.Checked And fSearchRadius < g_ui.Macro.txtVulnRange.Text Then
+            fSearchRadius = g_ui.Macro.txtVulnRange.Text
+        End If
+    End If
+
+
+    'If g_ui.Macro.chkDebuffFirst.Checked And IsCaster Then
+    '    bFound = FindNonDebuffedTarget(objTargetOut, fSearchRadius, "FindBestTarget")
+    '    If bFound Then GoTo Fin
+    'End If
+    '
+    'bFound = FindTarget(objTargetOut, fSearchRadius, Not g_ui.Macro.chkAttackAny.Checked, , AttackVulnedMobsFirst, , "FindBestTarget")
+    
+    'loop through each object of the collection
+    For Each objEntity In colTargets
+        'First make sure it's a valid potential target
+        If IsValidTarget(objEntity, True) Then
+            'Is Target within range? -
+            If TargetCanBeReached(objEntity, fSearchRadius) Then
+                'locDebug "TargetScanner: " & objEntity.Name & " is in range -- SR:" & fSearchRadius
+                TargetScanner = True
+                GoTo Fin
+            End If
+        End If
+    Next objEntity
+    
+    TargetScanner = False
+
+Fin:
+    Exit Function
+ErrorHandler:
+    TargetScanner = False
+    PrintErrorMessage "TargetScanner - " & Err.Description
+    Resume Fin
+End Function
+
 
 Public Function FindBestTarget(Optional ByRef objTargetOut As acObject, Optional ByVal fSearchRadius As Single = -1) As Boolean
 On Error GoTo ErrorHandler
@@ -452,8 +499,10 @@ On Error GoTo ErrorHandler
 
     Dim bFoundTarget As Boolean
     
-    'look for PKs before looking for monsters
-    bFoundTarget = FindTargetInCol(g_Objects.Players, objTargetOut, SearchRadius, bMustBeInList, bDanger, bPriorityToVulneds, bNonDebuffedTargetsOnly, sSource)
+    If g_ui.Macro.chkAttackPK.Checked Then
+        'look for PKs before looking for monsters
+        bFoundTarget = FindTargetInCol(g_Objects.Players, objTargetOut, SearchRadius, bMustBeInList, bDanger, bPriorityToVulneds, bNonDebuffedTargetsOnly, sSource)
+    End If
     
     'look for monster targets
     If Not bFoundTarget Then bFoundTarget = FindTargetInCol(g_Objects.Monsters, objTargetOut, SearchRadius, bMustBeInList, bDanger, bPriorityToVulneds, bNonDebuffedTargetsOnly, sSource)

@@ -3195,19 +3195,22 @@ End Sub
 ' Target scanner with it's own clock source
 Private Sub m_tmrTarget_Timer()
 On Error GoTo ErrorHandler
+    Dim bFoundTarget As Boolean
+
+    bFoundTarget = False
 
     If m_Combat.Target Is Nothing Then
         m_attackCritter = False
         
-        ' First check for Targets within Attack Range
-        If FindBestTarget() Then
-            m_attackCritter = True
-        ElseIf g_ui.Macro.chkVuln.Checked Then
-            ' Now check for non-vulned Targets within VulnRange
-            If FindNonDebuffedTarget(, g_ui.Macro.txtVulnRange.Text, "tmrTarget") Then
-                m_attackCritter = True
-            End If
+        'Look for PK's?
+        If g_ui.Macro.chkAttackPK.Checked Then
+            bFoundTarget = TargetScanner(g_Objects.Players)
         End If
+    
+        'look for monster targets
+        If Not bFoundTarget Then bFoundTarget = TargetScanner(g_Objects.Monsters)
+        
+        m_attackCritter = bFoundTarget
     End If
 
 Fin:
