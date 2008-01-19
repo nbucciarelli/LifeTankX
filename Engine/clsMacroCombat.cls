@@ -875,9 +875,10 @@ On Error GoTo Error_Handler
         End If
     ElseIf g_ui.Macro.chkSwitchIfBetterTarget.Checked Then
         If BetterTargetAvailable(m_objTarget, objNewTarget) Then
-            locDebug "EngagingBetterTarget - Found a better target"
             If Not g_ui.Options.chkFilterLTMsg.Checked Then
                 PrintMessage "Better target available - Switching from " & m_objTarget.Name & " to " & objNewTarget.Name & "..."
+            Else
+                locDebug "clsMacroCombat.EngageBetterTarget: Switching from " & m_objTarget.Name & " to " & objNewTarget.Name & "..."
             End If
             bRes = EngageCombat(objNewTarget, "EngageBetterTarget")
         Else

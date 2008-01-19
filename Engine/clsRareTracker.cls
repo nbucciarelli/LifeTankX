@@ -13,7 +13,7 @@ Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 Option Explicit
 
-Private Const AUTH_KEY = "A9c8u83na9NEp21psOQ9aj3zuQ1pSl2o" 'Authorization for Rare Tracker.
+Private Const AUTH_KEY = "Dk90aiNJaopND91iAnid03NapDi39anj" 'Authorization for Rare Tracker.
 
 Public Function SendData(RareName As String, playerName As String, Optional PlayerGUID As String)
 On Error GoTo ErrorHandler
@@ -39,15 +39,15 @@ On Error GoTo ErrorHandler
         
     
     'Debug data
-    MyDebug "Rare Find Data:"
+    MyDebug "clsRareTracker.Rare Find Data:"
     'MyDebug "Key: " & AUTH_KEY
-    MyDebug "Server: " & g_Filters.Server
-    MyDebug "Rare: " & RareName
-    MyDebug "Player GUID: " & g_Filters.PlayerGUID
-    MyDebug "Player Name (v1): " & g_Filters.playerName
-    MyDebug "Player Name (v2): " & g_ds.Player.Name
-    MyDebug "Player Name Passed To Fcn: " & playerName
-    MyDebug "Player Name (Altered): " & SendPlayerName
+    MyDebug "clsRareTracker.Server: " & g_Filters.Server
+    MyDebug "clsRareTracker.Rare: " & RareName
+    MyDebug "clsRareTracker.Player GUID: " & g_Filters.PlayerGUID
+    MyDebug "clsRareTracker.Player Name (v1): " & g_Filters.playerName
+    MyDebug "clsRareTracker.Player Name (v2): " & g_ds.Player.Name
+    MyDebug "clsRareTracker.Player Name Passed To Fcn: " & playerName
+    MyDebug "clsRareTracker.Player Name (Altered): " & SendPlayerName
     
     'Build the URL
     MainURL = "http://raretracker.acvault.ign.com/upload/release_1_processor.php?" & _
@@ -58,6 +58,9 @@ On Error GoTo ErrorHandler
     "&pname=" & SendPlayerName
     
     MainURL = Replace(MainURL, " ", "%20")
+    
+    MyDebug "clsRareTracker.MainURL: " & MainURL
+    
     'Send it
     Download (MainURL)
         

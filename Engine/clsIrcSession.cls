@@ -15,7 +15,7 @@ Option Explicit
 
 Private WithEvents m_wsock As MSWinsockLib.Winsock
 Attribute m_wsock.VB_VarHelpID = -1
-Private Const REGISTER_TAG = "lifetank2"
+Private Const REGISTER_TAG = "LifeTankX"
 
 Private m_szServerAdress As String
 Private m_szPort As String

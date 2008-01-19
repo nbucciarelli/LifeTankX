@@ -21,7 +21,7 @@ Private Enum eSubStates
 End Enum
 
 Private Const TRANSITION_DELAY = 1  'seconds
-Private Const SECURE_TIMER = 2      'seconds
+Private Const SECURE_TIMER = 3      'seconds
 
 Private m_newCombatState As eCombatStates    'the combat mode wanted
 Private m_State As eSubStates
@@ -134,7 +134,7 @@ On Error GoTo ErrorMessage
     If m_tmrTransition.Enabled Then Exit Sub
     
     If m_tmrSecure.Expired Then
-        PrintErrorMessage "clsMacroChangeCM.m_tmrSecure_OnTimeout : secure change combat timer expired."
+        MyDebug "clsMacroChangeCM.m_tmrSecure_OnTimeout : secure change combat timer expired."
         Call CombatModeChanged
         Exit Sub
     End If
@@ -143,17 +143,18 @@ On Error GoTo ErrorMessage
         Select Case m_State
             Case ST_START_MODE_CHANGE
                 Call ToggleCombatMode(m_newCombatState)
-                m_tmrSecure.SetNextTime SECURE_TIMER
-                m_tmrNextThink.SetNextTime 0.75
+                Call m_tmrSecure.SetNextTime(SECURE_TIMER)
+                Call m_tmrNextThink.SetNextTime(0.75)
                 m_State = ST_CHECK_MODE_CHANGE
                 
             Case ST_CHECK_MODE_CHANGE
                 If CurrentCombatState = m_newCombatState Then   'complete
+                    Call m_tmrSecure.Reset
                     Call CombatModeChanged
                 Else
                     MyDebug "clsMacroChangeCM.RunState - ST_CHECK_MODE_CHANGE - Combat mode not changed yet, toggling again."
                     Call ToggleCombatMode(m_newCombatState)
-                    m_tmrNextThink.SetNextTime 0.75
+                    Call m_tmrNextThink.SetNextTime(0.75)
                 End If
         End Select
     End If

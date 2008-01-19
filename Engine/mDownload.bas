@@ -68,7 +68,9 @@ End If
 End Function
 
 Public Function Connect()
-Dim strHttpRequest As String
+On Error GoTo Error_Handler
+
+    Dim strHttpRequest As String
 
     'create the HTTP Request
     strHttpRequest = "GET " & m_strFilePath & " " & m_HTTPStandard & vbCrLf
@@ -81,6 +83,11 @@ Dim strHttpRequest As String
     'send the request
     frmCom.sckcom.SendData strHttpRequest
 
+Fin:
+    Exit Function
+Error_Handler:
+    PrintErrorMessage "mDownload.Connect - " & Err.Description
+    Resume Fin
 End Function
 
 Public Function DataArrived(bStrData As String)

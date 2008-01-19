@@ -815,8 +815,7 @@ On Error GoTo ErrorHandler
     If m_Loot.canLoot And (m_Combat.Target Is Nothing) Then
         If m_tmrNextTargetScan.Expired Then
             ' First check for Targets within Attack Range
-            Dim objTarget As acObject
-            If Not FindBestTarget(objTarget) Then
+            If Not FindBestTarget() Then
                 GoNavSticky = False
                 Exit Function
             End If

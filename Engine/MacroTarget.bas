@@ -180,11 +180,13 @@ On Error GoTo ErrorHandler
             'yes definately worth it
             Set objTargetOut = objNewTarget
             BetterTargetAvailable = True
+            locDebug "MacroTarget.BetterTargetAvailable: Higher Priority: " & objNewTarget.Name
         ElseIf objNewTarget.Priority = objCurTarget.Priority Then
             'if same priority, only switch if our current target isnt vulned and the other is
             If (objCurTarget.Vulns <= 0) And (objNewTarget.Vulns > 1) Then
                 Set objTargetOut = objNewTarget
                 BetterTargetAvailable = True
+                locDebug "MacroTarget.BetterTargetAvailable: is Vulned: " & objNewTarget.Name
             End If
         Else
             Set objTargetOut = Nothing
@@ -391,12 +393,12 @@ On Error GoTo ErrorHandler
            
         'First make sure it's a valid potential target
         If Not IsValidTarget(objEntity, bMustBeInList, bDanger) Then
-            locDebug "FindTarget - [ " & objEntity.Name & " ] -  NOT Valid Target"
+            locDebug "FindTargetInCol - [ " & objEntity.Name & " ] -  NOT Valid Target"
             GoTo NextEntity
         
         'If we're in "Debuff All Monsters First" and this target is already debuffed, switch to next one
         ElseIf bNonDebuffedTargetsOnly And TargetDebuffed(objEntity) Then
-            locDebug "FindTarget - [ " & objEntity.Name & " ] - bNonDebuffedTargetsOnly And TargetDebuffed(objEntity)"
+            locDebug "FindTargetInCol - [ " & objEntity.Name & " ] - bNonDebuffedTargetsOnly And TargetDebuffed(objEntity)"
             GoTo NextEntity
             
         Else
@@ -407,7 +409,7 @@ On Error GoTo ErrorHandler
             
             'If this monster is considered vulned
             If bPriorityToVulneds And ((objEntity.Vulns > 0) Or (IsMelee And objEntity.Imperiled)) Then
-                locDebug "SearchForMonsters: AttackVulnedMobsFirst: " & objEntity.Name & " is vulned."
+                locDebug "FindTargetInCol: AttackVulnedMobsFirst: " & objEntity.Name & " is vulned."
                 bCurVulned = True
                 
                 'If it's the first vulned monster we find and we give priority to vulned targets,
@@ -419,7 +421,7 @@ On Error GoTo ErrorHandler
                     
             End If
             
-            locDebug "FindTarget(" & sSource & ") - Testing [ " & objEntity.Name & " ] P:" & objEntity.Priority & " - Vulned: " & bCurVulned & " - First Vulned? " & bDontCompareToBest
+            locDebug "FindTargetInCol(" & sSource & ") - Testing [ " & objEntity.Name & " ] P:" & objEntity.Priority & " - Vulned: " & bCurVulned & " - First Vulned? " & bDontCompareToBest
             
             'If we already have a potential target, check to see if we can skip this one before computing range
             If Valid(objBestTarget) Then
@@ -474,7 +476,7 @@ NextEntity:
     
     If bFoundTarget Then
        'If g_ui.Macro.chkNoWar.Checked Then Call objBestTarget.SetUserData(B_WAR_CHECK, True)
-       locDebug "SearchForMonsterInCol (" & sSource & "): selecting " & objBestTarget.Name & " [" & objBestTarget.Guid & "] at Range: " & fBestTargetRange
+       locDebug "FindTargetInCol (" & sSource & "): selecting " & objBestTarget.Name & " [" & objBestTarget.Guid & "] at Range: " & fBestTargetRange
        If bDanger Then Call objBestTarget.SetUserData(B_DANGEROUS, True)
     End If
 
