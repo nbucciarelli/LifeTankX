@@ -277,7 +277,7 @@ End Sub
 Public Sub OnSpellCastComplete(Optional ByVal bSuccess As Boolean = True, Optional ByVal sSource As String = "")
 On Error GoTo ErrorHandler
 
-    MyDebug "clsSpells.OnSpellCastComplete : " & CStr(bSuccess) & " - " & sSource
+    locDebug "clsSpells.OnSpellCastComplete : " & CStr(bSuccess) & " - " & sSource
     
     ' See if this spell is on the Queue, if so, pop it off
     If bSuccess And (g_Spells.c_SpellQueue.Count > 0) Then
@@ -838,7 +838,7 @@ On Error GoTo ErrorHandler
                 Exit Sub
             End If
         End If
-        MyDebug "clsSpells.queueThisSpell: adding objSpell: " & objSpell.SpellName & " :: " & objSpell.SpellID
+        locDebug "clsSpells.queueThisSpell: adding objSpell: " & objSpell.SpellName & " :: " & objSpell.SpellID
         Call c_SpellQueue.Add(s_objSpell)
     End If
         

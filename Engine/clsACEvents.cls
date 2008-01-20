@@ -492,7 +492,7 @@ End Sub
 Private Sub m_DSFilter_OnSpellCastOn(ByVal SpellID As Long, ByVal objTarget As acObject)
 On Error GoTo ErrorHandler
 
-    MyDebug "OUTGOING: OnSpellCastOn event: spellId: " & SpellID & "  target: " & objTarget.Name
+    locDebug "OUTGOING: OnSpellCastOn event: spellId: " & SpellID & "  target: " & objTarget.Name
     
     ' The problem is that this get's called as soon as the toon STARTS to cast the spell (war/vuln/yield spells)
     

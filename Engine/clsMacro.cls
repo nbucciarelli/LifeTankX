@@ -3143,12 +3143,12 @@ On Error GoTo ErrorHandler
     If (FiveMinXPCounter.startXP(FiveMinXPCounter.Position) = 0) Then
         FiveMinXPCounter.XP(FiveMinXPCounter.Position) = 0
     Else
-        MyDebug "5Min Timer: pos: " & FiveMinXPCounter.Position & " T: " & g_ds.XpTracker.TotalXp & " S: " & FiveMinXPCounter.startXP(FiveMinXPCounter.Position)
+        'MyDebug "5Min Timer: pos: " & FiveMinXPCounter.Position & " T: " & g_ds.XpTracker.TotalXp & " S: " & FiveMinXPCounter.startXP(FiveMinXPCounter.Position)
         ' Calculate the diff between the Current XP and XP from 5 mins ago
         FiveMinXPCounter.XP(FiveMinXPCounter.Position) = g_ds.XpTracker.TotalXp
     End If
   
-    MyDebug "5Min Timer: pos: " & FiveMinXPCounter.Position & " : " & FiveMinXPCounter.XP(FiveMinXPCounter.Position)
+    'MyDebug "5Min Timer: pos: " & FiveMinXPCounter.Position & " : " & FiveMinXPCounter.XP(FiveMinXPCounter.Position)
   
     prevCounter = FiveMinXPCounter.Position
   

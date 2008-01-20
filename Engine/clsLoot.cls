@@ -1356,7 +1356,7 @@ End Function
 
 Private Function DoOpenCorpse() As Boolean
 On Error GoTo Error_Handler
-    MyDebug "clsLoot.DoOpenCorpse: Opening corpse..."
+    locDebug "clsLoot.DoOpenCorpse: Opening corpse..."
     
     Dim iCount As Integer
     Dim bRet As Boolean
