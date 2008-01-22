@@ -551,8 +551,7 @@ On Error GoTo ErrorHandler
                 Call ToggleMacro(Not g_Macro.Ticking)
             
             Case vbKeyF2
-                'g_ui.Options.chkEnableHUD.Checked = Not g_ui.Options.chkEnableHUD.Checked 'g_HUD.Display
-                If (g_ui.Options.chkEnableHUD.Checked) Then
+                If g_ui.Options.chkEnableHUD.Checked Then
                     g_ui.Options.chkEnableHUD.Checked = False
                     Call g_HUD.stopAllHUDs
                 Else
@@ -570,10 +569,11 @@ On Error GoTo ErrorHandler
                 Call g_Nav.SetSticky
             
             Case vbKeyF5
-                'g_ui.Options.chkHUDDOT.Checked = Not g_ui.Options.chkHUDDOT.Checked
                 If g_ui.Options.chkHUDDOT.Checked Then
+                    g_ui.Options.chkHUDDOT.Checked = False
                     Call g_HUD.startDOTHUD
                 Else
+                    g_ui.Options.chkHUDDOT.Checked = True
                     Call g_HUD.stopDOTHUD
                 End If
                 PrintMessage "DOT Display : " & g_ui.Options.chkHUDDOT.Checked

@@ -1181,7 +1181,7 @@ On Error GoTo ErrorHandler
                     'Our spell did damage to critter, reset the BLACKLIST count for this target
                     If Valid(g_Macro.Combat.Target) Then
                         Call g_Macro.Combat.Target.SetUserData(INT_MISSCOUNT, 0)
-                        Call g_Macro.Combat.updateSecureTimer(3)
+                        Call g_Macro.Combat.updateSecureTimer(4)
                         'MyDebug "clsACEvents.ConsoleMessage: reset MISSCOUNT : " & g_Macro.Combat.Target.Name
                         'MyDebug "clsACEvents.ConsoleMessage: Spell: " & Msg
                         Call g_Spells.OnSpellCastComplete(True, "ACEvents: Spell damage")

@@ -73,6 +73,7 @@ Attribute chkHUDDOT.VB_VarHelpID = -1
 Public WithEvents chkHUDDebug As DecalControls.CheckBox
 Attribute chkHUDDebug.VB_VarHelpID = -1
 Public chkLockHuds As DecalControls.CheckBox
+Public chk3DTarget As DecalControls.CheckBox
 
 'Friend List
 Public WithEvents lstFriends As DecalControls.list
@@ -157,6 +158,7 @@ On Error GoTo Error_Handler
     Set chkHUDDebug = g_MainView.Control("chkHUDDebug")
     Set chkHUDDOT = g_MainView.Control("chkHUDDOT")
     Set chkLockHuds = g_MainView.Control("chkLockHuds")
+    Set chk3DTarget = g_MainView.Control("chk3DTarget")
     
     Set lstFriends = g_MainView.Control("lstFriends")
     Set btnAddFriend = g_MainView.Control("btnAddFriend")
@@ -221,6 +223,7 @@ On Error GoTo Error_Handler
     chkHUDDebug.Checked = g_Settings.GetValue("chkHUDDebug", False)
     chkHUDDOT.Checked = g_Settings.GetValue("chkHUDDOT", False)
     chkLockHuds.Checked = g_Settings.GetValue("chkLockHuds", True)
+    chk3DTarget.Checked = g_Settings.GetValue("chk3DTarget", True)
     
     chkOnlyFriendsList.Checked = g_Settings.GetValue("chkOnlyFriendsList", False)
     
@@ -286,6 +289,7 @@ On Error GoTo Error_Handler
         .SaveCheckbox chkHUDInventory, "chkHUDInventory"
         .SaveCheckbox chkHUDDebug, "chkHUDDebug"
         .SaveCheckbox chkHUDDOT, "chkHUDDOT"
+        .SaveCheckbox chk3DTarget, "chk3DTarget"
         
         .SaveCheckbox chkOnlyFriendsList, "chkOnlyFriendsList"
         
@@ -351,6 +355,7 @@ On Error GoTo Error_Handler
     Set chkHUDDebug = Nothing
     Set chkHUDDOT = Nothing
     Set chkLockHuds = Nothing
+    Set chk3DTarget = Nothing
     
     Set lstFriends = Nothing
     Set btnAddFriend = Nothing

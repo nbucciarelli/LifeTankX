@@ -20,7 +20,7 @@ Option Explicit
 ' [[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
 
 Private Const DEBUG_ME = False
-Private Const SECURE_TIMER = 3  'seconds
+Private Const SECURE_TIMER = 5  'seconds
 
 Public Enum eSubStates
     ST_COMBAT_NEXTTHINK         'Prepare the next attack action to perform
@@ -400,9 +400,13 @@ On Error GoTo ErrorHandler
     'return true
     bRet = True
     
-    'Put a 3D arrow above the target
-    Set m_tMark = g_D3D.m_d3ds.MarkObjectWithShape(m_objTarget.Guid, D3DService.eShape.eVArrow, &HFFBB0055) ' FFBB0000 :: 55667788
-    locDebug "SetTarget: D3D MarkObject " & m_objTarget.Guid
+    If g_ui.Options.chk3DTarget.Checked Then
+        'Put a 3D arrow above the target
+        Set m_tMark = g_D3D.m_d3ds.MarkObjectWithShape(m_objTarget.Guid, D3DService.eShape.eVArrow, &HFFBB0055) ' FFBB0000 :: 55667788
+        Call m_tMark.AnchorToObject(m_objTarget.Guid, 0.9, 0, 0, 0)
+        Call m_tMark.SetScale(0.6)
+        locDebug "SetTarget: D3D MarkObject " & m_objTarget.Guid
+    End If
 
 Fin:
     SetTarget = bRet
