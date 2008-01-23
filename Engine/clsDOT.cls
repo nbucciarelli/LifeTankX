@@ -506,7 +506,7 @@ On Error GoTo ErrorHandler
     
     If m_v3dText < 0.3 And Valid(g_Macro.Combat.Target.Guid) Then
         m_v3dText = m_v3dText + 0.03
-        Call m_dMark.AnchorToObject(g_Macro.Combat.Target.Guid, m_v3dText, 0, 0, 0)
+        Call m_dMark.AnchorToObject(g_Macro.Combat.Target.Guid, 1.3, 0, 0, m_v3dText)
     Else
         m_dMark.Visible = False
         m_v3dText = 0
