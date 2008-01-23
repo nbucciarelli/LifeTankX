@@ -520,9 +520,6 @@ ErrorHandler:
     Resume Fin
 End Sub
 
-Private Sub m_tmr3dText_OnTimeout()
-End Sub
-
 
 '----------------------------------------------------
 
