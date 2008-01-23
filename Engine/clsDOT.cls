@@ -39,7 +39,7 @@ Private Sub Class_Initialize()
     Set m_giveSpellDamage = New Collection
     Set m_giveMeleeDamage = New Collection
     
-    Set m_tmr3dText = frmTimer.tmrHealth
+    Set m_tmr3dText = frmTimer.tmr3Dtext
     m_tmr3dText.Enabled = False
 End Sub
 
@@ -500,12 +500,12 @@ End Sub
 
 '----------------------------------------------------
 ' 3D Text Floating timer with it's own clock source
+' gets called every 1/10 of a second
 Private Sub m_tmr3dText_Timer()
 On Error GoTo ErrorHandler
-    Dim aVal As Double
     
     If m_v3dText < 0.3 And Valid(g_Macro.Combat.Target.Guid) Then
-        m_v3dText = m_v3dText + 0.03
+        m_v3dText = m_v3dText + 0.01
         Call m_dMark.AnchorToObject(g_Macro.Combat.Target.Guid, 1.3, 0, 0, m_v3dText)
     Else
         m_dMark.Visible = False
