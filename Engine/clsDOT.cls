@@ -25,6 +25,7 @@ Private m_giveMeleeDamage As Collection
 
 Private m_dMark As CD3DObj
 Private WithEvents m_tmr3dText As clsTimer
+Attribute m_tmr3dText.VB_VarHelpID = -1
 
 
 '----------------------------------------------------------------------------
@@ -421,12 +422,11 @@ On Error GoTo ErrorHandler
 
         If g_ui.Options.chk3DTarget.Checked Then
             'Put some text above the target
-            Set m_dMark = Nothing
             Set m_dMark = g_D3D.m_d3ds.MarkObjectWith3DText(g_Macro.Combat.Target.Guid, aVal, "Arial", 0)
             Call m_dMark.AnchorToObject(g_Macro.Combat.Target.Guid, 1, 0, 0, 0.4)
             Call m_dMark.SetScale(0.3)
             m_dMark.pBounce = 6
-            m_dMark.hBounce = 0.3
+            m_dMark.hBounce = 0.4
             m_dMark.Color = &HCC4682B4 'steelblue
             m_dMark.autoscale = False
             m_dMark.Visible = True
@@ -465,7 +465,6 @@ On Error GoTo ErrorHandler
         
         If g_ui.Options.chk3DTarget.Checked Then
             'Put some text above the target
-            Set m_dMark = Nothing
             Set m_dMark = g_D3D.m_d3ds.MarkObjectWith3DText(g_Macro.Combat.Target.Guid, "resist", "Arial", 0)
             Call m_dMark.AnchorToObject(g_Macro.Combat.Target.Guid, 1, 0, 0, 0.5)
             Call m_dMark.SetScale(0.2)
@@ -503,6 +502,8 @@ End Sub
 
 Private Sub m_tmr3dText_OnTimeout()
     m_dMark.Visible = False
+    m_dMark.pBounce = 0
+    m_dMark.hBounce = 0
 End Sub
 
 
