@@ -23,6 +23,8 @@ Private m_takeSpellDamage As Collection
 Private m_giveSpellDamage As Collection
 Private m_giveMeleeDamage As Collection
 
+Private m_dMark As CD3DObj
+Private WithEvents m_tmr3dText As clsTimer
 
 
 '----------------------------------------------------------------------------
@@ -35,6 +37,7 @@ Private Sub Class_Initialize()
     
     Set m_giveSpellDamage = New Collection
     Set m_giveMeleeDamage = New Collection
+    Set m_tmr3dText = CreateTimer
 End Sub
 
 Private Sub Class_Terminate()
@@ -43,6 +46,7 @@ Private Sub Class_Terminate()
 
     Set m_giveSpellDamage = Nothing
     Set m_giveMeleeDamage = Nothing
+    Set m_dMark = Nothing
 End Sub
 
 Public Sub Reset()
@@ -269,6 +273,17 @@ On Error GoTo ErrorHandler
 
     'MyDebug "clsDOT.giveMeleeDamage: aWeap: " & aWeap & " dmg: " & lDamage
 
+        If g_ui.Options.chk3DTarget.Checked Then
+            'Put some text above the target
+            Set m_dMark = g_D3D.m_d3ds.MarkObjectWith3DText(g_Macro.Combat.Target.Guid, lDamage, "Arial", 0)
+            Call m_dMark.AnchorToObject(g_Macro.Combat.Target.Guid, 1, 0, 0, 0.5)
+            Call m_dMark.SetScale(0.3)
+            m_dMark.Color = &HCCBB0055
+            m_dMark.Visible = True
+            Call m_tmr3dText.SetNextTime(3)
+            m_tmr3dText.Enabled = True
+        End If
+
     If Exists(m_giveMeleeDamage, aWeap) Then
         Set dObj = m_giveMeleeDamage.Item(aWeap)
     Else
@@ -404,6 +419,21 @@ On Error GoTo ErrorHandler
    
         'MyDebug "clsDOT.giveSpellDamage: aWand: " & aWand & " aName: " & aName & " dmg: " & aVal
 
+        If g_ui.Options.chk3DTarget.Checked Then
+            'Put some text above the target
+            Set m_dMark = Nothing
+            Set m_dMark = g_D3D.m_d3ds.MarkObjectWith3DText(g_Macro.Combat.Target.Guid, aVal, "Arial", 0)
+            Call m_dMark.AnchorToObject(g_Macro.Combat.Target.Guid, 1, 0, 0, 0.4)
+            Call m_dMark.SetScale(0.3)
+            m_dMark.pBounce = 6
+            m_dMark.hBounce = 0.3
+            m_dMark.Color = &HCC4682B4 'steelblue
+            m_dMark.autoscale = False
+            m_dMark.Visible = True
+            Call m_tmr3dText.SetNextTime(3)
+            m_tmr3dText.Enabled = True
+        End If
+
         If Exists(m_giveSpellDamage, aWand) Then
             Set dObj = m_giveSpellDamage.Item(aWand)
         Else
@@ -433,6 +463,21 @@ On Error GoTo ErrorHandler
         
         'MyDebug "clsDOT.giveSpellDamage Resist: aWand: " & aWand & " aName: " & aName
         
+        If g_ui.Options.chk3DTarget.Checked Then
+            'Put some text above the target
+            Set m_dMark = Nothing
+            Set m_dMark = g_D3D.m_d3ds.MarkObjectWith3DText(g_Macro.Combat.Target.Guid, "resist", "Arial", 0)
+            Call m_dMark.AnchorToObject(g_Macro.Combat.Target.Guid, 1, 0, 0, 0.5)
+            Call m_dMark.SetScale(0.2)
+            m_dMark.Color = &HCCBB0055
+            m_dMark.pBounce = 6
+            m_dMark.hBounce = 0.3
+            m_dMark.autoscale = False
+            m_dMark.Visible = True
+            Call m_tmr3dText.SetNextTime(3)
+            m_tmr3dText.Enabled = True
+        End If
+        
         If Exists(m_giveSpellDamage, aWand) Then
             Set dObj = m_giveSpellDamage.Item(aWand)
         Else
@@ -452,6 +497,12 @@ Fin:
 ErrorHandler:
     PrintErrorMessage "clsDOT.giveSpellDamage - " & Err.Description & " - line:" & Erl
     Resume Fin
+End Sub
+
+'----------------------------------------------------
+
+Private Sub m_tmr3dText_OnTimeout()
+    m_dMark.Visible = False
 End Sub
 
 

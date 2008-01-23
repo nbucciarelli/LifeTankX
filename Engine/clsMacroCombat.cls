@@ -77,6 +77,7 @@ Private Sub Class_Terminate()
     Set m_tmrSecure = Nothing
     Set tmrDanger = Nothing
     Set m_tmrBusyCombat = Nothing
+    Set m_tMark = Nothing
 End Sub
 
 '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -207,7 +208,7 @@ On Error GoTo ErrorMessage
 
     If m_tmrSecure.Expired Then
         'PrintWarning "Busy Timeout - reseting combat flags"
-        Call StopCombat("clsMacroCombat.m_tmrSecure_OnTimeout")
+        Call StopCombat("clsMacroCombat.m_tmrSecure.Expired")
         Exit Sub
     End If
 
@@ -402,9 +403,10 @@ On Error GoTo ErrorHandler
     
     If g_ui.Options.chk3DTarget.Checked Then
         'Put a 3D arrow above the target
-        Set m_tMark = g_D3D.m_d3ds.MarkObjectWithShape(m_objTarget.Guid, D3DService.eShape.eVArrow, &HFFBB0055) ' FFBB0000 :: 55667788
+        Set m_tMark = g_D3D.m_d3ds.MarkObjectWithShape(m_objTarget.Guid, D3DService.eShape.eVArrow, &H77BB0055) ' FFBB0000 :: 55667788
         Call m_tMark.AnchorToObject(m_objTarget.Guid, 0.9, 0, 0, 0)
-        Call m_tMark.SetScale(0.6)
+        Call m_tMark.SetScale(0.3)
+        m_tMark.autoscale = False
         locDebug "SetTarget: D3D MarkObject " & m_objTarget.Guid
     End If
 
