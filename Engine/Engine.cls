@@ -264,6 +264,9 @@ On Error GoTo ErrorHandler
             Call g_HUD.createAllHuds
             Call g_HUD.StartHUDs
         End If
+        If Valid(g_DOT) Then
+            Call g_DOT.Init
+        End If
     End If
   
 Fin:
