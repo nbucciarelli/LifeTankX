@@ -211,7 +211,7 @@ Private WithEvents m_Nav As clsNav
 Attribute m_Nav.VB_VarHelpID = -1
 Private WithEvents m_Restam As clsMacroRestam
 Attribute m_Restam.VB_VarHelpID = -1
-Public WithEvents m_FellowCmd As clsFellowCmd
+Private WithEvents m_FellowCmd As clsFellowCmd
 Attribute m_FellowCmd.VB_VarHelpID = -1
 Private WithEvents m_Loot As clsLoot
 Attribute m_Loot.VB_VarHelpID = -1
@@ -455,8 +455,8 @@ Public Property Get OkToCast() As Boolean
 End Property
 
 Public Property Let OkToCast(ByVal bVal As Boolean)
-        m_bOKToCast = bVal
-        Call m_tmrCastSpell.SetNextTime(CAST_TIMER)
+    m_bOKToCast = bVal
+    Call m_tmrCastSpell.SetNextTime(CAST_TIMER)
 End Property
 
 Public Property Get PostCastDelayTimer() As clsTimer
