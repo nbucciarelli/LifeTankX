@@ -95,7 +95,7 @@ End Property
 
 Private Sub m_tmrTransition_OnTimeout()
     If m_State = STATE_DONE Then
-        MyDebug "clsMacroRestam.m_tmrTransition_OnTimeout: calling OnRestamComplete"
+        locDebug "clsMacroRestam.m_tmrTransition_OnTimeout: STATE_DONE, so calling OnRestamComplete"
         RaiseEvent OnRestamComplete
     End If
 End Sub

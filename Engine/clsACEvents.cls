@@ -457,7 +457,7 @@ End Sub
 'End Sub
 
 'OnAddEnchantment
-Private Sub M_DSFilter_OnAddEnchantment(ByVal iSpellID As Long, ByVal lFamily As Long, ByVal dStartTime As Double, ByVal dTimeElapsed As Double, ByVal dDuration As Double, ByVal lSourceGUID As Long, ByVal iLayer As Long)
+Private Sub m_DSFilter_OnAddEnchantment(ByVal spellID As Long, ByVal lFamily As Long, ByVal dStartTime As Double, ByVal dTimeElapsed As Double, ByVal dDuration As Double, ByVal lSourceGUID As Long, ByVal iLayer As Long)
 On Error GoTo ErrorHandler
     Dim objSpell As clsSpell
 

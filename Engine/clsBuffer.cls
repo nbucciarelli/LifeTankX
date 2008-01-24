@@ -647,7 +647,7 @@ On Error GoTo ErrorHandler
             If Valid(objSpell) Then
                 For i = 0 To (g_Filters.ActiveSpellsCount - 1)
                     'MyDebug "ID: " & g_Filters.ActiveSpell(i).SpellID & " :F: " & g_Filters.ActiveSpell(i).Family & " :T: " & g_Filters.ActiveSpell(i).TimeRemaining
-                    If g_Filters.ActiveSpell(i).SpellID = objSpell.SpellID Then
+                    If g_Filters.ActiveSpell(i).spellID = objSpell.spellID Then
                         isFound = True
                         GoTo found
                     End If
@@ -719,7 +719,7 @@ On Error GoTo ErrorHandler
 
         Set newSpell = New clsSpellQueueItem
         
-        newSpell.SpellID = g_Filters.ActiveSpell(i).SpellID
+        newSpell.spellID = g_Filters.ActiveSpell(i).spellID
         newSpell.SpellFamily = g_Filters.ActiveSpell(i).Family
         newSpell.TimeRemaining = g_Filters.ActiveSpell(i).TimeRemaining
         
@@ -844,7 +844,7 @@ End Sub
 'Check to see if we need to pre-buff certain spells
 Private Sub PreBuffCheck()
 On Error GoTo ErrorHandler
-    Dim objBuff As clsSpellQueueItem
+    Dim objBuff As New clsSpellQueueItem
     Dim aFamily As String
 
     'First check critter buffs
@@ -1216,7 +1216,7 @@ On Error GoTo ErrorHandler
 
     'First, check to see if we have this spell still active on us
     For i = 0 To (g_Filters.ActiveSpellsCount - 1)
-        If g_Filters.ActiveSpell(i).SpellID = objSpell.SpellID _
+        If g_Filters.ActiveSpell(i).spellID = objSpell.spellID _
          And g_Filters.ActiveSpell(i).TimeRemaining > 200 Then
             ' Yep, found active spell, so we are A-OK!
             locDebug "CheckExpiredSpell: found active spell: " & g_Filters.ActiveSpell(i).TimeRemaining
@@ -1240,7 +1240,7 @@ On Error GoTo ErrorHandler
         If objBuff.SpellSchool <> SCHOOL_ITEM Then
             Set buffSpell = g_Spells.sBuffs.FindSpell(objBuff.SpellFamily, g_Data.BuffsSpellsLevel)
             If Valid(buffSpell) Then
-                If buffSpell.SpellID = objSpell.SpellID Then
+                If buffSpell.spellID = objSpell.spellID Then
                     MyDebug "CheckExpiredSpell: adding to current Queue: " & objBuff.Description
                     Call addBuffToQueue(objBuff)
                     Exit Sub
