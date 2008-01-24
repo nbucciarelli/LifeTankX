@@ -44,6 +44,7 @@ Public Event OnSpellVisible(ByVal aName As String)
 
 Public Event OnAddEnchantment(ByVal iSpellID As Long, ByVal lFamily As Long, ByVal dStartTime As Double, ByVal dTimeElapsed As Double, ByVal dDuration As Double, ByVal lSourceGUID As Long, ByVal iLayer As Long)
 Public Event OnRemoveEnchantment(ByVal spellID As Long, ByVal iLayer As Long)
+Public Event OnRemoveMultEnchantment(ByVal spellID As Long, ByVal iLayer As Long)
 
 Public Event ForcedExit()
 
@@ -751,6 +752,9 @@ On Error GoTo ErrorHandler
 
                 Case EV_REMOVE_ENCHANTMENT
                     Call NetEvent_OnRemoveEnchantment(Message)
+                
+                Case EV_REMOVE_MULT_ENCHANTMENT
+                    Call NetEvent_OnRemoveMultEnchant(Message)
                 
                 '----------- Unknown Game Event -------------
                 Case Else
@@ -1519,6 +1523,34 @@ Fin:
     Exit Sub
 ErrorHandler:
     myError "NetEvent_OnAddEnchantment - " & Err.Description
+    Resume Fin
+End Sub
+
+'NetEvent_OnRemoveMultEnchant
+Private Sub NetEvent_OnRemoveMultEnchant(ByVal pMsg As DecalNet.IMessage2)
+On Error GoTo ErrorHandler
+
+    Dim Val As DecalNet.IMessageMember
+    Dim mem As DecalNet.IMessageMember
+
+    Dim iSpellID As Long
+    Dim iLayer As Long
+    Dim iCount As Long
+    Dim i As Integer
+
+    iCount = pMsg.Struct("count")
+    Set Val = pMsg.Struct("enchantments")
+
+    For i = 0 To (iCount - 1)
+        iSpellID = Val.Value("spell")
+        iLayer = Val.Value("layer")
+        RaiseEvent OnRemoveMultEnchantment(iSpellID, iLayer)
+    Next i
+    
+Fin:
+    Exit Sub
+ErrorHandler:
+    myError "NetEvent_OnRemoveMultEnchant - " & Err.Description
     Resume Fin
 End Sub
 

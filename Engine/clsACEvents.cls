@@ -457,11 +457,11 @@ End Sub
 'End Sub
 
 'OnAddEnchantment
-Private Sub m_DSFilter_OnAddEnchantment(ByVal spellID As Long, ByVal lFamily As Long, ByVal dStartTime As Double, ByVal dTimeElapsed As Double, ByVal dDuration As Double, ByVal lSourceGUID As Long, ByVal iLayer As Long)
+Private Sub m_DSFilter_OnAddEnchantment(ByVal SpellID As Long, ByVal lFamily As Long, ByVal dStartTime As Double, ByVal dTimeElapsed As Double, ByVal dDuration As Double, ByVal lSourceGUID As Long, ByVal iLayer As Long)
 On Error GoTo ErrorHandler
     Dim objSpell As clsSpell
 
-    MyDebug "OnAddEnchantment: " & spellID & " :lFamily: " & lFamily & " :dDuration: " & dDuration & " :layer: " & iLayer
+    MyDebug "OnAddEnchantment: " & SpellID & " :lFamily: " & lFamily & " :dDuration: " & dDuration & " :layer: " & iLayer
 
     'Set objSpell = g_Spells.sBuffs.FindSpellByID(spellID)
     'If Valid(objSpell) Then
@@ -476,11 +476,11 @@ ErrorHandler:
 End Sub
 
 'OnRemoveEnchantment
-Private Sub m_DSFilter_OnRemoveEnchantment(ByVal spellID As Long, ByVal iLayer As Long)
+Private Sub m_DSFilter_OnRemoveEnchantment(ByVal SpellID As Long, ByVal iLayer As Long)
 On Error GoTo ErrorHandler
     Dim objSpell As clsSpell
     
-    MyDebug "OnRemoveEnchantment: " & spellID & " :layer: " & iLayer
+    MyDebug "OnRemoveEnchantment: " & SpellID & " :layer: " & iLayer
     
     'Set objSpell = g_Spells.Items.FindSpellByID(spellID)
     'If Valid(objSpell) Then
@@ -491,6 +491,25 @@ Fin:
     Exit Sub
 ErrorHandler:
     PrintErrorMessage "clsACEvents.OnRemoveEnchantment - " & Err.Description
+    Resume Fin
+End Sub
+
+'OnRemoveMultEnchantment
+Private Sub m_DSFilter_OnRemoveMultEnchantment(ByVal SpellID As Long, ByVal iLayer As Long)
+On Error GoTo ErrorHandler
+    Dim objSpell As clsSpell
+    
+    MyDebug "OnRemoveMultEnchantment: " & SpellID & " :layer: " & iLayer
+    
+    'Set objSpell = g_Spells.Items.FindSpellByID(spellID)
+    'If Valid(objSpell) Then
+    '    Call g_Buffer.CheckExpiredItemSpellObj(spellID)
+    'End If
+
+Fin:
+    Exit Sub
+ErrorHandler:
+    PrintErrorMessage "clsACEvents.OnRemoveMultEnchantment - " & Err.Description
     Resume Fin
 End Sub
 
@@ -511,10 +530,10 @@ ErrorHandler:
     Resume Fin
 End Sub
 
-Private Sub m_DSFilter_OnSpellCast(ByVal spellID As Long)
+Private Sub m_DSFilter_OnSpellCast(ByVal SpellID As Long)
 On Error GoTo ErrorHandler
 
-    locDebug "OUTGOING: OnSpellCast event: spellID: " & spellID
+    locDebug "OUTGOING: OnSpellCast event: spellID: " & SpellID
     
     ' Set spell casting start flags
     Call g_Spells.OnSpellCastBegin("OnSpellCast Event")
@@ -526,10 +545,10 @@ ErrorHandler:
     Resume Fin
 End Sub
 
-Private Sub m_DSFilter_OnSpellCastOn(ByVal spellID As Long, ByVal objTarget As acObject)
+Private Sub m_DSFilter_OnSpellCastOn(ByVal SpellID As Long, ByVal objTarget As acObject)
 On Error GoTo ErrorHandler
 
-    locDebug "OUTGOING: OnSpellCastOn event: spellId: " & spellID & "  target: " & objTarget.Name
+    locDebug "OUTGOING: OnSpellCastOn event: spellId: " & SpellID & "  target: " & objTarget.Name
     
     ' The problem is that this get's called as soon as the toon STARTS to cast the spell (war/vuln/yield spells)
     
