@@ -90,6 +90,7 @@ On Error GoTo ErrorHandler
     Set Add = objEntity
 
 Fin:
+    Set objEntity = Nothing
     Exit Function
 ErrorHandler:
     myError "colObjects.Add [" & Description & "]"
@@ -146,6 +147,7 @@ On Error GoTo ErrorHandler
     End If
     
 Fin:
+    Set obj = Nothing
     Exit Function
 ErrorHandler:
     myError "colObjects.Item[" & Description & "]"
@@ -174,6 +176,7 @@ On Error GoTo ErrorHandler
     GetObjectsList = sList
     
 Fin:
+    Set objEntity = Nothing
     Exit Function
 ErrorHandler:
     GetObjectsList = ""
@@ -190,6 +193,7 @@ On Error GoTo ErrorHandler
     Next objEntity
     
 Fin:
+    Set objEntity = Nothing
     Exit Sub
 ErrorHandler:
     myError "colObjects.DebugList[" & Description & "] - " & Err.Description

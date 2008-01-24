@@ -47,6 +47,7 @@ On Error GoTo ErrorHandler
     
 Fin:
     Set Item = oData
+    Set oData = Nothing
     Exit Function
 ErrorHandler:
     Set oData = Nothing
@@ -121,6 +122,7 @@ On Error GoTo ErrorHandler
         GetValue = ""
     End If
 Fin:
+    Set oData = Nothing
     Exit Function
 ErrorHandler:
     GetValue = ""

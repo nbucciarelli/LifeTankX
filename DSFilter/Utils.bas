@@ -138,10 +138,8 @@ End Function
 Public Function DS_WriteToFile(ByVal lFileNum As Long, ByVal sText As String) As Boolean
 On Error GoTo ErrorHandler
 
-
     Print #lFileNum, DS_FormatedTimeStamp & " " & sText
     DS_WriteToFile = True
-    
 
 Fin:
     Exit Function

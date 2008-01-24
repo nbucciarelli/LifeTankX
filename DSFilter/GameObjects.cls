@@ -422,6 +422,7 @@ On Error GoTo ErrorHandler
     End If
 
 Fin:
+    Set objEntity = Nothing
     Exit Function
 ErrorHandler:
     Set FindObject = m_objUnknown
@@ -1399,7 +1400,7 @@ On Error GoTo ErrorHandler
     RaiseEvent OnIdentifyObject(objEntity)
 
 Fin:
-    'Set objEntity = Nothing
+    Set objEntity = Nothing
     Exit Sub
 ErrorHandler:
     myError "GameObjects.NetEvent_OnIdentifyObject - " & Err.Description & " - line: " & Erl

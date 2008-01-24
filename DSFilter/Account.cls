@@ -35,12 +35,13 @@ End Function
 
 Public Function Exists(ByVal sCharName As String) As Boolean
 On Error GoTo ErrorHandler
-
     Dim objChar As acAccountChar
+    
     Set objChar = m_colChars(sCharName)
     Exists = True
 
 Fin:
+    Set objChar = Nothing
     Exit Function
 ErrorHandler:
     Exists = False
@@ -49,12 +50,12 @@ End Function
 
 Friend Function Add(ByVal sCharName As String, Optional ByVal lCharGUID As Long) As acAccountChar
 On Error GoTo ErrorHandler
+    Dim objChar As New acAccountChar
 
     If Exists(sCharName) Then
         myDebug "Account.Add(" & sCharName & ") - character already in collection - Ignoring add"
         Set Add = Nothing
     Else
-        Dim objChar As New acAccountChar
         objChar.Name = sCharName
         If Not IsEmpty(lCharGUID) Then
             objChar.GUID = lCharGUID
@@ -65,6 +66,7 @@ On Error GoTo ErrorHandler
     End If
         
 Fin:
+    Set objChar = Nothing
     Exit Function
 ErrorHandler:
     myError "acAccount.Add - " & Err.Description

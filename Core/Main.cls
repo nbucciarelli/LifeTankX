@@ -269,7 +269,7 @@ End Sub
 
 
 Public Function GetDataFolder() As String
-   On Error GoTo GenericFolder
+On Error GoTo GenericFolder
    Dim PathName  As String
    Dim strPath   As String
    Dim lngReturn As Long

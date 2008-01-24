@@ -42,6 +42,9 @@ Public Event OnSpellCast(ByVal spellID As Long)
 Public Event OnSpellCastOn(ByVal spellID As Long, ByVal objTarget As acObject)
 Public Event OnSpellVisible(ByVal aName As String)
 
+Public Event OnAddEnchantment(ByVal iSpellID As Long, ByVal lFamily As Long, ByVal dStartTime As Double, ByVal dTimeElapsed As Double, ByVal dDuration As Double, ByVal lSourceGUID As Long, ByVal iLayer As Long)
+Public Event OnRemoveEnchantment(ByVal spellID As Long, ByVal iLayer As Long)
+
 Public Event ForcedExit()
 
 'Not working yet
@@ -126,26 +129,32 @@ ErrorHandler:
 End Sub
 
 Private Sub Class_Terminate()
-    Call ResetVolatileData
-    Call cleanCollections
+    'Call ResetVolatileData
+    'Call cleanCollections
     
     m_tmrClock.Enabled = False
     m_tmrCheck.Enabled = False
 
-    Set m_Log = Nothing
     Set m_tmrClock = Nothing
     Set m_tmrCheck = Nothing
     Set g_Filter = Nothing
+    
     Set m_GameObjects = Nothing
     Set m_Allegiance = Nothing
     Set m_XpTracker = Nothing
     Set m_locAccurate = Nothing
     Set m_Account = Nothing
+    
     Set g_Objects = Nothing
     Set g_Const = Nothing
-    g_Time = 0
     Set g_debugLog = Nothing
     Set g_errorLog = Nothing
+    Set m_Log = Nothing
+    
+    g_Time = 0
+    
+    'Set m_acHooks = Nothing
+    
 End Sub
 
 Private Sub ResetVolatileData()
@@ -174,13 +183,14 @@ On Error GoTo ErrorHandler
 
     Dim removeCol As colObjects
     Dim objEntity As acObject
-    
+
     myDebug "Filter.cleanCollections called"
-    GoTo Fin
+    myDebug "Filter.cleanCollections: g_Objects.Monsters: " & g_Objects.Monsters.Count
+    myDebug "Filter.cleanCollections: g_Objects.Items: " & g_Objects.Items.World.Count
     
     Set removeCol = New colObjects
+    
     ' First go thru the monster DB and remove any object marked dead
-    'JSC
     For Each objEntity In g_Objects.Monsters
         If Valid(objEntity) Then
             ' build up list of objects to be removed
@@ -188,31 +198,17 @@ On Error GoTo ErrorHandler
                 ' Remove Dead or objects that have been marked canDelete
                 Call removeCol.AddObject(objEntity)
             End If
-            If (objEntity.timeData <> 0) And (objEntity.timeData > g_Time) Then
-                'if timeData has passed, mark it for deletion
-                objEntity.canDelete = True
-            End If
+            'If (objEntity.timeData <> 0) And (objEntity.timeData > g_Time) Then
+            '    'if timeData has passed, mark it for deletion
+            '    objEntity.canDelete = True
+            'End If
         End If
     Next
-    
-    Set objEntity = Nothing
     
     For Each objEntity In removeCol
         'RemoveObject
         myDebug "Filter.cleanCollections: removing: " & objEntity.Name & " : " & objEntity.GUID
         Call m_GameObjects.RemoveObject(objEntity.GUID, "cleanCollections")
-    Next
-    
-    For Each objEntity In g_Objects.Equipment
-      Call m_GameObjects.RemoveObject(objEntity.GUID, "cleanCollections")
-    Next
-    
-    For Each objEntity In g_Objects.Items
-      Call m_GameObjects.RemoveObject(objEntity.GUID, "cleanCollections")
-    Next
-    
-    For Each objEntity In g_Objects.World
-      Call m_GameObjects.RemoveObject(objEntity.GUID, "cleanCollections")
     Next
     
 Fin:
@@ -331,7 +327,9 @@ End Property
 
 Public Property Get Player() As acObject
 Attribute Player.VB_Description = "GUID of the character logged in"
-    Set Player = m_GameObjects.Player
+    If Valid(m_GameObjects) Then
+        Set Player = m_GameObjects.Player
+    End If
 End Property
 
 Public Property Get GameObjects() As GameObjects
@@ -747,21 +745,19 @@ On Error GoTo ErrorHandler
                 Case RETIRED_EV_FELLOWSHIP_INVITATION
                     Call g_Objects.Fellowship.HandleFellowshipEvents(Message, RETIRED_EV_FELLOWSHIP_INVITATION)
                 
+                '----------- Spell Events -------------
+                Case EV_ADD_ENCHANTMENT
+                    Call NetEvent_OnAddEnchantment(Message)
+
+                Case EV_REMOVE_ENCHANTMENT
+                    Call NetEvent_OnRemoveEnchantment(Message)
+                
                 '----------- Unknown Game Event -------------
                 Case Else
                     myDebug "MSG_GAME_EVENT: unknown: Event: " & Message.Value("event")
 
                 End Select
                 
-                '----------- Spell Events -------------
-'                    Case RETIRED_EV_ADD_SPELL
-'                        Call OnAddSpell(Message.Value("spell"))
-'
-'                    Case EV_ADD_ENCHANTMENT
-'                        Call OnAddEnchantment(Message)
-'
-'                    Case EV_REMOVE_ENCHANTMENT
-'                        Call OnRemoveEnchantment(Message)
                     
         '---------------- Other Messages --------------------
 
@@ -833,7 +829,6 @@ On Error GoTo ErrorHandler
     myDebug "NetEvent_OnLogin"
     
     'Catch and set Total pyreals
-    
     RaiseEvent OnLogin
     
 Fin:
@@ -1012,6 +1007,7 @@ On Error GoTo ErrorHandler
     RaiseEvent OnReceiveMeleeDamage(sAttacker, lDamage, bCrit, sDamageType, sLocation)
     
 Fin:
+    Set objAttacker = Nothing
     Exit Sub
 ErrorHandler:
     myError "NetEvent_OnReceiveMeleeDamage - " & Err.Description & " line: " & Erl
@@ -1035,6 +1031,8 @@ On Error GoTo ErrorHandler
     End If
     
 Fin:
+    Set objAttacker = Nothing
+    Set objTarget = Nothing
     Exit Sub
 ErrorHandler:
     myError "NetEvent_OnAttack - " & Err.Description
@@ -1256,6 +1254,7 @@ On Error GoTo ErrorHandler
     End If
 
 Fin:
+    Set objEntity = Nothing
     Exit Sub
 ErrorHandler:
     myError "NetEvent_OnSetCoverage - " & Err.Description
@@ -1451,7 +1450,6 @@ On Error GoTo ErrorHandler
 '
 '        'Spellcasting stance
 '        If iStance = &H49 Then
-'            'myDebug "SpellCasting Attack - iAnimType:" & iAnim1 & " - Atker:" & objEntity.Name & " - Target: " & objTarget.Name
 '            myDebug "SpellCasting Anim - iAnimType:" & iAnim1 & " - Atker:" & objEntity.Name ' & " - Target: " & objTarget.Name
 '            RaiseEvent OnAttackAnimation(objEntity, objTarget)
 '        End If
@@ -1459,6 +1457,7 @@ On Error GoTo ErrorHandler
 '   ' End If
     
 Fin:
+    Set objEntity = Nothing
     Exit Sub
 ErrorHandler:
     myError "NetEvent_OnAnimation - " & Err.Description
@@ -1487,6 +1486,62 @@ ErrorHandler:
     myError "NetEvent_OnPlayerKill - " & Err.Description
     Resume Fin
 End Sub
+
+
+Private Sub NetEvent_OnAddEnchantment(ByVal pMsg As DecalNet.IMessage2)
+On Error GoTo ErrorHandler
+
+    Dim iSpellID As Integer
+    Dim iLayer As Integer
+    Dim lFamily As Long
+    Dim dStartTime As Double
+    Dim dTimeElapsed As Double
+    Dim dDuration As Double
+    Dim lSourceGUID As Long
+    Dim fAdjust As Single
+
+    With pMsg.Struct("enchantment")
+        iSpellID = .Value("spell")
+        iLayer = .Value("layer")
+        lFamily = .Value("family")
+        dTimeElapsed = .Value("elapsedTime")
+        dDuration = .Value("duration")
+        lSourceGUID = .Value("caster")
+        dStartTime = .Value("startTime")
+        fAdjust = .Value("value")
+    End With
+    
+    'myDebug "OnAddEnchantment : " & g_Spells.GetSpellName(iSpellId) & " (" & iSpellId & ")"
+    'myDebug "OnAddEnchantment: spell=" & g_Spells.GetSpellName(iSpellId) & " (" & iSpellId & "), Family=" & lFamily & ", TimeElapsed=" & dTimeElapsed & "(" & myFormatTime(dTimeElapsed) & "), Duration=" & dDuration & ", startTime=" & dStartTime & ", Source=" & g_Objects.FindObject(lSourceGUID).Name & ", Adjust=" & fAdjust & ", Layer=" & iLayer
+    RaiseEvent OnAddEnchantment(iSpellID, lFamily, dStartTime, dTimeElapsed, dDuration, lSourceGUID, iLayer)
+
+Fin:
+    Exit Sub
+ErrorHandler:
+    myError "NetEvent_OnAddEnchantment - " & Err.Description
+    Resume Fin
+End Sub
+
+Private Sub NetEvent_OnRemoveEnchantment(ByVal pMsg As DecalNet.IMessage2)
+On Error GoTo ErrorHandler
+
+    Dim iSpellID As Long
+    Dim iLayer As Long
+
+    iSpellID = pMsg.Value("spell")
+    iLayer = pMsg.Value("layer")
+
+    myDebug "OnRemoveEnchantment: spellId:" & iSpellID & "), Layer=" & iLayer
+    
+    RaiseEvent OnRemoveEnchantment(iSpellID, iLayer)
+
+Fin:
+    Exit Sub
+ErrorHandler:
+    myError "OnRemoveEnchantment - " & Err.Description
+    Resume Fin
+End Sub
+
 
 ' ****************************************************************************
 ' *                                Outbound Events                           *
@@ -1526,73 +1581,11 @@ On Error GoTo ErrorHandler
     End If
     
 Fin:
+    Set objTarget = Nothing
     Exit Sub
 ErrorHandler:
     myError "NetAction_CastSpell - " & Err.Description
     Resume Fin
 End Sub
 
-
-'Private Sub OnAddSpell(ByVal iSpellId As Integer)
-'On Error GoTo ErrorHandler
-'
-'    MyDebug "clsACEvents.OnAddSpell : " & g_Spells.GetSpellName(iSpellId) & " (" & iSpellId & ")"
-'
-'fin:
-'    Exit Sub
-'ErrorHandler:
-'    myError "OnAddSpell(" & iSpellId & ")"
-'    Resume fin
-'End Sub
-
-Private Sub OnAddEnchantment(ByVal pMsg As DecalNet.IMessage2)
-On Error GoTo ErrorHandler
-
-    Dim iSpellId As Integer
-    Dim iLayer As Integer
-    Dim lFamily As Long
-    Dim dTimeElapsed As Double
-    Dim dDuration As Double
-    Dim dStartTime As Double
-    Dim lSourceGUID As Long
-    Dim fAdjust As Single
-
-    With pMsg.Struct("enchantment")
-        iSpellId = .Value("spell")
-        iLayer = .Value("layer")
-        lFamily = .Value("family")
-        dTimeElapsed = .Value("elapsedTime")
-        dDuration = .Value("duration")
-        lSourceGUID = .Value("caster")
-        dStartTime = .Value("startTime")
-        fAdjust = .Value("value")
-    End With
-    
-    'myDebug "OnAddEnchantment : " & g_Spells.GetSpellName(iSpellId) & " (" & iSpellId & ")"
-    'myDebug "OnAddEnchantment: spell=" & g_Spells.GetSpellName(iSpellId) & " (" & iSpellId & "), Family=" & lFamily & ", TimeElapsed=" & dTimeElapsed & "(" & myFormatTime(dTimeElapsed) & "), Duration=" & dDuration & ", startTime=" & dStartTime & ", Source=" & g_Objects.FindObject(lSourceGUID).Name & ", Adjust=" & fAdjust & ", Layer=" & iLayer
-
-Fin:
-    Exit Sub
-ErrorHandler:
-    myError "OnAddEnchantment - " & Err.Description
-    Resume Fin
-End Sub
-
-Private Sub OnRemoveEnchantment(ByVal pMsg As DecalNet.IMessage2)
-On Error GoTo ErrorHandler
-
-    Dim iSpellId As Integer
-    Dim iLayer As Integer
-
-    iSpellId = pMsg.Value("spell")
-    iLayer = pMsg.Value("layer")
-
-    'myDebug "OnRemoveEnchantment: spell" & g_Spells.GetSpellName(iSpellId) & " (" & iSpellId & "), Layer=" & iLayer
-
-Fin:
-    Exit Sub
-ErrorHandler:
-    myError "OnRemoveEnchantment - " & Err.Description
-    Resume Fin
-End Sub
 

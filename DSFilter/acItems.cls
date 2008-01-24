@@ -381,7 +381,7 @@ Public Sub DisplayWorld()
     
     Next tmpItem
     
-    'Set tmpItem = Nothing
+    Set tmpItem = Nothing
     'Set objOwner = Nothing
 
 End Sub
@@ -520,6 +520,7 @@ On Error GoTo ErrorHandler
     Next objItem
     
 Fin:
+    Set objItem = Nothing
     Exit Function
 ErrorHandler:
     CountMainInventory = 0
@@ -548,6 +549,7 @@ On Error GoTo ErrorHandler
     Next objItem
     
 Fin:
+    Set objItem = Nothing
     Exit Function
 ErrorHandler:
     InvCntByName = 0
@@ -578,6 +580,7 @@ On Error GoTo ErrorHandler
     End If
     
 Fin:
+    Set objItem = Nothing
     Exit Sub
 ErrorHandler:
     myError "acItems.NetEvent_OnAdjustStackSize - " & Err.Description
@@ -803,6 +806,8 @@ On Error GoTo ErrorHandler
     End If
         
 Fin:
+    Set objItem = Nothing
+    Set objDest = Nothing
     Exit Sub
 ErrorHandler:
     myError "acItems.NetEvent_OnInsertInventoryItem - " & Err.Description
@@ -833,6 +838,7 @@ On Error GoTo ErrorHandler
     Call UpdateInventoryCount
          
 Fin:
+    Set objItem = Nothing
     Exit Sub
 ErrorHandler:
     myError "acItems.NetEvent_OnWearItem - " & Err.Description
@@ -871,6 +877,7 @@ On Error GoTo ErrorHandler
     End If
    
 Fin:
+    Set objContainer = Nothing
     Exit Sub
 ErrorHandler:
     myError "acItems.NetEvent_OnSetPackContents - " & Err.Description
@@ -927,6 +934,7 @@ On Error GoTo ErrorHandler
     
 Fin:
     Set CreateItem = objItem
+    Set objItem = Nothing
     Exit Function
 ErrorHandler:
     Set objItem = Nothing
