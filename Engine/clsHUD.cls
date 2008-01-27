@@ -381,7 +381,7 @@ On Error GoTo ErrorHandler
     Set m_Font = g_PluginSite.DecalCreateFont("Arial", FONT_SIZE, 0)
 
     'Firstly, create a Render:
-    Set m_Render = g_PluginSite2.Object("services\DecalRender.RenderService")
+    Set m_Render = g_PluginSite2.object("services\DecalRender.RenderService")
     
     If Not Valid(m_Render) Then
         PrintMessage "clsHUD: not able to initialize render"

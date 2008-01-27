@@ -503,7 +503,6 @@ On Error GoTo ErrorHandler
     sProfile = Trim(txtBuffsProfile.Text)
     
     If sProfile <> "" Then
-        'Call g_Settings.SavePluginConfiguration
         Call MakeProfilePath(g_Settings.Profile.FullPath & "\" & FOLDER_PROFILE_BUFFS, sProfile)
         Call g_Settings.Profile.SetBuffsProfile(sProfile)
         Call g_Settings.SavePluginConfiguration
@@ -526,7 +525,6 @@ On Error GoTo ErrorHandler
     sProfile = Trim(txtLootProfile.Text)
     
     If sProfile <> "" Then
-        'Call g_Settings.SavePluginConfiguration
         Call MakeProfilePath(g_Settings.GetDataFolder & "\" & PATH_PROFILE_LOOT, sProfile)
         Call g_Settings.Profile.SetLootProfile(sProfile)
         Call g_Settings.SavePluginConfiguration
@@ -549,7 +547,6 @@ On Error GoTo ErrorHandler
     sProfile = Trim(txtMacroProfile.Text)
     
     If sProfile <> "" Then
-        'Call g_Settings.SavePluginConfiguration
         Call MakeProfilePath(g_Settings.Profile.FullPath & "\" & FOLDER_PROFILE_MACRO, sProfile)
         Call g_Settings.Profile.SetMacroProfile(sProfile)
         Call g_Settings.SavePluginConfiguration

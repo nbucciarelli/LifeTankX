@@ -25,7 +25,9 @@ Private m_giveMeleeDamage As Collection
 
 Private m_v3dText As Single
 Private m_dMark As CD3DObj
-Private WithEvents m_tmr3dText As Timer
+Private WithEvents m_tmr3dText2 As Timer
+Attribute m_tmr3dText2.VB_VarHelpID = -1
+Private WithEvents m_tmr3dText As clsTimer
 Attribute m_tmr3dText.VB_VarHelpID = -1
 
 '----------------------------------------------------------------------------
@@ -39,8 +41,9 @@ Private Sub Class_Initialize()
     Set m_giveSpellDamage = New Collection
     Set m_giveMeleeDamage = New Collection
     
-    Set m_tmr3dText = frmTimer.tmr3Dtext
-    m_tmr3dText.Enabled = False
+    'Set m_tmr3dText2 = frmTimer.tmr3Dtext
+    'm_tmr3dText2.Enabled = False
+    Set m_tmr3dText = CreateTimer
 End Sub
 
 Private Sub Class_Terminate()
@@ -50,11 +53,13 @@ Private Sub Class_Terminate()
     Set m_giveSpellDamage = Nothing
     Set m_giveMeleeDamage = Nothing
     
+    'Set m_tmr3dText2 = Nothing
     Set m_tmr3dText = Nothing
     Set m_dMark = Nothing
 End Sub
 
 Public Sub Init()
+    MyDebug "clsDOT.Init called"
     Set m_dMark = g_D3D.m_d3ds.MarkObjectWith3DText(g_ds.Player.Guid, 0, "Arial", 0)
     Call m_dMark.SetScale(0.3)
     m_dMark.Color = &HCCBB0055
@@ -286,12 +291,13 @@ On Error GoTo ErrorHandler
 
     'MyDebug "clsDOT.giveMeleeDamage: aWeap: " & aWeap & " dmg: " & lDamage
 
-        If g_ui.Options.chk3DTarget.Checked Then
+        If g_ui.Options.chk3DTarget.Checked And Valid(g_Macro.Combat.Target) Then
             'Put some text above the target
-            Call m_dMark.AnchorToObject(g_Macro.Combat.Target.Guid, 1.3, 0, 0, 0)
+            Call m_dMark.AnchorToObject(g_Macro.Combat.Target.Guid, 1.1, 0, 0, 0)
             Call m_dMark.Set3DText(lDamage, "Arial", 0)
             m_dMark.Visible = True
             m_v3dText = 0
+            Call m_tmr3dText.SetNextTime(3)
             m_tmr3dText.Enabled = True
         End If
 
@@ -430,12 +436,13 @@ On Error GoTo ErrorHandler
    
         'MyDebug "clsDOT.giveSpellDamage: aWand: " & aWand & " aName: " & aName & " dmg: " & aVal
 
-        If g_ui.Options.chk3DTarget.Checked Then
+        If g_ui.Options.chk3DTarget.Checked And Valid(g_Macro.Combat.Target) Then
             'Put some text above the target
-            Call m_dMark.AnchorToObject(g_Macro.Combat.Target.Guid, 1.3, 0, 0, 0)
+            Call m_dMark.AnchorToObject(g_Macro.Combat.Target.Guid, 1.1, 0, 0, 0)
             Call m_dMark.Set3DText(aVal, "Arial", 0)
             m_dMark.Visible = True
             m_v3dText = 0
+            Call m_tmr3dText.SetNextTime(3)
             m_tmr3dText.Enabled = True
         End If
 
@@ -468,12 +475,13 @@ On Error GoTo ErrorHandler
         
         'MyDebug "clsDOT.giveSpellDamage Resist: aWand: " & aWand & " aName: " & aName
         
-        If g_ui.Options.chk3DTarget.Checked Then
+        If g_ui.Options.chk3DTarget.Checked And Valid(g_Macro.Combat.Target) Then
             'Put some text above the target
-            Call m_dMark.AnchorToObject(g_Macro.Combat.Target.Guid, 1.3, 0, 0, 0)
+            Call m_dMark.AnchorToObject(g_Macro.Combat.Target.Guid, 1.1, 0, 0, 0)
             Call m_dMark.Set3DText("resist", "Arial", 0)
             m_dMark.Visible = True
             m_v3dText = 0
+            Call m_tmr3dText.SetNextTime(3)
             m_tmr3dText.Enabled = True
         End If
         
@@ -501,23 +509,28 @@ End Sub
 '----------------------------------------------------
 ' 3D Text Floating timer with it's own clock source
 ' gets called every 1/10 of a second
-Private Sub m_tmr3dText_Timer()
+Private Sub m_tmr3dText2_Timer()
 On Error GoTo ErrorHandler
     
-    If m_v3dText < 0.3 And Valid(g_Macro.Combat.Target.Guid) Then
+    If m_v3dText < 0.3 And Valid(g_Macro.Combat.Target) Then
         m_v3dText = m_v3dText + 0.01
         Call m_dMark.AnchorToObject(g_Macro.Combat.Target.Guid, 1.3, 0, 0, m_v3dText)
     Else
         m_dMark.Visible = False
         m_v3dText = 0
-        m_tmr3dText.Enabled = False
+        m_tmr3dText2.Enabled = False
     End If
 
 Fin:
     Exit Sub
 ErrorHandler:
-    PrintErrorMessage "clsDOT.m_tmr3dText_Timer - " & Err.Description
+    PrintErrorMessage "clsDOT.m_tmr3dText2_Timer - " & Err.Description
     Resume Fin
+End Sub
+
+'Make combat numbers invisible
+Private Sub m_tmr3dText_OnTimeout()
+    m_dMark.Visible = False
 End Sub
 
 

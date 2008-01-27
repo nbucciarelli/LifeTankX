@@ -214,7 +214,7 @@ End Function
 Private Sub IEngine_Terminate()
 On Error GoTo ErrorHandler
 
-    MyDebug "IEngine_Terminate - start"
+    MyDebug "IEngine_Terminate"
 
     'Remove objects created by the LT Engine
     Call DeleteEngineObjects

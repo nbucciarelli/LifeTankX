@@ -72,7 +72,8 @@ Public WithEvents chkHUDDOT As DecalControls.CheckBox
 Attribute chkHUDDOT.VB_VarHelpID = -1
 Public WithEvents chkHUDDebug As DecalControls.CheckBox
 Attribute chkHUDDebug.VB_VarHelpID = -1
-Public chkLockHuds As DecalControls.CheckBox
+Public WithEvents chkLockHuds As DecalControls.CheckBox
+Attribute chkLockHuds.VB_VarHelpID = -1
 Public chk3DTarget As DecalControls.CheckBox
 
 'Friend List
@@ -555,6 +556,35 @@ Private Sub chkHUDDOT_Change(ByVal nID As Long, ByVal bChecked As Boolean)
     Else
         PrintMessage "Disabling DoT HUD"
         Call g_HUD.stopDOTHUD
+    End If
+End Sub
+
+'chkLockHuds
+Private Sub chkLockHuds_Change(ByVal nID As Long, ByVal bChecked As Boolean)
+    If bChecked Then
+        PrintMessage "Saving HUD position"
+        Call g_Settings.SavePluginConfiguration
+        
+        If Valid(g_HUD.getMacroHUD) Then
+            g_ui.Options.macroHUDposX = g_HUD.getMacroHUD.Region.Left
+            g_ui.Options.macroHUDposY = g_HUD.getMacroHUD.Region.Top
+        End If
+        If Valid(g_HUD.getStatsHUD) Then
+            g_ui.Options.statsHUDposX = g_HUD.getStatsHUD.Region.Left
+            g_ui.Options.statsHUDposY = g_HUD.getStatsHUD.Region.Top
+        End If
+        If Valid(g_HUD.getInvHUD) Then
+            g_ui.Options.invHUDposX = g_HUD.getInvHUD.Region.Left
+            g_ui.Options.invHUDposY = g_HUD.getInvHUD.Region.Top
+        End If
+        If Valid(g_HUD.getDebugHUD) Then
+            g_ui.Options.debugHUDposX = g_HUD.getDebugHUD.Region.Left
+            g_ui.Options.debugHUDposY = g_HUD.getDebugHUD.Region.Top
+        End If
+        If Valid(g_HUD.getDOTHUD) Then
+            g_ui.Options.dotHUDposX = g_HUD.getDOTHUD.Region.Left
+            g_ui.Options.dotHUDposY = g_HUD.getDOTHUD.Region.Top
+        End If
     End If
 End Sub
 

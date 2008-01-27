@@ -513,6 +513,44 @@ ErrorHandler:
     Resume Fin
 End Sub
 
+'OnSilentRemoveEnchantment
+Private Sub m_DSFilter_OnSilentRemoveEnchantment(ByVal SpellID As Long, ByVal iLayer As Long)
+On Error GoTo ErrorHandler
+    Dim objSpell As clsSpell
+    
+    MyDebug "OnSilentRemoveEnchantment: " & SpellID & " :layer: " & iLayer
+    
+    'Set objSpell = g_Spells.Items.FindSpellByID(spellID)
+    'If Valid(objSpell) Then
+    '    Call g_Buffer.CheckExpiredItemSpellObj(spellID)
+    'End If
+
+Fin:
+    Exit Sub
+ErrorHandler:
+    PrintErrorMessage "clsACEvents.OnSilentRemoveEnchantment - " & Err.Description
+    Resume Fin
+End Sub
+
+'OnSilentRemoveMultEnchantment
+Private Sub m_DSFilter_OnSilentRemoveMultEnchantment(ByVal SpellID As Long, ByVal iLayer As Long)
+On Error GoTo ErrorHandler
+    Dim objSpell As clsSpell
+    
+    MyDebug "OnSilentRemoveMultEnchantment: " & SpellID & " :layer: " & iLayer
+    
+    'Set objSpell = g_Spells.Items.FindSpellByID(spellID)
+    'If Valid(objSpell) Then
+    '    Call g_Buffer.CheckExpiredItemSpellObj(spellID)
+    'End If
+
+Fin:
+    Exit Sub
+ErrorHandler:
+    PrintErrorMessage "clsACEvents.OnSilentRemoveMultEnchantment - " & Err.Description
+    Resume Fin
+End Sub
+
 Private Sub m_DSFilter_OnSpellVisible(ByVal SpellName As String)
 On Error GoTo ErrorHandler
 
