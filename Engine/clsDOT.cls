@@ -62,6 +62,7 @@ Public Sub Init()
     MyDebug "clsDOT.Init called"
     Set m_dMark = g_D3D.m_d3ds.MarkObjectWith3DText(g_ds.Player.Guid, 0, "Arial", 0)
     Call m_dMark.SetScale(0.3)
+    m_dMark.autoscale = False
     m_dMark.Color = &HCCBB0055
     m_dMark.Visible = False
     m_v3dText = 0

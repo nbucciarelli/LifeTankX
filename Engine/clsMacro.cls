@@ -2830,15 +2830,21 @@ On Error GoTo ErrorHandler
     
     If bRet And g_ui.Macro.chkLogoutCastSpell.Checked And bCheckSpell Then
         If Not m_logoutSpellCast Then
-            MyDebug "MustLogOut - Will Cast LOGOUT Spell: " & g_ui.Macro.chLogoutSpell.Text(g_ui.Macro.chLogoutSpell.Selected)
-            'Put the spell at top of the Priority Queue
-            Call g_Spells.c_SpellQueue.Clear
-            Dim outSpell As New clsSpell
-            Set outSpell = g_Spells.Items.FindSpell(g_ui.Macro.chLogoutSpell.Text(g_ui.Macro.chLogoutSpell.Selected), 3, , True)
-            Call g_Spells.CastThisSpell(outSpell, 0, True)
-            m_logoutSpellCast = True
-            m_bOKToCast = True
-            bRet = False
+            'First make sure we are in casting mode
+            If Not g_Macro.ValidState(TYPE_CASTER) Then
+                MyDebug "MustLogOut - Waiting for caster mode before casting logout spell"
+                bRet = False
+            Else
+                MyDebug "MustLogOut - Will Cast LOGOUT Spell: " & g_ui.Macro.chLogoutSpell.Text(g_ui.Macro.chLogoutSpell.Selected)
+                'Put the spell at top of the Priority Queue
+                Call g_Spells.c_SpellQueue.Clear
+                Dim outSpell As New clsSpell
+                Set outSpell = g_Spells.Items.FindSpell(g_ui.Macro.chLogoutSpell.Text(g_ui.Macro.chLogoutSpell.Selected), 3, , True)
+                Call g_Spells.CastThisSpell(outSpell, 0, True)
+                m_logoutSpellCast = True
+                m_bOKToCast = True
+                bRet = False
+            End If
         End If
     End If
 
