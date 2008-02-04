@@ -216,7 +216,7 @@ On Error GoTo ErrorMessage
         Call StopCombat("Must Heal")
         Exit Sub
     End If
-    
+      
     ' *** FIXME :: need to add a high priority buff UI check box first ***
     'If we are a spell caster, then can buff while killing
     'If IsCaster Then

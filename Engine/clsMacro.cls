@@ -30,7 +30,7 @@ Private Const LOOT_CHECK_INTERVAL = 2       'check for loot every X seconds in i
 Private Const TARGET_SCAN_INTERVAL = 2      'check for targets every X seconds when in idle mode unless
                                             'timer gets reset when creatures are spawning nearby
 Private Const SALVAGER_CHECK_INTERVAL = 5   'check if we need to autosalvage every 5 seconds
-Private Const FELLOWHEAL_CHECK_INTERVAL = 5 'check if we need to autosalvage every 5 seconds
+Private Const FELLOWHEAL_CHECK_INTERVAL = 5 'check if we need to Heal a fellow member every 5 seconds
 
 Private Const MAX_NAV_FAIL = 200            'maximum number of navigation/loot failures before reset.
 
@@ -39,6 +39,8 @@ Private WithEvents m_tmrTarget As Timer
 Attribute m_tmrTarget.VB_VarHelpID = -1
 Private WithEvents m_tmrHealth As Timer
 Attribute m_tmrHealth.VB_VarHelpID = -1
+Private WithEvents m_tmrFellow As Timer
+Attribute m_tmrFellow.VB_VarHelpID = -1
 
 Public Enum eMacroStates
     ST_IDLE = 0
@@ -109,8 +111,8 @@ Private m_iCombatType As eMacroCombatType
 Private m_bRunning As Boolean
 Private m_bPaused As Boolean
 Private m_adminPaused As Boolean
-Private m_fellowNeedsHealing As Boolean
-Private m_fellowNeedsStam As Boolean
+Public m_fellowNeedsHealing As Boolean
+Public m_fellowNeedsStam As Boolean
 Private m_bOKToCast As Boolean      'Reset by m_tmrCastSpell
 Private m_attackCritter As Boolean
 Private m_mustHeal As Boolean
@@ -184,7 +186,6 @@ Private m_tmrNextTargetScan As clsTimer
 Private m_tmrNextLootCheck As clsTimer
 Private m_tmrNextSalvageTime As clsTimer
 Private m_tmrNextStatsUpdate As clsTimer    'use to update stats every X seconds
-Private m_tmrNextFellowHeal As clsTimer     'check fellow health every X seconds
 
 Private m_tmrManaChargeTimer As clsTimer
 Private m_tmrPostCastDelayTimer As clsTimer
@@ -229,8 +230,10 @@ Private Sub Class_Initialize()
  
     Set m_tmrTarget = frmTimer.tmrTarget
     Set m_tmrHealth = frmTimer.tmrHealth
+    Set m_tmrFellow = frmTimer.tmrFellow
     m_tmrTarget.Enabled = False
     m_tmrHealth.Enabled = False
+    m_tmrFellow.Enabled = False
 
     Set m_tmrBusyDelay = CreateTimer
     Set m_tmrPostCastDelayTimer = CreateTimer
@@ -240,7 +243,6 @@ Private Sub Class_Initialize()
     Set m_tmrNextStatsUpdate = CreateTimer
     Set m_tmrNextTargetScan = CreateTimer
     Set m_tmrNextSalvageTime = CreateTimer
-    Set m_tmrNextFellowHeal = CreateTimer
     Set m_tmrManaChargeTimer = CreateTimer
     Set m_tmr5MinTimer = CreateTimer
     Set m_tmrCastSpell = CreateTimer
@@ -251,7 +253,6 @@ Private Sub Class_Initialize()
     Call m_tmrNextLogoutCheck.Reset
     Call m_tmrNextLootCheck.Reset
     Call m_tmrNextSalvageTime.Reset
-    Call m_tmrNextFellowHeal.Reset
     Call m_tmrManaChargeTimer.Reset
     Call m_tmr5MinTimer.Reset
     Call m_tmrCastSpell.Reset
@@ -261,7 +262,6 @@ Private Sub Class_Initialize()
     Call m_tmrCastSpell.SetNextTime(CAST_TIMER)
     Call m_tmrNextSalvageTime.SetNextTime(SALVAGER_CHECK_INTERVAL)
     Call m_tmrNextLootCheck.SetNextTime(LOOT_CHECK_INTERVAL)
-    Call m_tmrNextFellowHeal.SetNextTime(FELLOWHEAL_CHECK_INTERVAL)
     
     g_Core.TimerInterval = DEFAULT_MACRO_TIMER_INTERVAL
     
@@ -351,6 +351,7 @@ Private Sub Class_Terminate()
 
     Set m_tmrTarget = Nothing
     Set m_tmrHealth = Nothing
+    Set m_tmrFellow = Nothing
 
     Set m_tmrCastSpell = Nothing
     Set m_tmrBusyDelay = Nothing
@@ -358,7 +359,6 @@ Private Sub Class_Terminate()
     Set m_tmrWaypointDelay = Nothing
     Set m_tmrNextLogoutCheck = Nothing
     Set m_tmrNextLootCheck = Nothing
-    Set m_tmrNextFellowHeal = Nothing
     Set m_tmrNextSalvageTime = Nothing
     Set m_tmr5MinTimer = Nothing
     Set m_tmrManaChargeTimer = Nothing
@@ -748,6 +748,8 @@ Private Sub m_Salvager_OnSalvageStopped(ByVal bComplete As Boolean)
     End If
 End Sub
 
+
+
 '#####################################################################################
 '#
 '#                               PRIVATE
@@ -1117,34 +1119,32 @@ On Error GoTo ErrorHandler
         If Not Valid(objFellow) Then GoTo NextObj
         If (objFellow.Name = g_Filters.playerName) Then GoTo NextObj
         
-        'MyDebug "clsMacro.DoFellowHeal: " & objFellow.Name & ":health:" & objFellow.Health & " out of " & objFellow.MaxHealth
+        locDebug "clsMacro.DoFellowHeal: " & objFellow.Name & ":health:" & objFellow.Health & " out of " & objFellow.MaxHealth
         
         If (objFellow.Health <= 0) Then GoTo Fin
         
         If (bStam) Then
             If (objFellow.Stamina <= GetPercent(objFellow.MaxStamina, g_Data.FellowStamThreshold)) Then
                 If Not ValidRangeTo(objFellow, g_ui.Macro.txtAssistRange.Text) Then
-                    'MyDebug "clsMacro.DoFellowHeal: out of range: " & objFellow.Name & " : " & objFellow.GetRange
+                    locDebug "clsMacro.DoFellowHeal: out of range: " & objFellow.Name & " : " & objFellow.GetRange
                     GoTo NextObj
                 End If
                 'Heal them!
-                MyDebug "clsMacro.DoFellowHeal: Staming " & objFellow.Name & " :guid: " & objFellow.Guid
+                MyDebug "clsMacro.DoFellowHeal: Queing Stam spell: " & objFellow.Name & " : ST: " & objFellow.Stamina
                 Call g_Spells.Cast_StamOther(objFellow.Guid)
-                m_fellowNeedsStam = False
                 bRet = True
             End If
         Else
             If (objFellow.Health <= GetPercent(objFellow.MaxHealth, g_Data.FellowHealthThreshold)) Then
-                'MyDebug "clsMacro.DoFellowHeal: " & objFellow.Name & ":health:" & objFellow.Health & " at " & GetPercent(objFellow.MaxHealth, g_Data.FellowHealthThreshold)
+                locDebug "clsMacro.DoFellowHeal: " & objFellow.Name & ":health:" & objFellow.Health & " at " & GetPercent(objFellow.MaxHealth, g_Data.FellowHealthThreshold)
             
                 If Not ValidRangeTo(objFellow, g_ui.Macro.txtAssistRange.Text) Then
-                    'MyDebug "clsMacro.DoFellowHeal: out of range: " & objFellow.Name & " : " & objFellow.GetRange
+                    locDebug "clsMacro.DoFellowHeal: out of range: " & objFellow.Name & " : " & objFellow.GetRange
                     GoTo NextObj
                 End If
                 'Heal them!
-                MyDebug "clsMacro.DoFellowHeal: healing " & objFellow.Name & " :guid: " & objFellow.Guid
+                MyDebug "clsMacro.DoFellowHeal: Queing Heal spell: " & objFellow.Name & " : HP: " & objFellow.Health
                 Call g_Spells.Cast_HealOther(objFellow.Guid)
-                m_fellowNeedsHealing = False
                 bRet = True
             End If
         End If
@@ -1162,13 +1162,16 @@ ErrorHandler:
 End Function
 
 ' See if any fellow members nearby need healing
-Private Function GoFellowHeal(Optional ByVal bStam As Boolean) As Boolean
+Private Function TestFellowHeal(Optional ByVal bStam As Boolean) As Boolean
 On Error GoTo ErrorHandler
     Dim bRet As Boolean
    
     bRet = False
 
-    If Not g_Objects.Fellowship.Active Then GoTo Fin
+    If Not g_Objects.Fellowship.Active Then
+        MyDebug "TestFellowHeal: No g_Objects.Fellowship.Active"
+        GoTo Fin
+    End If
 
     Dim objFellow As acObject
     
@@ -1179,23 +1182,23 @@ On Error GoTo ErrorHandler
         If Not Valid(objFellow) Then GoTo NextObj
         If (objFellow.Name = g_Filters.playerName) Then GoTo NextObj
         
-        'MyDebug "clsMacro.GoFellowHeal: " & objFellow.Name & ":health:" & objFellow.Health & " out of " & objFellow.MaxHealth
+        locDebug "clsMacro.TestFellowHeal: " & objFellow.Name & ":health:" & objFellow.Health & " out of " & objFellow.MaxHealth
         
         If (objFellow.Health <= 0) Then GoTo Fin
         
         If (bStam) Then
             If (objFellow.Stamina <= GetPercent(objFellow.MaxStamina, g_Data.FellowStamThreshold)) Then
                 If Not ValidRangeTo(objFellow, g_ui.Macro.txtAssistRange.Text) Then
-                    'MyDebug "clsMacro.GoFellowHeal: out of range: " & objFellow.Name & " : " & objFellow.GetRange
+                    'MyDebug "clsMacro.TestFellowHeal: out of range: " & objFellow.Name & " : " & objFellow.GetRange
                     GoTo NextObj
                 End If
                 bRet = True
             End If
         Else
             If (objFellow.Health <= GetPercent(objFellow.MaxHealth, g_Data.FellowHealthThreshold)) Then
-                'MyDebug "clsMacro.GoFellowHeal: " & objFellow.Name & ":health:" & objFellow.Health & " at " & GetPercent(objFellow.MaxHealth, g_Data.FellowHealthThreshold)
+                locDebug "clsMacro.TestFellowHeal: " & objFellow.Name & ":health:" & objFellow.Health & " at " & GetPercent(objFellow.MaxHealth, g_Data.FellowHealthThreshold)
                 If Not ValidRangeTo(objFellow, g_ui.Macro.txtAssistRange.Text) Then
-                    'MyDebug "clsMacro.GoFellowHeal: out of range: " & objFellow.Name & " : " & objFellow.GetRange
+                    locDebug "clsMacro.TestFellowHeal: out of range: " & objFellow.Name & " : " & objFellow.GetRange
                     GoTo NextObj
                 End If
                 bRet = True
@@ -1205,12 +1208,15 @@ On Error GoTo ErrorHandler
 NextObj:
     Next objFellow
 
+    If bRet Then
+       Call SetState(ST_FELLOWHEAL)
+    End If
 Fin:
-    GoFellowHeal = bRet
+    TestFellowHeal = bRet
     Exit Function
 ErrorHandler:
-    GoFellowHeal = False
-    PrintErrorMessage "clsMacro.GoFellowHeal() - " & Err.Description
+    TestFellowHeal = False
+    PrintErrorMessage "clsMacro.TestFellowHeal() - " & Err.Description
     Exit Function
 End Function
 
@@ -1458,20 +1464,16 @@ On Error GoTo ErrorHandler
                     If Vitals.CastManaStamRegen(False, m_RegenManaAction, m_RegenStamAction) Then GoTo Fin
                 End If
                 
-                'Every bit, check to see if fellow members need healing/staming
-                If m_tmrNextFellowHeal.Expired Then
-                    Call m_tmrNextFellowHeal.SetNextTime(FELLOWHEAL_CHECK_INTERVAL)
-                    'check to see if fellow members nearby need healing
-                    If g_ui.Macro.chkHealFellow.Checked And g_Objects.Fellowship.Active And m_fellowNeedsHealing Then
-                        locDebug "ST_IDLE: checking for fellow members in need of healing"
-                        If GoFellowHeal Then GoTo Fin
-                    End If
+                'check to see if fellow members nearby need healing
+                If g_ui.Macro.chkHealFellow.Checked And g_Objects.Fellowship.Active And m_fellowNeedsHealing Then
+                    locDebug "ST_IDLE: checking for fellow members in need of healing"
+                    If TestFellowHeal Then GoTo Fin
+                End If
                 
-                    'check to see if fellow members nearby need Staming
-                    If g_ui.Macro.chkStamFellow.Checked And g_Objects.Fellowship.Active And m_fellowNeedsStam Then
-                        locDebug "ST_IDLE: checking for fellow members in need of Staming"
-                        If GoFellowHeal(True) Then GoTo Fin
-                    End If
+                'check to see if fellow members nearby need Staming
+                If g_ui.Macro.chkStamFellow.Checked And g_Objects.Fellowship.Active And m_fellowNeedsStam Then
+                    locDebug "ST_IDLE: checking for fellow members in need of Staming"
+                    If TestFellowHeal(True) Then GoTo Fin
                 End If
 
                 'check to see if we need to loot a rare
@@ -1694,21 +1696,17 @@ On Error GoTo ErrorHandler
                     If Vitals.CastManaStamRegen(False, m_RegenManaAction, m_RegenStamAction) Then GoTo Fin
                 End If
                 
-                'Every bit, check to see if fellow members need healing/staming
-                If m_tmrNextFellowHeal.Expired Then
-                    Call m_tmrNextFellowHeal.SetNextTime(FELLOWHEAL_CHECK_INTERVAL)
-                    'check to see if fellow members nearby need healing
-                    If g_ui.Macro.chkHealFellow.Checked And g_Objects.Fellowship.Active And m_fellowNeedsHealing Then
-                        locDebug "ST_IDLE: checking for fellow members in need of healing"
-                        If GoFellowHeal Then GoTo Fin
-                    End If
+                    ''check to see if fellow members nearby need healing
+                    'If g_ui.Macro.chkHealFellow.Checked And g_Objects.Fellowship.Active And m_fellowNeedsHealing Then
+                    '    locDebug "ST_IDLE: checking for fellow members in need of healing"
+                    '    If TestFellowHeal Then GoTo Fin
+                    'End If
                 
                     'check to see if fellow members nearby need Staming
-                    If g_ui.Macro.chkStamFellow.Checked And g_Objects.Fellowship.Active And m_fellowNeedsStam Then
-                        locDebug "ST_IDLE: checking for fellow members in need of Staming"
-                        If GoFellowHeal(True) Then GoTo Fin
-                    End If
-                End If
+                    'If g_ui.Macro.chkStamFellow.Checked And g_Objects.Fellowship.Active And m_fellowNeedsStam Then
+                    '    locDebug "ST_IDLE: checking for fellow members in need of Staming"
+                    '    If TestFellowHeal(True) Then GoTo Fin
+                    'End If
                 
                 If ValidState Then
                     Call m_Combat.RunState
@@ -1737,6 +1735,16 @@ On Error GoTo ErrorHandler
                 Call m_Restam.RunState
                 
             Case ST_BUDDYREBUFF
+                'First check to make sure Buddy is still in range
+                If Not ValidRangeTo(g_buffBuddy, g_ui.Macro.txtAssistRange.Text) Then
+                    PrintMessage "Buff Buddy out of range, disabling buff buddy!"
+                    Call g_BuddyBuffer.StopService
+                    Call ClearSpellQueue
+                    Set g_buffBuddy = Nothing
+                    Call GoIdle
+                    GoTo Fin
+                End If
+                
                 'check if we still need to be in rebuff mode
                 If g_BuddyBuffer.BuffQueue.Count <= 0 Then
                     locDebug "clsMacro.RunState:ST_BUDDYREBUFF: no more buffs on the stack, moving back to IDLE"
@@ -1783,22 +1791,28 @@ On Error GoTo ErrorHandler
                 'check to see if fellow members nearby need healing
                 If g_ui.Macro.chkHealFellow.Checked And g_Objects.Fellowship.Active And m_fellowNeedsHealing Then
                     locDebug "ST_FELLOWHEAL: checking for fellow members in need of healing"
-                    If GoFellowHeal Then
-                        Call DoFellowHeal
-                        GoTo Fin
+                    If TestFellowHeal Then
+                        If DoFellowHeal Then
+                            GoTo Fin
+                        Else
+                            m_fellowNeedsHealing = False
+                        End If
                     End If
                 End If
                 
                 'check to see if fellow members nearby need Staming
                 If g_ui.Macro.chkStamFellow.Checked And g_Objects.Fellowship.Active And m_fellowNeedsStam Then
                     locDebug "ST_FELLOWHEAL: checking for fellow members in need of Staming"
-                    If GoFellowHeal(True) Then
+                    If TestFellowHeal(True) Then
                         Call DoFellowHeal(True)
+                        m_fellowNeedsStam = False
                         GoTo Fin
                     End If
                 End If
                 
                 'Ok, then go back to Idle state so we can figure out what to do
+                m_fellowNeedsHealing = False
+                m_fellowNeedsStam = False
                 Call GoIdle
             
             Case ST_FLETCHING
@@ -1831,22 +1845,6 @@ On Error GoTo ErrorHandler
                     If Vitals.CastManaStamRegen(False, m_RegenManaAction, m_RegenStamAction) Then GoTo Fin
                 End If
 
-                'Every bit, check to see if fellow members need healing/staming
-                If m_tmrNextFellowHeal.Expired Then
-                    Call m_tmrNextFellowHeal.SetNextTime(FELLOWHEAL_CHECK_INTERVAL)
-                    'check to see if fellow members nearby need healing
-                    If g_ui.Macro.chkHealFellow.Checked And g_Objects.Fellowship.Active And m_fellowNeedsHealing Then
-                        locDebug "ST_IDLE: checking for fellow members in need of healing"
-                        If GoFellowHeal Then GoTo Fin
-                    End If
-                
-                    'check to see if fellow members nearby need Staming
-                    If g_ui.Macro.chkStamFellow.Checked And g_Objects.Fellowship.Active And m_fellowNeedsStam Then
-                        locDebug "ST_IDLE: checking for fellow members in need of Staming"
-                        If GoFellowHeal(True) Then GoTo Fin
-                    End If
-                End If
-                
                 If Not g_bLootRare And Not g_ui.Loot.chkBoostLootPriority.Checked Then
                     ' See if we should be fighting Critters instead of looting
                     If m_attackCritter Then
@@ -1953,6 +1951,7 @@ On Error GoTo ErrorHandler
 
 1   m_tmrTarget.Enabled = True
 2   m_tmrHealth.Enabled = True
+    m_tmrFellow.Enabled = True
 
     'Init Strings
     m_sXpHour = "0"
@@ -1989,9 +1988,6 @@ On Error GoTo ErrorHandler
     
     'Update screen dimension
 10    Call g_Window.UpdateDimensions
-    
-    'Start fellowship checker
-11    Call m_tmrNextFellowHeal.SetNextTime(FELLOWHEAL_CHECK_INTERVAL)
     
     'Start 5 Min XP timer
 12    Call m_tmr5MinTimer.SetNextTime(10)
@@ -2134,7 +2130,7 @@ Public Sub StopMacro()
     If Valid(g_ui) Then Call g_ui.Main.UpdateStatus
     m_tmrTarget.Enabled = False
     m_tmrHealth.Enabled = False
-
+    m_tmrFellow.Enabled = False
 End Sub
 
 Public Sub PauseMacro()
@@ -3182,18 +3178,35 @@ End Sub
 ' Health check timer with it's own clock source
 Private Sub m_tmrHealth_Timer()
 On Error GoTo ErrorHandler
-
     If g_Filters.Health <= GetPercent(g_Filters.MaxHealth, g_Data.MinHealthThreshold) Then
-        MyDebug "tmrHealth: mustHeal: " & g_Filters.Health
+        MyDebug "tmrFellow: mustHeal: " & g_Filters.Health
         m_mustHeal = True
     Else
         m_mustHeal = False
+    End If
+Fin:
+    Exit Sub
+ErrorHandler:
+    PrintErrorMessage "clsMacro.m_tmrHealth_Timer - " & Err.Description
+    Resume Fin
+End Sub
+
+' Fellow Health check timer with it's own clock source
+Private Sub m_tmrFellow_Timer()
+On Error GoTo ErrorHandler
+
+    'check to see if fellow members nearby need healing
+    If g_ui.Macro.chkHealFellow.Checked And g_Objects.Fellowship.Active And m_fellowNeedsHealing Then
+        'locDebug "m_tmrFellow_Timer: checking for fellow members in need of healing"
+        If m_iState = ST_COMBAT Then
+            Call TestFellowHeal
+        End If
     End If
     
 Fin:
     Exit Sub
 ErrorHandler:
-    PrintErrorMessage "clsMacro.m_tmrHealth_Timer - " & Err.Description
+    PrintErrorMessage "clsMacro.m_tmrFellow_Timer - " & Err.Description
     Resume Fin
 End Sub
 

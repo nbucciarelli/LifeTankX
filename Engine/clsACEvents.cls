@@ -557,8 +557,10 @@ On Error GoTo ErrorHandler
     'locDebug "OnSpellVisible name: " & SpellName
     
     If g_Spells.Casting Or Not g_Macro.OkToCast Then
-        locDebug "-- DSFilter_OnSpellVisible: " & SpellName
-        Call g_Spells.OnSpellCastComplete(True, "OnSpellVisible")
+        If (g_Macro.State = ST_COMBAT_ATTACKING) Then
+            locDebug "-- DSFilter_OnSpellVisible: " & SpellName
+            Call g_Spells.OnSpellCastComplete(True, "OnSpellVisible")
+        End If
     End If
 
 Fin:
@@ -1250,8 +1252,9 @@ On Error GoTo ErrorHandler
                     Call g_BuddyBuffer.CheckCastedSpell(bstrMsg)
                 End If
             ElseIf g_Macro.State = ST_FELLOWHEAL Then
-                If InStr(bstrMsg, "You cast") Then
-                    Call g_Spells.OnSpellCastComplete(True, "ACEvents: You cast")
+                If InStr(bstrMsg, "you restore") Then
+                    Call g_Macro.SetFellowNeedsHealing(False)
+                    Call g_Spells.OnSpellCastComplete(True, "ACEvents: you restore")
                 End If
             Else
             
