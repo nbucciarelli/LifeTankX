@@ -15,6 +15,8 @@ Option Explicit
 
 Private Const DEBUG_ME = False
 
+Private Const SECURE_TIMER = 10
+
 Private m_BuffQueue As clsSpellQueue        'list of pending buff spells
 Private m_colBuffs As Collection            'list of all the spells the buffer has to use
 Private m_iRebuffMode As Integer
@@ -34,6 +36,8 @@ Private m_iNumBuffs As Integer  'number of consecutive buffs to cast in continuo
 'Buff Buddy held items
 Private m_HeldItem As acObject
 Private m_HeldShield As acObject
+
+Private m_tmrSecure As clsTimer
 
 'Events
 Public Event OnCycleComplete()
@@ -58,6 +62,7 @@ Private Sub Class_Initialize()
     mNumBuffsToCast = 0
     Set m_HeldItem = Nothing
     Set m_HeldShield = Nothing
+    Set m_tmrSecure = CreateTimer
 
     Call Reset
 End Sub
@@ -66,6 +71,7 @@ Private Sub Reset()
     Set m_BuffQueue = New clsSpellQueue
     Set m_colBuffs = New Collection
     Call m_tmrNextRebuff.Reset
+    Call m_tmrSecure.Reset
     m_lCurBuff = -1
     m_sCurSpellName = ""
 End Sub
@@ -75,6 +81,7 @@ Private Sub Class_Terminate()
     Set m_BuffQueue = Nothing
     Set m_colBuffs = Nothing
     Set m_tmrNextRebuff = Nothing
+    Set m_tmrSecure = Nothing
     Set m_HeldItem = Nothing
     Set m_HeldShield = Nothing
 End Sub
@@ -385,6 +392,7 @@ Private Sub m_tmrNextRebuff_OnTimeout()
     End If
 End Sub
 
+
 '#####################################################################################
 '#
 '#                                PUBLIC
@@ -551,6 +559,15 @@ On Error GoTo ErrorHandler
         Exit Sub
     End If
     
+    If m_tmrSecure.Expired Then
+        PrintWarning "Buff Buddy Timeout - disabling!"
+        MyDebug "clsBuddyBuffer.tmrSecure expired!"
+        Call StopService
+        Set g_buffBuddy = Nothing
+        Call g_Macro.GoIdle
+        Exit Sub
+    End If
+    
     Set objBuff = m_BuffQueue.ReadTop
     
     'Item or Creature/Life buff ?
@@ -632,6 +649,9 @@ On Error GoTo ErrorHandler
         End If
     End If
     
+    'Update secure timer
+    Call m_tmrSecure.SetNextTime(SECURE_TIMER)
+    m_tmrSecure.Enabled = True
     
 Fin:
     Exit Sub
@@ -654,6 +674,8 @@ On Error GoTo ErrorHandler
             If (g_Macro.State = ST_BUDDYREBUFF) Then
                 Call m_BuffQueue.Pop
                 Call g_Spells.c_SpellQueue.Pop
+                'Update secure timer
+                Call m_tmrSecure.Reset
                 'update progress bar
                 g_ui.Main.progBuffs.Value = g_ui.Main.progBuffs.Value + 1
                 m_sCurSpellName = ""

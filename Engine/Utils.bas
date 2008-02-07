@@ -543,6 +543,8 @@ On Error GoTo ErrorHandler
 
     g_ui.Main.chkEnable.Checked = False
     
+    g_Macro.Died = False
+    
     If bOn Then
         Call g_Engine.FireStartMacro
     Else
@@ -559,6 +561,8 @@ End Sub
 
 Public Sub TogglePause()
 On Error GoTo ErrorHandler
+
+    g_Macro.Died = False
 
     If g_Macro.Ticking Then
         If g_Macro.Paused Then

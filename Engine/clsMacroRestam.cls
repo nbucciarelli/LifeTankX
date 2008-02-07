@@ -33,8 +33,8 @@ Public Enum eRestamMethod
     NO_RESTAM
 End Enum
 
-Private Const TRANSITION_DELAY = 0.1    'seconds
-Private Const SECURE_TIME = 0.7         'seconds
+Private Const TRANSITION_DELAY = 0.5    'seconds
+Private Const SECURE_TIME = 2.5         'seconds
 
 Private WithEvents m_tmrTransition As clsTimer
 Attribute m_tmrTransition.VB_VarHelpID = -1
@@ -109,12 +109,16 @@ End Sub
 Public Sub ChooseBestRestamMethod()
 On Error GoTo ErrorMessage
     
+    If m_RestamMethod = NO_RESTAM Then
+        Exit Sub
+    End If
+    
     ' First see if we can use Stam Items
     If Vitals.CanUseStamItem Then
         m_RestamMethod = RESTAM_ITEM
     Else
         ' Or can we use spells?
-        If g_ui.Macro.chkUseHealSpell.Checked Then
+        If g_ui.Macro.chkUseStamSpell.Checked Then
             m_RestamMethod = RESTAM_SPELL
         Else
             PrintWarning "Trying to restam, but no stamina items left! Doing nothing... Either enable spells or restock!"
@@ -233,7 +237,6 @@ On Error GoTo ErrorMessage
         Case STATE_RESTAMING
             'do nothing
             If m_RestamMethod = RESTAM_SPELL And Not (g_Spells.Casting) Then
-                
                 MyDebug "clsMacroRestam.RunState:STATE_RESTAMING: spamming the spell"
                 Call g_Spells.Cast_Revitalize
             End If

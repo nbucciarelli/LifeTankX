@@ -556,11 +556,11 @@ On Error GoTo ErrorHandler
 
     'locDebug "OnSpellVisible name: " & SpellName
     
-    If g_Spells.Casting Or Not g_Macro.OkToCast Then
-        If (g_Macro.State = ST_COMBAT_ATTACKING) Then
-            locDebug "-- DSFilter_OnSpellVisible: " & SpellName
-            Call g_Spells.OnSpellCastComplete(True, "OnSpellVisible")
-        End If
+    If (g_Macro.State = ST_REBUFF) Or (g_Macro.State = ST_BUDDYREBUFF) Or (g_Macro.State = ST_FELLOWHEAL) Then
+        'Do nothing
+    Else
+        locDebug "-- DSFilter_OnSpellVisible: " & SpellName
+        Call g_Spells.OnSpellCastComplete(True, "OnSpellVisible")
     End If
 
 Fin:
@@ -1233,6 +1233,11 @@ On Error GoTo ErrorHandler
                 Call g_Macro.PlatsCount(1)
             End If
             
+            If InStr(bstrMsg, "you restore") Then
+                Call g_Macro.SetFellowNeedsHealing(False)
+                Call g_Spells.OnSpellCastComplete(True, "ACEvents: you restore")
+            End If
+            
             If InStr(bstrMsg, "You say,") Then
                 Call g_Spells.OnSpellCastBegin("ACEvents: spell words BEGIN: You say")
                 'bFilterMsg = True
@@ -1251,11 +1256,11 @@ On Error GoTo ErrorHandler
                 If InStr(bstrMsg, "You cast") Then
                     Call g_BuddyBuffer.CheckCastedSpell(bstrMsg)
                 End If
-            ElseIf g_Macro.State = ST_FELLOWHEAL Then
-                If InStr(bstrMsg, "you restore") Then
-                    Call g_Macro.SetFellowNeedsHealing(False)
-                    Call g_Spells.OnSpellCastComplete(True, "ACEvents: you restore")
-                End If
+            'ElseIf g_Macro.State = ST_FELLOWHEAL Then
+            '    If InStr(bstrMsg, "you restore") Then
+            '        Call g_Macro.SetFellowNeedsHealing(False)
+            '        Call g_Spells.OnSpellCastComplete(True, "ACEvents: you restore")
+            '    End If
             Else
             
                 'Vuln landed

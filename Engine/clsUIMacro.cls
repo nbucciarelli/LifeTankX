@@ -29,6 +29,7 @@ Private InterfaceName As String
 
 'Vitals
 Public chkUseHealSpell As DecalControls.CheckBox
+Public chkUseStamSpell As DecalControls.CheckBox
 Public chkUseHealingKits As DecalControls.CheckBox
 Public chkUseHealthPotion As DecalControls.CheckBox
 Public chkUseStamPotion As DecalControls.CheckBox
@@ -241,6 +242,7 @@ On Error GoTo ErrorHandler
     Set txtDangerZone = g_MainView.Control("txtDangerZone")
      
     Set chkUseHealSpell = g_MainView.Control("chkUseHealSpell")
+    Set chkUseStamSpell = g_MainView.Control("chkUseStamSpell")
     Set chkUseHealingKits = g_MainView.Control("chkUseHealingKits")
     Set chkUseHealthPotion = g_MainView.Control("chkUseHealthPotion")
     Set chkUseStamPotion = g_MainView.Control("chkUseStamPotion")
@@ -519,6 +521,7 @@ On Error GoTo Error_Handler
         End If
 
         chkUseHealSpell.Checked = g_Settings.GetValue("chkUseHealSpell", True)
+        chkUseStamSpell.Checked = g_Settings.GetValue("chkUseStamSpell", True)
         chkUseHealingKits.Checked = g_Settings.GetValue("chkUseHealingKits", True)
         chkUseHealthPotion.Checked = g_Settings.GetValue("chkUseHealthPotion", True)
         chkUseStamPotion.Checked = g_Settings.GetValue("chkUseStamPotion", False)
@@ -574,6 +577,7 @@ On Error GoTo Error_Handler
     With g_Settings.Profile.Config
     
         .SaveCheckbox chkUseHealSpell, "chkUseHealSpell"
+        .SaveCheckbox chkUseStamSpell, "chkUseStamSpell"
         .SaveCheckbox chkUseHealingKits, "chkUseHealingKits"
         .SaveCheckbox chkUseHealthPotion, "chkUseHealthPotion"
         .SaveCheckbox chkUseStamPotion, "chkUseStamPotion"
@@ -730,6 +734,7 @@ On Error GoTo Error_Handler
     Set txtDangerZone = Nothing
     
     Set chkUseHealSpell = Nothing
+    Set chkUseStamSpell = Nothing
     Set chkUseHealingKits = Nothing
     Set chkUseHealthPotion = Nothing
     Set chkUseStamPotion = Nothing
