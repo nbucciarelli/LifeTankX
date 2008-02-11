@@ -630,9 +630,9 @@ On Error GoTo ErrorHandler
     fRange = WorldRange(objEntity.Guid)
     fSquareRangeOut = fRange
     
-    'MyDebug "ValidRangeTo: Max:" & MaxRange & " fSquare: " & fSquareRange & "  for: " & objEntity.Name
+    'locDebug "ValidRangeTo: Max:" & MaxRange & " fRange: " & fRange & "  for: " & objEntity.Name
     
-    If (fRange < 0) Then
+    If (fRange <= 0) Then
         ValidRangeTo = False
     Else
         'ValidRangeTo = (CSng(fSquareRange) <= (CSng(MaxRange) * CSng(MaxRange)))

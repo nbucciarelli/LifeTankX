@@ -196,6 +196,8 @@ Private WithEvents m_tmr5MinTimer As clsTimer
 Attribute m_tmr5MinTimer.VB_VarHelpID = -1
 Private WithEvents m_tmrCastSpell As clsTimer
 Attribute m_tmrCastSpell.VB_VarHelpID = -1
+Private WithEvents m_tmrFellowHeal As clsTimer
+Attribute m_tmrFellowHeal.VB_VarHelpID = -1
 
 'Macro Extansion Modules
 Private WithEvents m_CombatMode As clsMacroChangeCM
@@ -246,6 +248,7 @@ Private Sub Class_Initialize()
     Set m_tmrManaChargeTimer = CreateTimer
     Set m_tmr5MinTimer = CreateTimer
     Set m_tmrCastSpell = CreateTimer
+    Set m_tmrFellowHeal = CreateTimer
     
     Call m_tmrBusyDelay.Reset
     Call m_tmrPostCastDelayTimer.Reset
@@ -256,6 +259,7 @@ Private Sub Class_Initialize()
     Call m_tmrManaChargeTimer.Reset
     Call m_tmr5MinTimer.Reset
     Call m_tmrCastSpell.Reset
+    Call m_tmrFellowHeal.Reset
     
     Call ResetTargetScanTimer
     
@@ -354,6 +358,7 @@ Private Sub Class_Terminate()
     Set m_tmrFellow = Nothing
 
     Set m_tmrCastSpell = Nothing
+    Set m_tmrFellowHeal = Nothing
     Set m_tmrBusyDelay = Nothing
     Set m_tmrPostCastDelayTimer = Nothing
     Set m_tmrWaypointDelay = Nothing
@@ -1125,27 +1130,24 @@ On Error GoTo ErrorHandler
         
         If (bStam) Then
             If (objFellow.Stamina <= GetPercent(objFellow.MaxStamina, g_Data.FellowStamThreshold)) Then
-                If Not ValidRangeTo(objFellow, g_ui.Macro.txtAssistRange.Text) Then
-                    locDebug "clsMacro.DoFellowHeal: out of range: " & objFellow.Name & " : " & objFellow.GetRange
-                    GoTo NextObj
+                If ValidRangeTo(objFellow, g_ui.Macro.txtAssistRange.Text) Then
+                    MyDebug "clsMacro.DoFellowHeal: in range: " & objFellow.Name & " :: " & WorldRange(objFellow.Guid)
+                    'Heal them!
+                    MyDebug "clsMacro.DoFellowHeal: Queing Stam spell: " & objFellow.Name & " : ST: " & objFellow.Stamina
+                    Call g_Spells.Cast_StamOther(objFellow.Guid)
+                    bRet = True
                 End If
-                'Heal them!
-                MyDebug "clsMacro.DoFellowHeal: Queing Stam spell: " & objFellow.Name & " : ST: " & objFellow.Stamina
-                Call g_Spells.Cast_StamOther(objFellow.Guid)
-                bRet = True
             End If
         Else
             If (objFellow.Health <= GetPercent(objFellow.MaxHealth, g_Data.FellowHealthThreshold)) Then
                 locDebug "clsMacro.DoFellowHeal: " & objFellow.Name & ":health:" & objFellow.Health & " at " & GetPercent(objFellow.MaxHealth, g_Data.FellowHealthThreshold)
-            
-                If Not ValidRangeTo(objFellow, g_ui.Macro.txtAssistRange.Text) Then
-                    locDebug "clsMacro.DoFellowHeal: out of range: " & objFellow.Name & " : " & objFellow.GetRange
-                    GoTo NextObj
+                If ValidRangeTo(objFellow, g_ui.Macro.txtAssistRange.Text) Then
+                    MyDebug "clsMacro.DoFellowHeal: in range: " & objFellow.Name & " :: " & WorldRange(objFellow.Guid)
+                    'Heal them!
+                    MyDebug "clsMacro.DoFellowHeal: Queing Heal spell: " & objFellow.Name & " : HP: " & objFellow.Health
+                    Call g_Spells.Cast_HealOther(objFellow.Guid)
+                    bRet = True
                 End If
-                'Heal them!
-                MyDebug "clsMacro.DoFellowHeal: Queing Heal spell: " & objFellow.Name & " : HP: " & objFellow.Health
-                Call g_Spells.Cast_HealOther(objFellow.Guid)
-                bRet = True
             End If
         End If
         
@@ -1188,20 +1190,18 @@ On Error GoTo ErrorHandler
         
         If (bStam) Then
             If (objFellow.Stamina <= GetPercent(objFellow.MaxStamina, g_Data.FellowStamThreshold)) Then
-                If Not ValidRangeTo(objFellow, g_ui.Macro.txtAssistRange.Text) Then
-                    'MyDebug "clsMacro.TestFellowHeal: out of range: " & objFellow.Name & " : " & objFellow.GetRange
-                    GoTo NextObj
+                If ValidRangeTo(objFellow, g_ui.Macro.txtAssistRange.Text) Then
+                    locDebug "clsMacro.TestFellowHeal: in Range: " & objFellow.Name & " :: " & WorldRange(objFellow.Guid)
+                    bRet = True
                 End If
-                bRet = True
             End If
         Else
             If (objFellow.Health <= GetPercent(objFellow.MaxHealth, g_Data.FellowHealthThreshold)) Then
                 locDebug "clsMacro.TestFellowHeal: " & objFellow.Name & ":health:" & objFellow.Health & " at " & GetPercent(objFellow.MaxHealth, g_Data.FellowHealthThreshold)
-                If Not ValidRangeTo(objFellow, g_ui.Macro.txtAssistRange.Text) Then
-                    locDebug "clsMacro.TestFellowHeal: out of range: " & objFellow.Name & " : " & objFellow.GetRange
-                    GoTo NextObj
+                If ValidRangeTo(objFellow, g_ui.Macro.txtAssistRange.Text) Then
+                    locDebug "clsMacro.TestFellowHeal: in Range: " & objFellow.Name & " :: " & WorldRange(objFellow.Guid)
+                    bRet = True
                 End If
-                bRet = True
             End If
         End If
         
@@ -1209,7 +1209,8 @@ NextObj:
     Next objFellow
 
     If bRet Then
-       Call SetState(ST_FELLOWHEAL)
+        Call m_tmrFellowHeal.SetNextTime(10)
+        Call SetState(ST_FELLOWHEAL)
     End If
 Fin:
     TestFellowHeal = bRet
@@ -1813,6 +1814,7 @@ On Error GoTo ErrorHandler
                 'Ok, then go back to Idle state so we can figure out what to do
                 m_fellowNeedsHealing = False
                 m_fellowNeedsStam = False
+                Call m_tmrFellowHeal.Reset
                 Call GoIdle
             
             Case ST_FLETCHING
@@ -3133,6 +3135,14 @@ End Sub
 
 Private Sub m_tmrCastSpell_OnTimeout()
     m_bOKToCast = True
+End Sub
+
+Private Sub m_tmrFellowHeal_OnTimeout()
+    If m_iState = ST_FELLOWHEAL Then
+        m_fellowNeedsHealing = False
+        Call ClearSpellQueue
+        Call GoIdle
+    End If
 End Sub
 
 Private Sub m_tmr5MinTimer_OnTimeout()
