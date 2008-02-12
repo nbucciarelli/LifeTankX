@@ -281,6 +281,7 @@ End Sub
 Public Sub ForceRestart()
     Call m_tmrNextRebuff_OnTimeout
     m_tmrNextRebuff.Enabled = False
+    Call m_tmrSecure.Reset
 End Sub
 
 'Returns the effective rebuff interval, in seconds, depending on the rebuff mode
@@ -559,14 +560,14 @@ On Error GoTo ErrorHandler
         Exit Sub
     End If
     
-    If m_tmrSecure.Expired Then
-        PrintWarning "Buff Buddy Timeout - disabling!"
-        MyDebug "clsBuddyBuffer.tmrSecure expired!"
-        Call StopService
-        Set g_buffBuddy = Nothing
-        Call g_Macro.GoIdle
-        Exit Sub
-    End If
+    'If m_tmrSecure.Expired Then
+    '    PrintWarning "Buff Buddy Timeout - disabling!"
+    '    MyDebug "clsBuddyBuffer.tmrSecure expired!"
+    '    Call StopService
+    '    Set g_buffBuddy = Nothing
+    '    Call g_Macro.GoIdle
+    '    Exit Sub
+    'End If
     
     Set objBuff = m_BuffQueue.ReadTop
     
