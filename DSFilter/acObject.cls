@@ -300,7 +300,7 @@ Private Sub Class_Initialize()
     ResistanceCleavingType = ""
 
     Vulnerability = -1 'DMG_SLASHING
-    m_Vulns = 0
+    m_Vulns = -1
     m_bImperiled = False
     m_bYielded = False
     

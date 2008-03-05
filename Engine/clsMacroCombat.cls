@@ -712,7 +712,7 @@ On Error GoTo Error_Handler
     'Check if we need to vuln
     'If the monster hasn't been vulned to anything yet...
     ElseIf (g_ui.Macro.chkVuln.Checked _
-        And (m_objTarget.Vulns <= 0) _
+        And (m_objTarget.CountVulns <= 0) _
         And (m_objTarget.UserData(B_CAN_BE_VULNED) = True)) Then
             'if we did find a valid vuln spell
             If g_Spells.SetupVulnForDamage(m_objTarget.Vulnerability) Then
@@ -780,7 +780,7 @@ On Error GoTo Error_Handler
             GoTo Fin
         End If
         
-        If (m_objTarget.Vulns > 0) Then
+        If (m_objTarget.CountVulns > 0) Then
             If Not m_objTarget.IsVulnedTo(m_objTarget.Vulnerability) Then
                 'if the monster is vulned to another vuln than the one we're using, switch our
                 'bolt damage type to match the vuln if available.

@@ -1381,6 +1381,9 @@ On Error GoTo ErrorHandler
     If objEntity.GUID = g_Objects.Player.GUID Then
         If lEffectID = EF_WAR_LAUNCH Then
         ElseIf lEffectID = EF_WAR_LAND Then
+        ElseIf lEffectID = EF_FIZZLE Then
+        ElseIf lEffectID = EF_EQUIP_ITEM Then
+        ElseIf lEffectID = EF_UNEQUIP_ITEM Then
         End If
     End If
     
