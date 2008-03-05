@@ -1377,6 +1377,13 @@ On Error GoTo ErrorHandler
     
     If Not Valid(objEntity) Then GoTo Fin
     
+    'Check to see if it is originating from this Player
+    If objEntity.GUID = g_Objects.Player.GUID Then
+        If lEffectID = EF_WAR_LAUNCH Then
+        ElseIf lEffectID = EF_WAR_LAND Then
+        End If
+    End If
+    
     Select Case lEffectID
         Case EF_FIRE_VULN
             iVuln = DMG_FIRE
@@ -1405,6 +1412,7 @@ On Error GoTo ErrorHandler
     If iVuln <> -1 Then
         Call objEntity.AddVuln(iVuln)
         Call m_GameObjects.FireObjectVulned(objEntity, iVuln)
+        myDebug "OnApplyVisualEffect: VULN landed: " & iVuln & " on target: " & objEntity.Name
     End If
     
 Fin:

@@ -156,6 +156,9 @@ Public Enum eVitalStats
 End Enum
 
 Public Enum eVisualEffects
+    EF_WAR_LAUNCH = &H4&
+    EF_WAR_LAND = &H5&
+    EF_FESTER = &H25&
     EF_FIRE_VULN = &H2B&
     EF_PIERCE_VULN = &H2D&
     EF_BLADE_VULN = &H2F&
@@ -164,6 +167,9 @@ Public Enum eVisualEffects
     EF_LIGHTNING_VULN = &H35&
     EF_IMPERIL_BLUDG = &H37&
     EF_YIELD = &H17&
+    EF_FIZZLE = &H50&
+    EF_EQUIP_ITEM = &H77&
+    EF_UNEQUIP_ITEM = &H78&
 End Enum
 
 '====================================================================
