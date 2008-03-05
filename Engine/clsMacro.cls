@@ -674,6 +674,7 @@ Private Sub m_CombatMode_OnCombatModeChanged()
 End Sub
 
 Private Sub m_Equip_OnItemEquipped()
+    locDebug "OnItemEquipped Fired"
     If m_iSubState = SUBST_EQUIP Then
         locDebug "Macro : item equipped."
         Call ResetSubState

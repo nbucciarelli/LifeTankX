@@ -554,7 +554,7 @@ End Sub
 Private Sub m_DSFilter_OnSpellVisible(ByVal SpellName As String)
 On Error GoTo ErrorHandler
 
-    'locDebug "OnSpellVisible name: " & SpellName
+    locDebug "OnSpellVisible name: " & SpellName
     
     If (g_Macro.State = ST_REBUFF) Or (g_Macro.State = ST_BUDDYREBUFF) Or (g_Macro.State = ST_FELLOWHEAL) Then
         'Do nothing
@@ -848,6 +848,7 @@ End Sub
 '#
 '######################################################################################
 
+
 Private Sub m_Items_OnOpenContainer(ByVal objContainer As DarksideFilter.acObject, ByVal colItems As DarksideFilter.colObjects)
 On Error GoTo ErrorHandler
     
@@ -878,6 +879,19 @@ Fin:
     Exit Sub
 ErrorHandler:
     PrintErrorMessage "clsACEvents.OnStackSizeChanged"
+    Resume Fin
+End Sub
+
+Private Sub m_Items_OnEquipItem(ByVal objItem As DarksideFilter.acObject)
+On Error GoTo ErrorHandler
+
+    locDebug "OnEquipItem event: " & objItem.Name
+    RaiseEvent OnItemEquipped
+
+Fin:
+    Exit Sub
+ErrorHandler:
+    PrintErrorMessage "clsACEvents.OnEquipItem"
     Resume Fin
 End Sub
 

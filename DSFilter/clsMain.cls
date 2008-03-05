@@ -1380,8 +1380,11 @@ On Error GoTo ErrorHandler
     'Check to see if it is originating from this Player
     If objEntity.GUID = g_Objects.Player.GUID Then
         If lEffectID = EF_WAR_LAUNCH Then
+            RaiseEvent OnSpellVisible("WAR_LAUNCH Event")
         ElseIf lEffectID = EF_WAR_LAND Then
+            RaiseEvent OnSpellVisible("WAR_LAND Event")
         ElseIf lEffectID = EF_FIZZLE Then
+            RaiseEvent OnSpellVisible("FIZZLE Event")
         ElseIf lEffectID = EF_EQUIP_ITEM Then
         ElseIf lEffectID = EF_UNEQUIP_ITEM Then
         End If
