@@ -2243,11 +2243,25 @@ Public Function ValidState(Optional ByVal CombatType As eMacroCombatType = TYPE_
 On Error GoTo Error_Handler
 
     Dim bRet As Boolean
+    Dim aWeap As acObject
     bRet = False
     
     If CombatType = TYPE_NOTYPE Then
         CombatType = m_iCombatType
         locDebug "clsMacro.ValidState: CombatType set to: " & CombatType
+    End If
+    
+    Set aWeap = Nothing
+    
+    'Get Vuln type of current target
+    If Valid(objTarget) Then
+        'Which is then used to find the correct weapon to equip
+        If objTarget.Vulnerability <> -1 Then
+            Set aWeap = g_Data.GetWeaponType(objTarget.Vulnerability)
+            If Valid(aWeap) Then
+                locDebug "ValidState: Setting aWeap to: " & aWeap.Name & " for damage type: " & objTarget.Vulnerability
+            End If
+        End If
     End If
     
     Select Case CombatType
