@@ -886,7 +886,7 @@ Private Sub m_Items_OnEquipItem(ByVal objItem As DarksideFilter.acObject)
 On Error GoTo ErrorHandler
 
     locDebug "OnEquipItem event: " & objItem.Name
-    RaiseEvent OnItemEquipped
+    'RaiseEvent g_Macro.m_Equip.OnItemEquipped
 
 Fin:
     Exit Sub

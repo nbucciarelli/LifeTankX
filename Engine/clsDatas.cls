@@ -398,7 +398,7 @@ On Error GoTo ErrorHandler
     Set GetWeaponType = aWeap
 
 Fin:
-    Exit Sub
+    Exit Function
 ErrorHandler:
     PrintErrorMessage "clsDatas.GetWeaponType - " & Err.Description
     Resume Fin

@@ -202,7 +202,7 @@ Attribute m_tmrFellowHeal.VB_VarHelpID = -1
 'Macro Extansion Modules
 Private WithEvents m_CombatMode As clsMacroChangeCM
 Attribute m_CombatMode.VB_VarHelpID = -1
-Private WithEvents m_Equip As clsMacroEquip
+Public WithEvents m_Equip As clsMacroEquip
 Attribute m_Equip.VB_VarHelpID = -1
 Private WithEvents m_Healing As clsMacroHealing
 Attribute m_Healing.VB_VarHelpID = -1
@@ -2254,12 +2254,12 @@ On Error GoTo Error_Handler
     Set aWeap = Nothing
     
     'Get Vuln type of current target
-    If Valid(objTarget) Then
+    If Valid(m_Combat.Target) Then
         'Which is then used to find the correct weapon to equip
-        If objTarget.Vulnerability <> -1 Then
-            Set aWeap = g_Data.GetWeaponType(objTarget.Vulnerability)
+        If m_Combat.Target.Vulnerability <> -1 Then
+            Set aWeap = g_Data.GetWeaponType(m_Combat.Target.Vulnerability)
             If Valid(aWeap) Then
-                locDebug "ValidState: Setting aWeap to: " & aWeap.Name & " for damage type: " & objTarget.Vulnerability
+                locDebug "ValidState: Setting aWeap to: " & aWeap.Name & " for damage type: " & m_Combat.Target.Vulnerability
             End If
         End If
     End If
