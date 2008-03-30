@@ -552,8 +552,9 @@ On Error GoTo ErrorHandler
         m_ARTimer.Enabled = True
         
         aRule.ar_talkTime = aRule.ar_delay + g_Core.Time
-        aRule.ar_used = True
+        aRule.ar_used = False
         aRule.ar_usedTime = g_Core.Time + TALK_DELAY
+        actionPause = False
     End If
 
 Fin:
