@@ -845,7 +845,7 @@ On Error GoTo Error_Handler
                     'make sure we don't have item IDs pending on this corpse
                     'before closing it
                     If m_ItemsIdQueue.Count > 0 Then
-                        locDebug "Waiting for pending loot IDs on : " & m_ItemsIdQueue.GetObjectsList
+                        MyDebug "Waiting for pending loot IDs on : " & m_ItemsIdQueue.GetObjectsList
                         Call m_tmrNextTime.SetNextTime(2)
                     'make sure we don't have any items waiting for creation on this corpse
                     ElseIf m_ItemsPending.Count > 0 Then
@@ -864,11 +864,11 @@ On Error GoTo Error_Handler
                             End If
                         Next objItem
                     
-                        locDebug "Waiting for pending corpse objects creation : " & strPending
+                        MyDebug "Waiting for pending corpse objects creation : " & strPending
                         'locDebug "Waiting for pending corpse objects creation : " & m_ItemsPending.GetObjectsList
                         Call m_tmrNextTime.SetNextTime(2)
                     Else 'nothing more to loot, close body
-                        locDebug "No more items to pickup on " & m_curCorpse.Name & ". Stopping looting."
+                        MyDebug "No more items to pickup on " & m_curCorpse.Name & ". Stopping looting."
                         Call SetBodyLooted
                         Call SetSubState(ST_LOOT_STOP)
                         Call StopLooting("RunState - ST_LOOT_SEARCH_ITEM")
@@ -1120,7 +1120,7 @@ On Error GoTo ErrorHandler
         PrintErrorMessage "clsLoot.OnCorpseOpened - invalid m_curCorpse - Stopping loot"
         Call StopLooting("OnCorpseOpened - Invalid m_curCorpse")
     Else
-        locDebug "OnCorpseOpened : " & m_curCorpse.Name & " - Now Searching for Items"
+        MyDebug "OnCorpseOpened : " & m_curCorpse.Name & " - Now Searching for Items"
         Call SetSubState(ST_LOOT_SEARCH_ITEM)
         Call m_tmrNextTime.ExpireNow
     End If

@@ -977,7 +977,7 @@ On Error GoTo ErrorHandler
     If m_Loot.StartLooting(True, g_ui.Loot.chkLootGround.Checked) Then
         GoLooting = True
         Call SetState(ST_LOOT)
-        Call RunState
+        'Call RunState
     Else
         GoLooting = False
         'MyDebug "clsMacro.GoLooting - StartLooting failed"
