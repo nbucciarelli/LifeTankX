@@ -19,7 +19,7 @@ Option Explicit
 ' [[                                                                         [[
 ' [[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
 
-Private Const DEBUG_ME = False
+Private Const DEBUG_ME = True
 
 'Contants
 Private Const LOOT_MAX_SEARCH_CORPSE_TIME = 3
