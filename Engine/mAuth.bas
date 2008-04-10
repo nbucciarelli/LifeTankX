@@ -18,7 +18,7 @@ On Error Resume Next
     End If
     
     If m_Variable("AuthKey", vbLf) = "NULL" Then
-        PrintMessage "We were unable to authenticate your session. Lifetank XI is currently disabled. Typing '/lt auth server 1' or 2 might solve this issue."
+        PrintMessage "We were unable to authenticate your session. Lifetank X is currently disabled. Typing '/lt auth server 1' or 2 might solve this issue."
         m_PluginEnabled = False
         Exit Function
     End If
@@ -35,7 +35,7 @@ On Error Resume Next
     End If
         
     If VerifyAuthKey(m_Variable("AuthKey", vbLf)) = False Then
-        PrintMessage "LifeTank XI client failed to perform an auth-check, Code: " & m_Variable("AuthKey", vbLf) & ". An error code of 1 indicates that the client was unable to authenticate with our server and will only function for 24 hours or until a successful authorization key is provided."
+        PrintMessage "LifeTank X client failed to perform an auth-check, Code: " & m_Variable("AuthKey", vbLf) & ". An error code of 1 indicates that the client was unable to authenticate with our server and will only function for 24 hours or until a successful authorization key is provided."
         m_PluginEnabled = False
         Exit Function
     End If
@@ -55,10 +55,10 @@ On Error Resume Next
     strbPlugins = m_Variable("PluginBans", vbLf)
     
     If VerifyVersion(m_Variable("PluginMajor", vbLf), m_Variable("PluginMinor", vbLf), m_Variable("PluginRevision", vbLf)) = True Then
-        PrintMessage "LifeTank XI is up to date!"
+        PrintMessage "LifeTank X is up to date!"
         m_PluginEnabled = True
     Else
-        PrintMessage "LifeTank XI is NOT up to date! Please visit http://www.lifetankxi.com for the latest update!"
+        PrintMessage "LifeTank X is NOT up to date! Please visit http://www.lifetankxi.com for the latest update!"
         m_PluginEnabled = False
         Exit Function
     End If
@@ -196,13 +196,13 @@ On Error GoTo ErrorHandler
         Else
             If m_banLevel = "Low" Then
                 If CInt(v_RetVal) >= 1 Then
-                    PrintMessage "You are running plugins with LifeTank XI that are against LifeTank XI's EULA. For more information, please check http://www.lifetankxi.com/forums/viewtopic.php?p=1177"
+                    PrintMessage "You are running plugins with LifeTank X that are against LifeTank X's EULA. For more information, please check http://www.lifetankxi.com/forums/viewtopic.php?p=1177"
                     m_PluginEnabled = False
                     Exit Sub
                 End If
             ElseIf m_banLevel = "High" Then
                 If CInt(v_RetVal) = 0 Or CInt(v_RetVal) >= 1 Then
-                    PrintMessage "You are trying to run LifeTank XI with plugins installed that are, either in itself or by proxy, against LifeTank XI's EULA. For more information, please check http://www.lifetankxi.com/forums/viewtopic.php?p=1177"
+                    PrintMessage "You are trying to run LifeTank X with plugins installed that are, either in itself or by proxy, against LifeTank X's EULA. For more information, please check http://www.lifetankxi.com/forums/viewtopic.php?p=1177"
                     m_PluginEnabled = False
                     Exit Sub
                 End If

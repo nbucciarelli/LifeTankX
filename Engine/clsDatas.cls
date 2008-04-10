@@ -364,36 +364,36 @@ On Error GoTo ErrorHandler
     
     Set aWeap = Nothing
         
-        Select Case iType
-            Case DMG_SLASHING
-                If g_ui.Macro.chkWeapSlash.Checked Then
-                    Set aWeap = g_Data.WeapSlash
-                End If
-            Case DMG_BLUDGEONING
-                If g_ui.Macro.chkWeapBludge.Checked Then
-                    Set aWeap = g_Data.WeapBludge
-                End If
-            Case DMG_PIERCING
-                If g_ui.Macro.chkWeapPierce.Checked Then
-                    Set aWeap = g_Data.WeapPierce
-                End If
-            Case DMG_FIRE
-                If g_ui.Macro.chkWeapFire.Checked Then
-                    Set aWeap = g_Data.WeapFire
-                End If
-            Case DMG_COLD
-                If g_ui.Macro.chkWeapCold.Checked Then
-                    Set aWeap = g_Data.WeapCold
-                End If
-            Case DMG_ACID
-                If g_ui.Macro.chkWeapAcid.Checked Then
-                    Set aWeap = g_Data.WeapAcid
-                End If
-            Case DMG_LIGHTNING
-                If g_ui.Macro.chkWeapLight.Checked Then
-                    Set aWeap = g_Data.WeapLight
-                End If
-        End Select
+    Select Case iType
+        Case DMG_SLASHING
+            If g_ui.Macro.chkWeapSlash.Checked Then
+                Set aWeap = g_Data.WeapSlash
+            End If
+        Case DMG_BLUDGEONING
+            If g_ui.Macro.chkWeapBludge.Checked Then
+                Set aWeap = g_Data.WeapBludge
+            End If
+        Case DMG_PIERCING
+            If g_ui.Macro.chkWeapPierce.Checked Then
+                Set aWeap = g_Data.WeapPierce
+            End If
+        Case DMG_FIRE
+            If g_ui.Macro.chkWeapFire.Checked Then
+                Set aWeap = g_Data.WeapFire
+            End If
+        Case DMG_COLD
+            If g_ui.Macro.chkWeapCold.Checked Then
+                Set aWeap = g_Data.WeapCold
+            End If
+        Case DMG_ACID
+            If g_ui.Macro.chkWeapAcid.Checked Then
+                Set aWeap = g_Data.WeapAcid
+            End If
+        Case DMG_LIGHTNING
+            If g_ui.Macro.chkWeapLight.Checked Then
+                Set aWeap = g_Data.WeapLight
+            End If
+    End Select
 
     Set GetWeaponType = aWeap
 

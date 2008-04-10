@@ -316,7 +316,7 @@ Private Sub OnRestartBuffCycle()
     Call BuildBuffList
     
     'See if we need to buff any weapons
-    'Call BuffWeapons
+    Call BuffWeapons
     
     m_lCurBuff = -1
 End Sub
@@ -373,7 +373,7 @@ On Error GoTo ErrorHandler
     Dim i As Integer
 
     For Each objBuff In m_BuffQueue.SpellQueue
-        If objBuff.SpellFamily = aBuff.SpellFamily Then
+        If (objBuff.SpellFamily = aBuff.SpellFamily) And (objBuff.TargetGUID = 0) Then
             'Already on the list, so exit sub
             MyDebug "clsBuffer: Already in BuffQueue: " & aBuff.Description
             Exit Sub
@@ -647,7 +647,7 @@ On Error GoTo ErrorHandler
             If Valid(objSpell) Then
                 For i = 0 To (g_Filters.ActiveSpellsCount - 1)
                     'MyDebug "ID: " & g_Filters.ActiveSpell(i).SpellID & " :F: " & g_Filters.ActiveSpell(i).Family & " :T: " & g_Filters.ActiveSpell(i).TimeRemaining
-                    If g_Filters.ActiveSpell(i).spellID = objSpell.spellID Then
+                    If g_Filters.ActiveSpell(i).SpellID = objSpell.SpellID Then
                         isFound = True
                         GoTo found
                     End If
@@ -675,6 +675,7 @@ End Sub
 Public Function existingSpellFamilyOnPlayer(ByVal aFamily As String) As Boolean
 On Error GoTo ErrorHandler
     
+    Dim objSpell As clsSpell
     Dim isFound As Boolean
     Dim i As Long
 
@@ -684,9 +685,14 @@ On Error GoTo ErrorHandler
     
         MyDebug "existingSpellFamily: " & g_Filters.ActiveSpell(i).Family & " :vs: " & aFamily
         
-        If g_Filters.ActiveSpell(i).Family = aFamily Then
-            isFound = True
-            GoTo Fin
+        Set objSpell = g_Spells.sBuffs.FindSpell(aFamily, g_Data.BuffsSpellsLevel)
+
+        If Valid(objSpell) Then
+            'MyDebug "ID: " & g_Filters.ActiveSpell(i).SpellID & " :F: " & g_Filters.ActiveSpell(i).Family & " :T: " & g_Filters.ActiveSpell(i).TimeRemaining
+            If g_Filters.ActiveSpell(i).SpellID = objSpell.SpellID Then
+                isFound = True
+                GoTo Fin
+            End If
         End If
     Next i
 
@@ -719,7 +725,7 @@ On Error GoTo ErrorHandler
 
         Set newSpell = New clsSpellQueueItem
         
-        newSpell.spellID = g_Filters.ActiveSpell(i).spellID
+        newSpell.SpellID = g_Filters.ActiveSpell(i).SpellID
         newSpell.SpellFamily = g_Filters.ActiveSpell(i).Family
         newSpell.TimeRemaining = g_Filters.ActiveSpell(i).TimeRemaining
         
@@ -814,7 +820,7 @@ On Error GoTo ErrorHandler
     Call PreBuffCheck
     
     'See if we need to buff up Any weapons
-    'Call BuffWeapons
+    Call BuffWeapons
     
     'push buffs to the queue if required
     If bPushBuffsNow Then
@@ -848,7 +854,7 @@ On Error GoTo ErrorHandler
     Dim aFamily As String
 
     'First check critter buffs
-    If g_ui.Buffs.chkEnableCreatureBuffs Then
+    If g_ui.Buffs.chkEnableCreatureBuffs.Checked Then
         'First check critter
         aFamily = "Creature Enchantment Mastery Self"
         If Not existingSpellFamilyOnPlayer(aFamily) Then
@@ -1216,7 +1222,7 @@ On Error GoTo ErrorHandler
 
     'First, check to see if we have this spell still active on us
     For i = 0 To (g_Filters.ActiveSpellsCount - 1)
-        If g_Filters.ActiveSpell(i).spellID = objSpell.spellID _
+        If g_Filters.ActiveSpell(i).SpellID = objSpell.SpellID _
          And g_Filters.ActiveSpell(i).TimeRemaining > 200 Then
             ' Yep, found active spell, so we are A-OK!
             locDebug "CheckExpiredSpell: found active spell: " & g_Filters.ActiveSpell(i).TimeRemaining
@@ -1240,7 +1246,7 @@ On Error GoTo ErrorHandler
         If objBuff.SpellSchool <> SCHOOL_ITEM Then
             Set buffSpell = g_Spells.sBuffs.FindSpell(objBuff.SpellFamily, g_Data.BuffsSpellsLevel)
             If Valid(buffSpell) Then
-                If buffSpell.spellID = objSpell.spellID Then
+                If buffSpell.SpellID = objSpell.SpellID Then
                     MyDebug "CheckExpiredSpell: adding to current Queue: " & objBuff.Description
                     Call addBuffToQueue(objBuff)
                     Exit Sub

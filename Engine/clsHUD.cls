@@ -798,7 +798,7 @@ On Error GoTo ErrorHandler
 8        Call m_HUDMacro.BeginRender
 9        Call m_HUDMacro.BeginText("Arial", FONT_SIZE, FW_NORMAL)
 
-10        y = y + DrawData(m_HUDMacro, d_macroRect, lWidth, x, y, "LifeTank XI", "", cRED)
+10        y = y + DrawData(m_HUDMacro, d_macroRect, lWidth, x, y, "LifeTank X", "", cRED)
         'If g_RemoteCmd.RemoteAccessON Then y = y + DrawData(m_HUDMacro, d_macroRect, lWidth, x, y, "Remote User : ", g_RemoteCmd.RemoteUserName, cYELLOW, cYELLOW)
         y = y + DrawData(m_HUDMacro, d_macroRect, lWidth, x, y, "State : ", g_Macro.GetStateString)
 

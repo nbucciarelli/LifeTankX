@@ -2273,56 +2273,84 @@ On Error GoTo Error_Handler
             End If
         
             'check if valid equipment
-            If Not g_Data.Weapon.Equiped Then
-                MyDebug "ValidState : Melee Weapon not equipped, equipping now."
-                Call RequestEquipItem(g_Data.Weapon)
-                GoTo Fin
-            ElseIf Not g_Data.Shield.Equiped Then
-                MyDebug "ValidState : Shield not equipped, equipping now."
-                Call RequestEquipItem(g_Data.Shield)
-                GoTo Fin
-            Else
-                If m_CombatMode.CurrentCombatState <> COMBATSTATE_MELEE And m_Healing.NeedHealing = False Then
-                    MyDebug "ValidState: TYPE_MELEE: invalid combat state. Switching now"
-                    Call RequestCombatStateChange(COMBATSTATE_MELEE)
+            If Valid(aWeap) Then
+                If Not aWeap.Equiped Then
+                    MyDebug "ValidState : Melee Weapon not equipped, equipping now: " & aWeap.Name
+                    Call RequestEquipItem(aWeap)
                     GoTo Fin
                 End If
+            Else
+                If Not g_Data.Weapon.Equiped Then
+                    MyDebug "ValidState : Default Melee Weapon not equipped, equipping now"
+                    Call RequestEquipItem(g_Data.Weapon)
+                    GoTo Fin
+                End If
+            End If
+            
+            If Not g_Data.Shield.Equiped Then
+                MyDebug "ValidState : Shield not equipped, equipping now: " & g_Data.Shield.Name
+                Call RequestEquipItem(g_Data.Shield)
+                GoTo Fin
+            End If
+            
+            If m_CombatMode.CurrentCombatState <> COMBATSTATE_MELEE And m_Healing.NeedHealing = False Then
+                MyDebug "ValidState: TYPE_MELEE: invalid combat state. Switching now"
+                Call RequestCombatStateChange(COMBATSTATE_MELEE)
+                GoTo Fin
             End If
         
         Case TYPE_ARCHER
             If Not Valid(g_Data.Bow) Then
-                PrintErrorMessage "ValidState : macro Bow not set."
+                PrintErrorMessage "ValidState : macro Bow not set"
                 GoTo Fin
             End If
             
-            If Not g_Data.Bow.Equiped Then
-               MyDebug "ValidState : Bow not equipped, equipping now."
-                Call RequestEquipItem(g_Data.Bow)
-                GoTo Fin
-            Else
-                If m_CombatMode.CurrentCombatState <> COMBATSTATE_ARCHER And m_Healing.NeedHealing = False Then
-                    MyDebug "ValidState: TYPE_ARCHER: invalid combat state. Switching now"
-                    Call RequestCombatStateChange(COMBATSTATE_ARCHER)
+            'check if valid equipment
+            'If Valid(aWeap) Then
+            '    If Not aWeap.Equiped Then
+            '        MyDebug "ValidState : Bow not equipped, equipping now: " & aWeap.Name
+            '        Call RequestEquipItem(aWeap)
+            '        GoTo Fin
+            '    End If
+            'Else
+                If Not g_Data.Bow.Equiped Then
+                    MyDebug "ValidState : Default Bow not equipped, equipping now"
+                    Call RequestEquipItem(g_Data.Bow)
                     GoTo Fin
                 End If
+            'End If
+            
+            If m_CombatMode.CurrentCombatState <> COMBATSTATE_ARCHER And m_Healing.NeedHealing = False Then
+                MyDebug "ValidState: TYPE_ARCHER: invalid combat state. Switching now"
+                Call RequestCombatStateChange(COMBATSTATE_ARCHER)
+                GoTo Fin
             End If
             
         Case Else   'Caster
             If Not Valid(g_Data.Wand) Then
-                PrintErrorMessage "ValidState : macro Wand not set."
+                PrintErrorMessage "ValidState : macro Wand not set"
                 GoTo Fin
             End If
             
-            If Not g_Data.Wand.Equiped Then
-               MyDebug "ValidState : Wand not equipped, equipping now."
-                Call RequestEquipItem(g_Data.Wand)
-                GoTo Fin
-            Else
-                If m_CombatMode.CurrentCombatState <> COMBATSTATE_MAGIC Then
-                    MyDebug "ValidState: TYPE_CASTER: invalid combat state. Switching now"
-                    Call RequestCombatStateChange(COMBATSTATE_MAGIC)
+            'check if valid equipment
+            If Valid(aWeap) Then
+                If Not aWeap.Equiped Then
+                    MyDebug "ValidState : Wand not equipped, equipping now: " & aWeap.Name
+                    Call RequestEquipItem(aWeap)
                     GoTo Fin
                 End If
+            Else
+                If Not g_Data.Wand.Equiped Then
+                   MyDebug "ValidState : Default Wand not equipped, equipping now"
+                    Call RequestEquipItem(g_Data.Wand)
+                    GoTo Fin
+                End If
+            End If
+            
+            If m_CombatMode.CurrentCombatState <> COMBATSTATE_MAGIC Then
+                MyDebug "ValidState: TYPE_CASTER: invalid combat state. Switching now"
+                Call RequestCombatStateChange(COMBATSTATE_MAGIC)
+                GoTo Fin
             End If
             
     End Select
