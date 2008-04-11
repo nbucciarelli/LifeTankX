@@ -43,6 +43,14 @@ Private m_sArrows As String
 Private m_sArrowHead As String
 Private m_sArrowShaft As String
 
+Public m_sArrowBludge As String
+Public m_sArrowSlash As String
+Public m_sArrowPierce As String
+Public m_sArrowFire As String
+Public m_sArrowCold As String
+Public m_sArrowAcid As String
+Public m_sArrowLight As String
+
 Public WeapBludge As acObject
 Public WeapBludgeGUID As Long
 Public WeapSlash As acObject
@@ -404,10 +412,69 @@ ErrorHandler:
     Resume Fin
 End Function
 
+Public Function GetArrowType() As String
+On Error GoTo ErrorHandler
+    
+    Dim i As Integer
+        
+    'Find Arrow type based on Equipped Bow
+    For i = DMG_SLASHING To DMG_LIGHTNING
+    
+        Select Case i
+            Case DMG_SLASHING
+                If g_Data.WeapSlash.Equiped Then
+                    GetArrowType = m_sArrowSlash
+                    GoTo Fin
+                End If
+            Case DMG_BLUDGEONING
+                If g_Data.WeapBludge.Equiped Then
+                    GetArrowType = m_sArrowBludge
+                    GoTo Fin
+                End If
+            Case DMG_PIERCING
+                If g_Data.WeapPierce.Equiped Then
+                    GetArrowType = m_sArrowPierce
+                    GoTo Fin
+                End If
+            Case DMG_FIRE
+                If g_Data.WeapFire.Equiped Then
+                    GetArrowType = m_sArrowFire
+                    GoTo Fin
+                End If
+            Case DMG_COLD
+                If g_Data.WeapCold.Equiped Then
+                    GetArrowType = m_sArrowCold
+                    GoTo Fin
+                End If
+            Case DMG_ACID
+                If g_Data.WeapAcid.Equiped Then
+                    GetArrowType = m_sArrowAcid
+                    GoTo Fin
+                End If
+            Case DMG_LIGHTNING
+                If g_Data.WeapLight.Equiped Then
+                    GetArrowType = m_sArrowLight
+                    GoTo Fin
+                End If
+        End Select
+    Next i
+
+    GetArrowType = m_sArrows
+
+Fin:
+    Exit Function
+ErrorHandler:
+    PrintErrorMessage "clsDatas.GetArrowType - " & Err.Description
+    Resume Fin
+End Function
+
+
+'
 Public Sub SetDebugMode(ByVal bVal As Boolean)
     mDebugMode = bVal
 End Sub
 
+' Load and Save Functions
 Public Function LoadMonsters(Optional ByVal sBaseFolder As String = "") As Boolean
     If sBaseFolder = "" Then
         sBaseFolder = g_Settings.GetDataFolder & "\" & PATH_DATA

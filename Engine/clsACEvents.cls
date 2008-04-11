@@ -753,8 +753,8 @@ End Sub
 
 Private Sub m_Objects_OnRareDetected(ByVal obj As DarksideFilter.acObject)
 On Error Resume Next
-    If g_ui.Options.chkFilterIdMsg.Checked Then Exit Sub
-    If g_ui.Loot.chkEnableLooting.Checked Then
+    If g_ui.Options.chkFilterIdMsg.Checked Or g_Macro.Loot.silentID Then Exit Sub
+     If ((g_Hooks.CurrentSelection = obj.Guid) Or (obj.Wielder <> 0)) Then
         PrintMessage "*** [Rare Detected] ***  " & obj.Name
         'Call PlaySound(SOUND_RARE)
     End If

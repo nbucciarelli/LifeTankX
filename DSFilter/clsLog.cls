@@ -18,7 +18,7 @@ Option Explicit
 Private Const FILE_DEBUGLOG = "DSFilter_Debug.log"
 Private Const FILE_ERROR = "DSFilter_Error.log"
 
-Private Const DEBUG_ME = True
+Private Const DEBUG_ME = False
 
 Private m_lFileDebugLog As Long
 Private m_lFileErrorLog As Long

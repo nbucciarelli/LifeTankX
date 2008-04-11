@@ -315,7 +315,6 @@ Public Sub MageImperilLanded()
     
     'Update secure timer
     Call m_tmrSecure.SetNextTime(SECURE_TIMER)
-    
     locDebug "MageImperilLanded: Monster Imperiled"
     Call m_objTarget.SetUserData(INT_MISSCOUNT, 0)
     m_objTarget.Imperiled = True
@@ -329,7 +328,6 @@ Public Sub MageVulnLanded()
     
     'Update secure timer
     Call m_tmrSecure.SetNextTime(SECURE_TIMER)
-    
     locDebug "MageVulnLanded: Monster Vulned."
     Call m_objTarget.SetUserData(INT_MISSCOUNT, 0)
     Call m_objTarget.AddVuln(g_Spells.CurrentDamage)
@@ -343,7 +341,6 @@ Public Sub MageYieldLanded()
     
     'Update secure timer
     Call m_tmrSecure.SetNextTime(SECURE_TIMER)
-    
     'If (Not m_objTarget.Yielded) And (g_ui.Macro.chkYield.Checked) Then
      locDebug "MageYieldLanded: Monster Yielded."
      Call m_objTarget.SetUserData(INT_MISSCOUNT, 0)
@@ -359,9 +356,7 @@ Public Sub MageSpellGotResisted()
     
     'Update secure timer
     Call m_tmrSecure.SetNextTime(SECURE_TIMER)
-    
     Call m_objTarget.SetUserData(INT_MISSCOUNT, 0)
-    
     If m_Action = ACT_YIELDMONSTER Then
         Call m_objTarget.SetUserData(INT_YIELD_TRYS_LEFT, m_objTarget.UserData(INT_YIELD_TRYS_LEFT) - 1)
         locDebug "MagicYield: monster resisted yield, " & m_objTarget.UserData(INT_YIELD_TRYS_LEFT) & " trys left"

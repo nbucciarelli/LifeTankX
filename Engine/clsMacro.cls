@@ -703,7 +703,7 @@ End Sub
 
 Private Sub m_Fletcher_OnFletchingOver()
     If m_iState = ST_FLETCHING Then
-        locDebug "clsMacro - m_Fletcher_OnFletchingOver : current combat over, moving back to Idle"
+        locDebug "clsMacro - m_Fletcher_OnFletchingOver : fletching over, moving back to Idle"
         Call GoIdle
     Else
         'PrintWarning "m_Fletcher_OnFletchingOver fired, but State <> ST_FLETCHING - Ignoring"
@@ -952,7 +952,7 @@ On Error GoTo ErrorHandler
     End If
 
     If Not Valid(objTarget) Then
-        MyDebug "GoCombat : invalid objTarget"
+        MyDebug "GoCombat : invalid objTarget, going to Idle"
         Exit Sub
     End If
     
@@ -2244,6 +2244,7 @@ On Error GoTo Error_Handler
 
     Dim bRet As Boolean
     Dim aWeap As acObject
+    
     bRet = False
     
     If CombatType = TYPE_NOTYPE Then
@@ -2306,19 +2307,19 @@ On Error GoTo Error_Handler
             End If
             
             'check if valid equipment
-            'If Valid(aWeap) Then
-            '    If Not aWeap.Equiped Then
-            '        MyDebug "ValidState : Bow not equipped, equipping now: " & aWeap.Name
-            '        Call RequestEquipItem(aWeap)
-            '        GoTo Fin
-            '    End If
-            'Else
+            If Valid(aWeap) Then
+                If Not aWeap.Equiped Then
+                    MyDebug "ValidState : Bow not equipped, equipping now: " & aWeap.Name
+                    Call RequestEquipItem(aWeap)
+                    GoTo Fin
+                End If
+            Else
                 If Not g_Data.Bow.Equiped Then
                     MyDebug "ValidState : Default Bow not equipped, equipping now"
                     Call RequestEquipItem(g_Data.Bow)
                     GoTo Fin
                 End If
-            'End If
+            End If
             
             If m_CombatMode.CurrentCombatState <> COMBATSTATE_ARCHER And m_Healing.NeedHealing = False Then
                 MyDebug "ValidState: TYPE_ARCHER: invalid combat state. Switching now"
@@ -2745,7 +2746,8 @@ On Error GoTo ErrorHandler
     Dim NumShafts As Integer
     Dim objArrow As acObject
 
-    ArrowName = g_Data.Arrows
+    'ArrowName = g_Data.Arrows
+    ArrowName = g_Data.GetArrowType
     PrintMessage "Out of " & ArrowName & ". Looking up for some in inventory..."
     NumArrowsInInventory = g_Objects.Items.InvCntByName(ArrowName, True)
     
@@ -2756,7 +2758,7 @@ On Error GoTo ErrorHandler
         If objArrow.Guid <> -1 Then
             Call RequestEquipItem(objArrow)
         Else
-            PrintErrorMessage "OnOutOfArrow : unable to find the arrow object in inventory"
+            PrintErrorMessage "ReleadArrows: unable to find the arrow object in inventory"
             GoTo Fin
         End If
     Else

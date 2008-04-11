@@ -127,6 +127,29 @@ Public lblArrowHead As DecalControls.StaticText
 Public lblArrowShaft As DecalControls.StaticText
 Public chkEnableFletching As DecalControls.CheckBox
 Public chkEnableArcherBlacklist As DecalControls.CheckBox
+'Archer Arrows tab
+Public WithEvents cmdArrowBludge As DecalControls.PushButton
+Attribute cmdArrowBludge.VB_VarHelpID = -1
+Public lblArrowBludge As DecalControls.StaticText
+Public WithEvents cmdArrowSlash As DecalControls.PushButton
+Attribute cmdArrowSlash.VB_VarHelpID = -1
+Public lblArrowSlash As DecalControls.StaticText
+Public WithEvents cmdArrowPierce As DecalControls.PushButton
+Attribute cmdArrowPierce.VB_VarHelpID = -1
+Public lblArrowPierce As DecalControls.StaticText
+Public WithEvents cmdArrowFire As DecalControls.PushButton
+Attribute cmdArrowFire.VB_VarHelpID = -1
+Public lblArrowFire As DecalControls.StaticText
+Public WithEvents cmdArrowCold As DecalControls.PushButton
+Attribute cmdArrowCold.VB_VarHelpID = -1
+Public lblArrowCold As DecalControls.StaticText
+Public WithEvents cmdArrowAcid As DecalControls.PushButton
+Attribute cmdArrowAcid.VB_VarHelpID = -1
+Public lblArrowAcid As DecalControls.StaticText
+Public WithEvents cmdArrowLight As DecalControls.PushButton
+Attribute cmdArrowLight.VB_VarHelpID = -1
+Public lblArrowLight As DecalControls.StaticText
+
 
 'Melee tab
 Public WithEvents txtMeleeRadius As DecalControls.Edit
@@ -158,7 +181,7 @@ Public chkAttackPK As DecalControls.CheckBox
 Public chkDangerZone As DecalControls.CheckBox
 Public txtDangerZone As DecalControls.Edit
 
-'Weapons
+'Elemental Weapons (wand, melee or bow)
 Public WithEvents cmdWeapBludge As DecalControls.PushButton
 Attribute cmdWeapBludge.VB_VarHelpID = -1
 Public chkWeapBludge As DecalControls.CheckBox
@@ -302,6 +325,22 @@ On Error GoTo ErrorHandler
     Set lblArrowShaft = g_MainView.Control("lblArrowShaft")
     Set chkEnableFletching = g_MainView.Control("chkEnableFletching")
     Set chkEnableArcherBlacklist = g_MainView.Control("chkEnableArcherBlacklist")
+    ' Arrows
+    Set cmdArrowBludge = g_MainView.Control("cmdArrowBludge")
+    Set lblArrowBludge = g_MainView.Control("lblArrowBludge")
+    Set cmdArrowSlash = g_MainView.Control("cmdArrowSlash")
+    Set lblArrowSlash = g_MainView.Control("lblArrowSlash")
+    Set cmdArrowPierce = g_MainView.Control("cmdArrowPierce")
+    Set lblArrowPierce = g_MainView.Control("lblArrowPierce")
+    Set cmdArrowFire = g_MainView.Control("cmdArrowFire")
+    Set lblArrowFire = g_MainView.Control("lblArrowFire")
+    Set cmdArrowCold = g_MainView.Control("cmdArrowCold")
+    Set lblArrowCold = g_MainView.Control("lblArrowCold")
+    Set cmdArrowAcid = g_MainView.Control("cmdArrowAcid")
+    Set lblArrowAcid = g_MainView.Control("lblArrowAcid")
+    Set cmdArrowLight = g_MainView.Control("cmdArrowLight")
+    Set lblArrowLight = g_MainView.Control("lblArrowLight")
+    
     
     'Melee tab
     Set txtMeleeRadius = g_MainView.Control("txtMeleeRadius")
@@ -476,6 +515,14 @@ On Error GoTo Error_Handler
         g_Data.Arrows = .GetValue(ID_ARROWS, TAG_NOT_SET)
         g_Data.ArrowHead = .GetValue(ID_ARROWHEAD, TAG_NOT_SET)
         g_Data.ArrowShaft = .GetValue(ID_ARROWSHAFT, TAG_NOT_SET)
+        
+        g_Data.m_sArrowBludge = .GetValue("ArrowBludge", TAG_NOT_SET)
+        g_Data.m_sArrowSlash = .GetValue("ArrowSlash", TAG_NOT_SET)
+        g_Data.m_sArrowPierce = .GetValue("ArrowPierce", TAG_NOT_SET)
+        g_Data.m_sArrowFire = .GetValue("ArrowFire", TAG_NOT_SET)
+        g_Data.m_sArrowCold = .GetValue("ArrowCold", TAG_NOT_SET)
+        g_Data.m_sArrowAcid = .GetValue("ArrowAcid", TAG_NOT_SET)
+        g_Data.m_sArrowLight = .GetValue("ArrowLight", TAG_NOT_SET)
         
         g_Data.SetWeapBludgeGUID = .GetValue("WeapBludge", 0)
         chkWeapBludge.Checked = .GetValue("chkWeapBludge", False)
@@ -681,6 +728,14 @@ On Error GoTo Error_Handler
         .SaveValue ID_ARROWS, g_Data.Arrows
         .SaveValue ID_ARROWHEAD, g_Data.ArrowHead
         .SaveValue ID_ARROWSHAFT, g_Data.ArrowShaft
+        
+        .SaveValue "ArrowBludge", g_Data.m_sArrowBludge
+        .SaveValue "ArrowSlash", g_Data.m_sArrowSlash
+        .SaveValue "ArrowPierce", g_Data.m_sArrowPierce
+        .SaveValue "ArrowFire", g_Data.m_sArrowFire
+        .SaveValue "ArrowCold", g_Data.m_sArrowCold
+        .SaveValue "ArrowAcid", g_Data.m_sArrowAcid
+        .SaveValue "ArrowLight", g_Data.m_sArrowLight
         
         'Weapons
         .SaveValue "WeapBludge", g_Data.WeapBludgeGUID
@@ -1077,6 +1132,14 @@ On Error GoTo ErrorHandler
     lblArrowHead.Text = g_Data.ArrowHead
     lblArrowShaft.Text = g_Data.ArrowShaft
     
+    lblArrowBludge.Text = g_Data.m_sArrowBludge
+    lblArrowSlash.Text = g_Data.m_sArrowSlash
+    lblArrowPierce.Text = g_Data.m_sArrowPierce
+    lblArrowFire.Text = g_Data.m_sArrowFire
+    lblArrowCold.Text = g_Data.m_sArrowCold
+    lblArrowAcid.Text = g_Data.m_sArrowAcid
+    lblArrowLight.Text = g_Data.m_sArrowLight
+    
 Fin:
     Exit Sub
 ErrorHandler:
@@ -1103,6 +1166,65 @@ Private Sub btnExportInv_Accepted(ByVal bID As Long)
     Call g_Macro.Loot.exportInventory
 End Sub
 
+'Arrows for the archer tab
+Private Sub cmdArrowBludge_Accepted(ByVal nID As Long)
+    Dim objItem As acObject
+    Call GetInventorySelection("Arrow", objItem)
+    If Valid(objItem) Then
+        g_Data.m_sArrowBludge = objItem.Name
+        Call UpdateMacroItemsLabels
+    End If
+End Sub
+Private Sub cmdArrowSlash_Accepted(ByVal nID As Long)
+    Dim objItem As acObject
+    Call GetInventorySelection("Arrow", objItem)
+    If Valid(objItem) Then
+        g_Data.m_sArrowSlash = objItem.Name
+        Call UpdateMacroItemsLabels
+    End If
+End Sub
+Private Sub cmdArrowPierce_Accepted(ByVal nID As Long)
+    Dim objItem As acObject
+    Call GetInventorySelection("Arrow", objItem)
+    If Valid(objItem) Then
+        g_Data.m_sArrowPierce = objItem.Name
+        Call UpdateMacroItemsLabels
+    End If
+End Sub
+Private Sub cmdArrowFire_Accepted(ByVal nID As Long)
+    Dim objItem As acObject
+    Call GetInventorySelection("Arrow", objItem)
+    If Valid(objItem) Then
+        g_Data.m_sArrowFire = objItem.Name
+        Call UpdateMacroItemsLabels
+    End If
+End Sub
+Private Sub cmdArrowCold_Accepted(ByVal nID As Long)
+    Dim objItem As acObject
+    Call GetInventorySelection("Arrow", objItem)
+    If Valid(objItem) Then
+        g_Data.m_sArrowCold = objItem.Name
+        Call UpdateMacroItemsLabels
+    End If
+End Sub
+Private Sub cmdArrowAcid_Accepted(ByVal nID As Long)
+    Dim objItem As acObject
+    Call GetInventorySelection("Arrow", objItem)
+    If Valid(objItem) Then
+        g_Data.m_sArrowAcid = objItem.Name
+        Call UpdateMacroItemsLabels
+    End If
+End Sub
+Private Sub cmdArrowLight_Accepted(ByVal nID As Long)
+    Dim objItem As acObject
+    Call GetInventorySelection("Arrow", objItem)
+    If Valid(objItem) Then
+        g_Data.m_sArrowLight = objItem.Name
+        Call UpdateMacroItemsLabels
+    End If
+End Sub
+
+'Default arrows
 Private Sub cmdSetArrow_Accepted(ByVal nID As Long)
     Dim objItem As acObject
     Call GetInventorySelection("Arrow", objItem)
@@ -1110,9 +1232,9 @@ Private Sub cmdSetArrow_Accepted(ByVal nID As Long)
         g_Data.Arrows = objItem.Name
         Call UpdateMacroItemsLabels
     End If
-    
 End Sub
 
+'Default heads for fletching
 Private Sub cmdSetHead_Accepted(ByVal nID As Long)
     Dim objItem As acObject
     Call GetInventorySelection("Arrow Head", objItem)
@@ -1120,9 +1242,9 @@ Private Sub cmdSetHead_Accepted(ByVal nID As Long)
         g_Data.ArrowHead = objItem.Name
         Call UpdateMacroItemsLabels
     End If
-   
 End Sub
 
+'Shafts for fletching
 Private Sub cmdSetShaft_Accepted(ByVal nID As Long)
     Dim objItem As acObject
     Call GetInventorySelection("Arrow Shaft", objItem)
@@ -1132,44 +1254,39 @@ Private Sub cmdSetShaft_Accepted(ByVal nID As Long)
     End If
 End Sub
 
+'Default bow
 Private Sub cmdSetBow_Accepted(ByVal nID As Long)
     g_Data.BowGUID = GetInventorySelection("Bow")
     Call UpdateItemLabel(g_Data.Bow, lblBow)
 End Sub
 
+'Default melee Weapon
 Private Sub cmdSetWeapon_Accepted(ByVal nID As Long)
     g_Data.WeaponGUID = GetInventorySelection("Melee Weapon")
     Call UpdateItemLabel(g_Data.Weapon, lblWeapon)
 End Sub
 
+'Melee Shield
 Private Sub cmdSetShield_Accepted(ByVal nID As Long)
     g_Data.ShieldGUID = GetInventorySelection("Shield")
     Call UpdateItemLabel(g_Data.Shield, lblShield)
 End Sub
 
+'Default wand
 Private Sub cmdSetWand_Accepted(ByVal nID As Long)
     g_Data.WandGUID = GetInventorySelection("Wand")
     Call UpdateItemLabel(g_Data.Wand, lblWand)
 End Sub
 
-'cmdWeapBludge
+'Elemental Weapons (could be wand, melee or archer)
 Private Sub cmdWeapBludge_Accepted(ByVal nID As Long)
-On Error GoTo Error_Handler
     Dim objItem As acObject
-    Call GetInventorySelection("Bludge Weapon", objItem)
+    Call GetInventorySelection("Weapon", objItem)
     If Valid(objItem) Then
-        MyDebug "clsUIMacro.cmdWeapBludge: " & objItem.Name
+        'MyDebug "clsUIMacro.cmdWeapBludge: " & objItem.Name
         g_Data.SetWeapBludgeGUID = objItem.Guid
         Call UpdateMacroItemsLabels
-    Else
-        MyDebug "clsUIMacro.cmdWeapBludge not set"
     End If
-
-Fin:
-    Exit Sub
-Error_Handler:
-    PrintErrorMessage "clsUIMacro.cmdWeapBludge_accepted - " & Err.Description
-    Resume Fin
 End Sub
 Private Sub cmdWeapSlash_Accepted(ByVal nID As Long)
     Dim objItem As acObject
@@ -1220,6 +1337,8 @@ Private Sub cmdWeapLight_Accepted(ByVal nID As Long)
     End If
 End Sub
 
+
+' Navigation
 Private Sub cmdShowNavEditor_Accepted(ByVal nID As Long)
     Call g_ui.NavEditor.ShowEditor
 End Sub
@@ -1232,7 +1351,6 @@ Private Sub chkEnableNav_Change(ByVal nID As Long, ByVal bChecked As Boolean)
 End Sub
 
 Private Sub chkEnableSticky_Change(ByVal nID As Long, ByVal bChecked As Boolean)
-    
     If (bChecked) Then
         MyDebug "chkEnableSticky_Change: on : " & bChecked
         ' Make sure Nav is not enabled
@@ -1243,7 +1361,6 @@ Private Sub chkEnableSticky_Change(ByVal nID As Long, ByVal bChecked As Boolean)
         MyDebug "chkEnableSticky_Change: off : " & bChecked
         Call g_Nav.SetStickyOff
     End If
-    
 End Sub
 
 Private Sub cmdSetSticky_accepted(ByVal nID As Long)
