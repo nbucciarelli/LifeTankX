@@ -1013,7 +1013,7 @@ End Function
 Public Sub GoFletching()
 On Error GoTo ErrorHandler
 
-    If m_Fletcher.StartFletching(g_Data.Arrows, g_Data.ArrowHead, g_Data.ArrowShaft, "clsMacro.GoFletching") Then
+    If m_Fletcher.StartFletching("clsMacro.GoFletching") Then
         LogEvent "Fletching " & g_Data.Arrows & " with " & g_Data.ArrowHead & " and " & g_Data.ArrowShaft
         Call SetState(ST_FLETCHING)
     Else
@@ -2243,7 +2243,7 @@ Public Function ValidState(Optional ByVal CombatType As eMacroCombatType = TYPE_
 On Error GoTo Error_Handler
 
     Dim bRet As Boolean
-    Dim aWeap As acObject
+    'Dim aWeap As acObject
     
     bRet = False
     
@@ -2252,18 +2252,18 @@ On Error GoTo Error_Handler
         locDebug "clsMacro.ValidState: CombatType set to: " & CombatType
     End If
     
-    Set aWeap = Nothing
+    'Set aWeap = Nothing
     
     'Get Vuln type of current target
-    If Valid(m_Combat.Target) Then
-        'Which is then used to find the correct weapon to equip
-        If m_Combat.Target.Vulnerability <> -1 Then
-            Set aWeap = g_Data.GetWeaponType(m_Combat.Target.Vulnerability)
-            If Valid(aWeap) Then
-                locDebug "ValidState: Setting aWeap to: " & aWeap.Name & " for damage type: " & m_Combat.Target.Vulnerability
-            End If
-        End If
-    End If
+    'If Valid(m_Combat.Target) Then
+    '    'Which is then used to find the correct weapon to equip
+    '    If m_Combat.Target.Vulnerability <> -1 Then
+    '        Set aWeap = g_Data.GetWeaponType(m_Combat.Target.Vulnerability)
+    '        If Valid(aWeap) Then
+    '            locDebug "ValidState: Setting aWeap to: " & aWeap.Name & " for damage type: " & m_Combat.Target.Vulnerability
+    '        End If
+    '    End If
+    'End If
     
     Select Case CombatType
         Case TYPE_MELEE
@@ -2274,10 +2274,10 @@ On Error GoTo Error_Handler
             End If
         
             'check if valid equipment
-            If Valid(aWeap) Then
-                If Not aWeap.Equiped Then
-                    MyDebug "ValidState : Melee Weapon not equipped, equipping now: " & aWeap.Name
-                    Call RequestEquipItem(aWeap)
+            If g_ui.Macro.chkAutoSwitch.Checked And Valid(g_currentEquip) Then
+                If Not g_currentEquip.Equiped Then
+                    MyDebug "ValidState : Melee Weapon not equipped, equipping now: " & g_currentEquip.Name
+                    Call RequestEquipItem(g_currentEquip)
                     GoTo Fin
                 End If
             Else
@@ -2307,10 +2307,15 @@ On Error GoTo Error_Handler
             End If
             
             'check if valid equipment
-            If Valid(aWeap) Then
-                If Not aWeap.Equiped Then
-                    MyDebug "ValidState : Bow not equipped, equipping now: " & aWeap.Name
-                    Call RequestEquipItem(aWeap)
+            If g_ui.Macro.chkAutoSwitch.Checked And Valid(g_currentEquip) Then
+                If Not g_currentEquip.Equiped Then
+                    MyDebug "ValidState : Bow not equipped, equipping now: " & g_currentEquip.Name
+                    Call RequestEquipItem(g_currentEquip)
+                    GoTo Fin
+                End If
+                If Not g_currentArrow.Equiped Then
+                    MyDebug "ValidState : Arrows not equipped, equipping now: " & g_currentArrow.Name
+                    Call RequestEquipItem(g_currentArrow)
                     GoTo Fin
                 End If
             Else
@@ -2334,10 +2339,10 @@ On Error GoTo Error_Handler
             End If
             
             'check if valid equipment
-            If Valid(aWeap) Then
-                If Not aWeap.Equiped Then
-                    MyDebug "ValidState : Wand not equipped, equipping now: " & aWeap.Name
-                    Call RequestEquipItem(aWeap)
+            If g_ui.Macro.chkAutoSwitch.Checked And Valid(g_currentEquip) Then
+                If Not g_currentEquip.Equiped Then
+                    MyDebug "ValidState : Wand not equipped, equipping now: " & g_currentEquip.Name
+                    Call RequestEquipItem(g_currentEquip)
                     GoTo Fin
                 End If
             Else
@@ -2758,14 +2763,15 @@ On Error GoTo ErrorHandler
         If objArrow.Guid <> -1 Then
             Call RequestEquipItem(objArrow)
         Else
-            PrintErrorMessage "ReleadArrows: unable to find the arrow object in inventory"
+            PrintErrorMessage "ReloadArrows: unable to find the arrow object in inventory"
             GoTo Fin
         End If
     Else
         'Fletch if needed and enabled
         If g_ui.Macro.chkEnableFletching.Checked Then
             'look up for arrow heads
-            NumArrowHeads = g_Objects.Items.InvCntByName(g_Data.ArrowHead, True)
+            ArrowName = g_Data.GetArrowHead
+            NumArrowHeads = g_Objects.Items.InvCntByName(ArrowName, True)
             MyDebug "...NumArrowHeads = " & NumArrowHeads
 
             'look up for shafts

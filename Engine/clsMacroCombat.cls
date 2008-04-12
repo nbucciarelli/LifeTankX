@@ -393,6 +393,8 @@ On Error GoTo ErrorHandler
         Call g_Service.SelectObject(m_objTarget)
     End If
     
+    Call SetCurrentEquip
+    
     'return true
     bRet = True
     
@@ -413,6 +415,30 @@ ErrorHandler:
     PrintErrorMessage "SetTarget - " & Err.Description
     Resume Fin
 End Function
+
+' Set the target equipment we should be using
+Public Sub SetCurrentEquip()
+On Error GoTo ErrorHandler
+
+    If Valid(m_objTarget) Then
+        If m_objTarget.Vulnerability <> -1 Then
+            Set g_currentEquip = g_Data.GetWeaponType(m_objTarget.Vulnerability)
+            If Valid(g_currentEquip) Then
+                locDebug "SetCurrentEquip: Setting g_CurrentEquip to: " & g_currentEquip.Name & " for damage type: " & m_objTarget.Vulnerability
+                If g_currentEquip.itemType = ITEM_MISSILE_WEAPON Then
+                    'Also need to find and equip Arrows
+                    Call g_Data.GetArrowType
+                End If
+            End If
+        End If
+    End If
+
+Fin:
+    Exit Sub
+ErrorHandler:
+    PrintErrorMessage "SetCurrentEquip - " & Err.Description
+    Resume Fin
+End Sub
 
 '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 '

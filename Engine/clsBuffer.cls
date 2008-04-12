@@ -940,7 +940,11 @@ Public Sub BuffWeapons()
 On Error GoTo ErrorHandler
     Dim aWeap As acObject
     Dim i As Integer
-        
+    
+    If Not g_ui.Macro.chkAutoSwitch.Checked Then
+        Exit Sub
+    End If
+    
     'Buff extra Weapons/Wands
     For i = DMG_SLASHING To DMG_LIGHTNING
     

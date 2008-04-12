@@ -92,7 +92,7 @@ End Sub
 
 Public Sub OnFletchingFailed()
     locDebug "Fletching failed, trying again"
-    If Not StartFletching(m_sArrow, m_sArrowHead, m_sArrowShaft, "OnFletchingFailed") Then
+    If Not StartFletching("OnFletchingFailed") Then
         Call StopFletching("OnFletchingFailed")
     End If
 End Sub
@@ -102,12 +102,19 @@ End Sub
 '                                   PUBLIC
 '
 '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-Public Function StartFletching(ByVal sArrowName As String, ByVal sArrowHead As String, ByVal sArrowShaft As String, Optional ByVal sSource As String = "") As Boolean
+Public Function StartFletching(Optional ByVal sSource As String = "") As Boolean
 On Error GoTo ErrorHandler
 
     Dim bRet As Boolean
+    Dim sArrowName As String
+    Dim sArrowHead As String
+    Dim sArrowShaft As String
     
     locDebug "StartFletching - Src: " & sSource
+
+    sArrowName = g_Data.GetArrowType
+    sArrowHead = g_Data.GetArrowHead
+    sArrowShaft = g_Data.ArrowShaft
 
     If ValidFletchItem(sArrowName) _
     And ValidFletchItem(sArrowHead) _
@@ -134,7 +141,7 @@ ErrorHandler:
 End Function
 
 Public Function RestartFletching() As Boolean
-    RestartFletching = StartFletching(m_sArrow, m_sArrowHead, m_sArrowShaft, RestartFletching)
+    RestartFletching = StartFletching(RestartFletching)
 End Function
 
 Public Function StopFletching(Optional ByVal sSource As String = "")

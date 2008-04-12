@@ -44,12 +44,19 @@ Private m_sArrowHead As String
 Private m_sArrowShaft As String
 
 Public m_sArrowBludge As String
+Public m_sHeadBludge As String
 Public m_sArrowSlash As String
+Public m_sHeadSlash As String
 Public m_sArrowPierce As String
+Public m_sHeadPierce As String
 Public m_sArrowFire As String
+Public m_sHeadFire As String
 Public m_sArrowCold As String
+Public m_sHeadCold As String
 Public m_sArrowAcid As String
+Public m_sHeadAcid As String
 Public m_sArrowLight As String
+Public m_sHeadLight As String
 
 Public WeapBludge As acObject
 Public WeapBludgeGUID As Long
@@ -367,8 +374,6 @@ Public Function GetWeaponType(ByVal iType As Integer) As acObject
 On Error GoTo ErrorHandler
     
     Dim aWeap As acObject
-        
-    'For i = DMG_SLASHING To DMG_LIGHTNING
     
     Set aWeap = Nothing
         
@@ -414,57 +419,82 @@ End Function
 
 Public Function GetArrowType() As String
 On Error GoTo ErrorHandler
-    
-    Dim i As Integer
-        
-    'Find Arrow type based on Equipped Bow
-    For i = DMG_SLASHING To DMG_LIGHTNING
-    
-        Select Case i
-            Case DMG_SLASHING
-                If g_Data.WeapSlash.Equiped Then
-                    GetArrowType = m_sArrowSlash
-                    GoTo Fin
-                End If
-            Case DMG_BLUDGEONING
-                If g_Data.WeapBludge.Equiped Then
-                    GetArrowType = m_sArrowBludge
-                    GoTo Fin
-                End If
-            Case DMG_PIERCING
-                If g_Data.WeapPierce.Equiped Then
-                    GetArrowType = m_sArrowPierce
-                    GoTo Fin
-                End If
-            Case DMG_FIRE
-                If g_Data.WeapFire.Equiped Then
-                    GetArrowType = m_sArrowFire
-                    GoTo Fin
-                End If
-            Case DMG_COLD
-                If g_Data.WeapCold.Equiped Then
-                    GetArrowType = m_sArrowCold
-                    GoTo Fin
-                End If
-            Case DMG_ACID
-                If g_Data.WeapAcid.Equiped Then
-                    GetArrowType = m_sArrowAcid
-                    GoTo Fin
-                End If
-            Case DMG_LIGHTNING
-                If g_Data.WeapLight.Equiped Then
-                    GetArrowType = m_sArrowLight
-                    GoTo Fin
-                End If
-        End Select
-    Next i
 
-    GetArrowType = m_sArrows
-
+    Dim ArrowName As String
+    Dim NumArrowHeads As Integer
+    
+    If g_currentEquip.Guid = g_Data.WeapSlash.Guid Then
+        ArrowName = m_sArrowSlash
+    ElseIf g_currentEquip.Guid = g_Data.WeapBludge.Guid Then
+        ArrowName = m_sArrowBludge
+    ElseIf g_currentEquip.Guid = g_Data.WeapPierce.Guid Then
+        ArrowName = m_sArrowPierce
+    ElseIf g_currentEquip.Guid = g_Data.WeapFire.Guid Then
+        ArrowName = m_sArrowFire
+    ElseIf g_currentEquip.Guid = g_Data.WeapCold.Guid Then
+        ArrowName = m_sArrowCold
+    ElseIf g_currentEquip.Guid = g_Data.WeapAcid.Guid Then
+        ArrowName = m_sArrowAcid
+    ElseIf g_currentEquip.Guid = g_Data.WeapLight.Guid Then
+        ArrowName = m_sArrowLight
+    Else
+        ArrowName = m_sArrows
+    End If
+    
+    GetArrowType = ArrowName
+    
+    NumArrowHeads = g_Objects.Items.InvCntByName(ArrowName, True)
+    
+    If NumArrowHeads > 0 Then
+        MyDebug "Found a total of " & NumArrowHeads & " " & ArrowName & " in inventory"
+        Set g_currentArrow = g_Objects.Items.InvFindByName(ArrowName)
+    End If
+    
 Fin:
     Exit Function
 ErrorHandler:
     PrintErrorMessage "clsDatas.GetArrowType - " & Err.Description
+    Resume Fin
+End Function
+
+'Arrow heads for fletching
+Public Function GetArrowHead() As String
+On Error GoTo ErrorHandler
+
+    Dim ArrowHeadName As String
+    Dim NumArrowHeads As Integer
+    
+    If g_currentEquip.Guid = g_Data.WeapSlash.Guid Then
+        ArrowHeadName = m_sHeadSlash
+    ElseIf g_currentEquip.Guid = g_Data.WeapBludge.Guid Then
+        ArrowHeadName = m_sHeadBludge
+    ElseIf g_currentEquip.Guid = g_Data.WeapPierce.Guid Then
+        ArrowHeadName = m_sHeadPierce
+    ElseIf g_currentEquip.Guid = g_Data.WeapFire.Guid Then
+        ArrowHeadName = m_sHeadFire
+    ElseIf g_currentEquip.Guid = g_Data.WeapCold.Guid Then
+        ArrowHeadName = m_sHeadCold
+    ElseIf g_currentEquip.Guid = g_Data.WeapAcid.Guid Then
+        ArrowHeadName = m_sHeadAcid
+    ElseIf g_currentEquip.Guid = g_Data.WeapLight.Guid Then
+        ArrowHeadName = m_sHeadLight
+    Else
+        ArrowHeadName = m_sArrows
+    End If
+    
+    GetArrowHead = ArrowHeadName
+    
+    NumArrowHeads = g_Objects.Items.InvCntByName(ArrowHeadName, True)
+    
+    If NumArrowHeads > 0 Then
+        MyDebug "Found a total of " & NumArrowHeads & " " & ArrowHeadName & " in inventory"
+        'Set g_currentArrow = g_Objects.Items.InvFindByName(ArrowHeadName)
+    End If
+    
+Fin:
+    Exit Function
+ErrorHandler:
+    PrintErrorMessage "clsDatas.GetArrowHead - " & Err.Description
     Resume Fin
 End Function
 

@@ -127,28 +127,50 @@ Public lblArrowHead As DecalControls.StaticText
 Public lblArrowShaft As DecalControls.StaticText
 Public chkEnableFletching As DecalControls.CheckBox
 Public chkEnableArcherBlacklist As DecalControls.CheckBox
+
 'Archer Arrows tab
 Public WithEvents cmdArrowBludge As DecalControls.PushButton
 Attribute cmdArrowBludge.VB_VarHelpID = -1
 Public lblArrowBludge As DecalControls.StaticText
+Public WithEvents cmdHeadBludge As DecalControls.PushButton
+Attribute cmdHeadBludge.VB_VarHelpID = -1
+Public lblHeadBludge As DecalControls.StaticText
 Public WithEvents cmdArrowSlash As DecalControls.PushButton
 Attribute cmdArrowSlash.VB_VarHelpID = -1
 Public lblArrowSlash As DecalControls.StaticText
+Public WithEvents cmdHeadSlash As DecalControls.PushButton
+Attribute cmdHeadSlash.VB_VarHelpID = -1
+Public lblHeadSlash As DecalControls.StaticText
 Public WithEvents cmdArrowPierce As DecalControls.PushButton
 Attribute cmdArrowPierce.VB_VarHelpID = -1
 Public lblArrowPierce As DecalControls.StaticText
+Public WithEvents cmdHeadPierce As DecalControls.PushButton
+Attribute cmdHeadPierce.VB_VarHelpID = -1
+Public lblHeadPierce As DecalControls.StaticText
 Public WithEvents cmdArrowFire As DecalControls.PushButton
 Attribute cmdArrowFire.VB_VarHelpID = -1
 Public lblArrowFire As DecalControls.StaticText
+Public WithEvents cmdHeadFire As DecalControls.PushButton
+Attribute cmdHeadFire.VB_VarHelpID = -1
+Public lblHeadFire As DecalControls.StaticText
 Public WithEvents cmdArrowCold As DecalControls.PushButton
 Attribute cmdArrowCold.VB_VarHelpID = -1
 Public lblArrowCold As DecalControls.StaticText
+Public WithEvents cmdHeadCold As DecalControls.PushButton
+Attribute cmdHeadCold.VB_VarHelpID = -1
+Public lblHeadCold As DecalControls.StaticText
 Public WithEvents cmdArrowAcid As DecalControls.PushButton
 Attribute cmdArrowAcid.VB_VarHelpID = -1
 Public lblArrowAcid As DecalControls.StaticText
+Public WithEvents cmdHeadAcid As DecalControls.PushButton
+Attribute cmdHeadAcid.VB_VarHelpID = -1
+Public lblHeadAcid As DecalControls.StaticText
 Public WithEvents cmdArrowLight As DecalControls.PushButton
 Attribute cmdArrowLight.VB_VarHelpID = -1
 Public lblArrowLight As DecalControls.StaticText
+Public WithEvents cmdHeadLight As DecalControls.PushButton
+Attribute cmdHeadLight.VB_VarHelpID = -1
+Public lblHeadLight As DecalControls.StaticText
 
 
 'Melee tab
@@ -182,6 +204,7 @@ Public chkDangerZone As DecalControls.CheckBox
 Public txtDangerZone As DecalControls.Edit
 
 'Elemental Weapons (wand, melee or bow)
+Public chkAutoSwitch As DecalControls.CheckBox
 Public WithEvents cmdWeapBludge As DecalControls.PushButton
 Attribute cmdWeapBludge.VB_VarHelpID = -1
 Public chkWeapBludge As DecalControls.CheckBox
@@ -328,16 +351,30 @@ On Error GoTo ErrorHandler
     ' Arrows
     Set cmdArrowBludge = g_MainView.Control("cmdArrowBludge")
     Set lblArrowBludge = g_MainView.Control("lblArrowBludge")
+    Set cmdHeadBludge = g_MainView.Control("cmdHeadBludge")
+    Set lblHeadBludge = g_MainView.Control("lblHeadBludge")
+    Set cmdArrowSlash = g_MainView.Control("cmdArrowSlash")
+    Set lblArrowSlash = g_MainView.Control("lblArrowSlash")
     Set cmdArrowSlash = g_MainView.Control("cmdArrowSlash")
     Set lblArrowSlash = g_MainView.Control("lblArrowSlash")
     Set cmdArrowPierce = g_MainView.Control("cmdArrowPierce")
     Set lblArrowPierce = g_MainView.Control("lblArrowPierce")
+    Set cmdArrowPierce = g_MainView.Control("cmdArrowPierce")
+    Set lblArrowPierce = g_MainView.Control("lblArrowPierce")
+    Set cmdArrowFire = g_MainView.Control("cmdArrowFire")
+    Set lblArrowFire = g_MainView.Control("lblArrowFire")
     Set cmdArrowFire = g_MainView.Control("cmdArrowFire")
     Set lblArrowFire = g_MainView.Control("lblArrowFire")
     Set cmdArrowCold = g_MainView.Control("cmdArrowCold")
     Set lblArrowCold = g_MainView.Control("lblArrowCold")
+    Set cmdArrowCold = g_MainView.Control("cmdArrowCold")
+    Set lblArrowCold = g_MainView.Control("lblArrowCold")
     Set cmdArrowAcid = g_MainView.Control("cmdArrowAcid")
     Set lblArrowAcid = g_MainView.Control("lblArrowAcid")
+    Set cmdArrowAcid = g_MainView.Control("cmdArrowAcid")
+    Set lblArrowAcid = g_MainView.Control("lblArrowAcid")
+    Set cmdArrowLight = g_MainView.Control("cmdArrowLight")
+    Set lblArrowLight = g_MainView.Control("lblArrowLight")
     Set cmdArrowLight = g_MainView.Control("cmdArrowLight")
     Set lblArrowLight = g_MainView.Control("lblArrowLight")
     
@@ -349,7 +386,9 @@ On Error GoTo ErrorHandler
     Set lblWeapon = g_MainView.Control("lblWeapon")
     Set lblShield = g_MainView.Control("lblShield")
     
-    'Weapons Tab
+    'Items Tab
+    Set chkAutoSwitch = g_MainView.Control("chkAutoSwitch")
+    
     Set cmdWeapBludge = g_MainView.Control("cmdWeapBludge")
     Set chkWeapBludge = g_MainView.Control("chkWeapBludge")
     Set lblWeapBludge = g_MainView.Control("lblWeapBludge")
@@ -517,12 +556,21 @@ On Error GoTo Error_Handler
         g_Data.ArrowShaft = .GetValue(ID_ARROWSHAFT, TAG_NOT_SET)
         
         g_Data.m_sArrowBludge = .GetValue("ArrowBludge", TAG_NOT_SET)
+        g_Data.m_sHeadBludge = .GetValue("HeadBludge", TAG_NOT_SET)
         g_Data.m_sArrowSlash = .GetValue("ArrowSlash", TAG_NOT_SET)
+        g_Data.m_sHeadSlash = .GetValue("HeadSlash", TAG_NOT_SET)
         g_Data.m_sArrowPierce = .GetValue("ArrowPierce", TAG_NOT_SET)
+        g_Data.m_sHeadPierce = .GetValue("HeadPierce", TAG_NOT_SET)
         g_Data.m_sArrowFire = .GetValue("ArrowFire", TAG_NOT_SET)
+        g_Data.m_sHeadFire = .GetValue("HeadFire", TAG_NOT_SET)
         g_Data.m_sArrowCold = .GetValue("ArrowCold", TAG_NOT_SET)
+        g_Data.m_sHeadCold = .GetValue("HeadCold", TAG_NOT_SET)
         g_Data.m_sArrowAcid = .GetValue("ArrowAcid", TAG_NOT_SET)
+        g_Data.m_sHeadAcid = .GetValue("HeadAcid", TAG_NOT_SET)
         g_Data.m_sArrowLight = .GetValue("ArrowLight", TAG_NOT_SET)
+        g_Data.m_sHeadLight = .GetValue("HeadLight", TAG_NOT_SET)
+        
+        chkAutoSwitch.Checked = .GetValue("chkAutoSwitch", False)
         
         g_Data.SetWeapBludgeGUID = .GetValue("WeapBludge", 0)
         chkWeapBludge.Checked = .GetValue("chkWeapBludge", False)
@@ -730,14 +778,23 @@ On Error GoTo Error_Handler
         .SaveValue ID_ARROWSHAFT, g_Data.ArrowShaft
         
         .SaveValue "ArrowBludge", g_Data.m_sArrowBludge
+        .SaveValue "HeadBludge", g_Data.m_sHeadBludge
         .SaveValue "ArrowSlash", g_Data.m_sArrowSlash
+        .SaveValue "HeadSlash", g_Data.m_sHeadSlash
         .SaveValue "ArrowPierce", g_Data.m_sArrowPierce
+        .SaveValue "HeadPierce", g_Data.m_sHeadPierce
         .SaveValue "ArrowFire", g_Data.m_sArrowFire
+        .SaveValue "HeadFire", g_Data.m_sHeadFire
         .SaveValue "ArrowCold", g_Data.m_sArrowCold
+        .SaveValue "HeadCold", g_Data.m_sHeadCold
         .SaveValue "ArrowAcid", g_Data.m_sArrowAcid
+        .SaveValue "HeadAcid", g_Data.m_sHeadAcid
         .SaveValue "ArrowLight", g_Data.m_sArrowLight
+        .SaveValue "HeadLight", g_Data.m_sHeadLight
         
-        'Weapons
+        'Items
+        .SaveCheckbox chkAutoSwitch, "chkAutoSwitch"
+        
         .SaveValue "WeapBludge", g_Data.WeapBludgeGUID
         .SaveCheckbox chkWeapBludge, "chkWeapBludge"
         .SaveValue "WeapSlash", g_Data.WeapSlashGUID
@@ -1133,12 +1190,19 @@ On Error GoTo ErrorHandler
     lblArrowShaft.Text = g_Data.ArrowShaft
     
     lblArrowBludge.Text = g_Data.m_sArrowBludge
+    lblHeadBludge.Text = g_Data.m_sHeadBludge
     lblArrowSlash.Text = g_Data.m_sArrowSlash
+    lblHeadSlash.Text = g_Data.m_sHeadSlash
     lblArrowPierce.Text = g_Data.m_sArrowPierce
+    lblHeadPierce.Text = g_Data.m_sHeadPierce
     lblArrowFire.Text = g_Data.m_sArrowFire
+    lblHeadFire.Text = g_Data.m_sHeadFire
     lblArrowCold.Text = g_Data.m_sArrowCold
+    lblHeadCold.Text = g_Data.m_sHeadCold
     lblArrowAcid.Text = g_Data.m_sArrowAcid
+    lblHeadAcid.Text = g_Data.m_sHeadAcid
     lblArrowLight.Text = g_Data.m_sArrowLight
+    lblHeadLight.Text = g_Data.m_sHeadLight
     
 Fin:
     Exit Sub
@@ -1220,6 +1284,63 @@ Private Sub cmdArrowLight_Accepted(ByVal nID As Long)
     Call GetInventorySelection("Arrow", objItem)
     If Valid(objItem) Then
         g_Data.m_sArrowLight = objItem.Name
+        Call UpdateMacroItemsLabels
+    End If
+End Sub
+
+Private Sub cmdHeadBludge_Accepted(ByVal nID As Long)
+    Dim objItem As acObject
+    Call GetInventorySelection("Head", objItem)
+    If Valid(objItem) Then
+        g_Data.m_sHeadBludge = objItem.Name
+        Call UpdateMacroItemsLabels
+    End If
+End Sub
+Private Sub cmdHeadSlash_Accepted(ByVal nID As Long)
+    Dim objItem As acObject
+    Call GetInventorySelection("Head", objItem)
+    If Valid(objItem) Then
+        g_Data.m_sHeadSlash = objItem.Name
+        Call UpdateMacroItemsLabels
+    End If
+End Sub
+Private Sub cmdHeadPierce_Accepted(ByVal nID As Long)
+    Dim objItem As acObject
+    Call GetInventorySelection("Head", objItem)
+    If Valid(objItem) Then
+        g_Data.m_sHeadPierce = objItem.Name
+        Call UpdateMacroItemsLabels
+    End If
+End Sub
+Private Sub cmdHeadFire_Accepted(ByVal nID As Long)
+    Dim objItem As acObject
+    Call GetInventorySelection("Head", objItem)
+    If Valid(objItem) Then
+        g_Data.m_sHeadFire = objItem.Name
+        Call UpdateMacroItemsLabels
+    End If
+End Sub
+Private Sub cmdHeadCold_Accepted(ByVal nID As Long)
+    Dim objItem As acObject
+    Call GetInventorySelection("Head", objItem)
+    If Valid(objItem) Then
+        g_Data.m_sHeadCold = objItem.Name
+        Call UpdateMacroItemsLabels
+    End If
+End Sub
+Private Sub cmdHeadAcid_Accepted(ByVal nID As Long)
+    Dim objItem As acObject
+    Call GetInventorySelection("Head", objItem)
+    If Valid(objItem) Then
+        g_Data.m_sHeadAcid = objItem.Name
+        Call UpdateMacroItemsLabels
+    End If
+End Sub
+Private Sub cmdHeadLight_Accepted(ByVal nID As Long)
+    Dim objItem As acObject
+    Call GetInventorySelection("Head", objItem)
+    If Valid(objItem) Then
+        g_Data.m_sHeadLight = objItem.Name
         Call UpdateMacroItemsLabels
     End If
 End Sub

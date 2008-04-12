@@ -47,6 +47,8 @@ Public g_bProfileLoaded As Boolean
 Public g_manaItem As acObject
 Public g_bFindingItem As Boolean
 Public g_bLootRare As Boolean
+Public g_currentEquip As acObject
+Public g_currentArrow As acObject
 
 'Corpse and kill trackers
 Public g_TotalKilled As Long
