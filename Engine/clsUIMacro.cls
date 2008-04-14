@@ -353,30 +353,36 @@ On Error GoTo ErrorHandler
     Set lblArrowBludge = g_MainView.Control("lblArrowBludge")
     Set cmdHeadBludge = g_MainView.Control("cmdHeadBludge")
     Set lblHeadBludge = g_MainView.Control("lblHeadBludge")
+    
     Set cmdArrowSlash = g_MainView.Control("cmdArrowSlash")
     Set lblArrowSlash = g_MainView.Control("lblArrowSlash")
-    Set cmdArrowSlash = g_MainView.Control("cmdArrowSlash")
-    Set lblArrowSlash = g_MainView.Control("lblArrowSlash")
+    Set cmdHeadSlash = g_MainView.Control("cmdHeadSlash")
+    Set lblHeadSlash = g_MainView.Control("lblHeadSlash")
+    
     Set cmdArrowPierce = g_MainView.Control("cmdArrowPierce")
     Set lblArrowPierce = g_MainView.Control("lblArrowPierce")
-    Set cmdArrowPierce = g_MainView.Control("cmdArrowPierce")
-    Set lblArrowPierce = g_MainView.Control("lblArrowPierce")
+    Set cmdHeadPierce = g_MainView.Control("cmdHeadPierce")
+    Set lblHeadPierce = g_MainView.Control("lblHeadPierce")
+    
     Set cmdArrowFire = g_MainView.Control("cmdArrowFire")
     Set lblArrowFire = g_MainView.Control("lblArrowFire")
-    Set cmdArrowFire = g_MainView.Control("cmdArrowFire")
-    Set lblArrowFire = g_MainView.Control("lblArrowFire")
+    Set cmdHeadFire = g_MainView.Control("cmdHeadFire")
+    Set lblHeadFire = g_MainView.Control("lblHeadFire")
+    
     Set cmdArrowCold = g_MainView.Control("cmdArrowCold")
     Set lblArrowCold = g_MainView.Control("lblArrowCold")
-    Set cmdArrowCold = g_MainView.Control("cmdArrowCold")
-    Set lblArrowCold = g_MainView.Control("lblArrowCold")
+    Set cmdHeadCold = g_MainView.Control("cmdHeadCold")
+    Set lblHeadCold = g_MainView.Control("lblHeadCold")
+    
     Set cmdArrowAcid = g_MainView.Control("cmdArrowAcid")
     Set lblArrowAcid = g_MainView.Control("lblArrowAcid")
-    Set cmdArrowAcid = g_MainView.Control("cmdArrowAcid")
-    Set lblArrowAcid = g_MainView.Control("lblArrowAcid")
+    Set cmdHeadAcid = g_MainView.Control("cmdHeadAcid")
+    Set lblHeadAcid = g_MainView.Control("lblHeadAcid")
+    
     Set cmdArrowLight = g_MainView.Control("cmdArrowLight")
     Set lblArrowLight = g_MainView.Control("lblArrowLight")
-    Set cmdArrowLight = g_MainView.Control("cmdArrowLight")
-    Set lblArrowLight = g_MainView.Control("lblArrowLight")
+    Set cmdHeadLight = g_MainView.Control("cmdHeadLight")
+    Set lblHeadLight = g_MainView.Control("lblHeadLight")
     
     
     'Melee tab
