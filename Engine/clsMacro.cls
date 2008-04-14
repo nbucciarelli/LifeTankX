@@ -2313,10 +2313,12 @@ On Error GoTo Error_Handler
                     Call RequestEquipItem(g_currentEquip)
                     GoTo Fin
                 End If
-                If Not g_currentArrow.Equiped Then
-                    MyDebug "ValidState : Arrows not equipped, equipping now: " & g_currentArrow.Name
-                    Call RequestEquipItem(g_currentArrow)
-                    GoTo Fin
+                If Valid(g_currentArrow) Then
+                    If Not g_currentArrow.Equiped Then
+                        MyDebug "ValidState : Arrows not equipped, equipping now: " & g_currentArrow.Name
+                        Call RequestEquipItem(g_currentArrow)
+                        GoTo Fin
+                    End If
                 End If
             Else
                 If Not g_Data.Bow.Equiped Then
@@ -2754,10 +2756,12 @@ On Error GoTo ErrorHandler
     'ArrowName = g_Data.Arrows
     ArrowName = g_Data.GetArrowType
     PrintMessage "Out of " & ArrowName & ". Looking up for some in inventory..."
+    MyDebug "Out of " & ArrowName & ". Looking up for some in inventory..."
     NumArrowsInInventory = g_Objects.Items.InvCntByName(ArrowName, True)
     
     If NumArrowsInInventory > 0 Then
         PrintMessage "Found a total of " & NumArrowsInInventory & " " & ArrowName & "(s) in inventory. Using first pile."
+        MyDebug "Found a total of " & NumArrowsInInventory & " " & ArrowName & "(s) in inventory. Using first pile."
 
         Set objArrow = g_Objects.Items.InvFindByName(ArrowName)
         If objArrow.Guid <> -1 Then
