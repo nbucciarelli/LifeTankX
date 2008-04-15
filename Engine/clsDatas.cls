@@ -441,6 +441,11 @@ On Error GoTo ErrorHandler
         ArrowName = m_sArrows
     End If
     
+    If ArrowName = TAG_NOT_SET Then
+        MyDebug "GetArrowType: arrow not set for this bow!"
+        ArrowName = m_sArrows
+    End If
+    
     GetArrowType = ArrowName
     
     MyDebug "GetArrowType: " & ArrowName
@@ -481,7 +486,12 @@ On Error GoTo ErrorHandler
     ElseIf g_currentEquip.Guid = g_Data.WeapLight.Guid Then
         ArrowHeadName = m_sHeadLight
     Else
-        ArrowHeadName = m_sArrows
+        ArrowHeadName = m_sArrowHead
+    End If
+    
+    If ArrowHeadName = TAG_NOT_SET Then
+        MyDebug "GetArrowHead: arrow Head not set for this type of arrow"
+        ArrowHeadName = m_sArrowHead
     End If
     
     GetArrowHead = ArrowHeadName
@@ -503,7 +513,7 @@ ErrorHandler:
 End Function
 
 
-'
+'Set debug mode
 Public Sub SetDebugMode(ByVal bVal As Boolean)
     mDebugMode = bVal
 End Sub

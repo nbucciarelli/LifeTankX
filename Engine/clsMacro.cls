@@ -1014,7 +1014,7 @@ Public Sub GoFletching()
 On Error GoTo ErrorHandler
 
     If m_Fletcher.StartFletching("clsMacro.GoFletching") Then
-        LogEvent "Fletching " & g_Data.Arrows & " with " & g_Data.ArrowHead & " and " & g_Data.ArrowShaft
+        LogEvent "Fletching " & g_Data.GetArrowType & " with " & g_Data.GetArrowHead & " and " & g_Data.ArrowShaft
         Call SetState(ST_FLETCHING)
     Else
         MyDebug "GoFletching - StartFletching failed"

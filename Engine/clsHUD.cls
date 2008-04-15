@@ -855,7 +855,9 @@ On Error GoTo ErrorHandler
 
                 Case TYPE_ARCHER
                     y = y + DrawData(m_HUDMacro, d_macroRect, lWidth, x, y, "Type : ", "Archer")
-                    y = y + DrawData(m_HUDMacro, d_macroRect, lWidth, x, y, "Arrows : ", g_Data.Arrows)
+                    If Valid(g_currentArrow) Then
+                        y = y + DrawData(m_HUDMacro, d_macroRect, lWidth, x, y, "Arrows : ", g_currentArrow.Name)
+                    End If
                     y = y + DrawData(m_HUDMacro, d_macroRect, lWidth, x, y, "Attack Range : ", g_ui.Macro.txtArcherRadius.Text)
             End Select
 
