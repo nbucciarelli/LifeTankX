@@ -443,10 +443,12 @@ On Error GoTo ErrorHandler
     
     GetArrowType = ArrowName
     
+    MyDebug "GetArrowType: " & ArrowName
+    
     NumArrowHeads = g_Objects.Items.InvCntByName(ArrowName, True)
     
     If NumArrowHeads > 0 Then
-        MyDebug "Found a total of " & NumArrowHeads & " " & ArrowName & " in inventory"
+        MyDebug "GetArrowType: Found a total of " & NumArrowHeads & " " & ArrowName & " in inventory"
         Set g_currentArrow = g_Objects.Items.InvFindByName(ArrowName)
     End If
     
@@ -484,10 +486,12 @@ On Error GoTo ErrorHandler
     
     GetArrowHead = ArrowHeadName
     
+    MyDebug "GetArrowHead: " & ArrowHeadName
+    
     NumArrowHeads = g_Objects.Items.InvCntByName(ArrowHeadName, True)
     
     If NumArrowHeads > 0 Then
-        MyDebug "Found a total of " & NumArrowHeads & " " & ArrowHeadName & " in inventory"
+        MyDebug "GetArrowHead: Found a total of " & NumArrowHeads & " " & ArrowHeadName & " in inventory"
         'Set g_currentArrow = g_Objects.Items.InvFindByName(ArrowHeadName)
     End If
     

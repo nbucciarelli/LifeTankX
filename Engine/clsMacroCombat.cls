@@ -425,8 +425,10 @@ On Error GoTo ErrorHandler
             Set g_currentEquip = g_Data.GetWeaponType(m_objTarget.Vulnerability)
             If Valid(g_currentEquip) Then
                 locDebug "SetCurrentEquip: Setting g_CurrentEquip to: " & g_currentEquip.Name & " for damage type: " & m_objTarget.Vulnerability
-                If g_currentEquip.itemType = ITEM_MISSILE_WEAPON Then
+                'If g_currentEquip.itemType = ITEM_MISSILE_WEAPON Then
+                If g_Macro.CombatType = TYPE_ARCHER Then
                     'Also need to find and equip Arrows
+                    locDebug "SetCurrentEquip: TYPE_ARCHER, so checking for correct ammo"
                     Call g_Data.GetArrowType
                 End If
             End If
