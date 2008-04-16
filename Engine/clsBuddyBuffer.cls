@@ -413,12 +413,14 @@ On Error GoTo ErrorHandler
     Set m_colBuffs = New Collection
     
     With g_ui.Buffs
-    
+        
         'Buff Wand 1st
-        If (m_HeldItem.itemType = ITEM_WAND) Then
-            CheckItemBuff .chkOtherItmWandHL.Checked, SPELL_HERMETIC_LINK, m_HeldItem
-            CheckItemBuff .chkOtherItmWandDef.Checked, SPELL_DEF, m_HeldItem
-            CheckItemBuff .chkOtherItmWandSD.Checked, SPELL_SPIRIT_DRINKER, m_HeldItem
+        If Valid(m_HeldItem) Then
+            If (m_HeldItem.itemType = ITEM_WAND) Then
+                CheckItemBuff .chkOtherItmWandHL.Checked, SPELL_HERMETIC_LINK, m_HeldItem
+                CheckItemBuff .chkOtherItmWandDef.Checked, SPELL_DEF, m_HeldItem
+                CheckItemBuff .chkOtherItmWandSD.Checked, SPELL_SPIRIT_DRINKER, m_HeldItem
+            End If
         End If
         
         If .chkEnableOtherCreatureBuffs.Checked Then
@@ -447,13 +449,14 @@ On Error GoTo ErrorHandler
         '*****************************************************************************
         
         'Weapon / Bow / Shield
-        CheckItemBanes .chkOtherItmArmorShield.Checked, m_HeldShield
-        
+        If Valid(m_HeldShield) Then
+            CheckItemBanes .chkOtherItmArmorShield.Checked, m_HeldShield
+        End If
+         
         If Valid(m_HeldItem) Then
             If (m_HeldItem.itemType = ITEM_MELEE_WEAPON) Then
                 CheckItemBuff .chkOtherItmWeapHS.Checked, SPELL_HS, m_HeldItem
             End If
-            
             If (m_HeldItem.itemType = ITEM_MELEE_WEAPON) Or (m_HeldItem.itemType = ITEM_MISSILE_WEAPON) Then
                 CheckItemBuff .chkOtherItmWeapBD.Checked, SPELL_BD, m_HeldItem
                 CheckItemBuff .chkOtherItmWeapSK.Checked, SPELL_SK, m_HeldItem
