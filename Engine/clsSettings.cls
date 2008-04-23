@@ -141,22 +141,37 @@ On Error GoTo ErrorHandler
                 If Valid(g_HUD.getMacroHUD) Then
                     .SaveValue "macroHUDposX", g_HUD.getMacroHUD.Region.Left
                     .SaveValue "macroHUDposY", g_HUD.getMacroHUD.Region.Top
+                Else
+                    .SaveValue "macroHUDposX", g_ui.Options.macroHUDposX
+                    .SaveValue "macroHUDposY", g_ui.Options.macroHUDposY
                 End If
                 If Valid(g_HUD.getStatsHUD) Then
                     .SaveValue "statsHUDposX", g_HUD.getStatsHUD.Region.Left
                     .SaveValue "statsHUDposY", g_HUD.getStatsHUD.Region.Top
+                Else
+                    .SaveValue "statsHUDposX", g_ui.Options.statsHUDposX
+                    .SaveValue "statsHUDposY", g_ui.Options.statsHUDposY
                 End If
                 If Valid(g_HUD.getInvHUD) Then
                     .SaveValue "invHUDposX", g_HUD.getInvHUD.Region.Left
                     .SaveValue "invHUDposY", g_HUD.getInvHUD.Region.Top
+                Else
+                    .SaveValue "invHUDposX", g_ui.Options.invHUDposX
+                    .SaveValue "invHUDposY", g_ui.Options.invHUDposY
                 End If
                 If Valid(g_HUD.getDebugHUD) Then
                     .SaveValue "debugHUDposX", g_HUD.getDebugHUD.Region.Left
                     .SaveValue "debugHUDposY", g_HUD.getDebugHUD.Region.Top
+                Else
+                    .SaveValue "debugHUDposX", g_ui.Options.debugHUDposX
+                    .SaveValue "debugHUDposY", g_ui.Options.debugHUDposY
                 End If
                 If Valid(g_HUD.getDOTHUD) Then
                     .SaveValue "dotHUDposX", g_HUD.getDOTHUD.Region.Left
                     .SaveValue "dotHUDposY", g_HUD.getDOTHUD.Region.Top
+                Else
+                    .SaveValue "dotHUDposX", g_ui.Options.dotHUDposX
+                    .SaveValue "dotHUDposY", g_ui.Options.dotHUDposY
                 End If
             End With
         

@@ -384,14 +384,6 @@ On Error GoTo ErrorHandler
         
         Call g_HUD.StartHUDs
         
-        MyDebug "macroHUDpos: x: " & g_ui.Options.macroHUDposX & "  y: " & g_ui.Options.macroHUDposY
-        
-        Call g_HUD.SetMacroHudPos(CLng(g_ui.Options.macroHUDposX), CLng(g_ui.Options.macroHUDposY))
-        Call g_HUD.SetStatsHudPos(CLng(g_ui.Options.statsHUDposX), CLng(g_ui.Options.statsHUDposY))
-        Call g_HUD.SetInvHudPos(CLng(g_ui.Options.invHUDposX), CLng(g_ui.Options.invHUDposY))
-        Call g_HUD.SetDebugHudPos(CLng(g_ui.Options.debugHUDposX), CLng(g_ui.Options.debugHUDposY))
-        Call g_HUD.SetDOTHudPos(CLng(g_ui.Options.dotHUDposX), CLng(g_ui.Options.dotHUDposY))
-        
         'Return ok
         IEngine_OnLoginComplete = True
     End If

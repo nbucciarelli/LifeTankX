@@ -187,6 +187,7 @@ Public Enum eArmorTypes
     ARMORTYPE_LEATHER
     ARMORTYPE_SCALEMAIL
     ARMORTYPE_CHAINMAIL
+    ARMORTYPE_COVENANTSHIELD
     ARMORTYPE_COVENANT
     ARMORTYPE_CHIRAN
     ARMORTYPE_LORICA
@@ -194,6 +195,10 @@ Public Enum eArmorTypes
     ARMORTYPE_DIFORSA
     ARMORTYPE_ALDURESSA
     ARMORTYPE_TENASSA
+    ARMORTYPE_BUCKLER
+    ARMORTYPE_KITESHIELD
+    ARMORTYPE_ROUNDSHIELD
+    ARMORTYPE_TOWERSHIELD
     
     ARMORTYPE_ANY
 End Enum
@@ -438,6 +443,7 @@ Private Sub LoadArmors()
         .Add ARMORTYPE_LEATHER, "Leather"
         .Add ARMORTYPE_SCALEMAIL, "Scalemail"
         .Add ARMORTYPE_CHAINMAIL, "Chainmail"
+        .Add ARMORTYPE_COVENANTSHIELD, "Covenant Shield"
         .Add ARMORTYPE_COVENANT, "Covenant"
         .Add ARMORTYPE_CHIRAN, "Chiran"
         .Add ARMORTYPE_LORICA, "Lorica"
@@ -445,6 +451,10 @@ Private Sub LoadArmors()
         .Add ARMORTYPE_DIFORSA, "Diforsa"
         .Add ARMORTYPE_ALDURESSA, "Alduressa"
         .Add ARMORTYPE_TENASSA, "Tenassa"
+        .Add ARMORTYPE_BUCKLER, "Buckler"
+        .Add ARMORTYPE_KITESHIELD, "Kite Shield"
+        .Add ARMORTYPE_ROUNDSHIELD, "Round Shield"
+        .Add ARMORTYPE_TOWERSHIELD, "Tower Shield"
     End With
 End Sub
 

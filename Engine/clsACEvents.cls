@@ -1250,6 +1250,7 @@ On Error GoTo ErrorHandler
             If InStr(bstrMsg, "you restore") Then
                 Call g_Macro.SetFellowNeedsHealing(False)
                 Call g_Spells.OnSpellCastComplete(True, "ACEvents: you restore")
+                Call g_Macro.Combat.updateSecureTimer(4)
             End If
             
             If InStr(bstrMsg, "You say,") Then
@@ -1265,10 +1266,12 @@ On Error GoTo ErrorHandler
             ElseIf g_Macro.State = ST_REBUFF Then
                 If InStr(bstrMsg, "You cast") Then
                     Call g_Buffer.CheckCastedSpell(bstrMsg)
+                    Call g_Macro.Combat.updateSecureTimer(4)
                 End If
             ElseIf g_Macro.State = ST_BUDDYREBUFF Then
                 If InStr(bstrMsg, "You cast") Then
                     Call g_BuddyBuffer.CheckCastedSpell(bstrMsg)
+                    Call g_Macro.Combat.updateSecureTimer(4)
                 End If
             'ElseIf g_Macro.State = ST_FELLOWHEAL Then
             '    If InStr(bstrMsg, "you restore") Then

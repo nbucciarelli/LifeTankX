@@ -863,6 +863,7 @@ On Error GoTo ErrorHandler
         g_BuddyBuffer.mNumBuffsToCast = g_BuddyBuffer.BuffQueue.Count
         Call SetState(ST_BUDDYREBUFF)
         GoBuddyRebuff = True
+        Call g_Macro.Combat.updateSecureTimer(10)
     Else
         locDebug "clsMacro.GoBuddyRebuff: NOT ValidState(TYPE_CASTER)"
         GoBuddyRebuff = False
@@ -886,6 +887,7 @@ On Error GoTo ErrorHandler
         g_ui.Main.progBuffs.Value = 0
         g_ui.Main.progBuffs.DecalDrawText = True
         Call SetState(ST_REBUFF)
+        Call g_Macro.Combat.updateSecureTimer(10)
     Else
         locDebug "clsMacro.GoRebuff: NOT ValidState(TYPE_CASTER)"
     End If
@@ -903,6 +905,7 @@ On Error GoTo ErrorHandler
     
     bRet = m_Healing.StartHealing
     If bRet Then
+        Call g_Macro.Combat.updateSecureTimer(10)
         Call SetState(ST_HEALING)
         Call RunState
     End If
@@ -927,6 +930,7 @@ On Error GoTo ErrorHandler
     If m_Restam.RestamMethod <> NO_RESTAM Then
         bRet = m_Restam.StartRestam
         If bRet Then
+            Call g_Macro.Combat.updateSecureTimer(10)
             Call SetState(ST_RESTAM)
             Call RunState
         End If
@@ -1085,6 +1089,7 @@ On Error GoTo ErrorHandler
             If m_FellowCmd.RecruitPlayer(m_objFellowTarget) Then
                 Call SetState(ST_FELLOW_CMD)
                 bRet = True
+                Call g_Macro.Combat.updateSecureTimer(10)
             Else
                 Call ResetFellowAction
                 bRet = False
@@ -1257,6 +1262,7 @@ On Error GoTo ErrorHandler
 
     'Cast the appropriate regen spell if needed
     m_bRegenVitals = Vitals.CastManaStamRegen(False, m_RegenManaAction, m_RegenStamAction)
+    Call g_Macro.Combat.updateSecureTimer(10)
 
 Fin:
     RechargingManaStam = m_bRegenVitals
@@ -1975,6 +1981,10 @@ On Error GoTo ErrorHandler
     m_bRunning = True
     m_bDied = False
     m_logoutSpellCast = False
+
+    If Valid(g_HUD) Then
+        Call g_HUD.StartHUDs
+    End If
 
 3   Call m_tmrNextStatsUpdate.Reset
 4   Call m_tmrNextStatsUpdate.SetNextTime(5)

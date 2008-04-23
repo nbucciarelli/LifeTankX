@@ -1605,7 +1605,8 @@ On Error GoTo ErrorHandler
             
             If (aObj.TinkCount > 0) Then id = id & ", " & aObj.TinkCount & " tinks"
             id = id & ", work " & aObj.Workmanship
-            id = id & ", AL " & aObj.ArmorLevel
+            id = id & ", AL " & getRealArmorLevel(aObj)
+            id = id & getUberRating(aObj)
             
             bPrint = True
             
@@ -1761,7 +1762,7 @@ On Error GoTo ErrorHandler
         
         Case Else
             'Only output if it's something interesting, like a major
-            If aObj.HasMajors Or aObj.HasMinors Or aObj.IsRare Then
+            If aObj.HasMajors Or aObj.HasMinors Or aObj.IsRare Or (aObj.ArmorLevel > 0) Then
                 
                 If (Len(aObj.Imbue) > 1) Then id = id & ", (" & aObj.Imbue
                 
@@ -1793,7 +1794,10 @@ On Error GoTo ErrorHandler
                 
                 If (aObj.TinkCount > 0) Then id = id & ", " & aObj.TinkCount & " tinks"
                 If (aObj.Workmanship > 0) Then id = id & ", work " & aObj.Workmanship
-                If (aObj.ArmorLevel > 0) Then id = id & ", AL " & aObj.ArmorLevel
+                If (aObj.ArmorLevel > 0) Then
+                    id = id & ", AL " & getRealArmorLevel(aObj)
+                    id = id & getUberRating(aObj)
+                End If
                 
                 bPrint = True
             End If
@@ -1802,17 +1806,17 @@ On Error GoTo ErrorHandler
 
     If bPrint Then
     
+        'Check for innate spells on this item
         If Valid(aObj.Spells) Then
             If (aObj.Spells.Count > 0) Then
                 For Each aVar In aObj.Spells
                     If (aObj.Spells.Item(aVar) = 0) Then
                         id = id & ", " & CStr(aVar)
-                    Else
-                        'Need to recalc certain values based on spells cast on item
                     End If
                 Next
             End If
         End If
+        
         If (aObj.LoreReq > 0) Then id = id & ", Lore " & aObj.LoreReq
         If (aObj.RankReq > 0) Then id = id & ", Rank " & aObj.RankReq
         If (aObj.ActivateSkillVal > 0) Then id = id & ", " & aObj.ActivateSkill & " " & aObj.ActivateSkillVal
@@ -1848,6 +1852,254 @@ Fin:
     Exit Function
 ErrorHandler:
     PrintErrorMessage "clsLoot.getIdString - " & Err.Description & " - line: " & Erl
+    Resume Fin
+End Function
+
+Public Function getRealArmorLevel(ByVal aObj As acObject) As Integer
+On Error GoTo ErrorHandler
+
+    Dim realAL As Integer
+    Dim buffLevel As Integer
+    Dim aVar As Variant
+
+    realAL = aObj.ArmorLevel
+    buffLevel = 0
+    
+    'Check for active cast spells on this item
+    If Valid(aObj.SpellsActive) Then
+        If (aObj.SpellsActive.Count > 0) Then
+        
+            For Each aVar In aObj.SpellsActive
+                    Dim buffSpell As clsSpell
+                        
+                    Set buffSpell = g_Spells.Items.FindSpellByName(CStr(aVar))
+                    If Valid(buffSpell) Then
+                        'Need to recalc Armor value based on active spells
+                        If buffSpell.SpellFamily = "Impenetrability" Then
+                            MyDebug "clsLoot.getRealArmorLevel: " & aObj.Name & " has Impenetrability active: " & buffSpell.SpellName
+                            If buffLevel < buffSpell.SpellLevel Then buffLevel = buffSpell.SpellLevel
+                        End If
+                    End If
+
+            Next
+        End If
+    End If
+
+    If buffLevel = 1 Then
+        '<lvl=1> by 20 points.>
+        realAL = aObj.ArmorLevel - 20
+    ElseIf buffLevel = 2 Then
+        '<lvl=2> by 50 points.>
+        realAL = aObj.ArmorLevel - 50
+    ElseIf buffLevel = 3 Then
+        '<lvl=3> by 75 points.>
+        realAL = aObj.ArmorLevel - 75
+    ElseIf buffLevel = 4 Then
+        '<lvl=4> by 100 points.>
+        realAL = aObj.ArmorLevel - 100
+    ElseIf buffLevel = 5 Then
+        '<lvl=5> by 150 points.>
+        realAL = aObj.ArmorLevel - 150
+    ElseIf buffLevel = 6 Then
+        '<lvl=6> by 200 points.>
+        realAL = aObj.ArmorLevel - 200
+    ElseIf buffLevel = 7 Then
+        '<lvl=7> by 220 points.>
+        realAL = aObj.ArmorLevel - 220
+    End If
+
+Fin:
+    getRealArmorLevel = realAL
+    Exit Function
+ErrorHandler:
+    PrintErrorMessage "clsLoot.getRealArmorLevel - " & Err.Description & " - line: " & Erl
+    Resume Fin
+End Function
+
+Public Function getUberRating(ByVal aObj As acObject) As String
+On Error GoTo ErrorHandler
+
+    Dim id As String
+    Dim baseAL As Integer
+
+    baseAL = 0
+    
+    MyDebug "getUberRating: " & aObj.Name & " IT: " & aObj.itemType & " AL: " & aObj.ArmorLevel & " AT: " & aObj.ArmorType
+    
+    ' Max Armor levels
+    If (aObj.itemType = ITEM_ARMOR) Or (aObj.ArmorLevel > 0) Then
+        Select Case aObj.ArmorType
+        Case ARMORTYPE_AMULI
+            'Amuli , 254
+            baseAL = 254
+        Case ARMORTYPE_CELDON
+            'Celdon , 274
+            baseAL = 274
+        Case ARMORTYPE_PLATEMAIL
+            'Platemail , 264
+            baseAL = 264
+        Case ARMORTYPE_YOROI
+            'Yoroi , 244
+            baseAL = 244
+        Case ARMORTYPE_KOUJIA
+            'Koujia , 259
+            baseAL = 259
+        Case ARMORTYPE_LEATHER
+            'Leather , 201
+            baseAL = 201
+        Case ARMORTYPE_SCALEMAIL
+            'Scalemail , 239
+            baseAL = 239
+        Case ARMORTYPE_CHAINMAIL
+            'Chainmail , 220
+            baseAL = 220
+        Case ARMORTYPE_COVENANT
+            'Covenant , 499
+            baseAL = 499
+        Case ARMORTYPE_CHIRAN
+            'Chiran , 264
+            baseAL = 264
+        Case ARMORTYPE_LORICA
+            'Lorica , 265
+            baseAL = 265
+        Case ARMORTYPE_NARIYID
+            'Nariyid , 274
+            baseAL = 274
+        Case ARMORTYPE_DIFORSA
+            'Diforsa , 264
+            baseAL = 264
+        Case ARMORTYPE_ALDURESSA
+            'Alduressa, 264
+            baseAL = 264
+        Case ARMORTYPE_TENASSA
+            'Tenassa , 259
+            baseAL = 259
+        Case ARMORTYPE_BUCKLER
+            'Buckler , 135
+            baseAL = 135
+        Case ARMORTYPE_KITESHIELD
+            'Kite , 163
+            baseAL = 163
+        Case ARMORTYPE_ROUNDSHIELD
+            'Round , 147
+            baseAL = 147
+        Case ARMORTYPE_TOWERSHIELD
+            'Tower , 181
+            baseAL = 181
+        Case ARMORTYPE_COVENANTSHIELD
+            'Covenant Shield , 399
+            baseAL = 399
+        Case Else
+            'Misc armor's like helms, gloves, boots, etc
+            '=========
+            If InStr(1, LCase(aObj.Name), LCase("Armet")) Then
+                'Armet , 315
+                baseAL = 315
+            ElseIf InStr(1, LCase(aObj.Name), LCase("Baigha")) Then
+                'Baigha , 229
+                baseAL = 229
+            ElseIf InStr(1, LCase(aObj.Name), LCase("Bandana")) Then
+                'Bandana , 292
+                baseAL = 292
+            ElseIf InStr(1, LCase(aObj.Name), LCase("Basinet")) Then
+                'Basinet , 239
+                baseAL = 239
+            ElseIf InStr(1, LCase(aObj.Name), LCase("Beret")) Then
+                'Beret , 292
+                baseAL = 292
+            ElseIf InStr(1, LCase(aObj.Name), LCase("Cap")) Then
+                'Cap , 291
+                baseAL = 291
+            ElseIf InStr(1, LCase(aObj.Name), LCase("Circlet")) Then
+                'Circlet , 239
+                baseAL = 239
+            ElseIf InStr(1, LCase(aObj.Name), LCase("Coif")) Then
+                'Coif , 239
+                baseAL = 239
+            ElseIf InStr(1, LCase(aObj.Name), LCase("Coronet")) Then
+                'Coronet , 260
+                baseAL = 260
+            ElseIf InStr(1, LCase(aObj.Name), LCase("Cowl")) Then
+                'Cowl , 291
+                baseAL = 291
+            ElseIf InStr(1, LCase(aObj.Name), LCase("Crown")) Then
+                'Crown , 304
+                baseAL = 304
+            ElseIf InStr(1, LCase(aObj.Name), LCase("Diadem")) Then
+                'Diadem , 288
+                baseAL = 288
+            ElseIf InStr(1, LCase(aObj.Name), LCase("Fez")) Then
+                'Fez , 277
+                baseAL = 277
+            ElseIf InStr(1, LCase(aObj.Name), LCase("Heaume")) Then
+                'Heaume , 315
+                baseAL = 315
+            ElseIf InStr(1, LCase(aObj.Name), LCase("Horned Helm")) Then
+                'Horned Helm, 252
+                baseAL = 252
+            ElseIf InStr(1, LCase(aObj.Name), LCase("Helmet")) Then
+                'Helmet , 254
+                baseAL = 254
+            ElseIf InStr(1, LCase(aObj.Name), LCase("Kabuton")) Then
+                'Kabuton , 254
+                baseAL = 254
+            ElseIf InStr(1, LCase(aObj.Name), LCase("Kasa")) Then
+                'Kasa , 293
+                baseAL = 293
+            ElseIf InStr(1, LCase(aObj.Name), LCase("Qafiya")) Then
+                'Qafiya , 293
+                baseAL = 293
+            ElseIf InStr(1, LCase(aObj.Name), LCase("Turban")) Then
+                'Turban , 276
+                baseAL = 276
+
+            ElseIf InStr(1, LCase(aObj.Name), LCase("Kote")) Then
+                'Kote , 264
+                baseAL = 264
+
+            ElseIf InStr(1, LCase(aObj.Name), LCase("Gauntlets")) Then
+                'Gauntlets, 264 (platemail, if material not in piece name)
+                baseAL = 264
+            ElseIf InStr(1, LCase(aObj.Name), LCase("Gloves")) Then
+                'Gloves, 243 (if soft - Leather, Satin, Velvet, etc)
+                baseAL = 243
+
+            ElseIf InStr(1, LCase(aObj.Name), LCase("Boots")) Then
+                'Boots, 224 (if soft)
+                baseAL = 224
+            ElseIf InStr(1, LCase(aObj.Name), LCase("Loafers")) Then
+                'Loafers , 243
+                baseAL = 243
+            ElseIf InStr(1, LCase(aObj.Name), LCase("Sandals")) Then
+                'Sandals, 239 (if soft)
+                baseAL = 239
+            ElseIf InStr(1, LCase(aObj.Name), LCase("Shoes")) Then
+                'Shoes , 243
+                baseAL = 243
+            ElseIf InStr(1, LCase(aObj.Name), LCase("Slippers")) Then
+                'Slippers , 243
+                baseAL = 243
+            ElseIf InStr(1, LCase(aObj.Name), LCase("Sollerets")) Then
+                'Sollerets, 264 (platemail)
+                baseAL = 264
+            End If
+        End Select
+        
+        If baseAL > 0 Then
+            If aObj.TinkCount > 0 Then
+                baseAL = baseAL + (20 * aObj.TinkCount)
+            End If
+            id = " (" & Round(((getRealArmorLevel(aObj) / baseAL) * 100), 1) & "%)"
+        End If
+    End If
+    
+    
+    getUberRating = id
+    
+Fin:
+    Exit Function
+ErrorHandler:
+    PrintErrorMessage "clsLoot.getUberRating - " & Err.Description & " - line: " & Erl
     Resume Fin
 End Function
 

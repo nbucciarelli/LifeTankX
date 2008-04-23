@@ -326,6 +326,7 @@ End Sub
 
 
 Private Sub Class_Terminate()
+    MyDebug "[clsHUD] Class_Terminate - start"
     
     m_bMacroHud = False
     m_bStatsHud = False
@@ -369,8 +370,10 @@ Private Sub Class_Terminate()
     Set m_HUDDebug = Nothing
     Set m_HUDDOT = Nothing
     Set m_Render = Nothing
-End Sub
+    
+    MyDebug "[clsHUD] Class_Terminate - end"
 
+End Sub
 
 
 Public Function Init() As Boolean
@@ -639,8 +642,8 @@ Public Sub createAllHuds()
         Exit Sub
     End If
     
-    MyDebug "clsHUD.createAllHuds: Removing any existing huds"
-    Call removeAllHuds
+    'MyDebug "clsHUD.createAllHuds: Removing any existing huds"
+    'Call removeAllHuds
     
     MyDebug "clsHUD.createAllHuds: now creating individual huds"
     
@@ -715,6 +718,14 @@ On Error GoTo ErrorHandler
         If g_ui.Options.chkHUDInventory.Checked Then Call startInvHUD
         If g_ui.Options.chkHUDDebug.Checked Then Call startDebugHUD
         If g_ui.Options.chkHUDDOT.Checked Then Call startDOTHUD
+        
+        MyDebug "StartHUDs: macroHUDpos: x: " & g_ui.Options.macroHUDposX & "  y: " & g_ui.Options.macroHUDposY
+        
+        Call SetMacroHudPos(CLng(g_ui.Options.macroHUDposX), CLng(g_ui.Options.macroHUDposY))
+        Call SetStatsHudPos(CLng(g_ui.Options.statsHUDposX), CLng(g_ui.Options.statsHUDposY))
+        Call SetInvHudPos(CLng(g_ui.Options.invHUDposX), CLng(g_ui.Options.invHUDposY))
+        Call SetDebugHudPos(CLng(g_ui.Options.debugHUDposX), CLng(g_ui.Options.debugHUDposY))
+        Call SetDOTHudPos(CLng(g_ui.Options.dotHUDposX), CLng(g_ui.Options.dotHUDposY))
         
         m_bStarted = True
     
@@ -1367,15 +1378,13 @@ ErrorHandler:
 End Sub
 
 Friend Sub m_Render_DeviceLost()
-
     MyDebug "clsHUD_DeviceLost called"
-    
+
     m_bMacroHud = False
     m_bStatsHud = False
     m_bInvHud = False
     m_bDebugHud = False
     m_bDOTHud = False
-    
-    Call createAllHuds
-    
+
+    'Call createAllHuds
 End Sub

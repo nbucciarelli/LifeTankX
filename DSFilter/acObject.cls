@@ -163,7 +163,8 @@ Public HasMinors As Boolean             'Indicates that this item holds at least
 Public HasMajors As Boolean             'Indicates that this item holds at least 1 major spell
 Public IsRare As Boolean                'Indicates that this item is a Rare
 Public RareNumber As Long               'Number of the rare item.
-Public Spells As Dictionary             'List of spells on this item
+Public Spells As Dictionary             'List of inate spells on this item
+Public SpellsActive As Dictionary       'List of Active spells on this item
 Public Spellcraft As Long               'Spellcraft of the item.
 
 '---------------------------------------------------------
@@ -308,6 +309,7 @@ Private Sub Class_Initialize()
     m_fImperilOrBludgeonTimer = 0
     LastIDTime = 0
     Set Spells = New Dictionary
+    Set SpellsActive = New Dictionary
     
 End Sub
 

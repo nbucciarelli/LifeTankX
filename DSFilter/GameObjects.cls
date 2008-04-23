@@ -890,8 +890,13 @@ On Error GoTo ErrorHandler
 
                 Case &H1C& 'Armor level
                     objEntity.ArmorLevel = lVal
-                    'MyDebug "ID: " & objEntity.Name & " - Armor Level : " & objEntity.ArmorLevel
-                
+                    myDebug "IDObject: " & objEntity.Name & " - Armor Level : " & objEntity.ArmorLevel
+                    If objEntity.ItemType <> ITEM_ARMOR Then
+                        myDebug "IDObject: " & objEntity.Name & " - NOT Armor: " & objEntity.ItemType
+                        'objEntity.ItemType = ITEM_ARMOR
+                        Call objEntity.UpdateArmorType
+                    End If
+
                 Case &H2D&  'Elemental Damage Bonus: DamageType
                     'objEntity.ElementBonusDamageType = lVal
                     
@@ -1254,9 +1259,9 @@ On Error GoTo ErrorHandler
         
         'myDebug "IDObject: Spells: " & objEntity.Name & " [NumData=" & iNumData & "]"
         
-        'If iNumData > 0 Then
-        '    Set objEntity.Spells = New Dictionary
-        'End If
+        If iNumData > 0 Then
+            Set objEntity.SpellsActive = New Dictionary
+        End If
         
         For i = 0 To iNumData - 1
             lSpellID = xSpells.Struct(i).Value("spell")
@@ -1266,11 +1271,21 @@ On Error GoTo ErrorHandler
                 Dim sFlags As Integer
                 sFlags = xSpells.Struct(i).Value("flags")
                 
-                If Not objEntity.Spells.Exists(sSpellName) Then
-                    Call objEntity.Spells.Add(sSpellName, sFlags)
+                'If Not objEntity.Spells.Exists(sSpellName) Then
+                '    Call objEntity.Spells.Add(sSpellName, sFlags)
+                'End If
+                
+                If sFlags = 0 Then
+                    If Not objEntity.Spells.Exists(sSpellName) Then
+                        Call objEntity.Spells.Add(sSpellName, sFlags)
+                    End If
+                Else
+                    If Not objEntity.SpellsActive.Exists(sSpellName) Then
+                        Call objEntity.SpellsActive.Add(sSpellName, sFlags)
+                    End If
                 End If
                 
-                'myDebug "ID: " & objEntity.Name & " - Spell: " & sSpellName & "  flags: " & sFlags
+                myDebug "ID: " & objEntity.Name & " - Spell: " & sSpellName & "  flags: " & sFlags
                 
                 If InStr(LCase(sSpellName), "minor") Then
                     'PrintMessage "[Minor] Item Detected : " & objEntity.Name & " - " & sSpellName
