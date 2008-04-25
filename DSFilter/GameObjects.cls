@@ -1259,9 +1259,9 @@ On Error GoTo ErrorHandler
         
         'myDebug "IDObject: Spells: " & objEntity.Name & " [NumData=" & iNumData & "]"
         
-        If iNumData > 0 Then
-            Set objEntity.SpellsActive = New Dictionary
-        End If
+        'If iNumData > 0 Then
+        '    Set objEntity.SpellsActive = New Dictionary
+        'End If
         
         For i = 0 To iNumData - 1
             lSpellID = xSpells.Struct(i).Value("spell")

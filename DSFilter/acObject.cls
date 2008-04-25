@@ -315,6 +315,8 @@ End Sub
 
 Private Sub Class_Terminate()
     Set Loc = Nothing
+    Set Spells = Nothing
+    Set SpellsActive = Nothing
 End Sub
 
 '#########################################################

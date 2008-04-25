@@ -1606,7 +1606,7 @@ On Error GoTo ErrorHandler
             If (aObj.TinkCount > 0) Then id = id & ", " & aObj.TinkCount & " tinks"
             id = id & ", work " & aObj.Workmanship
             id = id & ", AL " & getRealArmorLevel(aObj)
-            id = id & getUberRating(aObj)
+            id = id & getUberArmorRating(aObj)
             
             bPrint = True
             
@@ -1650,9 +1650,10 @@ On Error GoTo ErrorHandler
                 id = id & ", " & aObj.TinkCount & " tinks"
             'End If
             id = id & ", work " & aObj.Workmanship
-            id = id & ", dmg " & aObj.GetLowDamage & "-" & aObj.HighDamage
+            id = id & ", dmg " & getRealMeleeDamage(aObj, False) & "-" & getRealMeleeDamage(aObj, True)
+            id = id & getUberMeleeRating(aObj)
             id = id & ", +" & aObj.AttackBonus & " atk"
-            If (aObj.DefenseBonus > 0) Then id = id & "/+" & aObj.DefenseBonus & " MeleeD"
+            If (aObj.DefenseBonus > 0) Then id = id & "/+" & getRealMeleeD(aObj) & " MeleeD"
             If (aObj.MagicDefense > 0) Then id = id & "/+" & aObj.MagicDefense & " MagicD"
             If (aObj.ElementBonusDamage > 0) Then id = id & "/+" & aObj.ElementBonusDamage & " DMG"
             If (aObj.WieldReqVal > 0) And (aObj.WieldReqType = 2) Then
@@ -1703,10 +1704,11 @@ On Error GoTo ErrorHandler
             'End If
             id = id & ", work " & aObj.Workmanship
             id = id & ", +" & aObj.DamageModifier & "% "
-            id = id & " +" & aObj.DefenseBonus & " MeleeD"
+            id = id & getUberRangedRating(aObj)
+            id = id & " +" & getRealMeleeD(aObj) & " MeleeD"
             If (aObj.MagicDefense > 0) Then id = id & "/+" & aObj.MagicDefense & " MagicD"
             If (aObj.ElementBonusDamage > 0) Then id = id & "/+" & aObj.ElementBonusDamage & " DMG"
-           If (aObj.WieldReqVal > 0) And (aObj.WieldReqType = 2) Then
+            If (aObj.WieldReqVal > 0) And (aObj.WieldReqType = 2) Then
                 id = id & ", " & g_ACConst.GetWeaponSkillName(aObj.WieldReqID)
                 id = id & " " & aObj.WieldReqVal & "+ to wield"
             ElseIf (aObj.WieldReqVal > 0) And (aObj.WieldReqType = 7) Then
@@ -1753,10 +1755,10 @@ On Error GoTo ErrorHandler
                 id = id & ", " & aObj.TinkCount & " tinks"
             'End If
             id = id & ", work " & aObj.Workmanship
-            If (aObj.ManaConvMod > 0) Then id = id & ", +" & aObj.ManaConvMod & " ManaC"
-            If (aObj.DefenseBonus > 0) Then id = id & "/+" & aObj.DefenseBonus & " MeleeD"
+            If (aObj.ManaConvMod > 0) Then id = id & ", +" & getRealManaC(aObj) & " ManaC"
+            If (aObj.DefenseBonus > 0) Then id = id & "/+" & getRealMeleeD(aObj) & " MeleeD"
             If (aObj.MagicDefense > 0) Then id = id & "/+" & aObj.MagicDefense & " MagicD"
-            If (aObj.PvMBonus > 0) Then id = id & "/+" & aObj.PvMBonus & " PvM"
+            If (aObj.PvMBonus > 0) Then id = id & "/+" & getRealPvM(aObj) & " PvM"
             
             bPrint = True
         
@@ -1796,7 +1798,7 @@ On Error GoTo ErrorHandler
                 If (aObj.Workmanship > 0) Then id = id & ", work " & aObj.Workmanship
                 If (aObj.ArmorLevel > 0) Then
                     id = id & ", AL " & getRealArmorLevel(aObj)
-                    id = id & getUberRating(aObj)
+                    id = id & getUberArmorRating(aObj)
                 End If
                 
                 bPrint = True
@@ -1852,6 +1854,180 @@ Fin:
     Exit Function
 ErrorHandler:
     PrintErrorMessage "clsLoot.getIdString - " & Err.Description & " - line: " & Erl
+    Resume Fin
+End Function
+
+'            If (aObj.ManaConvMod > 0) Then id = id & ", +" & aObj.ManaConvMod & " ManaC"
+'            If (aObj.DefenseBonus > 0) Then id = id & "/+" & aObj.DefenseBonus & " MeleeD"
+'            If (aObj.PvMBonus > 0) Then id = id & "/+" & aObj.PvMBonus & " PvM" ' Spirit Drinker
+
+Public Function getRealPvM(ByVal aObj As acObject) As Integer
+On Error GoTo ErrorHandler
+
+    Dim realPvM As Integer
+    Dim buffLevel As Integer
+    Dim aVar As Variant
+
+    realPvM = aObj.PvMBonus
+    buffLevel = 0
+    
+    'Check for active cast spells on this item
+    If Valid(aObj.SpellsActive) Then
+        If (aObj.SpellsActive.Count > 0) Then
+        
+            For Each aVar In aObj.SpellsActive
+                    Dim buffSpell As clsSpell
+                        
+                    Set buffSpell = g_Spells.Items.FindSpellByName(CStr(aVar))
+                    If Valid(buffSpell) Then
+                        'Need to recalc Armor value based on active spells
+                        If buffSpell.SpellFamily = "Spirit Drinker" Then
+                            MyDebug "clsLoot.getRealManaC: " & aObj.Name & " has Spirit Drinker active: " & buffSpell.SpellName
+                            If buffLevel < buffSpell.SpellLevel Then buffLevel = buffSpell.SpellLevel
+                        End If
+                    End If
+
+            Next
+        End If
+    End If
+
+    If buffLevel = 1 Then
+        realPvM = realPvM - 1
+    ElseIf buffLevel = 2 Then
+        realPvM = realPvM - 2
+    ElseIf buffLevel = 3 Then
+        realPvM = realPvM - 3
+    ElseIf buffLevel = 4 Then
+        realPvM = realPvM - 4
+    ElseIf buffLevel = 5 Then
+        realPvM = realPvM - 5
+    ElseIf buffLevel = 6 Then
+        realPvM = realPvM - 6
+    ElseIf buffLevel = 7 Then
+        realPvM = realPvM - 7
+    End If
+
+Fin:
+    getRealPvM = realPvM
+    Exit Function
+ErrorHandler:
+    PrintErrorMessage "clsLoot.getRealPvM - " & Err.Description & " - line: " & Erl
+    Resume Fin
+End Function
+
+Public Function getRealMeleeD(ByVal aObj As acObject) As Integer
+On Error GoTo ErrorHandler
+
+    Dim realMeleeD As Integer
+    Dim buffLevel As Integer
+    Dim aVar As Variant
+
+    realMeleeD = aObj.DefenseBonus
+    buffLevel = 0
+    
+    'Check for active cast spells on this item
+    If Valid(aObj.SpellsActive) Then
+        If (aObj.SpellsActive.Count > 0) Then
+        
+            For Each aVar In aObj.SpellsActive
+                    Dim buffSpell As clsSpell
+                        
+                    Set buffSpell = g_Spells.Items.FindSpellByName(CStr(aVar))
+                    If Valid(buffSpell) Then
+                        'Need to recalc Armor value based on active spells
+                        If buffSpell.SpellFamily = "Defender" Then
+                            MyDebug "clsLoot.getRealManaC: " & aObj.Name & " has Defender active: " & buffSpell.SpellName
+                            If buffLevel < buffSpell.SpellLevel Then buffLevel = buffSpell.SpellLevel
+                        End If
+                    End If
+
+            Next
+        End If
+    End If
+
+    If buffLevel = 1 Then
+        '2.5%
+        realMeleeD = realMeleeD - 2.5
+    ElseIf buffLevel = 2 Then
+        '5%
+        realMeleeD = realMeleeD - 5
+    ElseIf buffLevel = 3 Then
+        '7.5%
+        realMeleeD = realMeleeD - 7.5
+    ElseIf buffLevel = 4 Then
+        '10%
+        realMeleeD = realMeleeD - 10
+    ElseIf buffLevel = 5 Then
+        '12.5%
+        realMeleeD = realMeleeD - 12.5
+    ElseIf buffLevel = 6 Then
+        '15%
+        realMeleeD = realMeleeD - 15
+    ElseIf buffLevel = 7 Then
+        '17%
+        realMeleeD = realMeleeD - 17
+    End If
+
+Fin:
+    getRealMeleeD = realMeleeD
+    Exit Function
+ErrorHandler:
+    PrintErrorMessage "clsLoot.getRealMeleeD - " & Err.Description & " - line: " & Erl
+    Resume Fin
+End Function
+
+
+Public Function getRealManaC(ByVal aObj As acObject) As Integer
+On Error GoTo ErrorHandler
+
+    Dim realManaC As Integer
+    Dim buffLevel As Integer
+    Dim aVar As Variant
+
+    realManaC = aObj.ManaConvMod
+    buffLevel = 0
+    
+    'Check for active cast spells on this item
+    If Valid(aObj.SpellsActive) Then
+        If (aObj.SpellsActive.Count > 0) Then
+        
+            For Each aVar In aObj.SpellsActive
+                    Dim buffSpell As clsSpell
+                        
+                    Set buffSpell = g_Spells.Items.FindSpellByName(CStr(aVar))
+                    If Valid(buffSpell) Then
+                        'Need to recalc Armor value based on active spells
+                        If buffSpell.SpellFamily = "Hermetic Link" Then
+                            MyDebug "clsLoot.getRealManaC: " & aObj.Name & " has Hermetic Link active: " & buffSpell.SpellName
+                            If buffLevel < buffSpell.SpellLevel Then buffLevel = buffSpell.SpellLevel
+                        End If
+                    End If
+
+            Next
+        End If
+    End If
+
+    If buffLevel = 1 Then
+        realManaC = realManaC / 1.1
+    ElseIf buffLevel = 2 Then
+        realManaC = realManaC / 1.2
+    ElseIf buffLevel = 3 Then
+        realManaC = realManaC / 1.3
+    ElseIf buffLevel = 4 Then
+        realManaC = realManaC / 1.4
+    ElseIf buffLevel = 5 Then
+        realManaC = realManaC / 1.5
+    ElseIf buffLevel = 6 Then
+        realManaC = realManaC / 1.6
+    ElseIf buffLevel = 7 Then
+        realManaC = realManaC / 1.7
+    End If
+
+Fin:
+    getRealManaC = realManaC
+    Exit Function
+ErrorHandler:
+    PrintErrorMessage "clsLoot.getRealManaC - " & Err.Description & " - line: " & Erl
     Resume Fin
 End Function
 
@@ -1916,7 +2092,403 @@ ErrorHandler:
     Resume Fin
 End Function
 
-Public Function getUberRating(ByVal aObj As acObject) As String
+Public Function getRealMeleeDamage(ByVal aObj As acObject, ByVal getHigh As Boolean) As Integer
+On Error GoTo ErrorHandler
+
+    Dim realDamage As Integer
+    Dim buffLevel As Integer
+    Dim aVar As Variant
+
+    If getHigh Then
+        realDamage = aObj.HighDamage
+        MyDebug "clsLoot.getRealmeleeDamage: realDamage: " & realDamage & " :High: " & aObj.HighDamage
+    Else
+        realDamage = Round(aObj.HighDamage - (aObj.Variance * aObj.HighDamage), 2)
+        'realDamage = aObj.GetLowDamage
+        MyDebug "clsLoot.getRealmeleeDamage: Variance: " & aObj.Variance & " :High: " & aObj.HighDamage
+        MyDebug "clsLoot.getRealmeleeDamage: realDamage: " & realDamage & " :Low: " & aObj.GetLowDamage
+    End If
+    
+    realDamage = aObj.HighDamage
+    buffLevel = 0
+    
+    'Check for active cast spells on this item
+    If Valid(aObj.SpellsActive) Then
+        If (aObj.SpellsActive.Count > 0) Then
+        
+            For Each aVar In aObj.SpellsActive
+                    Dim buffSpell As clsSpell
+                        
+                    Set buffSpell = g_Spells.Items.FindSpellByName(CStr(aVar))
+                    If Valid(buffSpell) Then
+                        'Need to recalc Damage value based on active spells
+                        If buffSpell.SpellFamily = "Blood Drinker" Then
+                            MyDebug "clsLoot.getRealMeleeDamage: " & aObj.Name & " has Blood Drinker active: " & buffSpell.SpellName
+                            If buffLevel < buffSpell.SpellLevel Then buffLevel = buffSpell.SpellLevel
+                        End If
+                    End If
+
+            Next
+        End If
+    End If
+
+    If buffLevel = 1 Then
+        realDamage = realDamage - 2
+    ElseIf buffLevel = 2 Then
+        realDamage = realDamage - 4
+    ElseIf buffLevel = 3 Then
+        realDamage = realDamage - 8
+    ElseIf buffLevel = 4 Then
+        realDamage = realDamage - 12
+    ElseIf buffLevel = 5 Then
+        realDamage = realDamage - 16
+    ElseIf buffLevel = 6 Then
+        realDamage = realDamage - 20
+    ElseIf buffLevel = 7 Then
+        realDamage = realDamage - 22
+    End If
+
+    If Not getHigh Then
+        realDamage = Round(realDamage - (aObj.Variance * realDamage), 2)
+        MyDebug "clsLoot.getRealmeleeDamage: Variance: " & aObj.Variance & " :High: " & aObj.HighDamage
+        MyDebug "clsLoot.getRealmeleeDamage: realDamage: " & realDamage & " :Low: " & aObj.GetLowDamage
+    End If
+
+Fin:
+    getRealMeleeDamage = realDamage
+    Exit Function
+ErrorHandler:
+    PrintErrorMessage "clsLoot.getRealMeleeDamage - " & Err.Description & " - line: " & Erl
+    Resume Fin
+End Function
+
+Public Function getUberRangedRating(ByVal aObj As acObject) As String
+On Error GoTo ErrorHandler
+
+    Dim id As String
+    Dim wieldReq, eDamage, damageMod As Integer
+
+    wieldReq = 0
+    eDamage = 0
+    damageMod = 0
+    
+    MyDebug "getUberRangedRating: " & aObj.Name & " WieldType: " & aObj.WieldReqType & " (" & aObj.WieldReqVal & ") :: " & g_ACConst.GetWeaponSkillName(aObj.WieldReqID)
+    MyDebug "getUberRangedRating: Dmg: " & aObj.DamageModifier & "%  -- eDamage: " & aObj.ElementBonusDamage
+
+
+    If (aObj.WieldReqVal > 0) And (aObj.WieldReqType = 2) Then
+        Select Case g_ACConst.GetWeaponSkillName(aObj.WieldReqID)
+            Case "Bow"
+                ' No      250     270     290     315         335     Bonus   360     Bonus
+                ' 100%    110%    120%    130%    130% (+4)   130%    +5-+8   130%    +9-+12
+                If aObj.WieldReqVal = 0 Then
+                    damageMod = 100
+                    eDamage = 0
+                ElseIf aObj.WieldReqVal = 250 Then
+                    damageMod = 110
+                    eDamage = 0
+                ElseIf aObj.WieldReqVal = 270 Then
+                    damageMod = 120
+                    eDamage = 0
+                ElseIf aObj.WieldReqVal = 290 Then
+                    damageMod = 130
+                    eDamage = 0
+                ElseIf aObj.WieldReqVal = 315 Then
+                    damageMod = 130
+                    eDamage = 4
+                ElseIf aObj.WieldReqVal = 335 Then
+                    damageMod = 130
+                    eDamage = 8
+                ElseIf aObj.WieldReqVal >= 360 Then
+                    damageMod = 130
+                    eDamage = 12
+                End If
+            Case "Xbow"
+                ' No      250     270     290     315         335     Bonus   360     Bonus
+                ' 130%    140%    145%    155%    155% (+4)   155%    +5-+8   155%    +9-+12
+                If aObj.WieldReqVal = 0 Then
+                    damageMod = 130
+                    eDamage = 0
+                ElseIf aObj.WieldReqVal = 250 Then
+                    damageMod = 140
+                    eDamage = 0
+                ElseIf aObj.WieldReqVal = 270 Then
+                    damageMod = 145
+                    eDamage = 0
+                ElseIf aObj.WieldReqVal = 290 Then
+                    damageMod = 155
+                    eDamage = 0
+                ElseIf aObj.WieldReqVal = 315 Then
+                    damageMod = 155
+                    eDamage = 4
+                ElseIf aObj.WieldReqVal = 335 Then
+                    damageMod = 155
+                    eDamage = 8
+                ElseIf aObj.WieldReqVal >= 360 Then
+                    damageMod = 155
+                    eDamage = 12
+                End If
+            Case "TW"
+                ' No      250     270     290     315         335     Bonus   360     Bonus
+                ' 120%    130%    140%    150%    150% (+4)   150%    +5-+8   150%    +9-+10
+                If aObj.WieldReqVal = 0 Then
+                    damageMod = 120
+                    eDamage = 0
+                ElseIf aObj.WieldReqVal = 250 Then
+                    damageMod = 130
+                    eDamage = 0
+                ElseIf aObj.WieldReqVal = 270 Then
+                    damageMod = 140
+                    eDamage = 0
+                ElseIf aObj.WieldReqVal = 290 Then
+                    damageMod = 150
+                    eDamage = 0
+                ElseIf aObj.WieldReqVal = 315 Then
+                    damageMod = 150
+                    eDamage = 4
+                ElseIf aObj.WieldReqVal = 335 Then
+                    damageMod = 150
+                    eDamage = 8
+                ElseIf aObj.WieldReqVal >= 360 Then
+                    damageMod = 150
+                    eDamage = 10
+                End If
+        End Select
+    
+        If damageMod > 0 Then
+            'If aObj.TinkCount > 0 Then
+            '    baseAL = baseAL + (20 * aObj.TinkCount)
+            'End If
+            
+            'id = " (" & Round(((getRealArmorLevel(aObj) / baseAL) * 100), 1) & "%)"
+            
+            id = " (" & Round(((aObj.DamageModifier / damageMod) * 100), 1) & "%)"
+        End If
+    End If
+    
+    getUberRangedRating = id
+    
+Fin:
+    Exit Function
+ErrorHandler:
+    PrintErrorMessage "clsLoot.getUberRangedRating - " & Err.Description & " - line: " & Erl
+    Resume Fin
+End Function
+
+
+Public Function getUberMeleeRating(ByVal aObj As acObject) As String
+On Error GoTo ErrorHandler
+
+    Dim id As String
+    Dim wieldReq, lowDamage, HighDamage As Integer
+
+    wieldReq = 0
+    lowDamage = 0
+    HighDamage = 0
+    
+    MyDebug "getUberMeleeRating: " & aObj.Name & " WieldType: " & aObj.WieldReqType & " (" & aObj.WieldReqVal & ") :: " & g_ACConst.GetWeaponSkillName(aObj.WieldReqID)
+    MyDebug "getUberMeleeRating: Dmg: " & aObj.GetLowDamage & "-" & aObj.HighDamage
+    
+    If (aObj.WieldReqVal > 0) And (aObj.WieldReqType = 2) Then
+        Select Case g_ACConst.GetWeaponSkillName(aObj.WieldReqID)
+            Case "Axe"
+                '  0            250         300        325         350         370         400
+                '11.4-19     16.8-28     19.2-32     21.6-36     22.8-38     25.2-42     27.6-46
+                If aObj.WieldReqVal = 0 Then
+                    lowDamage = 11.4
+                    HighDamage = 19
+                ElseIf aObj.WieldReqVal = 250 Then
+                    lowDamage = 16.8
+                    HighDamage = 28
+                ElseIf aObj.WieldReqVal = 300 Then
+                    lowDamage = 19.2
+                    HighDamage = 32
+                ElseIf aObj.WieldReqVal = 325 Then
+                    lowDamage = 21.6
+                    HighDamage = 36
+                ElseIf aObj.WieldReqVal = 350 Then
+                    lowDamage = 22.8
+                    HighDamage = 38
+                ElseIf aObj.WieldReqVal = 370 Then
+                    lowDamage = 25.2
+                    HighDamage = 42
+                ElseIf aObj.WieldReqVal >= 400 Then
+                    lowDamage = 27.6
+                    HighDamage = 46
+                End If
+            Case "Dagger"
+                '  0            250      300       325        350      370         400
+                '8.4-12      9.1-13      9-15    12.6-18     14-20   16.8 -24    18.2-26
+                If aObj.WieldReqVal = 0 Then
+                    lowDamage = 8.4
+                    HighDamage = 12
+                ElseIf aObj.WieldReqVal = 250 Then
+                    lowDamage = 9.1
+                    HighDamage = 13
+                ElseIf aObj.WieldReqVal = 300 Then
+                    lowDamage = 9
+                    HighDamage = 15
+                ElseIf aObj.WieldReqVal = 325 Then
+                    lowDamage = 12.6
+                    HighDamage = 18
+                ElseIf aObj.WieldReqVal = 350 Then
+                    lowDamage = 14
+                    HighDamage = 20
+                ElseIf aObj.WieldReqVal = 370 Then
+                    lowDamage = 16.8
+                    HighDamage = 24
+                ElseIf aObj.WieldReqVal >= 400 Then
+                    lowDamage = 18.2
+                    HighDamage = 26
+                End If
+            Case "Mace"
+                '  0            250         300        325        350      370        400
+                '13.5-18     19.5-26     22.5-30     25.5-34     27-36   28.5-38     31.5-42
+                If aObj.WieldReqVal = 0 Then
+                    lowDamage = 13.5
+                    HighDamage = 18
+                ElseIf aObj.WieldReqVal = 250 Then
+                    lowDamage = 19.5
+                    HighDamage = 26
+                ElseIf aObj.WieldReqVal = 300 Then
+                    lowDamage = 22.5
+                    HighDamage = 30
+                ElseIf aObj.WieldReqVal = 325 Then
+                    lowDamage = 25.5
+                    HighDamage = 34
+                ElseIf aObj.WieldReqVal = 350 Then
+                    lowDamage = 27
+                    HighDamage = 36
+                ElseIf aObj.WieldReqVal = 370 Then
+                    lowDamage = 28.5
+                    HighDamage = 38
+                ElseIf aObj.WieldReqVal >= 400 Then
+                    lowDamage = 31.5
+                    HighDamage = 42
+                End If
+            Case "Spear"
+                '  0            250         300        325         350         370        400
+                '9.35-17     13.2-24     14.3-26     15.4-28     17.6-32     19.8-36     22-40
+                If aObj.WieldReqVal = 0 Then
+                    lowDamage = 9.4
+                    HighDamage = 17
+                ElseIf aObj.WieldReqVal = 250 Then
+                    lowDamage = 13.2
+                    HighDamage = 24
+                ElseIf aObj.WieldReqVal = 300 Then
+                    lowDamage = 14.3
+                    HighDamage = 26
+                ElseIf aObj.WieldReqVal = 325 Then
+                    lowDamage = 15.4
+                    HighDamage = 28
+                ElseIf aObj.WieldReqVal = 350 Then
+                    lowDamage = 17.6
+                    HighDamage = 32
+                ElseIf aObj.WieldReqVal = 370 Then
+                    lowDamage = 19.8
+                    HighDamage = 36
+                ElseIf aObj.WieldReqVal >= 400 Then
+                    lowDamage = 22
+                    HighDamage = 40
+                End If
+            Case "Staff"
+                '  0        250         300         325         350     370         400
+                ' 9-12    9.75-14     11.25-15    14.75-18    15-20    18-24      19.5-26
+                If aObj.WieldReqVal = 0 Then
+                    lowDamage = 9
+                    HighDamage = 12
+                ElseIf aObj.WieldReqVal = 250 Then
+                    lowDamage = 9.8
+                    HighDamage = 14
+                ElseIf aObj.WieldReqVal = 300 Then
+                    lowDamage = 11.3
+                    HighDamage = 15
+                ElseIf aObj.WieldReqVal = 325 Then
+                    lowDamage = 14.8
+                    HighDamage = 18
+                ElseIf aObj.WieldReqVal = 350 Then
+                    lowDamage = 15
+                    HighDamage = 20
+                ElseIf aObj.WieldReqVal = 370 Then
+                    lowDamage = 18
+                    HighDamage = 24
+                ElseIf aObj.WieldReqVal >= 400 Then
+                    lowDamage = 19.5
+                    HighDamage = 26
+                End If
+            Case "Sword"
+                '  0            250         300        325         350         370       400
+                ' 12-20        18-30       21-35      24-40       27-45       30-50     33-55
+                If aObj.WieldReqVal = 0 Then
+                    lowDamage = 12
+                    HighDamage = 20
+                ElseIf aObj.WieldReqVal = 250 Then
+                    lowDamage = 18
+                    HighDamage = 30
+                ElseIf aObj.WieldReqVal = 300 Then
+                    lowDamage = 21
+                    HighDamage = 35
+                ElseIf aObj.WieldReqVal = 325 Then
+                    lowDamage = 24
+                    HighDamage = 40
+                ElseIf aObj.WieldReqVal = 350 Then
+                    lowDamage = 27
+                    HighDamage = 45
+                ElseIf aObj.WieldReqVal = 370 Then
+                    lowDamage = 30
+                    HighDamage = 50
+                ElseIf aObj.WieldReqVal >= 400 Then
+                    lowDamage = 33
+                    HighDamage = 55
+                End If
+            Case "UA"
+                '  0       250         300        325       350      370       400
+                ' 4-8     5.5-11      6.5-13      8-16     10-20    11-22     13-26
+                If aObj.WieldReqVal = 0 Then
+                    lowDamage = 4
+                    HighDamage = 8
+                ElseIf aObj.WieldReqVal = 250 Then
+                    lowDamage = 5.5
+                    HighDamage = 11
+                ElseIf aObj.WieldReqVal = 300 Then
+                    lowDamage = 6.5
+                    HighDamage = 13
+                ElseIf aObj.WieldReqVal = 325 Then
+                    lowDamage = 8
+                    HighDamage = 16
+                ElseIf aObj.WieldReqVal = 350 Then
+                    lowDamage = 10
+                    HighDamage = 20
+                ElseIf aObj.WieldReqVal = 370 Then
+                    lowDamage = 11
+                    HighDamage = 22
+                ElseIf aObj.WieldReqVal >= 400 Then
+                    lowDamage = 13
+                    HighDamage = 26
+                End If
+        End Select
+    
+        If lowDamage > 0 Then
+            'If aObj.TinkCount > 0 Then
+            '    baseAL = baseAL + (20 * aObj.TinkCount)
+            'End If
+            
+            'id = " (" & Round(((getRealArmorLevel(aObj) / baseAL) * 100), 1) & "%)"
+            
+            id = " (" & Round(((getRealMeleeDamage(aObj, False) / lowDamage) * 100), 1) & "%/" & Round(((getRealMeleeDamage(aObj, True) / HighDamage) * 100), 1) & "%)"
+        End If
+    End If
+    
+    getUberMeleeRating = id
+    
+Fin:
+    Exit Function
+ErrorHandler:
+    PrintErrorMessage "clsLoot.getUberMeleeRating - " & Err.Description & " - line: " & Erl
+    Resume Fin
+End Function
+
+Public Function getUberArmorRating(ByVal aObj As acObject) As String
 On Error GoTo ErrorHandler
 
     Dim id As String
@@ -1924,7 +2496,7 @@ On Error GoTo ErrorHandler
 
     baseAL = 0
     
-    MyDebug "getUberRating: " & aObj.Name & " IT: " & aObj.itemType & " AL: " & aObj.ArmorLevel & " AT: " & aObj.ArmorType
+    MyDebug "getUberArmorRating: " & aObj.Name & " IT: " & aObj.itemType & " AL: " & aObj.ArmorLevel & " AT: " & aObj.ArmorType
     
     ' Max Armor levels
     If (aObj.itemType = ITEM_ARMOR) Or (aObj.ArmorLevel > 0) Then
@@ -2094,12 +2666,12 @@ On Error GoTo ErrorHandler
     End If
     
     
-    getUberRating = id
+    getUberArmorRating = id
     
 Fin:
     Exit Function
 ErrorHandler:
-    PrintErrorMessage "clsLoot.getUberRating - " & Err.Description & " - line: " & Erl
+    PrintErrorMessage "clsLoot.getUberArmorRating - " & Err.Description & " - line: " & Erl
     Resume Fin
 End Function
 
