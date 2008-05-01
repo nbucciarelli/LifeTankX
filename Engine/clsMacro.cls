@@ -2249,7 +2249,7 @@ Public Sub RequestCombatStateChange(ByVal iNewState As eCombatStates)
     End If
 End Sub
 
-Public Function ValidState(Optional ByVal CombatType As eMacroCombatType = TYPE_NOTYPE) As Boolean
+Public Function ValidState(Optional ByVal eCombatType As eMacroCombatType = TYPE_NOTYPE) As Boolean
 On Error GoTo Error_Handler
 
     Dim bRet As Boolean
@@ -2257,9 +2257,9 @@ On Error GoTo Error_Handler
     
     bRet = False
     
-    If CombatType = TYPE_NOTYPE Then
-        CombatType = m_iCombatType
-        locDebug "clsMacro.ValidState: CombatType set to: " & CombatType
+    If eCombatType = TYPE_NOTYPE Then
+        eCombatType = m_iCombatType
+        locDebug "clsMacro.ValidState: eCombatType set to: " & eCombatType
     End If
     
     'Set aWeap = Nothing
@@ -2275,7 +2275,7 @@ On Error GoTo Error_Handler
     '    End If
     'End If
     
-    Select Case CombatType
+    Select Case eCombatType
         Case TYPE_MELEE
             If (Not Valid(g_Data.Weapon)) _
             Or (Not Valid(g_Data.Shield)) Then
@@ -2350,18 +2350,27 @@ On Error GoTo Error_Handler
                 GoTo Fin
             End If
             
-            'check if valid equipment
-            If g_ui.Macro.chkAutoSwitch.Checked And Valid(g_currentEquip) Then
-                If Not g_currentEquip.Equiped Then
-                    MyDebug "ValidState : Wand not equipped, equipping now: " & g_currentEquip.Name
-                    Call RequestEquipItem(g_currentEquip)
+            'called with TYPE_CASTER and we are melee/archer then equip default wand -- nothing else!
+            If (m_iCombatType = TYPE_ARCHER) Or (m_iCombatType = TYPE_MELEE) Then
+                If Not g_Data.Wand.Equiped Then
+                    MyDebug "ValidState : Default Wand not equipped, equipping now"
+                    Call RequestEquipItem(g_Data.Wand)
                     GoTo Fin
                 End If
             Else
-                If Not g_Data.Wand.Equiped Then
-                   MyDebug "ValidState : Default Wand not equipped, equipping now"
-                    Call RequestEquipItem(g_Data.Wand)
-                    GoTo Fin
+                'check if valid equipment
+                If g_ui.Macro.chkAutoSwitch.Checked And Valid(g_currentEquip) Then
+                    If Not g_currentEquip.Equiped Then
+                        MyDebug "ValidState : Wand not equipped, equipping now: " & g_currentEquip.Name
+                        Call RequestEquipItem(g_currentEquip)
+                        GoTo Fin
+                    End If
+                Else
+                    If Not g_Data.Wand.Equiped Then
+                        MyDebug "ValidState : Default Wand not equipped, equipping now"
+                        Call RequestEquipItem(g_Data.Wand)
+                        GoTo Fin
+                    End If
                 End If
             End If
             
