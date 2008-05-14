@@ -191,6 +191,7 @@ Enum eExtraObjectInfo
     INT_BLISTCOUNT          'Number of times this critter has been blacklisted
     INT_YIELD_TRYS_LEFT     'Number of trys left to yield this target
     B_LOOTED                'Has this corpse been looted by the macro already?
+    B_HASRARE               'This corpse has a rare on it
     B_MACO_PICKUP           'Has this item been picked up by the macro?
     L_TIME                  'Time to expire this object?
     INT_DELETE              'Should we ask DS Filter to delete this object

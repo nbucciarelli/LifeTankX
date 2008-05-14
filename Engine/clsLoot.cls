@@ -264,7 +264,6 @@ End Sub
 Public Sub StopLooting(Optional sSrc As String = "", Optional dTransitionTime As Double = DEFAULT_TRANSITION_TIME)
 On Error GoTo ErrorHandler
     
-    MyDebug "clsLoot.StopLooting - From: " & sSrc
     locDebug "clsLoot.StopLooting - From: " & sSrc
     Call m_tmrTransition.SetNextTime(dTransitionTime)
     g_bLootRare = False
@@ -274,6 +273,8 @@ On Error GoTo ErrorHandler
     If Valid(m_curCorpse) Then
         If (m_curCorpse.UserData(INT_BLISTCOUNT) > 2) Then
             Call m_curCorpse.SetUserData(B_LOOTED, True)
+            MyDebug "clsLoot.StopLooting: INT_BLISTCOUNT > 2 for " & m_curCorpse.Name
+            MyDebug "clsLoot.StopLooting: marking as looted to remove from list"
         Else
             Dim iCount As Integer
             iCount = m_curCorpse.UserData(INT_BLISTCOUNT) + 1
@@ -302,9 +303,9 @@ On Error GoTo Error_Handler
     For Each tmpObj In m_corpseList
         If (tmpObj.itemType = ITEM_CORPSE) Then
             If tmpObj.UserData(B_LOOTED) Then
-                'do nothing
+                'do nothing (will be removed)
             ElseIf (g_Core.Time > tmpObj.UserData(L_TIME)) Then
-                'do nothing
+                'do nothing (will be removed)
             ElseIf (tmpObj.GetSquareRange <= (g_Data.LootSearchRadius * g_Data.LootSearchRadius)) Then
                 Call newList.addObject(tmpObj)
             End If
@@ -389,7 +390,7 @@ On Error GoTo ErrorHandler
 
     If Valid(objItem) Then
         If Not m_ItemsToLoot.Exists(objItem.Guid) Then
-            MyDebug "AddItemToLoot - Added: " & objItem.Name
+            locDebug "AddItemToLoot - Added: " & objItem.Name
             Call m_ItemsToLoot.addObject(objItem)
         Else
             PrintWarning "clsLoot.AddItemToLoot - " & objItem.Name & " is already in m_ItemsToLoot. Ignoring."
@@ -521,7 +522,7 @@ On Error GoTo Error_Handler
         'Add corpse to List
         Call m_corpseList.addObject(objItem)
         
-        MyDebug "clsLoot.OnCreateObject: " & objItem.Name & " (" & m_corpseList.Count & ")"
+        locDebug "clsLoot.OnCreateObject: " & objItem.Name & " (" & m_corpseList.Count & ")"
         
         GoTo Fin
     
@@ -560,7 +561,7 @@ On Error GoTo Error_Handler
         
     If Not g_ui.Options.chkFilterIdMsg.Checked And Not m_silentID And _
         ((g_Hooks.CurrentSelection = objItem.Guid) Or (objItem.Wielder <> 0)) Then
-            MyDebug "ID'ing selected item"
+            locDebug "ID'ing selected item"
             Call printIdString(objItem)
             If g_Macro.Running Then
                 Call SetSilentID(True)
@@ -578,6 +579,7 @@ On Error GoTo Error_Handler
         If InStr(LCase(objItem.Description), "rare") Then
             g_bLootRare = True
             Set m_rareCorpse = objItem
+            Call m_rareCorpse.SetUserData(B_HASRARE, True)
             MyDebug "clsLoot.OnIdentifyObject: found corpse containing a rare"
         End If
         
@@ -611,7 +613,7 @@ End Sub
 Public Sub OnRemoveObject(ByVal objItem As acObject)
 On Error GoTo Error_Handler
 
-    MyDebug "clsLoot.OnRemoveObject: " & objItem.Name & " (" & m_corpseList.Count & ")"
+    locDebug "clsLoot.OnRemoveObject: " & objItem.Name & " (" & m_corpseList.Count & ")"
     'Call m_corpseList.Remove(objItem.Guid)
     Call objItem.SetUserData(B_LOOTED, True)
 
@@ -746,7 +748,7 @@ On Error GoTo Error_Handler
    
     'Staying alive is more important than looting.
     'However, still keep this body on the list of corpses to loot
-3    If g_Macro.NeedHealing("clsLoot.RunState") And g_bLootRare = False Then
+3    If g_Macro.NeedHealing("clsLoot.RunState") Then
         MyDebug "RunState - Healing..."
         Call StopLooting("RunState - Need Healing")
         GoTo Fin
@@ -761,7 +763,7 @@ On Error GoTo Error_Handler
             locDebug "clsLoot.Runstate : found target, moving to regular IDLE state for combat initialization"
             'go back to regular IDLE mode to ensure we're in the proper equipment/vital state
             Call SetSubState(ST_LOOT_STOP)
-            Call StopLooting("RunState - ST_LOOT_SEARCH_ITEM")
+            Call StopLooting("RunState - Found Combat Target")
         End If
     End If
 
@@ -838,14 +840,14 @@ On Error GoTo Error_Handler
                     If Not g_ui.Options.chkFilterLootMsg.Checked Then
                         PrintMessage sLootString
                     Else
-                        MyDebug "clsLoot.RunState: " & sLootString
+                        locDebug "clsLoot.RunState: " & sLootString
                     End If
                     Call SetSubState(ST_LOOT_PICKUP_ITEM)
                 Else
                     'make sure we don't have item IDs pending on this corpse
                     'before closing it
                     If m_ItemsIdQueue.Count > 0 Then
-                        MyDebug "Waiting for pending loot IDs on : " & m_ItemsIdQueue.GetObjectsList
+                        locDebug "Waiting for pending loot IDs on : " & m_ItemsIdQueue.GetObjectsList
                         Call m_tmrNextTime.SetNextTime(2)
                     'make sure we don't have any items waiting for creation on this corpse
                     ElseIf m_ItemsPending.Count > 0 Then
@@ -864,7 +866,7 @@ On Error GoTo Error_Handler
                             End If
                         Next objItem
                     
-                        MyDebug "Waiting for pending corpse objects creation : " & strPending
+                        locDebug "Waiting for pending corpse objects creation : " & strPending
                         'locDebug "Waiting for pending corpse objects creation : " & m_ItemsPending.GetObjectsList
                         Call m_tmrNextTime.SetNextTime(2)
                     Else 'nothing more to loot, close body
@@ -1095,7 +1097,7 @@ On Error GoTo Error_Handler
                 bRet = True
                 GoTo Fin
             Else
-                MyDebug "FoundCorpseToLoot: Fail - found " & tmpObj.Name & " but TOO FAR."
+                locDebug "FoundCorpseToLoot: " & tmpObj.Name & " is TOO FAR away"
                 'Call m_corpseList.Remove(tmpObj.Guid)
             End If
         'Else
@@ -1120,7 +1122,7 @@ On Error GoTo ErrorHandler
         PrintErrorMessage "clsLoot.OnCorpseOpened - invalid m_curCorpse - Stopping loot"
         Call StopLooting("OnCorpseOpened - Invalid m_curCorpse")
     Else
-        MyDebug "OnCorpseOpened : " & m_curCorpse.Name & " - Now Searching for Items"
+        locDebug "OnCorpseOpened : " & m_curCorpse.Name & " - Now Searching for Items"
         Call SetSubState(ST_LOOT_SEARCH_ITEM)
         Call m_tmrNextTime.ExpireNow
     End If
@@ -1361,16 +1363,20 @@ On Error GoTo Error_Handler
     Dim iCount As Integer
     Dim bRet As Boolean
     
-    If (m_curCorpse Is Nothing) _
-    Or (m_curCorpse.GetSquareRange > (g_Data.LootSearchRadius * g_Data.LootSearchRadius)) _
-    Or (m_curCorpse.UserData(B_LOOTED)) _
-    Or (Not CanLootCorpse(m_curCorpse)) Then
+    If (m_curCorpse.GetSquareRange = 0) Then
+        'Range of 0 is an error
+        Call m_curCorpse.SetUserData(B_LOOTED, True)
+        Call StopLooting("DoOpen Corpse - GetSquareRange is ZERO")
+    ElseIf (m_curCorpse Is Nothing) _
+     Or (m_curCorpse.GetSquareRange > (g_Data.LootSearchRadius * g_Data.LootSearchRadius)) _
+     Or (m_curCorpse.UserData(B_LOOTED)) _
+     Or (Not CanLootCorpse(m_curCorpse)) Then
         bRet = False
         locDebug "DoOpenCorpse: invalid corpse."
         
-        If (m_curCorpse Is Nothing) Then locDebug "DoOpenCorpse: m_curCorpse Is Nothing"
-        If (m_curCorpse.GetSquareRange > (g_Data.LootSearchRadius * g_Data.LootSearchRadius)) Then locDebug "DoOpenCorpse: out of range"
-        If (m_curCorpse.UserData(B_LOOTED)) Then locDebug "DoOpenCorpse: UserData(B_LOOTED) is true"
+        If (m_curCorpse Is Nothing) Then MyDebug "DoOpenCorpse: m_curCorpse Is Nothing"
+        If (m_curCorpse.GetSquareRange > (g_Data.LootSearchRadius * g_Data.LootSearchRadius)) Then MyDebug "DoOpenCorpse: out of range"
+        If (m_curCorpse.UserData(B_LOOTED)) Then MyDebug "DoOpenCorpse: UserData(B_LOOTED) is true"
         
         Set m_curCorpse = Nothing
     Else
@@ -1438,9 +1444,11 @@ On Error GoTo ErrorHandler
             MyDebug "A rare still needs to be looted!"
         End If
         
-        'Make sure to unset rare stuff
-        Set m_rareCorpse = Nothing
-        g_bLootRare = False
+        If m_curCorpse.UserData(B_HASRARE) Then
+            'Make sure to unset rare stuff
+            Set m_rareCorpse = Nothing
+            g_bLootRare = False
+        End If
     End If
     
 Fin:

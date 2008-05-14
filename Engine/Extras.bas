@@ -166,7 +166,7 @@ On Error GoTo ErrorHandler
             
             ' number of slots each item sold takes up
             minPackSpace = CDbl(m_sellCost / 25000)
-            freePackSpace = 95 - g_Objects.Items.CountMainInventory
+            freePackSpace = 90 - g_Objects.Items.CountMainInventory
             
             If minPackSpace > 0 Then
                 computeDouble = CDbl(freePackSpace / minPackSpace)
@@ -615,19 +615,19 @@ On Error GoTo ErrorHandler
     'Unknown scrolls
     If g_ui.Loot.chkUnknownScrolls.Checked And InStr(LCase(objItem.Name), "scroll") Then
         Dim sName As String
-        Dim spellID As Long
+        Dim SpellID As Long
         Dim aSpell As clsSpell
         'get scroll name
         sName = objItem.Name
         'get spell ID
-        spellID = objItem.AssociatedSpellId
+        SpellID = objItem.AssociatedSpellId
         
-        MyDebug "PhatLoot.PassLootFilter scroll: " & sName & " spellId: " & spellID
+        MyDebug "PhatLoot.PassLootFilter scroll: " & sName & " spellId: " & SpellID
         
         'see if we know it
-1        If Not g_Filters.SpellLearned(spellID) Then
+1        If Not g_Filters.SpellLearned(SpellID) Then
             'Make sure it's a school we have trained
-2            Set aSpell = g_Spells.FindSpellByID(spellID)
+2            Set aSpell = g_Spells.FindSpellByID(SpellID)
 3            If Valid(aSpell) Then
 4                MyDebug "PhatLoot.scrolls: Name: " & sName & "   school: " & aSpell.SpellSchool & " isTrained: " & g_Hooks.Skill(aSpell.SpellSchool)
 5                If (g_Hooks.Skill(aSpell.SpellSchool) > 0) Then
