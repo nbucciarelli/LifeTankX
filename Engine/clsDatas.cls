@@ -441,7 +441,7 @@ On Error GoTo ErrorHandler
                 ArrowName = m_sArrowAcid
             Case DMG_LIGHTNING
                 ArrowName = m_sArrowLight
-            Else
+            Case Else
                 ArrowName = m_sArrows
         End Select
     End If
@@ -495,7 +495,7 @@ On Error GoTo ErrorHandler
                 ArrowHeadName = m_sHeadAcid
             Case DMG_LIGHTNING
                 ArrowHeadName = m_sHeadLight
-            Else
+            Case Else
                 ArrowHeadName = m_sArrowHead
         End Select
     End If
