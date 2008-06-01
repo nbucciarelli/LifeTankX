@@ -1660,7 +1660,7 @@ On Error GoTo ErrorHandler
             id = id & ", work " & aObj.Workmanship
             id = id & ", dmg " & getRealMeleeDamage(aObj, False) & "-" & getRealMeleeDamage(aObj, True)
             id = id & getUberMeleeRating(aObj)
-            id = id & ", +" & aObj.AttackBonus & " atk"
+            id = id & ", +" & getRealAttackBonus(aObj) & " atk"
             If (aObj.DefenseBonus > 0) Then id = id & "/+" & getRealMeleeD(aObj) & " MeleeD"
             If (aObj.MagicDefense > 0) Then id = id & "/+" & aObj.MagicDefense & " MagicD"
             If (aObj.ElementBonusDamage > 0) Then id = id & "/+" & aObj.ElementBonusDamage & " DMG"
@@ -1944,7 +1944,7 @@ On Error GoTo ErrorHandler
                     If Valid(buffSpell) Then
                         'Need to recalc Armor value based on active spells
                         If buffSpell.SpellFamily = "Defender" Then
-                            MyDebug "clsLoot.getRealManaC: " & aObj.Name & " has Defender active: " & buffSpell.SpellName
+                            MyDebug "clsLoot.getRealMeleeD: " & aObj.Name & " has Defender active: " & buffSpell.SpellName
                             If buffLevel < buffSpell.SpellLevel Then buffLevel = buffSpell.SpellLevel
                         End If
                     End If
@@ -1984,6 +1984,67 @@ ErrorHandler:
     Resume Fin
 End Function
 
+
+Public Function getRealAttackBonus(ByVal aObj As acObject) As Integer
+On Error GoTo ErrorHandler
+
+    Dim realAttack As Integer
+    Dim buffLevel As Integer
+    Dim aVar As Variant
+
+    realAttack = aObj.AttackBonus
+    buffLevel = 0
+    
+    'Check for active cast spells on this item
+    If Valid(aObj.SpellsActive) Then
+        If (aObj.SpellsActive.Count > 0) Then
+        
+            For Each aVar In aObj.SpellsActive
+                    Dim buffSpell As clsSpell
+                        
+                    Set buffSpell = g_Spells.Items.FindSpellByName(CStr(aVar))
+                    If Valid(buffSpell) Then
+                        'Need to recalc Armor value based on active spells
+                        If buffSpell.SpellFamily = "Heart Seeker" Then
+                            MyDebug "clsLoot.getRealAttackBonus: " & aObj.Name & " has Heart Seeker active: " & buffSpell.SpellName
+                            If buffLevel < buffSpell.SpellLevel Then buffLevel = buffSpell.SpellLevel
+                        End If
+                    End If
+
+            Next
+        End If
+    End If
+
+    If buffLevel = 1 Then
+        '2.5%
+        realAttack = realAttack - 2.5
+    ElseIf buffLevel = 2 Then
+        '5%
+        realAttack = realAttack - 5
+    ElseIf buffLevel = 3 Then
+        '7.5%
+        realAttack = realAttack - 7.5
+    ElseIf buffLevel = 4 Then
+        '10%
+        realAttack = realAttack - 10
+    ElseIf buffLevel = 5 Then
+        '12.5%
+        realAttack = realAttack - 12.5
+    ElseIf buffLevel = 6 Then
+        '15%
+        realAttack = realAttack - 15
+    ElseIf buffLevel = 7 Then
+        '17%
+        realAttack = realAttack - 17
+    End If
+
+Fin:
+    getRealAttackBonus = realAttack
+    Exit Function
+ErrorHandler:
+    PrintErrorMessage "clsLoot.getRealAttackBonus - " & Err.Description & " - line: " & Erl
+    Resume Fin
+End Function
 
 Public Function getRealManaC(ByVal aObj As acObject) As Integer
 On Error GoTo ErrorHandler
@@ -2109,12 +2170,12 @@ On Error GoTo ErrorHandler
 
     If getHigh Then
         realDamage = aObj.HighDamage
-        MyDebug "clsLoot.getRealmeleeDamage: realDamage: " & realDamage & " :High: " & aObj.HighDamage
+        MyDebug "clsLoot.getRealMeleeDamage: realDamage: " & realDamage & " :High: " & aObj.HighDamage
     Else
         realDamage = Round(aObj.HighDamage - (aObj.Variance * aObj.HighDamage), 2)
         'realDamage = aObj.GetLowDamage
-        MyDebug "clsLoot.getRealmeleeDamage: Variance: " & aObj.Variance & " :High: " & aObj.HighDamage
-        MyDebug "clsLoot.getRealmeleeDamage: realDamage: " & realDamage & " :Low: " & aObj.GetLowDamage
+        MyDebug "clsLoot.getRealMeleeDamage: Variance: " & aObj.Variance & " :High: " & aObj.HighDamage
+        MyDebug "clsLoot.getRealMeleeDamage: realDamage: " & realDamage & " :Low: " & aObj.GetLowDamage
     End If
     
     realDamage = aObj.HighDamage

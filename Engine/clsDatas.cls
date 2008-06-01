@@ -426,19 +426,19 @@ On Error GoTo ErrorHandler
     ArrowName = TAG_NOT_SET
     
     If Valid(g_currentEquip) Then
-        If g_currentEquip.Guid = g_Data.WeapSlash.Guid Then
+        If Valid(g_Data.WeapSlash) And (g_currentEquip.Guid = g_Data.WeapSlash.Guid) Then
             ArrowName = m_sArrowSlash
-        ElseIf g_currentEquip.Guid = g_Data.WeapBludge.Guid Then
+        ElseIf Valid(g_Data.WeapBludge) And (g_currentEquip.Guid = g_Data.WeapBludge.Guid) Then
             ArrowName = m_sArrowBludge
-        ElseIf g_currentEquip.Guid = g_Data.WeapPierce.Guid Then
+        ElseIf Valid(g_Data.WeapPierce) And (g_currentEquip.Guid = g_Data.WeapPierce.Guid) Then
             ArrowName = m_sArrowPierce
-        ElseIf g_currentEquip.Guid = g_Data.WeapFire.Guid Then
+        ElseIf Valid(g_Data.WeapFire) And (g_currentEquip.Guid = g_Data.WeapFire.Guid) Then
             ArrowName = m_sArrowFire
-        ElseIf g_currentEquip.Guid = g_Data.WeapCold.Guid Then
+        ElseIf Valid(g_Data.WeapCold) And (g_currentEquip.Guid = g_Data.WeapCold.Guid) Then
             ArrowName = m_sArrowCold
-        ElseIf g_currentEquip.Guid = g_Data.WeapAcid.Guid Then
+        ElseIf Valid(g_Data.WeapAcid) And (g_currentEquip.Guid = g_Data.WeapAcid.Guid) Then
             ArrowName = m_sArrowAcid
-        ElseIf g_currentEquip.Guid = g_Data.WeapLight.Guid Then
+        ElseIf Valid(g_Data.WeapLight) And (g_currentEquip.Guid = g_Data.WeapLight.Guid) Then
             ArrowName = m_sArrowLight
         Else
             ArrowName = m_sArrows
@@ -465,6 +465,7 @@ Fin:
     Exit Function
 ErrorHandler:
     PrintErrorMessage "clsDatas.GetArrowType - " & Err.Description
+    GetArrowType = m_sArrows
     Resume Fin
 End Function
 
@@ -478,19 +479,19 @@ On Error GoTo ErrorHandler
     ArrowHeadName = TAG_NOT_SET
     
     If Valid(g_currentEquip) Then
-        If g_currentEquip.Guid = g_Data.WeapSlash.Guid Then
+        If Valid(g_Data.WeapSlash) And (g_currentEquip.Guid = g_Data.WeapSlash.Guid) Then
             ArrowHeadName = m_sHeadSlash
-        ElseIf g_currentEquip.Guid = g_Data.WeapBludge.Guid Then
-        ArrowHeadName = m_sHeadBludge
-        ElseIf g_currentEquip.Guid = g_Data.WeapPierce.Guid Then
+        ElseIf Valid(g_Data.WeapBludge) And g_currentEquip.Guid = g_Data.WeapBludge.Guid Then
+            ArrowHeadName = m_sHeadBludge
+        ElseIf Valid(g_Data.WeapPierce) And g_currentEquip.Guid = g_Data.WeapPierce.Guid Then
             ArrowHeadName = m_sHeadPierce
-        ElseIf g_currentEquip.Guid = g_Data.WeapFire.Guid Then
-        ArrowHeadName = m_sHeadFire
-        ElseIf g_currentEquip.Guid = g_Data.WeapCold.Guid Then
+        ElseIf Valid(g_Data.WeapFire) And g_currentEquip.Guid = g_Data.WeapFire.Guid Then
+            ArrowHeadName = m_sHeadFire
+        ElseIf Valid(g_Data.WeapCold) And g_currentEquip.Guid = g_Data.WeapCold.Guid Then
             ArrowHeadName = m_sHeadCold
-        ElseIf g_currentEquip.Guid = g_Data.WeapAcid.Guid Then
+        ElseIf Valid(g_Data.WeapAcid) And g_currentEquip.Guid = g_Data.WeapAcid.Guid Then
             ArrowHeadName = m_sHeadAcid
-        ElseIf g_currentEquip.Guid = g_Data.WeapLight.Guid Then
+        ElseIf Valid(g_Data.WeapLight) And g_currentEquip.Guid = g_Data.WeapLight.Guid Then
             ArrowHeadName = m_sHeadLight
         Else
             ArrowHeadName = m_sArrowHead

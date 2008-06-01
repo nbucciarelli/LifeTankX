@@ -133,13 +133,15 @@ Public Function Init(Optional ProfileName As String = "Default") As Boolean
     Set chkRebuffOnStart = g_MainView.Control("chkRebuffOnStart")
     Set chkEnableBuffing = g_MainView.Control("chkEnableBuffing")
     Set chkContinuousBuffing = g_MainView.Control("chkContinuousBuffing")
-    Set stItemName = g_MainView.Control("stItemName")
-    Set btnSetItemGUID = g_MainView.Control("btnSetItemGUID")
-    Set btnAddItem = g_MainView.Control("btnAddItem")
-    Set lstItemSpells = g_MainView.Control("lstItemSpells")
-    Set lstItems = g_MainView.Control("lstItems")
-    Set chItemSpell = g_MainView.Control("chItemSpell")
-    Set btnAddSpellToItem = g_MainView.Control("btnAddSpellToItem")
+    
+    'Set stItemName = g_MainView.Control("stItemName")
+    'Set btnSetItemGUID = g_MainView.Control("btnSetItemGUID")
+    'Set btnAddItem = g_MainView.Control("btnAddItem")
+    'Set lstItemSpells = g_MainView.Control("lstItemSpells")
+    'Set lstItems = g_MainView.Control("lstItems")
+    'Set chItemSpell = g_MainView.Control("chItemSpell")
+    'Set btnAddSpellToItem = g_MainView.Control("btnAddSpellToItem")
+    
     Set chkEnableBuffBuddy = g_MainView.Control("chkEnableBuffBuddy")
     Set btnSetBuffBuddy = g_MainView.Control("btnSetBuffBuddy")
     Set btnForceBuffBuddy = g_MainView.Control("btnForceBuffBuddy")
@@ -196,7 +198,7 @@ Public Function Init(Optional ProfileName As String = "Default") As Boolean
 
     
     'Controls default settings
-    chItemSpell.Selected = 0
+    'chItemSpell.Selected = 0
     
     Init = True
     MyDebug InterfaceName & ".Init() -- End"
@@ -216,7 +218,7 @@ On Error GoTo Error_Handler
     MyDebug "[" & InterfaceName & "] Loading controls value"
     
      '***************************************************************************
-    chItemSpell.Selected = 0
+    'chItemSpell.Selected = 0
     chkRebuffOnStart.Checked = g_Settings.GetValue("chkRebuffOnStart", True)
     chkEnableBuffing.Checked = g_Settings.GetValue("chkEnableBuffing", True)
     chkContinuousBuffing.Checked = g_Settings.GetValue("chkContinuousBuffing", False)
@@ -383,6 +385,7 @@ On Error GoTo Error_Handler
     Set chkEnableBuffing = Nothing
     Set chkEnableBuffBuddy = Nothing
     Set chkContinuousBuffing = Nothing
+    
     Set stItemName = Nothing
     Set btnSetItemGUID = Nothing
     Set btnAddItem = Nothing
@@ -390,6 +393,7 @@ On Error GoTo Error_Handler
     Set lstItems = Nothing
     Set chItemSpell = Nothing
     Set btnAddSpellToItem = Nothing
+    
     Set btnSetBuffBuddy = Nothing
     Set btnForceBuffBuddy = Nothing
     Set txtBuffBuddy = Nothing
@@ -665,12 +669,12 @@ On Error GoTo ErrorHandler
         End If
     Next objFam
     
-    Call chItemSpell.Clear
-    For Each objFam In g_Spells.Items.Families
-        If objFam.mType <> SPELLTYPE_TRANSPORT Then  'only add regular spells to the list, no recalls/ties etc
-            chItemSpell.AddChoice objFam.mFamily
-        End If
-    Next objFam
+    'Call chItemSpell.Clear
+    'For Each objFam In g_Spells.Items.Families
+    '    If objFam.mType <> SPELLTYPE_TRANSPORT Then  'only add regular spells to the list, no recalls/ties etc
+    '        chItemSpell.AddChoice objFam.mFamily
+    '    End If
+    'Next objFam
     
 Fin:
     Exit Sub
