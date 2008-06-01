@@ -1386,5 +1386,7 @@ Friend Sub m_Render_DeviceLost()
     m_bDebugHud = False
     m_bDOTHud = False
 
-    'Call createAllHuds
+    If g_Macro.Running Then
+        Call createAllHuds
+    End If
 End Sub
