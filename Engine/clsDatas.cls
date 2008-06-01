@@ -426,23 +426,24 @@ On Error GoTo ErrorHandler
     ArrowName = TAG_NOT_SET
     
     If Valid(g_currentEquip) Then
-        If Valid(g_Data.WeapSlash) And (g_currentEquip.Guid = g_Data.WeapSlash.Guid) Then
-            ArrowName = m_sArrowSlash
-        ElseIf Valid(g_Data.WeapBludge) And (g_currentEquip.Guid = g_Data.WeapBludge.Guid) Then
-            ArrowName = m_sArrowBludge
-        ElseIf Valid(g_Data.WeapPierce) And (g_currentEquip.Guid = g_Data.WeapPierce.Guid) Then
-            ArrowName = m_sArrowPierce
-        ElseIf Valid(g_Data.WeapFire) And (g_currentEquip.Guid = g_Data.WeapFire.Guid) Then
-            ArrowName = m_sArrowFire
-        ElseIf Valid(g_Data.WeapCold) And (g_currentEquip.Guid = g_Data.WeapCold.Guid) Then
-            ArrowName = m_sArrowCold
-        ElseIf Valid(g_Data.WeapAcid) And (g_currentEquip.Guid = g_Data.WeapAcid.Guid) Then
-            ArrowName = m_sArrowAcid
-        ElseIf Valid(g_Data.WeapLight) And (g_currentEquip.Guid = g_Data.WeapLight.Guid) Then
-            ArrowName = m_sArrowLight
-        Else
-            ArrowName = m_sArrows
-        End If
+        Select Case g_currentEquip.DamageType
+            Case DMG_SLASHING
+                ArrowName = m_sArrowSlash
+            Case DMG_BLUDGEONING
+                ArrowName = m_sArrowBludge
+            Case DMG_PIERCING
+                ArrowName = m_sArrowPierce
+            Case DMG_FIRE
+                ArrowName = m_sArrowFire
+            Case DMG_COLD
+                ArrowName = m_sArrowCold
+            Case DMG_ACID
+                ArrowName = m_sArrowAcid
+            Case DMG_LIGHTNING
+                ArrowName = m_sArrowLight
+            Else
+                ArrowName = m_sArrows
+        End Select
     End If
     
     If ArrowName = TAG_NOT_SET Then
@@ -479,23 +480,24 @@ On Error GoTo ErrorHandler
     ArrowHeadName = TAG_NOT_SET
     
     If Valid(g_currentEquip) Then
-        If Valid(g_Data.WeapSlash) And (g_currentEquip.Guid = g_Data.WeapSlash.Guid) Then
-            ArrowHeadName = m_sHeadSlash
-        ElseIf Valid(g_Data.WeapBludge) And g_currentEquip.Guid = g_Data.WeapBludge.Guid Then
-            ArrowHeadName = m_sHeadBludge
-        ElseIf Valid(g_Data.WeapPierce) And g_currentEquip.Guid = g_Data.WeapPierce.Guid Then
-            ArrowHeadName = m_sHeadPierce
-        ElseIf Valid(g_Data.WeapFire) And g_currentEquip.Guid = g_Data.WeapFire.Guid Then
-            ArrowHeadName = m_sHeadFire
-        ElseIf Valid(g_Data.WeapCold) And g_currentEquip.Guid = g_Data.WeapCold.Guid Then
-            ArrowHeadName = m_sHeadCold
-        ElseIf Valid(g_Data.WeapAcid) And g_currentEquip.Guid = g_Data.WeapAcid.Guid Then
-            ArrowHeadName = m_sHeadAcid
-        ElseIf Valid(g_Data.WeapLight) And g_currentEquip.Guid = g_Data.WeapLight.Guid Then
-            ArrowHeadName = m_sHeadLight
-        Else
-            ArrowHeadName = m_sArrowHead
-        End If
+        Select Case g_currentEquip.DamageType
+            Case DMG_SLASHING
+                ArrowHeadName = m_sHeadSlash
+            Case DMG_BLUDGEONING
+                ArrowHeadName = m_sHeadBludge
+            Case DMG_PIERCING
+                ArrowHeadName = m_sHeadPierce
+            Case DMG_FIRE
+                ArrowHeadName = m_sHeadFire
+            Case DMG_COLD
+                ArrowHeadName = m_sHeadCold
+            Case DMG_ACID
+                ArrowHeadName = m_sHeadAcid
+            Case DMG_LIGHTNING
+                ArrowHeadName = m_sHeadLight
+            Else
+                ArrowHeadName = m_sArrowHead
+        End Select
     End If
     
     If ArrowHeadName = TAG_NOT_SET Then

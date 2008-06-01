@@ -105,6 +105,7 @@ Public SkillReqId As Long
 
 Public ElementBonusDamage As Long       'Elemental Bonus Damage
 Public DamageFlags As Long              'Element of the weapon (eWeaponDamageFlags combinations)
+Public DamageType As Integer
 Public SkillUsed As Integer
 Public HighDamage As Long
 Public DamageModifier As Integer        'X, where X is the +X% damage modifier (+120%, +130%...)
@@ -246,6 +247,7 @@ Private Sub Class_Initialize()
     RankReq = 0
     ElementBonusDamage = 0
     DamageFlags = 0
+    DamageType = 0
     SkillUsed = 0
     HighDamage = 0
     Variance = 0
@@ -481,6 +483,7 @@ On Error GoTo ErrorHandler
         .RaceReq = RaceReq
         .RankReq = RankReq
         .DamageFlags = DamageFlags
+        .DamageType = DamageType
         .SkillUsed = SkillUsed
         .HighDamage = HighDamage
         .DamageModifier = DamageModifier

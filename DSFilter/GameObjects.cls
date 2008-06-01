@@ -1324,6 +1324,23 @@ On Error GoTo ErrorHandler
         If objEntity.AttackBonus < 0 Then objEntity.AttackBonus = 0
         If objEntity.DamageModifier < 0 Then objEntity.DamageModifier = 0
 
+        Select Case objEntity.DamageFlags
+            Case &H1&  'Slashing
+                objEntity.DamageType = DMG_SLASHING
+            Case &H2&  'Pierce
+                objEntity.DamageType = DMG_PIERCING
+            Case &H4&  'Bludge
+                objEntity.DamageType = DMG_BLUDGEONING
+            Case &H8&  'Cold
+                objEntity.DamageType = DMG_COLD
+            Case &H10& 'Fire
+                objEntity.DamageType = DMG_FIRE
+            Case &H20& 'Acid
+                objEntity.DamageType = DMG_ACID
+            Case &H40& 'Lightning
+                objEntity.DamageType = DMG_LIGHTNING
+        End Select
+
         'MyDebug "ID : Weapon Info - " & objEntity.Name & " : Type=" & objEntity.GetWeaponTypeName & ", HighDmg=" & objEntity.HighDamage & ", LowDmg=" & objEntity.GetLowDamage & " Var=" & objEntity.Variance & ", Att%=" & objEntity.AttackBonus & ", Def%=" & objEntity.DefenseBonus & ", DmgFlags=" & objEntity.DamageFlags
         'If objEntity.DamageModifier <> 0 Then MyDebug "Damage Mod : +" & objEntity.DamageModifier & "%"
 
