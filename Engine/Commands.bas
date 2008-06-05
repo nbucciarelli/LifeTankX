@@ -162,7 +162,7 @@ On Error GoTo ErrorHandler
                     Call g_Data.getClassAutoResponse.spamAutoResponse(nString)
                  
                 Case "coords", "loc", "location"
-                    PrintMessage "Coords: " & g_Objects.Player.Loc.Coords & "(" & g_Objects.Player.Loc.DungeonId & ")"
+                    PrintMessage "Coords: " & g_Objects.Player.Loc.Coords & "  - Dungeon ID: " & g_Objects.Player.Loc.DungeonId
                     
                 Case "testalarm"
                     PrintMessage "Testing Admin Alert..."
@@ -233,6 +233,26 @@ On Error GoTo ErrorHandler
                 Case "sell"
                     Call SellAtVendor
                     
+                Case "dist"
+                    If Arg2 Then
+                        Dim farobj As acObject
+                        Set farobj = g_Objects.FindObject(Arg2)
+                        Dim wRange As Single
+                        wRange = g_Filters.g_worldFilter.Distance2D(Arg2, g_Filters.PlayerGUID)
+                        If Valid(farobj) Then
+                            PrintMessage "Name: " & farobj.Name
+                            PrintMessage "GUID: " & farobj.Guid
+                            PrintMessage "Type: " & farobj.ObjectType
+                            PrintMessage "Range: " & farobj.GetRange
+                            PrintMessage "Range: " & farobj.Loc.landblock & " : " & farobj.Loc.DungeonId & " : " & farobj.Loc.Coords
+                            PrintMessage "wRange: " & wRange
+                        Else
+                            PrintMessage "wRange: " & wRange
+                        End If
+                    Else
+                        PrintMessage "try: /lt dist 1234567890"
+                    End If
+                
                 Case "selection"
                     If g_Hooks.CurrentSelection = 0 Then
                         PrintMessage "Please select a valid object"

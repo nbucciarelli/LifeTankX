@@ -875,7 +875,7 @@ On Error GoTo ErrorHandler
             lVal = xVal.Value("value")
             lKey = xVal.Value("key")
             
-            'myDebug "IDObject: " & objEntity.Name & " Key:" & Hex(lKey) & " Val:" & lVal
+            myDebug "IDObject: " & objEntity.Name & " Key:" & Hex(lKey) & " Val:" & lVal
             
             Select Case lKey
                 Case &H11& 'Rare #
