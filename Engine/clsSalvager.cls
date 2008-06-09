@@ -425,6 +425,7 @@ NextItem:
     Next objItem
     
 Fin:
+    Set objItem = Nothing
     Exit Sub
 ErrorHandler:
     PrintErrorMessage "clsSalvager.MakeValidSalvagesList - " & Err.Description
@@ -518,6 +519,8 @@ NextItem:
 
 Fin:
     Set objFullestBagOut = objFullestBag
+    Set objFullestBag = Nothing
+    Set objItem = Nothing
     Exit Function
 ErrorHandler:
     FindPartialBags = False
@@ -588,6 +591,10 @@ NextType:
 Fin:
     Set colBatchOut = colBigBatch
     MakeAllBatches = bRet
+    Set colBigBatch = Nothing
+    Set colBatch = Nothing
+    Set oItem = Nothing
+    Set oFilter = Nothing
     Exit Function
 ErrorHandler:
     bRet = False
@@ -773,6 +780,12 @@ ExitItemsLoop:
 Fin:
     Set colBatchOut = colBatch
     MakeSingleBatch = bRet
+    Set colBatch = Nothing
+    Set colBags = Nothing
+    Set colSalv = Nothing
+    Set colIgnoreList = Nothing
+    Set objItem = Nothing
+    Set objFullestBag = Nothing
     Exit Function
 ErrorHandler:
     bRet = False

@@ -874,6 +874,9 @@ On Error GoTo Error_Handler
                         Call SetBodyLooted
                         Call SetSubState(ST_LOOT_STOP)
                         Call StopLooting("RunState - ST_LOOT_SEARCH_ITEM")
+                        If PhatLoot.doAutoStacking Then
+                            locDebug "Called PhatLoot.doAutoStacking with return of TRUE"
+                        End If
                     End If
                 End If
             

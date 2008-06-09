@@ -827,3 +827,55 @@ ErrorHandler:
     PrintErrorMessage "PhatLoot.IsWorthAssessing - " & Err.Description
     Resume Fin
 End Function
+
+Public Function doAutoStacking() As Boolean
+On Error GoTo ErrorHandler
+
+    Dim colInv As colObjects
+    Dim bRet As Boolean
+    Dim objItem1 As acObject
+    Dim objItem2 As acObject
+    Dim bottomCount As Integer
+    Dim topCount As Integer
+    
+    bRet = False
+    Set colInv = New colObjects
+    
+    For Each objItem1 In g_Objects.Items.Inv
+        If (objItem1.stackCount < objItem1.StackMax) And (objItem1.Container = g_Objects.Player.Guid) Then
+            Call colInv.addObject(objItem1)
+        End If
+    Next objItem1
+    
+    If colInv.Count > 1 Then
+    
+        Dim itemList() As acObject
+        
+        itemList = ColToArray(colInv)
+        
+        For topCount = UBound(itemList) To LBound(itemList) Step -1
+            Set objItem1 = itemList(topCount)
+            If (objItem1.stackCount < objItem1.StackMax) Then
+                For bottomCount = LBound(itemList) To UBound(itemList)
+                    Set objItem2 = itemList(bottomCount)
+                    If (objItem2.Name = objItem1.Name) And (objItem2.stackCount < objItem2.StackMax) And (objItem1.Guid <> objItem2.Guid) Then
+                        Call g_Hooks.MoveItemEx(objItem1.Guid, objItem2.Guid)
+                        bRet = True
+                        GoTo Fin
+                    End If
+                Next bottomCount
+            End If
+        Next topCount
+
+    End If
+    
+Fin:
+    Set colInv = Nothing
+    Set objItem1 = Nothing
+    Set objItem2 = Nothing
+    doAutoStacking = bRet
+    Exit Function
+ErrorHandler:
+    PrintErrorMessage "PhatLoot.doAutoStacking - " & Err.Description
+    Resume Fin
+End Function

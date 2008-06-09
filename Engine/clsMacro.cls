@@ -27,8 +27,6 @@ Private Const CAST_TIMER = 0.3                     'seconds
 
 Private Const LOGOUT_CHECK_INTERVAL = 30    'check need to Logout every X seconds
 Private Const LOOT_CHECK_INTERVAL = 2       'check for loot every X seconds in idle mode
-Private Const TARGET_SCAN_INTERVAL = 2      'check for targets every X seconds when in idle mode unless
-                                            'timer gets reset when creatures are spawning nearby
 Private Const SALVAGER_CHECK_INTERVAL = 5   'check if we need to autosalvage every 5 seconds
 Private Const FELLOWHEAL_CHECK_INTERVAL = 5 'check if we need to Heal a fellow member every 5 seconds
 
@@ -899,6 +897,27 @@ ErrorHandler:
     Resume Fin
 End Sub
 
+'
+' Not used: Is called from the end of the clsLoot.Run subroutine
+'
+'Private Function GoStacking() As Boolean
+'On Error GoTo ErrorHandler
+'    Dim bRet As Boolean
+'
+'    bRet = PhatLoot.doAutoStacking
+'    If bRet Then
+'        locDebug "GoStacking did some stacking!"
+'    End If
+'
+'Fin:
+'    GoStacking = bRet
+'    Exit Function
+'ErrorHandler:
+'    bRet = False
+'    PrintErrorMessage "clsMacro.GoStacking - " & Err.Description
+'    Resume Fin
+'End Function
+
 Private Function GoHealing() As Boolean
 On Error GoTo ErrorHandler
     Dim bRet As Boolean
@@ -1636,6 +1655,7 @@ On Error GoTo ErrorHandler
                             GoTo Fin
                         End If
                     End If
+
                 Else
                     Call GoCombat    'resume combat
                 End If
