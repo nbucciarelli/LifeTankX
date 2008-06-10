@@ -490,7 +490,7 @@ Private Sub ResetMeleeAttack()
     Call m_tmrAttackCheck.Reset
     
     'SPK - Added 8/06/04
-    Call m_tmrBusyCombat.Reset 'Tell the macro we're really be done swinging
+    Call m_tmrBusyCombat.Reset 'Tell the macro we really be done swinging
 
 End Sub
 

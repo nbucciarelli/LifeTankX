@@ -31,7 +31,7 @@ Private InterfaceName As String
 Public chkUseHealSpell As DecalControls.CheckBox
 Public chkUseStamSpell As DecalControls.CheckBox
 Public chkUseHealingKits As DecalControls.CheckBox
-Public chkUseHealthPotion As DecalControls.CheckBox
+Public chkUseEmergItem As DecalControls.CheckBox
 Public chkUseStamPotion As DecalControls.CheckBox
 Public chkHealFellow As DecalControls.CheckBox
 Public chkStamFellow As DecalControls.CheckBox
@@ -64,6 +64,12 @@ Public WithEvents lstStamItems As DecalControls.list
 Attribute lstStamItems.VB_VarHelpID = -1
 Public WithEvents btnAddStamItem As DecalControls.PushButton
 Attribute btnAddStamItem.VB_VarHelpID = -1
+
+' Emergency items tab
+Public WithEvents lstEmergItems As DecalControls.list
+Attribute lstEmergItems.VB_VarHelpID = -1
+Public WithEvents btnAddEmergItem As DecalControls.PushButton
+Attribute btnAddEmergItem.VB_VarHelpID = -1
 
 Public WithEvents cmdSetWand As DecalControls.PushButton
 Attribute cmdSetWand.VB_VarHelpID = -1
@@ -290,7 +296,7 @@ On Error GoTo ErrorHandler
     Set chkUseHealSpell = g_MainView.Control("chkUseHealSpell")
     Set chkUseStamSpell = g_MainView.Control("chkUseStamSpell")
     Set chkUseHealingKits = g_MainView.Control("chkUseHealingKits")
-    Set chkUseHealthPotion = g_MainView.Control("chkUseHealthPotion")
+    Set chkUseEmergItem = g_MainView.Control("chkUseEmergItem")
     Set chkUseStamPotion = g_MainView.Control("chkUseStamPotion")
     Set chkUsePeaceHeal = g_MainView.Control("chkUsePeaceHeal")
     
@@ -309,6 +315,9 @@ On Error GoTo ErrorHandler
     
     Set lstStamItems = g_MainView.Control("lstStamItems")
     Set btnAddStamItem = g_MainView.Control("btnAddStamItem")
+    
+    Set lstEmergItems = g_MainView.Control("lstEmergItems")
+    Set btnAddEmergItem = g_MainView.Control("btnAddEmergItem")
     
     Set chkLogoutOnDeath = g_MainView.Control("chkLogoutOnDeath")
     Set cmdSetWand = g_MainView.Control("cmdSetWand")
@@ -624,7 +633,7 @@ On Error GoTo Error_Handler
         chkUseHealSpell.Checked = g_Settings.GetValue("chkUseHealSpell", True)
         chkUseStamSpell.Checked = g_Settings.GetValue("chkUseStamSpell", True)
         chkUseHealingKits.Checked = g_Settings.GetValue("chkUseHealingKits", True)
-        chkUseHealthPotion.Checked = g_Settings.GetValue("chkUseHealthPotion", True)
+        chkUseEmergItem.Checked = g_Settings.GetValue("chkUseEmergItem", True)
         chkUseStamPotion.Checked = g_Settings.GetValue("chkUseStamPotion", False)
         chkUsePeaceHeal.Checked = g_Settings.GetValue("chkUsePeaceHeal", True)
         'chkUsePeaceHeal.Unchecked = g_Settings.GetValue("chkUsePeaceHeal", False)
@@ -656,6 +665,7 @@ On Error GoTo Error_Handler
     
     Call LoadItemsList(lstHealItems, GetHealListPath)
     Call LoadItemsList(lstStamItems, GetStamListPath)
+    Call LoadItemsList(lstEmergItems, GetEmergListPath)
     
     '***************************************************************************
     
@@ -680,7 +690,7 @@ On Error GoTo Error_Handler
         .SaveCheckbox chkUseHealSpell, "chkUseHealSpell"
         .SaveCheckbox chkUseStamSpell, "chkUseStamSpell"
         .SaveCheckbox chkUseHealingKits, "chkUseHealingKits"
-        .SaveCheckbox chkUseHealthPotion, "chkUseHealthPotion"
+        .SaveCheckbox chkUseEmergItem, "chkUseEmergItem"
         .SaveCheckbox chkUseStamPotion, "chkUseStamPotion"
         .SaveCheckbox chkUsePeaceHeal, "chkUsePeaceHeal"
         .SaveCheckbox chkHealFellow, "chkHealFellow"
@@ -826,6 +836,7 @@ On Error GoTo Error_Handler
     
     Call SaveItemsList(lstHealItems, GetHealListPath)
     Call SaveItemsList(lstStamItems, GetStamListPath)
+    Call SaveItemsList(lstEmergItems, GetEmergListPath)
     
     bRet = True
 Fin:
@@ -854,7 +865,7 @@ On Error GoTo Error_Handler
     Set chkUseHealSpell = Nothing
     Set chkUseStamSpell = Nothing
     Set chkUseHealingKits = Nothing
-    Set chkUseHealthPotion = Nothing
+    Set chkUseEmergItem = Nothing
     Set chkUseStamPotion = Nothing
     Set chkUsePeaceHeal = Nothing
     Set chkHealFellow = Nothing
@@ -1554,7 +1565,6 @@ On Error GoTo Error_Handler
         If g_Objects.Items.Exists(g_Hooks.CurrentSelection) Then
             Set aObj = g_Objects.Items(g_Hooks.CurrentSelection)
 
-            If (aObj.itemType = ITEM_FOOD) Then
                 Dim intFoundItem As Integer
                 intFoundItem = 0
                 Dim intTempCounter As Integer
@@ -1573,11 +1583,11 @@ On Error GoTo Error_Handler
                     Call SaveItemsList(lstStamItems, GetStamListPath)
                     PrintMessage "Adding: " & aObj.Name
                 End If
-            End If
         End If
     End If
 
 Fin:
+    Set aObj = Nothing
     Exit Sub
 Error_Handler:
     PrintErrorMessage "clsUIMain.btnAddStamItem_Accepted - " & Err.Description
@@ -1640,6 +1650,7 @@ On Error GoTo Error_Handler
     End If
 
 Fin:
+    Set aObj = Nothing
     Exit Sub
 Error_Handler:
     PrintErrorMessage "clsUIMain.btnAddHealItem_Accepted - " & Err.Description
@@ -1662,6 +1673,68 @@ Private Sub lstHealItems_Change(ByVal nID As Long, ByVal nX As Long, ByVal nY As
     Case 3
         ' Move down the list
         Call lstMoveDown(lstHealItems, nY)
+    End Select
+ 
+End Sub
+
+
+' Emergency items
+Private Sub btnAddEmergItem_Accepted(ByVal nID As Long)
+On Error GoTo Error_Handler
+
+    Dim aObj As acObject
+    Dim aName As String
+        
+    If (g_Hooks.CurrentSelection <> 0) Then
+        If g_Objects.Items.Exists(g_Hooks.CurrentSelection) Then
+            Set aObj = g_Objects.Items(g_Hooks.CurrentSelection)
+
+            Dim intTempCounter As Integer
+            Dim intFoundItem As Integer
+            
+            intFoundItem = 0
+            For intTempCounter = 0 To lstEmergItems.Count - 1
+                If (lstEmergItems.Data(1, intTempCounter) = aObj.Name) Then
+                    intFoundItem = 1
+                    Exit For
+                End If
+            Next
+            If (intFoundItem = 0) Then
+                intTempCounter = lstEmergItems.AddRow
+                lstEmergItems.Data(COL_ENABLED, intTempCounter) = True
+                lstEmergItems.Data(COL_ITEM_NAME, intTempCounter) = aObj.Name
+                lstEmergItems.Data(COL_ICON_UP, intTempCounter, 1) = MOVE_UP_ICON
+                lstEmergItems.Data(COL_ICON_DOWN, intTempCounter, 1) = MOVE_DOWN_ICON
+                Call SaveItemsList(lstEmergItems, GetEmergListPath)
+                PrintMessage "Adding: " & aObj.Name
+            End If
+        End If
+    End If
+
+Fin:
+    Set aObj = Nothing
+    Exit Sub
+Error_Handler:
+    PrintErrorMessage "clsUIMain.btnAddEmergItem_Accepted - " & Err.Description
+    Resume Fin
+End Sub
+
+
+Private Sub lstEmergItems_Change(ByVal nID As Long, ByVal nX As Long, ByVal nY As Long)
+    Select Case nX
+    Case 0
+        'Enable checkbox
+    Case 1
+        'Delete this item
+        PrintMessage "Removing: " & lstEmergItems.Data(COL_ITEM_NAME, nY)
+        lstEmergItems.DeleteRow (nY)
+        Call SaveItemsList(lstEmergItems, GetEmergListPath)
+    Case 2
+        ' Move up the list
+        Call lstMoveUp(lstEmergItems, nY)
+    Case 3
+        ' Move down the list
+        Call lstMoveDown(lstEmergItems, nY)
     End Select
  
 End Sub
@@ -1718,6 +1791,10 @@ End Function
 
 Private Function GetStamListPath() As String
     GetStamListPath = g_Settings.Profile.FullPath & "\" & FILE_STAMITEMS_LIST
+End Function
+
+Private Function GetEmergListPath() As String
+    GetEmergListPath = g_Settings.Profile.FullPath & "\" & FILE_EMERGITEMS_LIST
 End Function
 
 'Save the items list

@@ -2264,7 +2264,9 @@ Public Sub RequestEquipItem(objItem As acObject)
         Exit Sub
     End If
     
+    
     If m_Equip.StartEquip(objItem) Then
+        Call g_Core.SendKey(g_Keys.KeyReady)
         MyDebug "RequestEquipItem : SUBST_EQUIP"
         Call SetSubState(SUBST_EQUIP)
         Call RunState
@@ -2277,6 +2279,7 @@ End Function
 
 Public Sub RequestCombatStateChange(ByVal iNewState As eCombatStates)
     If m_CombatMode.ChangeCombatState(iNewState) Then
+        Call g_Core.SendKey(g_Keys.KeyReady)
         Call SetSubState(SUBST_CHANGE_COMBATMODE)
         Call RunState
     End If
@@ -2638,7 +2641,7 @@ On Error GoTo ErrorHandler
         Select Case m_iState
             Case ST_HEALING
                 If m_Healing.HealingMethod <> MET_SPELL Then
-                    locDebug "OnReady - OnHealingReady [MET_KIT or MET_POTION]"
+                    locDebug "OnReady - OnHealingReady [MET_KIT or MET_EMERGENCY]"
                     Call m_Healing.OnHealingReady(bSuccess)
                 End If
                 

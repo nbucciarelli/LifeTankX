@@ -215,7 +215,6 @@ On Error GoTo ErrorMessage
                         End If
                         
                     Case RESTAM_SPELL   'spell
-                        
                         If g_Macro.ValidState(TYPE_CASTER) Then
                             If Not Vitals.CastManaStamRegen Then    'Juggle mana
                                 locDebug "clsMacroRestam.RunState: Casting Revitalize"

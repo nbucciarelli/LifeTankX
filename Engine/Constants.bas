@@ -50,6 +50,7 @@ Public Const FILE_CORPSES_TO_LOOT_LIST = "CorpsesToLoot.dat"
 
 Public Const FILE_HEALITEMS_LIST = "Healitems.dat"
 Public Const FILE_STAMITEMS_LIST = "Stamitems.dat"
+Public Const FILE_EMERGITEMS_LIST = "Emergitems.dat"
 
 Public Const FILE_ANTIBAN_FRIENDS_LIST = "FriendsList.dat"
 Public Const FILE_ANTIBAN_ALLEGIANCES_LIST = "AllegianceFriends.dat"

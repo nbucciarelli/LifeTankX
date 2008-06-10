@@ -832,6 +832,7 @@ On Error GoTo ErrorHandler
     Dim bCrushBAdded  As Boolean
     Dim bBSAdded As Boolean
     Dim bRCAdded As Boolean
+    Dim isNewObj As Boolean
     
     bAddImbueComma = False
     bCrushBAdded = False
@@ -846,8 +847,12 @@ On Error GoTo ErrorHandler
     
     If Not Valid(objEntity) Then
         myError "OnIdentifyObject: FindObject returned Nothing for lObjGUID: " & lObjGUID
+        myDebug "OnIdentifyObject: not found! Creating new acObject for lObjGUID: " & lObjGUID
         Set objEntity = New acObject
+        isNewObj = True
         'Exit Sub
+    Else
+        isNewObj = False
     End If
     
     If GetModObject(lObjGUID, objEntity) Then
@@ -863,9 +868,66 @@ On Error GoTo ErrorHandler
     objEntity.LastIDTime = g_Time
 
     '----------------------------------------------------------------
+    ' Strings (description, useInstructions, etc)
+    '----------------------------------------------------------------
+1    If (lAssessFlag And &H8&) Then
+
+        Dim xS As DecalNet.IMessageMember
+        iNumData = pMsg.Value("stringCount")
+        Set xS = pMsg.Struct("strings")
+
+        'myDebug "IDObject: Strings: " & objEntity.Name & " [NumData=" & iNumData & "]"
+
+        For i = 0 To iNumData - 1
+            sVal = xS.Struct(i).Value("value")
+            lKey = xS.Struct(i).Value("key")
+        
+            'myDebug "IDObject: Strings: " & objEntity.Name & " Key:" & Hex(lKey) & " Value:" & sVal
+            
+            Select Case lKey
+                Case &H1&  'Name
+                    If (objEntity.Name = "UnknownEntity") Then
+                        objEntity.Name = sVal
+                        myDebug "ID: " & objEntity.Name & " - Use Instruction : " & sVal
+                    End If
+                    
+                Case &HE&  'Use Instruction
+                    objEntity.UsageInstructions = sVal
+                    'myDebug "ID: " & objEntity.Name & " - Use Instruction : " & sVal
+
+                Case &HF&  'Simple Description
+                    objEntity.ShortDesc = sVal
+                    'myDebug "ID: " & objEntity.Name & " - Simple Description : " & sVal
+
+                Case &H7& 'Inscription
+                    objEntity.Inscription = sVal
+
+                Case &H8& 'Inscriber
+                    objEntity.Inscriber = sVal
+
+                Case &H10& 'Description -- That's where we can find "Killed by PlayerName." kind of info
+                    'MyDebug "ID: " & objEntity.Name & " - Description : " & sVal
+                    objEntity.Description = sVal
+
+                    If objEntity.ItemType = ITEM_CORPSE Then
+                        If InStr(LCase(sVal), LCase(m_objPlayer.Name)) Then
+                            objEntity.KillerName = m_objPlayer.Name
+                        ElseIf InStr(LCase(sVal), "killed by ") Then
+                            sVal = Mid(sVal, 1, Len(sVal) - 1)  'remove the dot at the end
+                            objEntity.KillerName = Trim(Mid(sVal, Len("killed by ") + 1))
+                            'MyDebug "ID: " & objEntity.Name & " - Killer : " & objEntity.KillerName
+                        End If
+                    End If
+
+            End Select
+        Next i
+
+    End If
+    
+    '----------------------------------------------------------------
     ' General item stats information
     '----------------------------------------------------------------
-1    If (lAssessFlag And &H1&) Then
+2    If (lAssessFlag And &H1&) Then
         Dim xDwords As DecalNet.IMessageMember
         Dim xVal As DecalNet.IMessageMember
         
@@ -1103,7 +1165,7 @@ On Error GoTo ErrorHandler
     '----------------------------------------------------------------
     ' Boolean (infinite uses, etc.)
     '----------------------------------------------------------------
-8    If (lAssessFlag) Then
+3    If (lAssessFlag) Then
 
         Dim xB As DecalNet.IMessageMember
         iNumData = pMsg.Value("booleanCount")
@@ -1133,7 +1195,7 @@ On Error GoTo ErrorHandler
     '----------------------------------------------------------------
     ' Wand/Item Bonus Info
     '----------------------------------------------------------------
-2    If (lAssessFlag And &H4&) Then
+4    If (lAssessFlag And &H4&) Then
 
         Dim xD As DecalNet.IMessageMember
         iNumData = pMsg.Value("doubleCount")
@@ -1198,61 +1260,11 @@ On Error GoTo ErrorHandler
         Next i
     End If
 
-    '----------------------------------------------------------------
-    ' Strings (description, useInstructions, etc)
-    '----------------------------------------------------------------
-3    If (lAssessFlag And &H8&) Then
-
-        Dim xS As DecalNet.IMessageMember
-        iNumData = pMsg.Value("stringCount")
-        Set xS = pMsg.Struct("strings")
-
-        'myDebug "IDObject: Strings: " & objEntity.Name & " [NumData=" & iNumData & "]"
-
-        For i = 0 To iNumData - 1
-            sVal = xS.Struct(i).Value("value")
-            lKey = xS.Struct(i).Value("key")
-        
-            'myDebug "IDObject: Strings: " & objEntity.Name & " Key:" & Hex(lKey) & " Value:" & sVal
-            
-            Select Case lKey
-                Case &HE&  'Use Instruction
-                    objEntity.UsageInstructions = sVal
-                    'myDebug "ID: " & objEntity.Name & " - Use Instruction : " & sVal
-
-                Case &HF&  'Simple Description
-                    objEntity.ShortDesc = sVal
-                    'myDebug "ID: " & objEntity.Name & " - Simple Description : " & sVal
-
-                Case &H7& 'Inscription
-                    objEntity.Inscription = sVal
-
-                Case &H8& 'Inscriber
-                    objEntity.Inscriber = sVal
-
-                Case &H10& 'Description -- That's where we can find "Killed by PlayerName." kind of info
-                    'MyDebug "ID: " & objEntity.Name & " - Description : " & sVal
-                    objEntity.Description = sVal
-
-                    If objEntity.ItemType = ITEM_CORPSE Then
-                        If InStr(LCase(sVal), LCase(m_objPlayer.Name)) Then
-                            objEntity.KillerName = m_objPlayer.Name
-                        ElseIf InStr(LCase(sVal), "killed by ") Then
-                            sVal = Mid(sVal, 1, Len(sVal) - 1)  'remove the dot at the end
-                            objEntity.KillerName = Trim(Mid(sVal, Len("killed by ") + 1))
-                            'MyDebug "ID: " & objEntity.Name & " - Killer : " & objEntity.KillerName
-                        End If
-                    End If
-
-            End Select
-        Next i
-
-    End If
 
     '----------------------------------------------------------------
     ' Spells on Item
     '----------------------------------------------------------------
-4    If (lAssessFlag And &H10&) Then
+5    If (lAssessFlag And &H10&) Then
         
         Dim lSpellID As Long
         Dim sSpellName As String
@@ -1314,7 +1326,7 @@ On Error GoTo ErrorHandler
     '----------------------------------------------------------------
     ' Weapon Info
     '----------------------------------------------------------------
-5    If (lAssessFlag And &H20&) Then
+6    If (lAssessFlag And &H20&) Then
         'myDebug "OnIdentifyObject H20 Weap: " & objEntity.Name & " : lAssessFlag: " & Hex(lAssessFlag) & "  lCharFlags: " & Hex(lCharFlags)
         
         objEntity.DamageFlags = pMsg.Value("weapType")
@@ -1353,7 +1365,7 @@ On Error GoTo ErrorHandler
     '----------------------------------------------------------------
     ' Character Assess (Player)
     '----------------------------------------------------------------
-6    If (lAssessFlag And &H100&) Then
+7    If (lAssessFlag And &H100&) Then
 
         myDebug "OnIdentifyObject H100: " & objEntity.Name & " : lAssessFlag: " & Hex(lAssessFlag) & "  lCharFlags: " & Hex(lCharFlags)
 
@@ -1370,7 +1382,7 @@ On Error GoTo ErrorHandler
             'objEntity.Level = pMsg.Value("level")
         'End If
 
-7        If (lCharFlags And &H8&) Then
+8        If (lCharFlags And &H8&) Then
             'Stamina
             iStam = pMsg.Value("stamina")
             iMaxStam = pMsg.Value("staminaMax")
@@ -1423,7 +1435,6 @@ On Error GoTo ErrorHandler
     End If
 
     
-    ' Update the Inventory objects
     'If (objEntity.Container = m_objPlayer.GUID) _
     'Or (objEntity.Wielder = m_objPlayer.GUID) _
     'Or m_Items.InInventory(objEntity.Container) Then
@@ -1431,6 +1442,15 @@ On Error GoTo ErrorHandler
     'Else
     '    m_Items.AddWorldItemEx (objEntity)
     'End If
+    
+    ' Do we need to add it?
+    If isNewObj Then
+        If m_Items.AddWorldItemEx(objEntity) Then
+            myDebug "GameObjects.NetEcho_OnIdentifyObject: added new item to World: " & objEntity.Name
+        Else
+            myError "GameObjects.NetEcho_OnIdentifyObject: failed to add NEW item " & objEntity.Name & " [" & objEntity.GUID & "] to World Items collection"
+        End If
+    End If
 
     'Trigger the assess event
     RaiseEvent OnIdentifyObject(objEntity)

@@ -198,6 +198,13 @@ Public Function findHealItem() As acObject
     g_bFindingItem = False
 End Function
 
+'Find Healing item to use
+Public Function findEmergItem() As acObject
+    g_bFindingItem = True
+    Set findEmergItem = g_ui.Macro.findObjectFromList(g_ui.Macro.lstEmergItems)
+    g_bFindingItem = False
+End Function
+
 Public Sub idManaStones()
 On Error GoTo ErrorMessage
     

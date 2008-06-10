@@ -296,7 +296,7 @@ On Error GoTo ErrorHandler
             'Ok, try select closest critter and see what that gets us
             Call g_Core.SendKey(g_Keys.KeyClosestMonster)
             MyDebug "clsACEvents.OnReceiveMeleeDamage: ST_IDLE, no target and taking melee damage!"
-            MyDebug "clsACEvents.OnReceiveMeleeDamage: LOST CRITTER! Selecting now"
+            MyDebug "clsACEvents.OnReceiveMeleeDamage: LOST CRITTER! IDing now"
             Call g_Hooks.IDQueueAdd(g_Hooks.CurrentSelection)
         End If
     End If
