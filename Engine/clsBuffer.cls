@@ -175,6 +175,7 @@ On Error GoTo ErrorHandler
     Call m_colBuffs.Add(objBuff, CStr(objBuff.Index))
     
 Fin:
+    Set objBuff = Nothing
     Exit Sub
 ErrorHandler:
     PrintErrorMessage "AddBuffToList"
@@ -198,7 +199,6 @@ End Function
 
 Private Sub CheckItemBuff(ByVal bChecked As Boolean, ByVal sSpellFamily As String, objItem As acObject)
 On Error GoTo ErrorHandler
-    Dim objBuff As clsSpellQueueItem
     
     If bChecked And Valid(objItem) Then
         Call AddBuffToList(sSpellFamily, , , objItem, , SCHOOL_ITEM)
@@ -229,6 +229,7 @@ On Error GoTo ErrorHandler
     End If
     
 Fin:
+    Set objItem = Nothing
     Exit Sub
 ErrorHandler:
     PrintErrorMessage "CheckCollectionBanes"
@@ -360,6 +361,7 @@ On Error GoTo ErrorHandler
     End If
     
 Fin:
+    Set objBuff = Nothing
     Exit Sub
 ErrorHandler:
     PrintErrorMessage "AddBanes - " & Err.Description
@@ -386,6 +388,7 @@ On Error GoTo ErrorHandler
     Call m_BuffQueue.Add(aBuff)
     
 Fin:
+    Set objBuff = Nothing
     Exit Sub
 ErrorHandler:
     PrintErrorMessage "addBuffToQueue - " & Err.Description
@@ -416,6 +419,7 @@ On Error GoTo ErrorHandler
     m_tmrDroppedRebuff.Enabled = True
     
 Fin:
+    Set objBuff = Nothing
     Exit Sub
 ErrorHandler:
     PrintErrorMessage "addDroppedBuffToQueue - " & Err.Description
@@ -531,6 +535,9 @@ On Error GoTo ErrorHandler
 Fin:
     Set m_droppedQueue = New clsSpellQueue
     Set m_buffItems = New colObjects
+    Set objBuff = Nothing
+    Set objItem = Nothing
+    Set buffSpell = Nothing
     Exit Sub
 ErrorHandler:
     PrintErrorMessage "m_tmrDroppedRebuff_OnTimeout - " & Err.Description & " - line: " & Erl
@@ -562,6 +569,17 @@ On Error GoTo ErrorHandler
         Call CheckItemBuff(.chkItmWandDef.Checked, SPELL_DEF, g_Data.Wand)
         Call CheckItemBuff(.chkItmWandSD.Checked, SPELL_SPIRIT_DRINKER, g_Data.Wand)
         
+        'Critter Buffs
+        If .chkEnableCreatureBuffs.Checked Then
+            For i = 0 To .lstCreature.Count - 1
+                bChecked = .lstCreature.Data(2, i, 0)
+                sSpellFam = .lstCreature.Data(1, i, 0)
+                If bChecked Then
+                    Call AddBuffToList(sSpellFam)
+                End If
+            Next i
+        End If
+        
         'Armor Banes
         If .chkItmSelectSelf.Checked Then
             Call CheckItemBanes(.chkItmSelectSelf.Checked, g_Objects.Player)
@@ -592,16 +610,6 @@ On Error GoTo ErrorHandler
             Call CheckItemBuff(.chkItmWeapDE.Checked, SPELL_DEF, objWeapon)
         End If
         
-        'Critter Buffs
-        If .chkEnableCreatureBuffs.Checked Then
-            For i = 0 To .lstCreature.Count - 1
-                bChecked = .lstCreature.Data(2, i, 0)
-                sSpellFam = .lstCreature.Data(1, i, 0)
-                If bChecked Then
-                    Call AddBuffToList(sSpellFam)
-                End If
-            Next i
-        End If
         
         'Life Pro's
         If .chkEnableLifeBuffs.Checked Then
@@ -850,7 +858,7 @@ End Sub
 'Check to see if we need to pre-buff certain spells
 Private Sub PreBuffCheck()
 On Error GoTo ErrorHandler
-    Dim objBuff As New clsSpellQueueItem
+    Dim objBuff As clsSpellQueueItem
     Dim aFamily As String
 
     'First check critter buffs
@@ -858,6 +866,7 @@ On Error GoTo ErrorHandler
         'First check critter
         aFamily = "Creature Enchantment Mastery Self"
         If Not existingSpellFamilyOnPlayer(aFamily) Then
+            Set objBuff = New clsSpellQueueItem
             objBuff.SpellFamily = aFamily
             objBuff.SpellType = SPELLTYPE_NORMAL
             objBuff.TargetName = "Self"
@@ -868,6 +877,7 @@ On Error GoTo ErrorHandler
         'Then check Will
         aFamily = "Willpower Self"
         If Not existingSpellFamilyOnPlayer(aFamily) Then
+            Set objBuff = New clsSpellQueueItem
             objBuff.SpellFamily = aFamily
             objBuff.SpellType = SPELLTYPE_NORMAL
             objBuff.TargetName = "Self"
@@ -878,6 +888,7 @@ On Error GoTo ErrorHandler
         'Then check Focus
         aFamily = "Focus Self"
         If Not existingSpellFamilyOnPlayer(aFamily) Then
+            Set objBuff = New clsSpellQueueItem
             objBuff.SpellFamily = aFamily
             objBuff.SpellType = SPELLTYPE_NORMAL
             objBuff.TargetName = "Self"
@@ -888,6 +899,7 @@ On Error GoTo ErrorHandler
         'Then check Life
         aFamily = "Life Magic Mastery Self"
         If Not existingSpellFamilyOnPlayer(aFamily) Then
+            Set objBuff = New clsSpellQueueItem
             objBuff.SpellFamily = aFamily
             objBuff.SpellType = SPELLTYPE_NORMAL
             objBuff.TargetName = "Self"
@@ -898,6 +910,7 @@ On Error GoTo ErrorHandler
         'And last check Item
         aFamily = "Item Enchantment Mastery Self"
         If Not existingSpellFamilyOnPlayer(aFamily) Then
+            Set objBuff = New clsSpellQueueItem
             objBuff.SpellFamily = aFamily
             objBuff.SpellType = SPELLTYPE_NORMAL
             objBuff.TargetName = "Self"
@@ -908,6 +921,7 @@ On Error GoTo ErrorHandler
     End If
     
 Fin:
+    Set objBuff = Nothing
     Exit Sub
 ErrorHandler:
     PrintErrorMessage "PreBuffCheck - " & Err.Description & " - line: " & Erl
@@ -929,6 +943,7 @@ On Error GoTo ErrorHandler
     End If
 
 Fin:
+    Set objBuff = Nothing
     Exit Sub
 ErrorHandler:
     PrintErrorMessage "buffItem - " & Err.Description & " - line: " & Erl
@@ -1001,6 +1016,7 @@ On Error GoTo ErrorHandler
     Next i
 
 Fin:
+    Set aWeap = Nothing
     Exit Sub
 ErrorHandler:
     PrintErrorMessage "WeaponBuff - " & Err.Description & " - line: " & Erl
@@ -1193,6 +1209,10 @@ On Error GoTo ErrorHandler
     Next objBuff
 
 Fin:
+    Set objItem = Nothing
+    Set objBuff = Nothing
+    Set objSpell = Nothing
+    Set buffSpell = Nothing
     Exit Sub
 ErrorHandler:
     'PrintErrorMessage "CheckExpiredItemSpell - " & Err.Description & " - line: " & Erl
@@ -1260,6 +1280,9 @@ On Error GoTo ErrorHandler
     Next objBuff
     
 Fin:
+    Set objBuff = Nothing
+    Set objSpell = Nothing
+    Set buffSpell = Nothing
     Exit Sub
 ErrorHandler:
     PrintErrorMessage "CheckExpiredSpell - " & Err.Description

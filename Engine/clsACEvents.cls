@@ -288,6 +288,19 @@ On Error GoTo ErrorHandler
         Call g_DOT.takeMeleeDamage(sAttacker, lDamage, bCrit, sDamageType, sLocation)
     End If
     
+    'This is here to find those pesky critters that are "invisible" to decal/dsfilter
+    If g_Macro.isIdle And Not TargetScanner(g_Objects.Monsters) Then
+        'Idle and No citters within range, yet we just took melee damage, WTF?
+        ' Maybe we should not be shooting wars?
+        If Not g_ui.Macro.chkNoWar.Checked Then
+            'Ok, try select closest critter and see what that gets us
+            Call g_Core.SendKey(g_Keys.KeyClosestMonster)
+            MyDebug "clsACEvents.OnReceiveMeleeDamage: ST_IDLE, no target and taking melee damage!"
+            MyDebug "clsACEvents.OnReceiveMeleeDamage: LOST CRITTER! Selecting now"
+            Call g_Hooks.IDQueueAdd(g_Hooks.CurrentSelection)
+        End If
+    End If
+    
 Fin:
     Exit Sub
 ErrorHandler:

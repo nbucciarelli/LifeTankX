@@ -405,6 +405,14 @@ Public Property Get SubState() As Integer
     SubState = m_iSubState
 End Property
 
+Public Property Get isIdle() As Boolean
+    If m_iState = ST_IDLE Then
+        isIdle = True
+    Else
+        isIdle = False
+    End If
+End Property
+
 'Public Property Get Mode() As Integer
 '    Mode = m_iMode
 'End Property
@@ -987,6 +995,7 @@ On Error GoTo ErrorHandler
     End If
     
 Fin:
+    Set objTarget = Nothing
     Exit Sub
 ErrorHandler:
     PrintErrorMessage "clsMacro.GoCombat() - " & Err.Description
@@ -1181,6 +1190,7 @@ NextObj:
 
 Fin:
     DoFellowHeal = bRet
+    Set objFellow = Nothing
     Exit Function
 ErrorHandler:
     DoFellowHeal = False
@@ -1239,6 +1249,7 @@ NextObj:
     End If
 Fin:
     TestFellowHeal = bRet
+    Set objFellow = Nothing
     Exit Function
 ErrorHandler:
     TestFellowHeal = False
@@ -1877,7 +1888,7 @@ On Error GoTo ErrorHandler
                 If Not g_bLootRare And Not g_ui.Loot.chkBoostLootPriority.Checked Then
                     ' See if we should be fighting Critters instead of looting
                     If m_attackCritter Then
-                            Call GoCombat
+                            Call GoIdle
                             GoTo Fin
                     End If
                 End If
@@ -1925,6 +1936,8 @@ On Error GoTo ErrorHandler
     End If
     
 Fin:
+    Set objTarget = Nothing
+    Set o_Spell = Nothing
     Exit Sub
 ErrorHandler:
     PrintErrorMessage "clsMacro.RunState - " & Err.Description
@@ -2843,6 +2856,7 @@ On Error GoTo ErrorHandler
     
 Fin:
     m_bNeedArrows = False   'reset flag once this function has been called
+    Set objArrow = Nothing
     Exit Sub
 ErrorHandler:
     PrintErrorMessage "clsMacro.OnOutOfArrow - " & Err.Description

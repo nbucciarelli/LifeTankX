@@ -315,6 +315,8 @@ On Error GoTo Error_Handler
     Set m_corpseList = newList
 
 Fin:
+    Set tmpObj = Nothing
+    Set newList = Nothing
     Exit Sub
 Error_Handler:
     PrintErrorMessage "clsLoot.cleanCorpseList - " & Err.Description
@@ -725,6 +727,7 @@ On Error GoTo ErrorHandler
 
 Fin:
     CheckPickup = bRet
+    Set objItem = Nothing
     Exit Function
 ErrorHandler:
     bRet = False
@@ -1069,6 +1072,7 @@ On Error GoTo Error_Handler
 
 Fin:
     FoundGroundItemToLoot = bRet
+    Set tmpObj = Nothing
     Exit Function
 Error_Handler:
     PrintErrorMessage "clsLoot.FoundGroundItemsToLoot - " & Err.Description
@@ -1110,6 +1114,7 @@ On Error GoTo Error_Handler
 
 Fin:
     FoundCorpseToLoot = bRet
+    Set tmpObj = Nothing
     Exit Function
 Error_Handler:
     PrintErrorMessage "clsLoot.FoundCorpseToLoot - " & Err.Description
@@ -1353,6 +1358,7 @@ On Error GoTo Error_Handler
     
 Fin:
     FoundItemToPickup = bRet
+    Set tmpObj = Nothing
     Exit Function
 Error_Handler:
     PrintErrorMessage "clsLoot.FoundItemToPickup - " & Err.Description

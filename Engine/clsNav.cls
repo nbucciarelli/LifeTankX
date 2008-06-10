@@ -45,7 +45,7 @@ Private Const MIN_CORRECTION_DISTANCE = 5   'minimum distance to require a route
 Private Const MAX_STICKY_RANGE = 20         'maximum distance to be from sticky point, otherwise disable sticky
 Private Const MAX_WP_RANGE = 5              'maximum distance to require a route recheck
 Private Const MAX_STICKY_RUN = 5            'maximum time allowed to run back to sticky point
-Private Const RUN_PAUSE = 60                'time to pause if we fail to reach sticky point
+Private Const RUN_PAUSE = 15                'time to pause if we fail to reach sticky point
 
 Private m_iNavType As eNavigationType
 Private m_Route As clsNavRoute
@@ -347,6 +347,7 @@ On Error GoTo ErrorHandler
             'we reached it
             'locDebug "m_tmrRouteChecker_Timer: WaypointReached(fDist): " & fDist
             Call FireWaypointReached(m_targetWp)
+            Call m_tmrRunPause.SetNextTime(0)
             GoTo Fin
         ElseIf m_iNavType = NAVTYPE_FOLLOW Then
             Call AdjustFollowHeading(m_targetWp, fDist)

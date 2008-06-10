@@ -18,6 +18,7 @@ Private Const KEY_ATTACK_MEDIUM = "CombatMediumAttack"
 Private Const KEY_ATTACK_HIGH = "CombatHighAttack"
 Private Const KEY_JUMP = "MovementJump"
 Private Const KEY_READY = "Ready"
+Private Const KEY_CLOSESTMONSTER = "SelectionClosestMonster"
 
 
 Public KeyAttackLow As Long
@@ -25,6 +26,7 @@ Public KeyAttackMedium As Long
 Public KeyAttackHigh As Long
 Public KeyJump As Long
 Public KeyReady As Long
+Public KeyClosestMonster As Long
 
 Private Sub Class_Initialize()
     KeyAttackLow = -1      '211 DIK_DELETE
@@ -43,6 +45,7 @@ On Error GoTo ErrorHandler
     KeyAttackHigh = g_PluginSite.QueryKeyboardMap(KEY_ATTACK_HIGH)
     KeyJump = g_PluginSite.QueryKeyboardMap(KEY_JUMP)
     KeyReady = g_PluginSite.QueryKeyboardMap(KEY_READY)
+    KeyClosestMonster = g_PluginSite.QueryKeyboardMap(KEY_CLOSESTMONSTER)
     
     MyDebug "Ready         : " & KeyReady, True
     MyDebug "Jump          : " & KeyJump, True
@@ -78,6 +81,7 @@ On Error GoTo ErrorHandler
     CheckKey KeyAttackMedium, KEY_ATTACK_MEDIUM
     CheckKey KeyAttackHigh, KEY_ATTACK_HIGH
     CheckKey KeyReady, KEY_READY
+    CheckKey KeyClosestMonster, KEY_CLOSESTMONSTER
     
 Fin:
     Exit Sub

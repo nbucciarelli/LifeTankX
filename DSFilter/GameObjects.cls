@@ -844,7 +844,11 @@ On Error GoTo ErrorHandler
 
     Set objEntity = FindObject(lObjGUID)
     
-    If Not Valid(objEntity) Then Exit Sub
+    If Not Valid(objEntity) Then
+        myError "OnIdentifyObject: FindObject returned Nothing for lObjGUID: " & lObjGUID
+        Set objEntity = New acObject
+        'Exit Sub
+    End If
     
     If GetModObject(lObjGUID, objEntity) Then
         objEntity.LastIDTime = g_Time

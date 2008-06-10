@@ -579,7 +579,7 @@ ErrorHandler:
     Resume Fin
 End Function
 
-Public Function SetupWarSpellForDamage(ByVal iDmg As Integer, Optional fTargetSquareRange As Single = 0, Optional ByVal bSilent As Boolean = True) As Boolean
+Public Function SetupWarSpellForDamage(ByVal iDmg As Integer, Optional fTargetSquareRange As Single = 0, Optional ByVal bSilent As Boolean = True, Optional ByVal overideDmg As Boolean = False) As Boolean
 On Error GoTo ErrorHandler
 
     Dim bRet As Boolean
@@ -587,8 +587,19 @@ On Error GoTo ErrorHandler
     Dim splWar As clsSpell
     Dim splRing As clsSpell
     
+    'If we are using Auto switching rend wands, always match the damage type to the rend we are holding
+    'As it should be correct (or the default damage)
+    If overideDmg And g_ui.Macro.chkAutoSwitch.Checked And Valid(g_currentEquip) Then
+        If g_currentEquip.DamageType <> -1 Then
+            iDmg = g_currentEquip.DamageType
+            locDebug "SetupWarSpellForDamage: overideDmg set iDmg to: " & iDmg
+        End If
+    End If
+    
+    'Force default will still overide the above check
     If g_ui.Macro.chkForceDefaultDmg.Checked Then
         iDmg = m_DefaultDamageType
+        locDebug "SetupWarSpellForDamage: chkForceDefaultDmg set iDmg to: " & iDmg
     End If
     
     'default war spell type : bolt
@@ -646,6 +657,9 @@ On Error GoTo ErrorHandler
     
 Fin:
     SetupWarSpellForDamage = bRet
+    Set splArc = Nothing
+    Set splWar = Nothing
+    Set splRing = Nothing
     Exit Function
 ErrorHandler:
     bRet = False
@@ -684,6 +698,7 @@ On Error GoTo ErrorHandler
 
 Fin:
     SetupVulnForDamage = bRet
+    Set splVuln = Nothing
     Exit Function
 ErrorHandler:
     bRet = False
@@ -726,6 +741,8 @@ On Error GoTo ErrorHandler
     
 Fin:
     SetDefaultDamage = bRet
+    Set splWar = Nothing
+    Set splVuln = Nothing
     Exit Function
 ErrorHandler:
     bRet = False
@@ -846,6 +863,7 @@ On Error GoTo ErrorHandler
     'MyDebug "queueThisSpell: g_Hooks.CastSpell: " & objSpell.SpellID & " : " & TargetGUID
     
 Fin:
+    Set s_objSpell = Nothing
     Exit Sub
 ErrorHandler:
     PrintErrorMessage "clsSpells.queueThisSpell " & Err.Description & "  line: " & Erl

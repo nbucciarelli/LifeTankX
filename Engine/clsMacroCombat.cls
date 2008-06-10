@@ -809,7 +809,7 @@ On Error GoTo Error_Handler
                 'bolt damage type to match the vuln if available.
                 For i = DMG_SLASHING To DMG_LIGHTNING
                     If m_objTarget.IsVulnedTo(i) Then
-                        If g_Spells.SetupWarSpellForDamage(i, fRange, True) Then
+                        If g_Spells.SetupWarSpellForDamage(i, fRange, True, False) Then
                             locDebug "FireMageAttack: " & m_objTarget.Name & " is vulned to " & GetDamageString(i)
                             Exit For
                         End If
@@ -817,11 +817,11 @@ On Error GoTo Error_Handler
                 Next i
             Else
                 'Critter is Vulnerable to right damage type
-                Call g_Spells.SetupWarSpellForDamage(m_objTarget.Vulnerability, fRange)
+                Call g_Spells.SetupWarSpellForDamage(m_objTarget.Vulnerability, fRange, True, False)
             End If
         Else
             'Use Vuln from UI
-            Call g_Spells.SetupWarSpellForDamage(m_objTarget.Vulnerability, fRange)
+            Call g_Spells.SetupWarSpellForDamage(m_objTarget.Vulnerability, fRange, True, True)
         End If
         
     End If
