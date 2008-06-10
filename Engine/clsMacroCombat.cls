@@ -661,7 +661,7 @@ Private Function FireAttackKey() As Boolean
 
     If Not CurrentTargetValid Then
         locDebug "WARNING - FireAttackKey : Invalid Target. Leaving combat state."
-        Call StopCombat("FireAttackKey")
+        Call StopCombat("FireAttackKey, Invalid Target")
         FireAttackKey = False
         Exit Function
     End If
@@ -866,7 +866,8 @@ End Function
 Private Sub MeleeCheckSelection()
     
     If Not Valid(m_objTarget) Then
-        locDebug "WARNING - MeleeCheckSelection : m_objTarget = NULL !"
+        locDebug "WARNING - MeleeCheckSelection : no valid m_objTarget!"
+        Call StopCombat("MelleCheckSelection invalid m_objTarget")
         Exit Sub
     End If
 
