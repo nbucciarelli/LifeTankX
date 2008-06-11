@@ -843,7 +843,7 @@ On Error GoTo ErrorHandler
     lAssessFlag = pMsg.Value("flags")
     lCharFlags = pMsg.Value("flags1")
 
-    Set objEntity = FindObject(lObjGUID)
+    Set objEntity = FindObject(lObjGUID, False)
     
     If Not Valid(objEntity) Then
         myError "OnIdentifyObject: FindObject returned Nothing for lObjGUID: " & lObjGUID
@@ -853,13 +853,10 @@ On Error GoTo ErrorHandler
         'Exit Sub
     Else
         isNewObj = False
-    End If
-    
-    If GetModObject(lObjGUID, objEntity) Then
-        objEntity.LastIDTime = g_Time
-        myDebug "OnIdentifyObject: WILL UPDATE (" & g_Time & ") " & objEntity.Name & " : " & lObjGUID & " -- AssessFlag=" & Hex(lAssessFlag) & " -- lCharFlags=" & Hex(lCharFlags)
-    Else
-        myError "OnIdentifyObject: ERROR, could not GetModObject for: " & lObjGUID
+        If GetModObject(lObjGUID, objEntity) Then
+            objEntity.LastIDTime = g_Time
+            myDebug "OnIdentifyObject: WILL UPDATE (" & g_Time & ") " & objEntity.Name & " : " & lObjGUID & " -- AssessFlag=" & Hex(lAssessFlag) & " -- lCharFlags=" & Hex(lCharFlags)
+        End If
     End If
 
     'myDebug "OnIdentifyObject: " & objEntity.Name & " : " & lObjGUID & " -- AssessFlag=" & Hex(lAssessFlag) & " -- lCharFlags=" & Hex(lCharFlags)
