@@ -291,7 +291,10 @@ End Sub
 'NOTE: this is a particular case where g_macro.State = ST_COMBAT isnt a precondition
 Public Sub OnMeleeAttackComplete()
     If g_Macro.State = ST_COMBAT Then
-        If IsMelee Then
+        Call m_tmrSecure.SetNextTime(SECURE_TIMER)
+        If (g_Macro.CombatType = TYPE_ARCHER) Then
+            'Only needed for Archers/TW to count ammo
+            'Melee's attack lots and lots before critter is dead
             Call OnLastAttackComplete
         End If
     Else 'after killing a monster, we may leave ST_COMBAT before OnMeleeAttackComplete event fires
@@ -303,6 +306,7 @@ End Sub
 'StateEngine is active (enabled & not paused)
 Public Sub OnLastSpellCasted()
     If IsCaster Then
+        Call m_tmrSecure.SetNextTime(SECURE_TIMER)
         Call OnLastAttackComplete
     End If
 End Sub
@@ -867,7 +871,7 @@ Private Sub MeleeCheckSelection()
     
     If Not Valid(m_objTarget) Then
         locDebug "WARNING - MeleeCheckSelection : no valid m_objTarget!"
-        Call StopCombat("MelleCheckSelection invalid m_objTarget")
+        Call StopCombat("MeleeCheckSelection invalid m_objTarget")
         Exit Sub
     End If
 

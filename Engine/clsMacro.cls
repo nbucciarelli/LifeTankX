@@ -109,12 +109,14 @@ Private m_iCombatType As eMacroCombatType
 Private m_bRunning As Boolean
 Private m_bPaused As Boolean
 Private m_adminPaused As Boolean
-Public m_fellowNeedsHealing As Boolean
-Public m_fellowNeedsStam As Boolean
 Private m_bOKToCast As Boolean      'Reset by m_tmrCastSpell
 Private m_attackCritter As Boolean
 Private m_mustHeal As Boolean
 Private m_logoutSpellCast As Boolean
+
+Public m_fellowNeedsHealing As Boolean
+Public m_fellowNeedsStam As Boolean
+Public m_lostCritter As Boolean
 
 'Timers / display / Stats
 Private m_dStartTime As Double
@@ -277,6 +279,7 @@ Private Sub Class_Initialize()
     m_fellowNeedsStam = False
     m_attackCritter = False
     m_mustHeal = False
+    m_lostCritter = False
     
     Set m_objFellowTarget = Nothing
     
@@ -682,7 +685,7 @@ End Sub
 Private Sub m_Equip_OnItemEquipped()
     locDebug "OnItemEquipped Fired"
     If m_iSubState = SUBST_EQUIP Then
-        locDebug "Macro : item equipped."
+        MyDebug "Macro : item equipped."
         Call ResetSubState
     Else
         PrintWarning "m_Equip_OnItemEquipped fired, but SubState != SUBST_EQUIP"
@@ -701,6 +704,7 @@ End Sub
 Private Sub m_Combat_OnStopCombat()
     If m_iState = ST_COMBAT Then
         locDebug "clsMacro - m_Combat_OnStopCombat : current combat over, moving back to Idle"
+        Call g_Core.SendKey(g_Keys.KeyReady)
         Call GoIdle
     Else
         'PrintWarning "m_Combat_OnStopCombat fired, but State <> ST_COMBAT - Ignoring"
@@ -972,6 +976,43 @@ ErrorHandler:
     Resume Fin
 End Function
 
+Public Function FindLostCritter() As acObject
+On Error GoTo ErrorHandler
+
+    Dim aGUID As Long
+    Dim objEntity As acObject
+
+    Set objEntity = New acObject
+    
+    aGUID = g_Hooks.CurrentSelection
+    If g_Filters.g_worldFilter.Item(aGUID).ObjectClass = eMonster Then
+        MyDebug "clsMacro.FindLostCritter: g_Hooks.CurrentSelection is Monster"
+        MyDebug "clsMacro.FindLostCritter: Name: " & g_Filters.g_worldFilter(aGUID).Name
+        MyDebug "clsMacro.FindLostCritter: Range: " & g_Filters.g_worldFilter.Distance2D(aGUID, g_Filters.PlayerGUID)
+        objEntity.Guid = aGUID
+        objEntity.Name = g_Filters.g_worldFilter.Item(aGUID).Name
+        Call g_Filters.g_worldFilter.Item(aGUID).RawCoordinates(objEntity.Loc.xOff, objEntity.Loc.yOff, objEntity.Loc.Zoff)
+        objEntity.Loc.landblock = g_Objects.Player.Loc.landblock
+        'objEntity.Loc.xOff = CSng(xLoc.Value("x"))
+        'objEntity.Loc.yOff = CSng(xLoc.Value("y"))
+        'objEntity.Loc.Zoff = CSng(xLoc.Value("z"))
+        objEntity.ObjectType = TYPE_MONSTER
+        
+        Call g_Filters.dsFilter.GameObjects.Monsters.addObject(objEntity)
+        
+        Set FindLostCritter = objEntity
+    Else
+        Set FindLostCritter = Nothing
+    End If
+
+Fin:
+    Set objEntity = Nothing
+    Exit Function
+ErrorHandler:
+    PrintErrorMessage "clsMacro.FindLostCritter - " & Err.Description
+    Resume Fin
+End Function
+
 Public Sub GoCombat()
 On Error GoTo ErrorHandler
     Dim objTarget As acObject
@@ -982,6 +1023,11 @@ On Error GoTo ErrorHandler
         ' Found non-vulned Targets within VulnRange
     End If
 
+    If Not Valid(objTarget) And m_lostCritter Then
+        MyDebug "GoCombat: no valid objTarget, but m_lostCritter is TRUE"
+        Set objTarget = FindLostCritter
+    End If
+    
     If Not Valid(objTarget) Then
         MyDebug "GoCombat : invalid objTarget, going to Idle"
         Exit Sub
@@ -1596,6 +1642,12 @@ On Error GoTo ErrorHandler
                         
                     ' Check to see if we should be fighting
                     If m_attackCritter Then
+                        Call GoCombat
+                        GoTo Fin
+                    End If
+                    
+                    'Check and see if we have lost any critters
+                    If m_lostCritter Then
                         Call GoCombat
                         GoTo Fin
                     End If
@@ -2259,18 +2311,30 @@ ErrorHandler:
 End Function
 
 Public Sub RequestEquipItem(objItem As acObject)
+On Error GoTo ErrorHandler
+    
     If Not Valid(objItem) Then
         PrintWarning "RequestEquipItem : objItem = NULL"
         Exit Sub
     End If
-    
+
+    If (m_iSubState <> SUBST_NONE) Then
+        MyDebug "RequestEquipItem all ready in progress for: " & objItem.Name
+        Exit Sub
+    End If
     
     If m_Equip.StartEquip(objItem) Then
         Call g_Core.SendKey(g_Keys.KeyReady)
-        MyDebug "RequestEquipItem : SUBST_EQUIP"
+        MyDebug "RequestEquipItem : SUBST_EQUIP : " & objItem.Name
         Call SetSubState(SUBST_EQUIP)
         Call RunState
     End If
+
+Fin:
+    Exit Sub
+ErrorHandler:
+    PrintErrorMessage "clsMacro.RequestEquipItem - " & Err.Description
+    Resume Fin
 End Sub
 
 Public Function ValidCombatState(ByVal iCombatState As eCombatStates)
@@ -2296,6 +2360,12 @@ On Error GoTo Error_Handler
     If eCombatType = TYPE_NOTYPE Then
         eCombatType = m_iCombatType
         locDebug "clsMacro.ValidState: eCombatType set to: " & eCombatType
+    End If
+    
+    ' Make sure we are not in a loop with Valid state and Equip item
+    If (m_iSubState = SUBST_EQUIP) Then
+        MyDebug "RequestEquipItem all ready in progress"
+        GoTo Fin
     End If
     
     'Set aWeap = Nothing

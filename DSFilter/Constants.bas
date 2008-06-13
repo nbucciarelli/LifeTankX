@@ -33,7 +33,8 @@ Public Enum eNetMessages
     
     MSG_SET_CHAR_DWORD = &H2CD&         'Set Character DWORD
     MSG_SET_CHAR_QWORD = &H2CF&         'Set Character QWORD
-     
+    MSG_SET_CHAR_POSITION = &H2DB&      'Set Character Position
+    
     RETIRED_MSG_SET_WIELDER_CONTAINER = &H22D&
     RETIRED_MSG_UPDATE_LAST_ATTACKER = &H23B&
     

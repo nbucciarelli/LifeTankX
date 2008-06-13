@@ -847,10 +847,10 @@ On Error GoTo ErrorHandler
     
     If Not Valid(objEntity) Then
         myError "OnIdentifyObject: FindObject returned Nothing for lObjGUID: " & lObjGUID
-        myDebug "OnIdentifyObject: not found! Creating new acObject for lObjGUID: " & lObjGUID
-        Set objEntity = New acObject
-        isNewObj = True
-        'Exit Sub
+        'myDebug "OnIdentifyObject: not found! Creating new acObject for lObjGUID: " & lObjGUID
+        'Set objEntity = New acObject
+        'isNewObj = True
+        GoTo Fin
     Else
         isNewObj = False
         If GetModObject(lObjGUID, objEntity) Then
@@ -1441,13 +1441,13 @@ On Error GoTo ErrorHandler
     'End If
     
     ' Do we need to add it?
-    If isNewObj Then
-        If m_Items.AddWorldItemEx(objEntity) Then
-            myDebug "GameObjects.NetEcho_OnIdentifyObject: added new item to World: " & objEntity.Name
-        Else
-            myError "GameObjects.NetEcho_OnIdentifyObject: failed to add NEW item " & objEntity.Name & " [" & objEntity.GUID & "] to World Items collection"
-        End If
-    End If
+    'If isNewObj Then
+    '    If m_Items.AddWorldItemEx(objEntity) Then
+    '        myDebug "GameObjects.NetEcho_OnIdentifyObject: added new item to World: " & objEntity.Name
+    '    Else
+    '        myError "GameObjects.NetEcho_OnIdentifyObject: failed to add NEW item " & objEntity.Name & " [" & objEntity.GUID & "] to World Items collection"
+    '    End If
+    'End If
 
     'Trigger the assess event
     RaiseEvent OnIdentifyObject(objEntity)
@@ -1531,6 +1531,34 @@ Fin:
     Exit Sub
 ErrorHandler:
     myError "OnSetPosition"
+    Resume Fin
+End Sub
+
+'NetEvent_OnSetCharPosition
+Friend Sub NetEvent_OnSetCharPosition(ByVal pMsg As DecalNet.IMessage2)
+On Error GoTo ErrorHandler
+
+    '
+    'Worthless Network packet, as it's only used for last corpse location
+    '
+    
+    Dim lFlag As Long
+
+    Dim lLandblock As Long
+    Dim x As DecalNet.IMessageMember
+        
+    Set x = pMsg.Struct("position0")
+    lLandblock = x.Value("landcell")
+        
+            'objEntity.Loc.Landblock = lLandblock
+            'objEntity.Loc.Xoff = x.Value("x")
+            'objEntity.Loc.Yoff = x.Value("y")
+            'objEntity.Loc.Zoff = x.Value("z")
+
+Fin:
+    Exit Sub
+ErrorHandler:
+    myError "OnSetCharPosition"
     Resume Fin
 End Sub
 

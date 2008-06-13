@@ -621,6 +621,10 @@ On Error GoTo ErrorHandler
         Case MSG_SET_POSITION
             'myDebug "- SetPosition -"
             Call m_GameObjects.NetEvent_OnSetPosition(Message)
+            
+        'Case MSG_SET_CHAR_POSITION
+            'myDebug "- SetCharacterPosition -"
+            'Call m_GameObjects.NetEvent_OnSetCharPosition(Message)
                 
         Case MSG_DESTROY_OBJECT
             'myDebug "- Destroy Object -"
@@ -1372,22 +1376,23 @@ On Error GoTo ErrorHandler
     lObjectGUID = pMsg.Value("object")
     lEffectID = pMsg.Value("effect")
     
+    If lEffectID = EF_WAR_LAUNCH Then
+        RaiseEvent OnSpellVisible("WAR_LAUNCH Event")
+    ElseIf lEffectID = EF_WAR_LAND Then
+        RaiseEvent OnSpellVisible("WAR_LAND Event")
+    ElseIf lEffectID = EF_FIZZLE Then
+        RaiseEvent OnSpellVisible("FIZZLE Event")
+    ElseIf lEffectID = EF_EQUIP_ITEM Then
+    ElseIf lEffectID = EF_UNEQUIP_ITEM Then
+    End If
+    
     iVuln = -1
-    Set objEntity = m_GameObjects.FindObject(lObjectGUID)
+    Call m_GameObjects.Exists(lObjectGUID, objEntity)
     
-    If Not Valid(objEntity) Then GoTo Fin
-    
-    'Check to see if it is originating from this Player
-    If objEntity.GUID = g_Objects.Player.GUID Then
-        If lEffectID = EF_WAR_LAUNCH Then
-            RaiseEvent OnSpellVisible("WAR_LAUNCH Event")
-        ElseIf lEffectID = EF_WAR_LAND Then
-            RaiseEvent OnSpellVisible("WAR_LAND Event")
-        ElseIf lEffectID = EF_FIZZLE Then
-            RaiseEvent OnSpellVisible("FIZZLE Event")
-        ElseIf lEffectID = EF_EQUIP_ITEM Then
-        ElseIf lEffectID = EF_UNEQUIP_ITEM Then
-        End If
+    If Not Valid(objEntity) Then
+        'Spells don't get added to GameObjects, so not an error
+        'myError "NetEvent_OnApplyVisualEffects: No valid objEntity found in m_GameObjects GUID: " & lObjectGUID
+        Set objEntity = New acObject
     End If
     
     Select Case lEffectID
@@ -1403,13 +1408,11 @@ On Error GoTo ErrorHandler
             iVuln = DMG_ACID
         Case EF_LIGHTNING_VULN
             iVuln = DMG_LIGHTNING
-        
         Case EF_IMPERIL_BLUDG
             objEntity.ImpOrBludgeon = True
             Call m_GameObjects.FireObjectImpOrBludgeoned(objEntity)
-            
         Case EF_YIELD
-            'myDebug "OnApplyVisualEffect: Yield landing on " & lObjectGUID
+            myDebug "OnApplyVisualEffect: Yield landing on " & lObjectGUID
             objEntity.Yielded = True
             Call m_GameObjects.FireOnObjectYielded(objEntity)
             
@@ -1425,7 +1428,7 @@ Fin:
     Set objEntity = Nothing
     Exit Sub
 ErrorHandler:
-    myError "NetEvent_OnApplyVisualEffects"
+    myError "NetEvent_OnApplyVisualEffects - " & Err.Description
     Resume Fin
 End Sub
 
@@ -1444,11 +1447,33 @@ On Error GoTo ErrorHandler
     
     Set objEntity = m_GameObjects.FindObject(lObjGUID, False)
     
-    'If object not created yet, skip
-    If Not Valid(objEntity) Then
-        Exit Sub
-    End If
-        
+    'If object not created yet, see if we can detect missing critters
+    'If Not Valid(objEntity) And (iAnimType = &H6&) Then
+    '    'Attack animation
+    '    If bHasTarget Then
+    '        Dim objTarget As acObject
+    '
+    '        Set objEntity = New acObject
+    '        objEntity.GUID = lObjGUID
+    '        objEntity.ObjectType = TYPE_MONSTER
+    '
+    '        'Set objTarget = g_Objects.FindObject(pMsg.Value("target"))
+    '
+    '        objEntity.Loc.Landblock = pMsg.Value("landblock")
+    '        objEntity.Loc.Xoff = pMsg.Value("xOffset")
+    '        objEntity.Loc.Yoff = pMsg.Value("yOffset")
+    '        objEntity.Loc.Zoff = pMsg.Value("zOffset")
+    '
+    '        If Not g_Objects.Monsters.AddObject(objEntity) Then
+    '            myError "GameObjects.NetEcho_OnAnimation: failed to add monster " & objEntity.GUID & " to Monsters collection"
+    '        Else
+    '            myDebug "GameObjects.NetEcho_OnAnimation: adding m_colMonsters: " & objEntity.GUID & " to Monsters collection"
+    '        End If
+    '
+    '    End If
+    'End If
+
+
     If iAnimType = 0 Then
         Dim lFlags As Long
         lFlags = pMsg.Value("flags")
@@ -1507,6 +1532,8 @@ On Error GoTo ErrorHandler
     End If
     
 Fin:
+    Set objKiller = Nothing
+    Set objKilled = Nothing
     Exit Sub
 ErrorHandler:
     myError "NetEvent_OnPlayerKill - " & Err.Description

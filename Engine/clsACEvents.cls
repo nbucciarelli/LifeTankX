@@ -261,6 +261,8 @@ End Sub
 Private Sub m_DSFilter_OnInflictMeleeDamage(ByVal sTarget As String, ByVal lDamage As Long, ByVal bCrit As Boolean, ByVal sDamageType As String)
 On Error GoTo ErrorHandler
 
+    Call g_Macro.Combat.updateSecureTimer(3)
+
     If g_ui.Macro.chkEnableDOT.Checked Then
         Call g_DOT.giveMeleeDamage(sTarget, lDamage, bCrit, sDamageType)
     End If
@@ -298,6 +300,11 @@ On Error GoTo ErrorHandler
             MyDebug "clsACEvents.OnReceiveMeleeDamage: ST_IDLE, no target and taking melee damage!"
             MyDebug "clsACEvents.OnReceiveMeleeDamage: LOST CRITTER! IDing now"
             Call g_Hooks.IDQueueAdd(g_Hooks.CurrentSelection)
+            g_Macro.m_lostCritter = True
+            If g_Filters.g_worldFilter.Item(g_Hooks.CurrentSelection).ObjectClass = eMonster Then
+                MyDebug "clsACEVents.OnReceiveMeleeDamage: g_Hooks.CurrentSelection is Monster"
+                MyDebug "clsACEvents.OnReceiveMeleeDamage: range: " & g_Filters.g_worldFilter.Distance2D(g_Hooks.CurrentSelection, g_Filters.PlayerGUID)
+            End If
         End If
     End If
     
@@ -898,7 +905,7 @@ End Sub
 Private Sub m_Items_OnEquipItem(ByVal objItem As DarksideFilter.acObject)
 On Error GoTo ErrorHandler
 
-    locDebug "OnEquipItem event: " & objItem.Name
+    MyDebug "OnEquipItem event: " & objItem.Name
     'RaiseEvent g_Macro.m_Equip.OnItemEquipped
 
 Fin:
