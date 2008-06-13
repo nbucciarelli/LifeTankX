@@ -1012,7 +1012,7 @@ On Error GoTo ErrorHandler
                     objEntity.WieldReqVal = lVal
                     'MyDebug "ID: " & objEntity.Name & " - Wield Req Value : " & objEntity.WieldReqVal
 
-                Case &HAB& 'Numeber times tinked
+                Case &HAB& 'Number times tinked
                     objEntity.TinkCount = lVal
                 
                 Case &HB0& 'Activation Skill Name
@@ -1060,6 +1060,7 @@ On Error GoTo ErrorHandler
                     End If
                     
                     If lVal = 8 Then
+                        objEntity.DamageType = DMG_SLASHING
                         If InStr(objEntity.Imbue, "Slash Rending") = 0 Then
                             If bAddImbueComma Then
                                 objEntity.Imbue = LTrim(objEntity.Imbue & ", Slash Rending")
@@ -1071,6 +1072,7 @@ On Error GoTo ErrorHandler
                     End If
                     
                     If lVal = 16 Then
+                        objEntity.DamageType = DMG_PIERCING
                         If InStr(objEntity.Imbue, "Pierce Rending") = 0 Then
                             If bAddImbueComma Then
                                 objEntity.Imbue = LTrim(objEntity.Imbue & ", Pierce Rending")
@@ -1082,6 +1084,7 @@ On Error GoTo ErrorHandler
                     End If
                     
                     If lVal = 32 Then
+                        objEntity.DamageType = DMG_BLUDGEONING
                         If InStr(objEntity.Imbue, "Bludgeon Rending") = 0 Then
                             If bAddImbueComma Then
                                 objEntity.Imbue = LTrim(objEntity.Imbue & ", Bludgeon Rending")
@@ -1093,6 +1096,7 @@ On Error GoTo ErrorHandler
                     End If
                     
                     If lVal = 64 Then
+                        objEntity.DamageType = DMG_ACID
                         If InStr(objEntity.Imbue, "Acid Rending") = 0 Then
                             If bAddImbueComma Then
                                 objEntity.Imbue = LTrim(objEntity.Imbue & ", Acid Rending")
@@ -1104,6 +1108,7 @@ On Error GoTo ErrorHandler
                     End If
                     
                     If lVal = 128 Then
+                        objEntity.DamageType = DMG_COLD
                         If InStr(objEntity.Imbue, "Frost Rending") = 0 Then
                             If bAddImbueComma Then
                                 objEntity.Imbue = LTrim(objEntity.Imbue & ", Frost Rending")
@@ -1115,6 +1120,7 @@ On Error GoTo ErrorHandler
                     End If
                     
                     If lVal = 256 Then
+                        objEntity.DamageType = DMG_LIGHTNING
                         If InStr(objEntity.Imbue, "Lightning Rending") = 0 Then
                             If bAddImbueComma Then
                                 objEntity.Imbue = LTrim(objEntity.Imbue & ", Lightning Rending")
@@ -1126,6 +1132,7 @@ On Error GoTo ErrorHandler
                     End If
                     
                     If lVal = 512 Then
+                        objEntity.DamageType = DMG_FIRE
                         If InStr(objEntity.Imbue, "Fire Rending") = 0 Then
                             If bAddImbueComma Then
                                 objEntity.Imbue = LTrim(objEntity.Imbue & ", Fire Rending")

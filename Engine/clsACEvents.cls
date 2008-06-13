@@ -322,6 +322,8 @@ On Error GoTo ErrorHandler
     m_bDeathMessageOccured = True
     g_TotalKilled = g_TotalKilled + 1
 
+    g_Macro.m_lostCritter = False
+
     If g_ui.Loot.chkEnableLooting.Checked Then
         Call g_Macro.incLoot
     End If
@@ -797,6 +799,8 @@ On Error GoTo ErrorHandler
  
     locDebug "clsACEvent.OnObjectDeath: " & obj.Name & " : " & obj.Guid
  
+    g_Macro.m_lostCritter = False
+    
     'Always call this, even when macro is not "runing"
     Call g_Macro.OnEntityDeath(obj)
     
