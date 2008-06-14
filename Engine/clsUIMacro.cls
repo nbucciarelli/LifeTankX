@@ -198,6 +198,12 @@ Public WithEvents chkEnableSticky As DecalControls.CheckBox
 Attribute chkEnableSticky.VB_VarHelpID = -1
 Public WithEvents cmdSetSticky As DecalControls.PushButton
 Attribute cmdSetSticky.VB_VarHelpID = -1
+Public WithEvents chkEnableFollow As DecalControls.CheckBox
+Attribute chkEnableFollow.VB_VarHelpID = -1
+Public WithEvents cmdSetFollow As DecalControls.PushButton
+Attribute cmdSetFollow.VB_VarHelpID = -1
+Public WithEvents chkNoCombatFollow As DecalControls.CheckBox
+Attribute chkNoCombatFollow.VB_VarHelpID = -1
 
 'Targetting
 Public chkAttackAny As DecalControls.CheckBox
@@ -439,6 +445,9 @@ On Error GoTo ErrorHandler
     Set cmdShowNavEditor = g_MainView.Control("cmdShowNavEditor")
     Set chkEnableSticky = g_MainView.Control("chkEnableSticky")
     Set cmdSetSticky = g_MainView.Control("cmdSetSticky")
+    Set chkEnableFollow = g_MainView.Control("chkEnableFollow")
+    Set cmdSetFollow = g_MainView.Control("cmdSetFollow")
+    Set chkNoCombatFollow = g_MainView.Control("chkNoCombatFollow")
     
     'Options
     Set chMacroSpellsLevel = g_MainView.Control("chMacroSpellsLevel")
@@ -547,6 +556,8 @@ On Error GoTo Error_Handler
         chkEnableNav.Checked = .GetValue("chkEnableNav", False)
         ' Don't save/load sticky position
         'chkEnableSticky.Checked = .GetValue("chkEnableSticky", False)
+        'chkEnableFollow.Checked = .GetValue("chkEnableFollow", False)
+        chkNoCombatFollow.Checked = .GetValue("chkNoCombatFollow", False)
         
         'Load route
         g_Nav.Route.Description = .GetValue(ID_ROUTE_NAME, "Default Route")
@@ -830,6 +841,7 @@ On Error GoTo Error_Handler
         .SaveCheckbox chkEnableNav, "chkEnableNav"
         .SaveValue ID_ROUTE_NAME, g_Nav.Route.Description   'save current route name
         .SaveValue ID_ROUTE_NAVTYPE, g_Nav.NavType          'save current route navtype
+        .SaveValue chkNoCombatFollow, "chkNoCombatFollow"
     
         .SaveChoice chAttackHeight, "chAttackHeight"
     End With
@@ -934,6 +946,8 @@ On Error GoTo Error_Handler
     Set cmdShowNavEditor = Nothing
     Set chkEnableSticky = Nothing
     Set cmdSetSticky = Nothing
+    Set chkEnableFollow = Nothing
+    Set cmdSetFollow = Nothing
     
     'Options
     Set chMacroSpellsLevel = Nothing
@@ -1485,6 +1499,7 @@ Private Sub chkEnableNav_Change(ByVal nID As Long, ByVal bChecked As Boolean)
     If (bChecked) Then
         ' Make sure Sticky is not enabled
         chkEnableSticky.Checked = False
+        chkEnableFollow.Checked = False
     End If
 End Sub
 
@@ -1494,6 +1509,9 @@ Private Sub chkEnableSticky_Change(ByVal nID As Long, ByVal bChecked As Boolean)
         ' Make sure Nav is not enabled
         If (chkEnableNav.Checked) Then
             chkEnableNav.Checked = False
+        End If
+        If (chkEnableFollow.Checked) Then
+            chkEnableFollow.Checked = False
         End If
     Else
         MyDebug "chkEnableSticky_Change: off : " & bChecked
@@ -1509,8 +1527,46 @@ Private Sub cmdSetSticky_accepted(ByVal nID As Long)
         If (chkEnableNav.Checked) Then
             chkEnableNav.Checked = False
         End If
+        If (chkEnableFollow.Checked) Then
+            chkEnableFollow.Checked = False
+        End If
         chkEnableSticky.Checked = True
         Call g_Nav.SetSticky
+    End If
+
+End Sub
+
+Private Sub chkEnableFollow_Change(ByVal nID As Long, ByVal bChecked As Boolean)
+    If (bChecked) Then
+        MyDebug "chkEnableFollower_Change: on : " & bChecked
+        ' Make sure Nav is not enabled
+        If (chkEnableNav.Checked) Then
+            chkEnableNav.Checked = False
+        End If
+        If (chkEnableSticky.Checked) Then
+            chkEnableSticky.Checked = False
+            Call g_Nav.SetStickyOff
+        End If
+    Else
+        MyDebug "chkEnableFollower_Change: off : " & bChecked
+        Call g_Nav.SetFollowOff
+    End If
+End Sub
+
+Private Sub cmdSetFollow_accepted(ByVal nID As Long)
+    ' Set the sticky position
+    If chkEnableFollow.Checked Then
+        Call g_Nav.SetFollow
+    Else
+        If (chkEnableNav.Checked) Then
+            chkEnableNav.Checked = False
+        End If
+        If (chkEnableSticky.Checked) Then
+            chkEnableSticky.Checked = False
+            Call g_Nav.SetStickyOff
+        End If
+        chkEnableFollow.Checked = True
+        Call g_Nav.SetFollow
     End If
 
 End Sub

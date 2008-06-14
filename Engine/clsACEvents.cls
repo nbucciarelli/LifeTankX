@@ -139,7 +139,7 @@ ErrorHandler:
     Resume Fin
 End Sub
 
-Private Sub m_DSFilter_OnRareLoot(ByVal aGuid As Long)
+Private Sub m_DSFilter_OnRareLoot(ByVal aGUID As Long)
 On Error GoTo ErrorHandler
 
 
@@ -708,7 +708,7 @@ ErrorHandler:
     Resume Fin
 End Sub
 
-Private Sub initObjectExtra(ByVal obj As DarksideFilter.acObject)
+Public Sub initObjectExtra(ByVal obj As DarksideFilter.acObject)
 On Error GoTo ErrorHandler
     
     If obj.SetUserDataCount(NUM_EXTRA_OBJECT_INFO) Then

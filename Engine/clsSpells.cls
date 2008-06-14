@@ -344,7 +344,7 @@ ErrorHandler:
     Resume Fin
 End Function
 
-'
+' Queues up a spell for later casting
 Public Function CastThisSpell(ByVal objSpell As clsSpell, ByVal lTargetId As Long, Optional ByVal bPriority As Boolean = False) As Boolean
 On Error GoTo ErrorHandler
     
@@ -369,7 +369,7 @@ ErrorHandler:
     Resume Fin
 End Function
 
-'
+' Calls CastSpell if everything is OK
 Public Function CastSpell(ByRef spellList As clsSpellList, ByVal sSpellFamily As String, ByVal TargetId As Long, Optional ByVal iLevelWanted As Integer = 7) As Boolean
 On Error GoTo ErrorHandler
     
@@ -401,6 +401,7 @@ ErrorHandler:
     Resume Fin
 End Function
 
+' Finds the exact spell for a requested Type, Element, level, etc
 Public Function CastSpellType(ByRef spellList As clsSpellList, ByVal iType As Integer, ByVal iElement As Integer, ByVal TargetId As Long, Optional ByVal iLevelWanted As Integer = 7) As Boolean
 On Error GoTo ErrorHandler
 
@@ -610,7 +611,8 @@ On Error GoTo ErrorHandler
         Set splArc = m_War.FindSpellByType(SPELLTYPE_ARC, iDmg, g_Data.mMaxWarLevel)
         If Valid(splArc) Then
             If Valid(splWar) Then
-                'compare spell levels between arc & bolt, keep the highest one
+                'See if target is at correct range to use an Arc
+                'also compare spell levels between arc & bolt, keep the highest one
                 If ((fTargetSquareRange >= (g_ui.Macro.txtArcRange.Text * g_ui.Macro.txtArcRange.Text)) And (splArc.SpellLevel >= splWar.SpellLevel)) _
                 Or (splArc.SpellLevel > splWar.SpellLevel) Then
                     Set splWar = splArc

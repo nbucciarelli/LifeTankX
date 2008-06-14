@@ -266,6 +266,9 @@ On Error GoTo ErrorHandler
                 Call MoveToWaypoint(NextWp)
             End If
         
+        Case NAVTYPE_FOLLOW
+            'Hmm, do we need to do anything here at all?
+        
     End Select
             
 Fin:
@@ -949,6 +952,39 @@ ErrorHandler:
     Resume Fin
 End Function
 
+'ResumeFollow
+Public Function ResumeFollow() As Boolean
+On Error GoTo ErrorHandler
+    
+    Dim bRet As Boolean
+    
+    If m_iNavType = NAVTYPE_STICKY Then GoTo Fin
+    
+    If m_iNavType <> NAVTYPE_FOLLOW Then
+        locDebug "clsNav.ResumeFollow but iNavType != NAVTYPE_FOLLOW"
+        GoTo Fin
+    ElseIf Not Valid(m_targetWp) Then
+        locDebug "clsNav.ResumeFollow - invalid m_targetWp"
+        GoTo Fin
+    ElseIf Not Valid(m_objToFollow) Then
+        PrintErrorMessage "clsNav.ResumeFollow - invalid m_objToFollow"
+        locDebug "clsNav.ResumeFollow - invalid m_objToFollow"
+        GoTo Fin
+    Else
+        Call UpdateTargetWP(m_targetWp)
+        Call MoveToWaypoint(m_targetWp)
+        bRet = True
+    End If
+    
+Fin:
+    ResumeFollow = bRet
+    Exit Function
+ErrorHandler:
+    bRet = False
+    PrintErrorMessage "clsNav.ResumeFollow - " & Err.Description
+    Resume Fin
+End Function
+
 
 'Makes a new route
 Public Sub MakeNewRoute(Optional ByVal sRouteName As String = "")
@@ -965,14 +1001,20 @@ ErrorHandler:
 End Sub
 
 'Follow someone
-Public Function FollowObject(obj As acObject) As Boolean
+Public Function SetFollow() As Boolean
 On Error GoTo ErrorHandler
     
+    Dim obj As acObject
     Dim bRet As Boolean
+    Dim aGUID As Long
     Dim wp As clsNavWaypoint
     
+    aGUID = g_Hooks.CurrentSelection
+    Set obj = g_Objects.FindObject(aGUID)
+    
     If Not Valid(obj) Then
-        locDebug "FollowObject : invalid object"
+        PrintErrorMessage "You must first select a valid target to follow"
+        MyDebug "SetFollow : invalid object"
         GoTo Fin
     End If
     
@@ -988,13 +1030,35 @@ On Error GoTo ErrorHandler
     
 Fin:
     Set wp = Nothing
-    FollowObject = bRet
+    SetFollow = bRet
     Exit Function
 ErrorHandler:
     bRet = False
-    PrintErrorMessage "clsNav.FollowObject - " & Err.Description
+    PrintErrorMessage "clsNav.SetFollow - " & Err.Description
     Resume Fin
 End Function
+
+'Follow someone
+Public Function SetFollowOff() As Boolean
+On Error GoTo ErrorHandler
+    
+    Set m_objToFollow = Nothing
+    Set m_StickyWP = Nothing
+    Set m_targetWp = Nothing
+    NavType = NAVTYPE_NONE
+    
+    locDebug "Now Following NOTHING"
+
+    SetFollowOff = True
+    
+Fin:
+    Exit Function
+ErrorHandler:
+    SetFollowOff = False
+    PrintErrorMessage "clsNav.FollowOff - " & Err.Description
+    Resume Fin
+End Function
+
 
 
 

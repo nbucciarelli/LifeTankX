@@ -32,6 +32,7 @@ Private m_State As eSubStates           'current combat state
 Private m_objTarget As acObject         'our current target
 Private m_lastTargetName As String      'last target name
 Private m_lLastTargetGUID As Long
+Private m_lastSpellTarget As Long       'GUID of last spell's target
 Private m_bAttackKeyPushed As Boolean
 Private m_tMark As CD3DObj
 Private m_Action As eActionType
@@ -709,6 +710,7 @@ On Error GoTo Error_Handler
         longRange = g_ui.Macro.txtMageRadius.Text
     End If
     
+    
     'Check if we need to yield
     If (g_ui.Macro.chkYield.Checked _
         And Not m_objTarget.Yielded _
@@ -806,6 +808,8 @@ On Error GoTo Error_Handler
             bRet = False
             GoTo Fin
         End If
+        
+        'Check m_lastSpellTarget to see if it's the same, so we can skip all these extra steps
         
         If (m_objTarget.CountVulns > 0) Then
             If Not m_objTarget.IsVulnedTo(m_objTarget.Vulnerability) Then

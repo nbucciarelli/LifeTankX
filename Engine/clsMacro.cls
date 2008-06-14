@@ -50,6 +50,7 @@ Public Enum eMacroStates
     ST_FELLOWHEAL
     ST_FLETCHING
     ST_STICK_NAV
+    ST_FOLLOW_NAV
     ST_NAV
     ST_FELLOW_CMD
     ST_LOOT
@@ -857,6 +858,21 @@ ErrorHandler:
     Resume Fin
 End Function
 
+Private Function GoNavFollow() As Boolean
+On Error GoTo ErrorHandler
+
+    If g_Nav.ResumeFollow() Then
+        GoNavFollow = True
+        Call SetState(ST_FOLLOW_NAV)
+    End If
+
+Fin:
+    Exit Function
+ErrorHandler:
+    PrintErrorMessage "clsMacro.GoNavFollow() - " & Err.Description
+    Resume Fin
+End Function
+
 'GoBuddyRebuff
 Private Function GoBuddyRebuff() As Boolean
 On Error GoTo ErrorHandler
@@ -976,6 +992,8 @@ ErrorHandler:
     Resume Fin
 End Function
 
+'Creates a LC object from ACHooks info to inject into DSFilter
+'Used to find/kill critters that DSFilter missed the OnCreate event for
 Public Function FindLostCritter() As acObject
 On Error GoTo ErrorHandler
 
@@ -985,25 +1003,25 @@ On Error GoTo ErrorHandler
     Set objEntity = New acObject
     
     aGUID = g_Hooks.CurrentSelection
-    If g_Filters.g_worldFilter.Item(aGUID).ObjectClass = eMonster Then
-        MyDebug "clsMacro.FindLostCritter: g_Hooks.CurrentSelection is Monster"
-        MyDebug "clsMacro.FindLostCritter: Name: " & g_Filters.g_worldFilter(aGUID).Name
-        MyDebug "clsMacro.FindLostCritter: Range: " & g_Filters.g_worldFilter.Distance2D(aGUID, g_Filters.PlayerGUID)
+    MyDebug "clsMacro.FindLostCritter: g_Hooks.CurrentSelection is Monster"
+    MyDebug "clsMacro.FindLostCritter: Name: " & g_Filters.g_worldFilter(aGUID).Name
+    
         objEntity.Guid = aGUID
         objEntity.Name = g_Filters.g_worldFilter.Item(aGUID).Name
-        Call g_Filters.g_worldFilter.Item(aGUID).RawCoordinates(objEntity.Loc.xOff, objEntity.Loc.yOff, objEntity.Loc.Zoff)
-        objEntity.Loc.landblock = g_Objects.Player.Loc.landblock
-        'objEntity.Loc.xOff = CSng(xLoc.Value("x"))
-        'objEntity.Loc.yOff = CSng(xLoc.Value("y"))
-        'objEntity.Loc.Zoff = CSng(xLoc.Value("z"))
         objEntity.ObjectType = TYPE_MONSTER
         
-        Call g_Filters.dsFilter.GameObjects.Monsters.addObject(objEntity)
+        Call g_Events.initObjectExtra(objEntity)
+        Call InitMonster(objEntity)
+            
+        'Call g_Filters.g_worldFilter.Item(aGuid).RawCoordinates(objEntity.Loc.xOff, objEntity.Loc.yOff, objEntity.Loc.Zoff)
+        objEntity.Loc.landblock = g_Objects.Player.Loc.landblock
+        objEntity.Loc.xOff = g_Objects.Player.Loc.xOff + 1
+        objEntity.Loc.yOff = g_Objects.Player.Loc.yOff + 1
+        objEntity.Loc.Zoff = g_Objects.Player.Loc.Zoff
         
-        Set FindLostCritter = objEntity
-    Else
-        Set FindLostCritter = Nothing
-    End If
+    Call g_Filters.dsFilter.GameObjects.Monsters.addObject(objEntity)
+        
+    Set FindLostCritter = objEntity
 
 Fin:
     Set objEntity = Nothing
@@ -1472,7 +1490,7 @@ On Error GoTo ErrorHandler
     End If
     
     'make sure we're not moving if we are not in ST_NAV state
-6    If (m_iState <> ST_NAV) And (m_iState <> ST_STICK_NAV) Then Call CheckStopNav
+6    If (m_iState <> ST_NAV) And (m_iState <> ST_STICK_NAV) And (m_iState <> ST_FOLLOW_NAV) Then Call CheckStopNav
 
     'ST_COMBAT or ST_IDLE
     If (g_Spells.c_SpellQueue.Count > 0) And ((m_iState <> ST_COMBAT) And (m_iState <> ST_IDLE)) Then
@@ -1578,6 +1596,10 @@ On Error GoTo ErrorHandler
                 If g_ui.Macro.chkEnableSticky.Checked And g_Nav.isStickySet And g_Nav.stickyRunTimeout Then
                     locDebug "ST_IDLE: moving to Sticky Point"
                     If GoNavSticky Then GoTo Fin
+                End If
+                
+                'If we are following someone and noCombatFollow is checked, then do the follow here
+                If g_ui.Macro.chkEnableFollow.Checked And g_ui.Macro.chkNoCombatFollow.Checked Then
                 End If
                 
                 'check if we need to buff
@@ -1772,7 +1794,33 @@ On Error GoTo ErrorHandler
                     locDebug "ST_NAV: routeCheckerRunning false, GoIdle"
                     Call GoIdle
                 End If
+            
+            Case ST_FOLLOW_NAV
+                'check if we need healing
+                If m_mustHeal Then
+                    If GoHealing Then GoTo Fin
+                End If
+                'Need stam ?
+                If Vitals.NeedStamina(IsMelee) Then
+                    If GoRestam Then GoTo Fin
+                End If
                 
+                ' If we have a War spell in the queue, be sure to clear it out
+                Call ClearSpellQueue
+                
+                'Look for targets
+                If Not g_ui.Macro.chkNoCombatFollow And m_attackCritter Then
+                    locDebug "ST_FOLLOW_NAV : found target while following, going to Idle state"
+                    Call GoIdle
+                    GoTo Fin
+                End If
+                
+                ' Check to see if we've been running to long
+                If Not g_Nav.routeCheckerRunning Then
+                    locDebug "ST_FOLLOW_NAV: routeCheckerRunning false, GoIdle"
+                    Call GoIdle
+                End If
+            
             Case ST_COMBAT
                 'check if we need Healing
                 If m_mustHeal Then
