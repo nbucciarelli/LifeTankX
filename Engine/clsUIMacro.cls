@@ -841,7 +841,7 @@ On Error GoTo Error_Handler
         .SaveCheckbox chkEnableNav, "chkEnableNav"
         .SaveValue ID_ROUTE_NAME, g_Nav.Route.Description   'save current route name
         .SaveValue ID_ROUTE_NAVTYPE, g_Nav.NavType          'save current route navtype
-        .SaveValue chkNoCombatFollow, "chkNoCombatFollow"
+        .SaveCheckbox chkNoCombatFollow, "chkNoCombatFollow"
     
         .SaveChoice chAttackHeight, "chAttackHeight"
     End With
