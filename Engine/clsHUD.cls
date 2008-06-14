@@ -852,7 +852,9 @@ On Error GoTo ErrorHandler
             ElseIf g_ui.Macro.chkEnableSticky.Checked Then
                 y = y + DrawData(m_HUDMacro, d_macroRect, lWidth, x, y, "NavType : ", "Sticky Position")
             ElseIf g_ui.Macro.chkEnableFollow.Checked Then
-                y = y + DrawData(m_HUDMacro, d_macroRect, lWidth, x, y, "NavType : ", "Following " & g_Nav.objToFollow.Name)
+                If Valid(g_Nav.objToFollow) Then
+                    y = y + DrawData(m_HUDMacro, d_macroRect, lWidth, x, y, "NavType : ", "Following " & g_Nav.objToFollow.Name)
+                End If
             End If
 
             Select Case g_Macro.CombatType
