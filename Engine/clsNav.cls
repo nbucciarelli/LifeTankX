@@ -348,7 +348,7 @@ On Error GoTo ErrorHandler
         'check if we reached the WP/objToFollow
         If WaypointReached(fDist) Then
             'we reached it
-            'locDebug "m_tmrRouteChecker_Timer: WaypointReached(fDist): " & fDist
+            locDebug "m_tmrRouteChecker_Timer: WaypointReached(fDist): " & fDist
             Call FireWaypointReached(m_targetWp)
             Call m_tmrRunPause.SetNextTime(0)
             GoTo Fin
@@ -794,7 +794,7 @@ End Sub
 Public Sub TurnTowardWP(wp As clsNavWaypoint, Optional ByVal bStopToTurn As Boolean = True)
     If Valid(wp) Then
         If bStopToTurn And m_bRunning Then Call StopMoving("TurnTowardWP")
-        'locDebug "TurnTowardWP: GetHeadingToWP(): " & GetHeadingToWP(wp) & " CurHeading " & curHeading
+        locDebug "TurnTowardWP: GetHeadingToWP(): " & GetHeadingToWP(wp) & " CurHeading " & curHeading
         Call g_Hooks.FaceHeading(GetHeadingToWP(wp), False)
     Else
         PrintErrorMessage "clsNav.TurnTowardWP : invalid wp"
@@ -1006,11 +1006,11 @@ On Error GoTo ErrorHandler
     
     Dim obj As acObject
     Dim bRet As Boolean
-    Dim aGUID As Long
+    Dim aGuid As Long
     Dim wp As clsNavWaypoint
     
-    aGUID = g_Hooks.CurrentSelection
-    Set obj = g_Objects.FindObject(aGUID)
+    aGuid = g_Hooks.CurrentSelection
+    Set obj = g_Objects.FindObject(aGuid)
     
     If Not Valid(obj) Then
         PrintErrorMessage "You must first select a valid target to follow"

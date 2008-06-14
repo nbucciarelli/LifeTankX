@@ -253,6 +253,30 @@ InvalidFilter:
     Resume Fin
 End Function
 
+Private Sub g_worldFilter_CreateObject(ByVal wObj As WorldObject)
+On Error GoTo ErrorHandler
+
+1    Dim objEntity As acObject
+
+2    If Not g_Macro.Active Then Exit Sub
+3    If Not Valid(wObj) Then Exit Sub
+
+4    Set objEntity = g_Objects.FindObject(wObj.Guid)
+
+5    If Not Valid(objEntity) Then
+        'Decal WorldFilter OnCreate caught the Object, but it doesn't exist in DS Filter!
+6        MyDebug "g_worldFilter_CreateObject: does not exist in DSFilter"
+7        MyDebug "g_worldFilter_CreateObject: Name: " & wObj.Name & " GUID: " & wObj.Guid
+8    End If
+
+Fin:
+    Set objEntity = Nothing
+    Exit Sub
+ErrorHandler:
+    PrintErrorMessage "g_worldFilter_CreateObject - " & Err.Description & " (line : " & Erl & ") - Err# " & Err.Number
+    Resume Fin
+End Sub
+
 '#####################################################################################
 '#
 '#                                  NETECHO

@@ -139,7 +139,7 @@ ErrorHandler:
     Resume Fin
 End Sub
 
-Private Sub m_DSFilter_OnRareLoot(ByVal aGUID As Long)
+Private Sub m_DSFilter_OnRareLoot(ByVal aGuid As Long)
 On Error GoTo ErrorHandler
 
 
@@ -236,7 +236,27 @@ On Error GoTo ErrorHandler
     If g_ui.Macro.chkEnableDOT.Checked Then
         Call g_DOT.playerEvade(sAttacker)
     End If
-    
+
+    'This is here to find those pesky critters that are "invisible" to dsfilter
+    If g_Macro.isIdle And Not TargetScanner(g_Objects.Monsters) Then
+        'Idle and No citters within range, yet we just took melee damage, WTF?
+        ' Maybe we should not be shooting wars?
+        If Not g_ui.Macro.chkNoWar.Checked Then
+            Dim wObj As WorldObject
+
+            'Ok, try select closest critter and see what that gets us
+            Call g_Core.SendKey(g_Keys.KeyClosestMonster)
+            MyDebug "clsACEvents.OnPlayerEvade: ST_IDLE, no target and evading melee damage"
+            MyDebug "clsACEvents.OnPlayerEvade: LOST CRITTER!"
+            Call g_Hooks.IDQueueAdd(g_Hooks.CurrentSelection)
+            g_Macro.m_lostCritter = True
+            Set wObj = g_Filters.g_worldFilter(g_Hooks.CurrentSelection)
+            If wObj.ObjectClass = eMonster Then
+                MyDebug "clsACEVents.OnPlayerEvade: g_Hooks.CurrentSelection: " & wObj.Name
+            End If
+        End If
+    End If
+
 Fin:
     Exit Sub
 ErrorHandler:
@@ -295,15 +315,17 @@ On Error GoTo ErrorHandler
         'Idle and No citters within range, yet we just took melee damage, WTF?
         ' Maybe we should not be shooting wars?
         If Not g_ui.Macro.chkNoWar.Checked Then
+            Dim wObj As WorldObject
+
             'Ok, try select closest critter and see what that gets us
             Call g_Core.SendKey(g_Keys.KeyClosestMonster)
             MyDebug "clsACEvents.OnReceiveMeleeDamage: ST_IDLE, no target and taking melee damage!"
             MyDebug "clsACEvents.OnReceiveMeleeDamage: LOST CRITTER! IDing now"
             Call g_Hooks.IDQueueAdd(g_Hooks.CurrentSelection)
             g_Macro.m_lostCritter = True
-            If g_Filters.g_worldFilter.Item(g_Hooks.CurrentSelection).ObjectClass = eMonster Then
-                MyDebug "clsACEVents.OnReceiveMeleeDamage: g_Hooks.CurrentSelection is Monster"
-                MyDebug "clsACEvents.OnReceiveMeleeDamage: range: " & g_Filters.g_worldFilter.Distance2D(g_Hooks.CurrentSelection, g_Filters.PlayerGUID)
+            Set wObj = g_Filters.g_worldFilter(g_Hooks.CurrentSelection)
+            If wObj.ObjectClass = eMonster Then
+                MyDebug "clsACEVents.OnReceiveMeleeDamage: g_Hooks.CurrentSelection is Monster: " & wObj.Name
             End If
         End If
     End If
@@ -657,7 +679,7 @@ On Error GoTo ErrorHandler
 
     If Not Valid(obj) Then Exit Sub
     
-    locDebug "clsACEvents.OnCreateObject: " & obj.Name & " : " & obj.Guid
+    MyDebug "clsACEvents.OnCreateObject: " & obj.Name & " : " & obj.Guid
     
 1    Select Case obj.ObjectType
         Case TYPE_PLAYER

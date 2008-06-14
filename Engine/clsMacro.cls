@@ -997,18 +997,25 @@ End Function
 Public Function FindLostCritter() As acObject
 On Error GoTo ErrorHandler
 
-    Dim aGUID As Long
+    Dim aGuid As Long
     Dim objEntity As acObject
+    Dim wObj As WorldObject
 
     Set objEntity = New acObject
     
-    aGUID = g_Hooks.CurrentSelection
-    MyDebug "clsMacro.FindLostCritter: g_Hooks.CurrentSelection is Monster"
-    MyDebug "clsMacro.FindLostCritter: Name: " & g_Filters.g_worldFilter(aGUID).Name
+1    aGuid = g_Hooks.CurrentSelection
     
-        objEntity.Guid = aGUID
-        objEntity.Name = g_Filters.g_worldFilter.Item(aGUID).Name
-        objEntity.ObjectType = TYPE_MONSTER
+2    Set wObj = g_Filters.g_worldFilter(aGuid)
+    
+3    If (wObj.ObjectClass = eMonster) Then
+    
+4        objEntity.Guid = aGuid
+5        objEntity.Name = wObj.Name
+
+6        MyDebug "clsMacro.FindLostCritter: g_Hooks.CurrentSelection is Monster"
+7        MyDebug "clsMacro.FindLostCritter: Name: " & wObj.Name
+        
+8        objEntity.ObjectType = TYPE_MONSTER
         
         Call g_Events.initObjectExtra(objEntity)
         Call InitMonster(objEntity)
@@ -1019,15 +1026,17 @@ On Error GoTo ErrorHandler
         objEntity.Loc.yOff = g_Objects.Player.Loc.yOff + 1
         objEntity.Loc.Zoff = g_Objects.Player.Loc.Zoff
         
-    Call g_Filters.dsFilter.GameObjects.Monsters.addObject(objEntity)
+9        Call g_Filters.dsFilter.GameObjects.Monsters.addObject(objEntity)
+    End If
         
-    Set FindLostCritter = objEntity
+10    Set FindLostCritter = objEntity
+    
 
 Fin:
     Set objEntity = Nothing
     Exit Function
 ErrorHandler:
-    PrintErrorMessage "clsMacro.FindLostCritter - " & Err.Description
+    PrintErrorMessage "clsMacro.FindLostCritter - " & Err.Description & " line: " & Erl
     Resume Fin
 End Function
 
@@ -1062,7 +1071,7 @@ Fin:
     Set objTarget = Nothing
     Exit Sub
 ErrorHandler:
-    PrintErrorMessage "clsMacro.GoCombat() - " & Err.Description
+    PrintErrorMessage "clsMacro.GoCombat() - " & Err.Description & " line: " & Erl
     Resume Fin
 End Sub
 
@@ -1082,7 +1091,7 @@ On Error GoTo ErrorHandler
 Fin:
     Exit Function
 ErrorHandler:
-    PrintErrorMessage "clsMacro.GoLooting() - " & Err.Description
+    PrintErrorMessage "clsMacro.GoLooting() - " & Err.Description & " line: " & Erl
     GoLooting = False
     Resume Fin
 End Function
@@ -1145,7 +1154,7 @@ On Error GoTo ErrorHandler
 Fin:
     Exit Sub
 ErrorHandler:
-    PrintErrorMessage "clsMacro.OnRebuffComplete() - " & Err.Description
+    PrintErrorMessage "clsMacro.OnRebuffComplete() - " & Err.Description & " line: " & Erl
     Resume Fin
 End Sub
 
@@ -1200,7 +1209,7 @@ Fin:
     Exit Function
 ErrorHandler:
     bRet = False
-    PrintErrorMessage "clsMacro.GoFellowshipCmd() - " & Err.Description
+    PrintErrorMessage "clsMacro.GoFellowshipCmd() - " & Err.Description & " line: " & Erl
     Resume Fin
 End Function
 
@@ -1258,7 +1267,7 @@ Fin:
     Exit Function
 ErrorHandler:
     DoFellowHeal = False
-    PrintErrorMessage "clsMacro.DoFellowHeal() - " & Err.Description
+    PrintErrorMessage "clsMacro.DoFellowHeal() - " & Err.Description & " line: " & Erl
     Exit Function
 End Function
 
@@ -1317,7 +1326,7 @@ Fin:
     Exit Function
 ErrorHandler:
     TestFellowHeal = False
-    PrintErrorMessage "clsMacro.TestFellowHeal() - " & Err.Description
+    PrintErrorMessage "clsMacro.TestFellowHeal() - " & Err.Description & " line: " & Erl
     Exit Function
 End Function
 
@@ -1600,6 +1609,10 @@ On Error GoTo ErrorHandler
                 
                 'If we are following someone and noCombatFollow is checked, then do the follow here
                 If g_ui.Macro.chkEnableFollow.Checked And g_ui.Macro.chkNoCombatFollow.Checked Then
+                    If GoNavFollow Then
+                        locDebug "ST_IDLE: moving towards Follow target (chkNoCombatFollow)"
+                        GoTo Fin
+                    End If
                 End If
                 
                 'check if we need to buff
@@ -1739,6 +1752,15 @@ On Error GoTo ErrorHandler
                             Call GoNav
                             GoTo Fin
                         End If
+                        
+                        'If we are following someone and noCombatFollow is checked, then do the follow here
+                        If g_ui.Macro.chkEnableFollow.Checked Then
+                            If GoNavFollow Then
+                                locDebug "ST_IDLE: moving towards Follow target"
+                                GoTo Fin
+                            End If
+                        End If
+                
                     End If
 
                 Else
@@ -2040,7 +2062,7 @@ Fin:
     Set o_Spell = Nothing
     Exit Sub
 ErrorHandler:
-    PrintErrorMessage "clsMacro.RunState - " & Err.Description
+    PrintErrorMessage "clsMacro.RunState - " & Err.Description & " line: " & Erl
     Resume Fin
 End Sub
 
@@ -2084,7 +2106,7 @@ Fin:
     Exit Function
 ErrorHandler:
     bRet = False
-    PrintErrorMessage "clsMacro.CheckMacroItem - " & Err.Description
+    PrintErrorMessage "clsMacro.CheckMacroItem - " & Err.Description & " line: " & Erl
     Resume Fin
 End Function
 
@@ -2354,7 +2376,7 @@ Fin:
     Exit Function
 ErrorHandler:
     bRet = False
-    PrintErrorMessage "clsMacro.ValidMacroItems - " & Err.Description
+    PrintErrorMessage "clsMacro.ValidMacroItems - " & Err.Description & " line: " & Erl
     Resume Fin
 End Function
 
@@ -2381,7 +2403,7 @@ On Error GoTo ErrorHandler
 Fin:
     Exit Sub
 ErrorHandler:
-    PrintErrorMessage "clsMacro.RequestEquipItem - " & Err.Description
+    PrintErrorMessage "clsMacro.RequestEquipItem - " & Err.Description & " line: " & Erl
     Resume Fin
 End Sub
 
@@ -2578,7 +2600,7 @@ On Error GoTo ErrorHandler
 Fin:
     Exit Sub
 ErrorHandler:
-    PrintErrorMessage "clsMacro.OnStateSpellCasted() - " & Err.Description
+    PrintErrorMessage "clsMacro.OnStateSpellCasted() - " & Err.Description & " line: " & Erl
     Resume Fin
 End Sub
 
@@ -2604,7 +2626,7 @@ On Error GoTo ErrorHandler
 Fin:
     Exit Sub
 ErrorHandler:
-    PrintErrorMessage "clsMacro.OnStateSpellFailed() - " & Err.Description
+    PrintErrorMessage "clsMacro.OnStateSpellFailed() - " & Err.Description & " line: " & Erl
     Resume Fin
 End Sub
 
@@ -2692,7 +2714,7 @@ Fin:
     Exit Function
 ErrorHandler:
     bRet = False
-    PrintErrorMessage "clsMacro.OnLastActionFailed - " & Err.Description
+    PrintErrorMessage "clsMacro.OnLastActionFailed - " & Err.Description & " line: " & Erl
     Resume Fin
 End Function
 
@@ -2783,7 +2805,7 @@ On Error GoTo ErrorHandler
 Fin:
     Exit Sub
 ErrorHandler:
-    PrintErrorMessage "clsMacro.OnReady - " & Err.Description
+    PrintErrorMessage "clsMacro.OnReady - " & Err.Description & " line: " & Erl
     Resume Fin
 End Sub
 
@@ -2816,7 +2838,7 @@ On Error GoTo ErrorHandler
 Fin:
     Exit Sub
 ErrorHandler:
-    PrintErrorMessage "clsMacro.OnEntityNoLongerAvailable - " & Err.Description
+    PrintErrorMessage "clsMacro.OnEntityNoLongerAvailable - " & Err.Description & " line: " & Erl
     Resume Fin
 End Sub
 
@@ -2866,7 +2888,7 @@ On Error GoTo ErrorHandler
 Fin:
     Exit Sub
 ErrorHandler:
-    PrintErrorMessage "clsMacro.goManaCharge - " & Err.Description
+    PrintErrorMessage "clsMacro.goManaCharge - " & Err.Description & " line: " & Erl
     Resume Fin
 End Sub
 
@@ -2894,7 +2916,7 @@ On Error GoTo ErrorHandler
 Fin:
     Exit Sub
 ErrorHandler:
-    PrintErrorMessage "clsMacro.UseManaCharge - " & Err.Description
+    PrintErrorMessage "clsMacro.UseManaCharge - " & Err.Description & " line: " & Erl
     Resume Fin
 End Sub
 
@@ -2980,7 +3002,7 @@ Fin:
     Set objArrow = Nothing
     Exit Sub
 ErrorHandler:
-    PrintErrorMessage "clsMacro.OnOutOfArrow - " & Err.Description
+    PrintErrorMessage "clsMacro.OnOutOfArrow - " & Err.Description & " line: " & Erl
     Resume Fin
 End Sub
 
@@ -3080,7 +3102,7 @@ Fin:
     Exit Function
 ErrorHandler:
     bRet = False
-    PrintErrorMessage "clsMacro.MustLogOut - " & Err.Description
+    PrintErrorMessage "clsMacro.MustLogOut - " & Err.Description & " line: " & Erl
     Resume Fin
 End Function
 
