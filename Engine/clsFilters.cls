@@ -259,7 +259,7 @@ On Error GoTo ErrorHandler
 1    Dim objEntity As acObject
 
 2    If Not g_Macro.Active Then Exit Sub
-3    If Not Valid(wObj) Then Exit Sub
+3    'If Not Valid(wObj) Then Exit Sub
 
 4    Set objEntity = g_Objects.FindObject(wObj.Guid)
 

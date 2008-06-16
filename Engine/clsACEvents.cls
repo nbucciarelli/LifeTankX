@@ -242,18 +242,12 @@ On Error GoTo ErrorHandler
         'Idle and No citters within range, yet we just took melee damage, WTF?
         ' Maybe we should not be shooting wars?
         If Not g_ui.Macro.chkNoWar.Checked Then
-            Dim wObj As WorldObject
-
             'Ok, try select closest critter and see what that gets us
             Call g_Core.SendKey(g_Keys.KeyClosestMonster)
             MyDebug "clsACEvents.OnPlayerEvade: ST_IDLE, no target and evading melee damage"
             MyDebug "clsACEvents.OnPlayerEvade: LOST CRITTER!"
             Call g_Hooks.IDQueueAdd(g_Hooks.CurrentSelection)
             g_Macro.m_lostCritter = True
-            Set wObj = g_Filters.g_worldFilter(g_Hooks.CurrentSelection)
-            If wObj.ObjectClass = eMonster Then
-                MyDebug "clsACEVents.OnPlayerEvade: g_Hooks.CurrentSelection: " & wObj.Name
-            End If
         End If
     End If
 
@@ -315,18 +309,12 @@ On Error GoTo ErrorHandler
         'Idle and No citters within range, yet we just took melee damage, WTF?
         ' Maybe we should not be shooting wars?
         If Not g_ui.Macro.chkNoWar.Checked Then
-            Dim wObj As WorldObject
-
             'Ok, try select closest critter and see what that gets us
             Call g_Core.SendKey(g_Keys.KeyClosestMonster)
             MyDebug "clsACEvents.OnReceiveMeleeDamage: ST_IDLE, no target and taking melee damage!"
             MyDebug "clsACEvents.OnReceiveMeleeDamage: LOST CRITTER! IDing now"
             Call g_Hooks.IDQueueAdd(g_Hooks.CurrentSelection)
             g_Macro.m_lostCritter = True
-            Set wObj = g_Filters.g_worldFilter(g_Hooks.CurrentSelection)
-            If wObj.ObjectClass = eMonster Then
-                MyDebug "clsACEVents.OnReceiveMeleeDamage: g_Hooks.CurrentSelection is Monster: " & wObj.Name
-            End If
         End If
     End If
     

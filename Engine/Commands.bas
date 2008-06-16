@@ -277,23 +277,33 @@ On Error GoTo ErrorHandler
             
                             Case "info"
                                 Dim aRange As Single
-                                aRange = g_Filters.g_worldFilter.Distance2D(obj.Guid, g_Filters.PlayerGUID)
-                                PrintMessage "Current Selection Info : " & obj.Name
-                                PrintMessage "GUID: " & obj.Guid
-                                PrintMessage "Type: " & obj.ObjectType
-                                PrintMessage "Range: " & obj.GetRange & " :w: " & aRange
-                                PrintMessage "Range: " & WorldRange(obj.Guid)
-                                PrintMessage "Dead : " & CStr(obj.Dead)
-                                PrintMessage "Dangerous : " & CStr(obj.UserData(B_DANGEROUS))
-                                PrintMessage "ValidTarget: " & IsValidTarget(obj, Not g_ui.Macro.chkAttackAny.Checked)
+                                If (obj.Guid = -1) Then
+                                    Dim wObj As WorldObject
+                                    Set wObj = g_Filters.g_worldFilter(g_Hooks.CurrentSelection)
+                                    PrintMessage "Selection not found in g_Objects, looking in WorldFilter"
+                                    PrintMessage "g_Hooks: " & g_Hooks.CurrentSelection
+                                    PrintMessage "GUID: " & wObj.Guid
+                                    PrintMessage "Current Selection Info : " & wObj.Name
+                                    PrintMessage "Type: " & wObj.Type
+                                    PrintMessage "ObjClass: " & wObj.ObjectClass
+                                Else
+                                    aRange = g_Filters.g_worldFilter.Distance2D(obj.Guid, g_Filters.PlayerGUID)
+                                    PrintMessage "Current Selection Info : " & obj.Name
+                                    PrintMessage "GUID: " & obj.Guid
+                                    PrintMessage "Type: " & obj.ObjectType
+                                    PrintMessage "Range: " & obj.GetRange & " :w: " & aRange
+                                    PrintMessage "Range: " & WorldRange(obj.Guid)
+                                    PrintMessage "Dead : " & CStr(obj.Dead)
+                                    PrintMessage "Dangerous : " & CStr(obj.UserData(B_DANGEROUS))
+                                    PrintMessage "ValidTarget: " & IsValidTarget(obj, Not g_ui.Macro.chkAttackAny.Checked)
                                 
-                                If obj.itemType = ITEM_SALVAGE Then
-                                    PrintMessage "TickCount: " & obj.TinkCount
-                                    PrintMessage "UsesLeft: " & obj.UsesLeft
-                                    PrintMessage "TotalUses: " & obj.TotalUses
-                                    PrintMessage "Work: " & obj.Workmanship
+                                    If obj.itemType = ITEM_SALVAGE Then
+                                        PrintMessage "TickCount: " & obj.TinkCount
+                                        PrintMessage "UsesLeft: " & obj.UsesLeft
+                                        PrintMessage "TotalUses: " & obj.TotalUses
+                                        PrintMessage "Work: " & obj.Workmanship
+                                    End If
                                 End If
-                                
                             Case Else
                                 PrintMessage "LifeTank Selection Commands : /lt selection <cmd>"
                                 PrintMessage "- info : prints information about target"

@@ -1005,15 +1005,15 @@ On Error GoTo ErrorHandler
     
 1    aGuid = g_Hooks.CurrentSelection
     
-2    Set wObj = g_Filters.g_worldFilter(aGuid)
+2    'Set wObj = g_Filters.g_worldFilter(aGuid)
     
-3    If (wObj.ObjectClass = eMonster) Then
+3    'If (wObj.ObjectClass = eMonster) Then
     
 4        objEntity.Guid = aGuid
-5        objEntity.Name = wObj.Name
+5        'objEntity.Name = wObj.Name
 
-6        MyDebug "clsMacro.FindLostCritter: g_Hooks.CurrentSelection is Monster"
-7        MyDebug "clsMacro.FindLostCritter: Name: " & wObj.Name
+6        'MyDebug "clsMacro.FindLostCritter: g_Hooks.CurrentSelection is Monster"
+7        'MyDebug "clsMacro.FindLostCritter: Name: " & wObj.Name
         
 8        objEntity.ObjectType = TYPE_MONSTER
         
@@ -1027,7 +1027,7 @@ On Error GoTo ErrorHandler
         objEntity.Loc.Zoff = g_Objects.Player.Loc.Zoff
         
 9        Call g_Filters.dsFilter.GameObjects.Monsters.addObject(objEntity)
-    End If
+    'End If
         
 10    Set FindLostCritter = objEntity
     

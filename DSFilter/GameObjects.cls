@@ -322,7 +322,7 @@ On Error GoTo ErrorHandler
 
     'Never remove self
     If lObjGUID = m_objPlayer.GUID Then
-        myDebug "GameObjects.RemoveObject : tryed to remove local player object [id: " & lObjGUID & "]. Ignoring."
+        myError "GameObjects.RemoveObject : tryed to remove local player object [id: " & lObjGUID & "]. Ignoring."
         GoTo Fin
     End If
     
@@ -847,10 +847,11 @@ On Error GoTo ErrorHandler
     
     If Not Valid(objEntity) Then
         myError "OnIdentifyObject: FindObject returned Nothing for lObjGUID: " & lObjGUID
-        'myDebug "OnIdentifyObject: not found! Creating new acObject for lObjGUID: " & lObjGUID
-        'Set objEntity = New acObject
-        'isNewObj = True
-        GoTo Fin
+        myDebug "OnIdentifyObject: not found! Creating new acObject for lObjGUID: " & lObjGUID
+        Set objEntity = New acObject
+        objEntity.GUID = lObjGUID
+        isNewObj = True
+        'GoTo Fin
     Else
         isNewObj = False
         If GetModObject(lObjGUID, objEntity) Then
@@ -883,9 +884,9 @@ On Error GoTo ErrorHandler
             
             Select Case lKey
                 Case &H1&  'Name
-                    If (objEntity.Name = "UnknownEntity") Then
+                    If (objEntity.Name = "UnknownEntity") Or isNewObj Then
                         objEntity.Name = sVal
-                        myDebug "ID: " & objEntity.Name & " - Use Instruction : " & sVal
+                        myDebug "New Obj Name: " & sVal
                     End If
                     
                 Case &HE&  'Use Instruction
@@ -915,7 +916,11 @@ On Error GoTo ErrorHandler
                             'MyDebug "ID: " & objEntity.Name & " - Killer : " & objEntity.KillerName
                         End If
                     End If
-
+                Case &H2B& 'Date of Birth
+                    If isNewObj Then
+                        objEntity.ObjectType = TYPE_PLAYER
+                    End If
+                    
             End Select
         Next i
 
@@ -1373,6 +1378,10 @@ On Error GoTo ErrorHandler
 
         myDebug "OnIdentifyObject H100: " & objEntity.Name & " : lAssessFlag: " & Hex(lAssessFlag) & "  lCharFlags: " & Hex(lCharFlags)
 
+        If isNewObj And (objEntity.ObjectType <> TYPE_PLAYER) Then
+            objEntity.ObjectType = TYPE_MONSTER
+        End If
+
         'If (lCharFlags And &H4) Then
             'MyDebug "OnIdentifyObject: &H4&"
             iHealth = pMsg.Value("health")
@@ -1448,13 +1457,15 @@ On Error GoTo ErrorHandler
     'End If
     
     ' Do we need to add it?
-    'If isNewObj Then
-    '    If m_Items.AddWorldItemEx(objEntity) Then
-    '        myDebug "GameObjects.NetEcho_OnIdentifyObject: added new item to World: " & objEntity.Name
-    '    Else
-    '        myError "GameObjects.NetEcho_OnIdentifyObject: failed to add NEW item " & objEntity.Name & " [" & objEntity.GUID & "] to World Items collection"
-    '    End If
-    'End If
+    If isNewObj Then
+        If m_Items.AddWorldItemEx(objEntity) Then
+            myError "GameObjects.NetEcho_OnIdentifyObject: added new item to World: " & objEntity.Name
+            myDebug "GameObjects.NetEcho_OnIdentifyObject: added new item to World: " & objEntity.Name
+        Else
+            myError "GameObjects.NetEcho_OnIdentifyObject: failed to add NEW item " & objEntity.Name & " [" & objEntity.GUID & "] to World Items collection"
+        End If
+        RaiseEvent OnCreateObject(objEntity)
+    End If
 
     'Trigger the assess event
     RaiseEvent OnIdentifyObject(objEntity)

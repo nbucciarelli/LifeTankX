@@ -498,10 +498,10 @@ End Sub
 Private Sub m_acHooks_ObjectDestroyed(ByVal lGUID As Long)
 On Error GoTo ErrorHandler
 
-    'myDebug "acHooks.ObjectDestroyed: " & lGUID
+    myDebug "acHooks.ObjectDestroyed called: " & lGUID
     If Valid(g_Objects.FindObject(lGUID)) Then
-        'myError "WARNING: acHooks.ObjectDestroyed: FOUND VALID OBJECT: " & g_Objects.FindObject(lGUID).Name & " : " & lGUID
-        Call m_GameObjects.RemoveObject(lGUID, "acHooks.ObjectDestroyed")
+        myError "WARNING: acHooks.ObjectDestroyed: FOUND VALID OBJECT: " & g_Objects.FindObject(lGUID).Name & " : " & lGUID
+        'Call m_GameObjects.RemoveObject(lGUID, "acHooks.ObjectDestroyed")
     End If
 
 Fin:
