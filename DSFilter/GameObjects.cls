@@ -339,16 +339,16 @@ On Error GoTo ErrorHandler
     'in this function
     If m_colMonsters.Exists(lObjGUID, objEntity) Then
         bRemoved = m_colMonsters.Remove(lObjGUID)
-        'myDebug "RemoveObject: removed from colMonsters: " & lObjGUID
+        myDebug "RemoveObject: removed from colMonsters: " & lObjGUID
     ElseIf m_colPlayers.Exists(lObjGUID, objEntity) Then
         bRemoved = m_colPlayers.Remove(lObjGUID)
-        'myDebug "RemoveObject: removed from colPlayers: " & lObjGUID
+        myDebug "RemoveObject: removed from colPlayers: " & lObjGUID
     ElseIf m_Items.Exists(lObjGUID, objEntity) Then
         bRemoved = m_Items.Remove(lObjGUID)
-        'myDebug "RemoveObject: removed from colItems: " & lObjGUID
+        myDebug "RemoveObject: removed from colItems: " & lObjGUID
     ElseIf m_colJunk.Exists(lObjGUID, objEntity) Then
         bRemoved = m_colJunk.Remove(lObjGUID)
-        'myDebug "RemoveObject: removed from colJunk: " & lObjGUID
+        myDebug "RemoveObject: removed from colJunk: " & lObjGUID
     End If
     
     'If we found something
@@ -365,6 +365,7 @@ On Error GoTo ErrorHandler
     End If
     
 Fin:
+    Set objEntity = Nothing
     Exit Sub
 ErrorHandler:
     myError "GameObjects.RemoveObject - " & Err.Description
@@ -541,22 +542,28 @@ On Error GoTo ErrorHandler
     
     'myDebug "NetEvent_OnCreateObject: " & lObjGUID & " : " & sObjName
 
+
+    '
+' Don't care about duplicates, as colObjects.addObject now just removes the old one and adds the new one
+    '
     'Make sure we're not trying to add an already existing object that hasn't been deleted (happens sometimes)
-    Set objEntity = FindObject(lObjGUID, False)
-    If Not Valid(objEntity) Then
-        Set objEntity = New acObject
-    Else
-        If (objEntity.Name = sObjName) Then
-            'Must be an update of the object
-            myDebug "OnCreateObject: Update to already existing object " & objEntity.Name & " id: " & lObjGUID
-        Else
-            myDebug "OnCreateObject: Removing already existing object " & objEntity.Name & " id: " & lObjGUID
-            'Remove the existing object and re-create it (unless it's this player)
-            If (lObjGUID <> m_objPlayer.GUID) Then
-                Call RemoveObject(lObjGUID, "OnCreateObject dupe")
-            End If
-        End If
-    End If
+    'Set objEntity = FindObject(lObjGUID, False)
+    'If Not Valid(objEntity) Then
+    '    Set objEntity = New acObject
+    'Else
+    '    If (objEntity.Name = sObjName) Then
+    '        'Must be an update of the object
+    '        myDebug "OnCreateObject: Update to already existing object " & objEntity.Name & " id: " & lObjGUID
+    '    Else
+    '        myDebug "OnCreateObject: Removing already existing object " & objEntity.Name & " id: " & lObjGUID
+    '        'Remove the existing object and re-create it (unless it's this player)
+    '        If (lObjGUID <> m_objPlayer.GUID) Then
+    '            Call RemoveObject(lObjGUID, "OnCreateObject dupe")
+    '        End If
+    '    End If
+    'End If
+    
+    Set objEntity = New acObject
     
     objEntity.GUID = lObjGUID
     objEntity.Name = sObjName
@@ -943,7 +950,7 @@ On Error GoTo ErrorHandler
             lVal = xVal.Value("value")
             lKey = xVal.Value("key")
             
-            myDebug "IDObject: " & objEntity.Name & " Key:" & Hex(lKey) & " Val:" & lVal
+            'myDebug "IDObject: " & objEntity.Name & " Key:" & Hex(lKey) & " Val:" & lVal
             
             Select Case lKey
                 Case &H11& 'Rare #
@@ -1457,15 +1464,15 @@ On Error GoTo ErrorHandler
     'End If
     
     ' Do we need to add it?
-    If isNewObj Then
-        If m_Items.AddWorldItemEx(objEntity) Then
-            myError "GameObjects.NetEcho_OnIdentifyObject: added new item to World: " & objEntity.Name
-            myDebug "GameObjects.NetEcho_OnIdentifyObject: added new item to World: " & objEntity.Name
-        Else
-            myError "GameObjects.NetEcho_OnIdentifyObject: failed to add NEW item " & objEntity.Name & " [" & objEntity.GUID & "] to World Items collection"
-        End If
-        RaiseEvent OnCreateObject(objEntity)
-    End If
+    'If isNewObj Then
+    '    If m_Items.AddWorldItemEx(objEntity) Then
+    '        myError "GameObjects.NetEcho_OnIdentifyObject: added new item to World: " & objEntity.Name
+    '        myDebug "GameObjects.NetEcho_OnIdentifyObject: added new item to World: " & objEntity.Name
+    '    Else
+    '        myError "GameObjects.NetEcho_OnIdentifyObject: failed to add NEW item " & objEntity.Name & " [" & objEntity.GUID & "] to World Items collection"
+    '    End If
+    '    RaiseEvent OnCreateObject(objEntity)
+    'End If
 
     'Trigger the assess event
     RaiseEvent OnIdentifyObject(objEntity)

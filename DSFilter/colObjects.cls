@@ -56,16 +56,18 @@ On Error GoTo ErrorHandler
     If Not Valid(objEntity) Then
         myDebug "colObjects.AddObject(objEntity) - Invalid objEntity, ignoring"
         AddObject = False
-        Exit Function
-    ElseIf Exists(objEntity.GUID) Then
-        myDebug "colObjects.AddObject(objEntity) - Object ID " & objEntity.GUID & " already in collection - Ignoring add"
-        AddObject = False
-    Else
-        'add it
-        'myDebug "colObject.AddObject: " & objEntity.Name & " : " & objEntity.GUID
-        Call m_map.Add(objEntity, CStr(objEntity.GUID))
-        AddObject = True
+        GoTo Fin
     End If
+    
+    If Exists(objEntity.GUID) Then
+        myDebug "colObjects.AddObject(objEntity) - Object ID " & objEntity.GUID & " already in collection - removing old one"
+        Call m_map.Remove(CStr(objEntity.GUID))
+    End If
+        
+    'add it
+    'myDebug "colObject.AddObject: " & objEntity.Name & " : " & objEntity.GUID
+    Call m_map.Add(objEntity, CStr(objEntity.GUID))
+    AddObject = True
         
 Fin:
     Exit Function

@@ -410,6 +410,9 @@ End Property
 '                          Public Methods
 '################################################################################
 
+Public Sub SetDebugMode(ByVal aVal As Boolean)
+    m_Log.bDebugMode = aVal
+End Sub
 
 '################################################################################
 '                             FRIEND METHODS

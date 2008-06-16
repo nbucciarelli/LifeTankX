@@ -527,6 +527,7 @@ End Function
 'Set debug mode
 Public Sub SetDebugMode(ByVal bVal As Boolean)
     mDebugMode = bVal
+    Call g_Filters.dsFilter.SetDebugMode(bVal)
 End Sub
 
 ' Load and Save Functions
