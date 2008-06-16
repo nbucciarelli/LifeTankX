@@ -247,7 +247,7 @@ Private Sub Class_Initialize()
     RankReq = 0
     ElementBonusDamage = 0
     DamageFlags = 0
-    DamageType = 0
+    DamageType = DMG_NONE
     SkillUsed = 0
     HighDamage = 0
     Variance = 0

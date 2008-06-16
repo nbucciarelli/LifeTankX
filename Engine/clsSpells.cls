@@ -591,7 +591,7 @@ On Error GoTo ErrorHandler
     'If we are using Auto switching rend wands, always match the damage type to the rend we are holding
     'As it should be correct (or the default damage)
     If overideDmg And g_ui.Macro.chkAutoSwitch.Checked And Valid(g_currentEquip) Then
-        If g_currentEquip.DamageType <> -1 Then
+        If g_currentEquip.DamageType <> DMG_NONE Then
             iDmg = g_currentEquip.DamageType
             locDebug "SetupWarSpellForDamage: overideDmg set iDmg to: " & iDmg
         End If
