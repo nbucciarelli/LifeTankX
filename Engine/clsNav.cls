@@ -897,6 +897,34 @@ ErrorHandler:
     Resume Fin
 End Function
 
+' Check to see if we are Melee Attack Range distance or closer to Sticky spot
+Public Function CheckStickyRange(ByVal aRange As Integer) As Boolean
+On Error GoTo ErrorHandler
+    
+    Dim bRet As Boolean
+    
+    bRet = False
+    
+    If Not (m_StickySet) Then
+        locDebug "MoveToSticky : no Sticky point set, ignoring"
+        GoTo Fin
+    End If
+
+    ' Check to see if we are too far away from the Sticky Waypoint
+    If (m_StickyWP.Get2DRange > aRange) Then
+        MyDebug "CheckStickyRange: To far from sticky waypoint!"
+        bRet = True
+    End If
+
+Fin:
+    CheckStickyRange = bRet
+    Exit Function
+ErrorHandler:
+    bRet = False
+    PrintErrorMessage "clsNav.CheckStickyRange - " & Err.Description
+    Resume Fin
+End Function
+
 ' Move to Sticky Waypoint
 Public Function MoveToSticky() As Boolean
 On Error GoTo ErrorHandler

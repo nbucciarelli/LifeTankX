@@ -217,7 +217,12 @@ On Error GoTo ErrorMessage
         Call StopCombat("Must Heal")
         Exit Sub
     End If
-      
+    
+    If (g_Macro.CombatType = TYPE_MELEE) And g_Nav.CheckStickyRange(g_ui.Macro.txtMeleeRadius.Text) Then
+        Call StopCombat("Sticky Range exceeded, go IDLE")
+        Exit Sub
+    End If
+
     ' *** FIXME :: need to add a high priority buff UI check box first ***
     'If we are a spell caster, then can buff while killing
     'If IsCaster Then
