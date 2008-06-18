@@ -1001,9 +1001,18 @@ On Error GoTo ErrorHandler
     Dim objEntity As acObject
     Dim wObj As WorldObject
 
-    Set objEntity = New acObject
-    
 1    aGuid = g_Hooks.CurrentSelection
+    
+    Set objEntity = g_Objects.FindObject(aGuid)
+    
+    If Valid(objEntity) Then
+        Set FindLostCritter = Nothing
+        Set objEntity = Nothing
+        Exit Function
+    Else
+        Set objEntity = New acObject
+    End If
+    
     
 2    'Set wObj = g_Filters.g_worldFilter(aGuid)
     
@@ -1030,7 +1039,8 @@ On Error GoTo ErrorHandler
     'End If
         
 10    Set FindLostCritter = objEntity
-    
+
+11    PrintErrorMessage "FindLostCritter: aGuid: " & aGuid
 
 Fin:
     Set objEntity = Nothing

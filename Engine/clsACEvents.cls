@@ -1172,9 +1172,9 @@ On Error GoTo ErrorHandler
         pColor = 9 Or _
         pColor = 10 Or _
         pColor = 12 Or _
-        pColor = 19 Or _
-        pColor = 22 Then
+        pColor = 19 Then
             Call LogChatMessage(Left(bstrMsg, Len(bstrMsg) - 1)) 'get rid of chr(10)
+        'pColor = 22
     End If
     
     '=====================================

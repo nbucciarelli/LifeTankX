@@ -503,7 +503,7 @@ On Error GoTo ErrorHandler
 
     myDebug "acHooks.ObjectDestroyed called: " & lGUID
     If Valid(g_Objects.FindObject(lGUID)) Then
-        myError "WARNING: acHooks.ObjectDestroyed: FOUND VALID OBJECT: " & g_Objects.FindObject(lGUID).Name & " : " & lGUID
+        'myError "WARNING: acHooks.ObjectDestroyed: FOUND VALID OBJECT: " & g_Objects.FindObject(lGUID).Name & " : " & lGUID
         'Call m_GameObjects.RemoveObject(lGUID, "acHooks.ObjectDestroyed")
     End If
 
@@ -1477,7 +1477,7 @@ On Error GoTo ErrorHandler
     'End If
 
 
-    If iAnimType = 0 Then
+    If iAnimType = 0 And Valid(objEntity) Then
         Dim lFlags As Long
         lFlags = pMsg.Value("flags")
         
