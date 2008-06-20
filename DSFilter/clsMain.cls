@@ -48,6 +48,8 @@ Public Event OnRemoveMultEnchantment(ByVal spellID As Long, ByVal iLayer As Long
 Public Event OnSilentRemoveEnchantment(ByVal spellID As Long, ByVal iLayer As Long)
 Public Event OnSilentRemoveMultEnchantment(ByVal spellID As Long, ByVal iLayer As Long)
 
+Public Event OnObjectMoved(ByVal obj As acObject)
+
 Public Event ForcedExit()
 
 'Not working yet
@@ -1491,6 +1493,28 @@ On Error GoTo ErrorHandler
                 Call m_GameObjects.FireOnObjectDeath(objEntity)
             End If
             
+        End If
+    End If
+    
+    If Valid(objEntity) And (iAnimType = &H6&) And bHasTarget Then
+        Dim lLandblock As Long
+        
+        lLandblock = pMsg.Value("landblock")
+        
+        If lLandblock <> 0 Then
+            Dim oldLoc As acLoc
+            Set oldLoc = objEntity.Loc.Clone
+        
+            objEntity.Loc.Landblock = lLandblock
+            objEntity.Loc.Xoff = pMsg.Value("xOffset")
+            objEntity.Loc.Yoff = pMsg.Value("yOffset")
+            objEntity.Loc.Zoff = pMsg.Value("zOffset")
+            
+            If Not objEntity.Loc.Equals(oldLoc) Then
+                RaiseEvent OnObjectMoved(objEntity)
+                objEntity.timeData = 0
+            End If
+            Set oldLoc = Nothing
         End If
     End If
     
