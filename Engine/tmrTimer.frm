@@ -36,7 +36,7 @@ Begin VB.Form frmTimer
    End
    Begin VB.Timer tmrRoute 
       Enabled         =   0   'False
-      Interval        =   200
+      Interval        =   100
       Left            =   240
       Top             =   120
    End
