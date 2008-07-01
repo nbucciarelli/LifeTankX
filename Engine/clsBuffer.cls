@@ -569,30 +569,6 @@ On Error GoTo ErrorHandler
         Call CheckItemBuff(.chkItmWandDef.Checked, SPELL_DEF, g_Data.Wand)
         Call CheckItemBuff(.chkItmWandSD.Checked, SPELL_SPIRIT_DRINKER, g_Data.Wand)
         
-        'Critter Buffs
-        If .chkEnableCreatureBuffs.Checked Then
-            For i = 0 To .lstCreature.Count - 1
-                bChecked = .lstCreature.Data(2, i, 0)
-                sSpellFam = .lstCreature.Data(1, i, 0)
-                If bChecked Then
-                    Call AddBuffToList(sSpellFam)
-                End If
-            Next i
-        End If
-        
-        'Armor Banes
-        If .chkItmSelectSelf.Checked Then
-            Call CheckItemBanes(.chkItmSelectSelf.Checked, g_Objects.Player)
-        Else
-            Call CheckItemBanes(.chkItmArmorHead.Checked, g_Objects.Equipment.head)
-            Call CheckItemBanes(.chkItmArmorHands.Checked, g_Objects.Equipment.Hands)
-            Call CheckItemBanes(.chkItmArmorFeet.Checked, g_Objects.Equipment.Feet)
-            Call CheckItemBanes(.chkItmArmorTopUndie.Checked, g_Objects.Equipment.TopUndie)
-            Call CheckItemBanes(.chkItmArmorBottomUndie.Checked, g_Objects.Equipment.BottomUndie)
-            Call CheckCollectionBanes(.chkItmArmorTop.Checked, g_Objects.Equipment.Top)
-            Call CheckCollectionBanes(.chkItmArmorBottom.Checked, g_Objects.Equipment.Bottom)
-        End If
-        
         'Weapon / Bow / Shield
         If IsMelee Then
             Dim objWeapon As acObject
@@ -610,6 +586,29 @@ On Error GoTo ErrorHandler
             Call CheckItemBuff(.chkItmWeapDE.Checked, SPELL_DEF, objWeapon)
         End If
         
+        'Armor Banes
+        If .chkItmSelectSelf.Checked Then
+            Call CheckItemBanes(.chkItmSelectSelf.Checked, g_Objects.Player)
+        Else
+            Call CheckItemBanes(.chkItmArmorHead.Checked, g_Objects.Equipment.head)
+            Call CheckItemBanes(.chkItmArmorHands.Checked, g_Objects.Equipment.Hands)
+            Call CheckItemBanes(.chkItmArmorFeet.Checked, g_Objects.Equipment.Feet)
+            Call CheckItemBanes(.chkItmArmorTopUndie.Checked, g_Objects.Equipment.TopUndie)
+            Call CheckItemBanes(.chkItmArmorBottomUndie.Checked, g_Objects.Equipment.BottomUndie)
+            Call CheckCollectionBanes(.chkItmArmorTop.Checked, g_Objects.Equipment.Top)
+            Call CheckCollectionBanes(.chkItmArmorBottom.Checked, g_Objects.Equipment.Bottom)
+        End If
+        
+        'Critter Buffs
+        If .chkEnableCreatureBuffs.Checked Then
+            For i = 0 To .lstCreature.Count - 1
+                bChecked = .lstCreature.Data(2, i, 0)
+                sSpellFam = .lstCreature.Data(1, i, 0)
+                If bChecked Then
+                    Call AddBuffToList(sSpellFam)
+                End If
+            Next i
+        End If
         
         'Life Pro's
         If .chkEnableLifeBuffs.Checked Then
