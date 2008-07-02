@@ -414,6 +414,7 @@ End Property
 
 Public Sub SetDebugMode(ByVal aVal As Boolean)
     m_Log.bDebugMode = aVal
+    myDebug "SetDebugMode: " & aVal
 End Sub
 
 '################################################################################
@@ -1381,6 +1382,9 @@ On Error GoTo ErrorHandler
     lObjectGUID = pMsg.Value("object")
     lEffectID = pMsg.Value("effect")
     
+    myDebug "OnApplyVisualEffect: Hex: " & Hex(lEffectID) & " on GUID: " & lObjectGUID
+    myDebug "OnApplyVisualEffect: Raw: " & lEffectID & " on GUID: " & lObjectGUID
+    
     If lEffectID = EF_WAR_LAUNCH Then
         RaiseEvent OnSpellVisible("WAR_LAUNCH Event")
     ElseIf lEffectID = EF_WAR_LAND Then
@@ -1398,6 +1402,7 @@ On Error GoTo ErrorHandler
         'Spells don't get added to GameObjects, so not an error
         'myError "NetEvent_OnApplyVisualEffects: No valid objEntity found in m_GameObjects GUID: " & lObjectGUID
         Set objEntity = New acObject
+        myDebug "NetEvent_OnApplyVisualEffects: No valid objEntity found in m_GameObjects GUID: " & lObjectGUID
     End If
     
     Select Case lEffectID
@@ -1414,6 +1419,7 @@ On Error GoTo ErrorHandler
         Case EF_LIGHTNING_VULN
             iVuln = DMG_LIGHTNING
         Case EF_IMPERIL_BLUDG
+            myDebug "OnApplyVisualEffect: Imp/Bludge landing on " & lObjectGUID
             objEntity.ImpOrBludgeon = True
             Call m_GameObjects.FireObjectImpOrBludgeoned(objEntity)
         Case EF_YIELD

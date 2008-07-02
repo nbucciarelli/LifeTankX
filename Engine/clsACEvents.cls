@@ -87,7 +87,7 @@ End Sub
 Private Sub g_charFilter_ActionComplete()
 On Error GoTo ErrorHandler
 
-    'MyDebug "clsACEvents.g_charFilter_ActionComplete"
+    locDebug "clsACEvents.g_charFilter_ActionComplete"
 
 Fin:
     Exit Sub
@@ -168,7 +168,7 @@ On Error GoTo ErrorHandler
     End If
     
     If g_Macro.Ticking Then
-        'MyDebug "DSFilter_OnReady: g_Macro.Ticking"
+        locDebug "DSFilter_OnReady: g_Macro.Ticking"
         Call g_Macro.OnReady(True, bWasCasting)
     End If
     
@@ -220,6 +220,7 @@ Private Sub m_DSFilter_MeleeAttackComplete()
 On Error GoTo ErrorHandler
 
     If g_Macro.Ticking Then
+        locDebug "clsACEvents_DSFilter_MeleeAttackComplete"
         Call g_Macro.Combat.OnMeleeAttackComplete
     End If
     
@@ -887,7 +888,7 @@ Private Sub m_Items_OnOpenContainer(ByVal objContainer As DarksideFilter.acObjec
 On Error GoTo ErrorHandler
     
       'if we're not in loot mode, don't even bother
-    If g_Macro.State = ST_LOOT Then
+    If (g_Macro.State = ST_LOOT) Or (g_Macro.State = ST_IDLE) And g_Macro.Active Then
         Call g_Macro.Loot.OnOpenContainer(objContainer, colItems)
     End If
     
@@ -919,7 +920,7 @@ End Sub
 Private Sub m_Items_OnEquipItem(ByVal objItem As DarksideFilter.acObject)
 On Error GoTo ErrorHandler
 
-    MyDebug "OnEquipItem event: " & objItem.Name
+    MyDebug "m_Items_OnEquipItem event: " & objItem.Name
     'RaiseEvent g_Macro.m_Equip.OnItemEquipped
 
 Fin:

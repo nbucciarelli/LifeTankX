@@ -156,22 +156,40 @@ Public Enum eVitalStats
     VITAL_STAT_MANA = &H5&
 End Enum
 
+'Public Enum eVisualEffects
+'    EF_WAR_LAUNCH = &H4&
+'    EF_WAR_LAND = &H5&
+'    EF_FESTER = &H25&
+'    EF_FIRE_VULN = &H2B&
+'    EF_PIERCE_VULN = &H2D&
+'    EF_BLADE_VULN = &H2F&
+'    EF_ACID_VULN = &H31&
+'    EF_COLD_VULN = &H33&
+'    EF_LIGHTNING_VULN = &H35&
+'    EF_IMPERIL_BLUDG = &H37&
+'    EF_YIELD = &H17&
+'    EF_FIZZLE = &H50&
+'    EF_EQUIP_ITEM = &H77&
+'    EF_UNEQUIP_ITEM = &H78&
+'End Enum
+
 Public Enum eVisualEffects
     EF_WAR_LAUNCH = &H4&
     EF_WAR_LAND = &H5&
-    EF_FESTER = &H25&
-    EF_FIRE_VULN = &H2B&
-    EF_PIERCE_VULN = &H2D&
-    EF_BLADE_VULN = &H2F&
-    EF_ACID_VULN = &H31&
-    EF_COLD_VULN = &H33&
-    EF_LIGHTNING_VULN = &H35&
-    EF_IMPERIL_BLUDG = &H37&
     EF_YIELD = &H17&
-    EF_FIZZLE = &H50&
-    EF_EQUIP_ITEM = &H77&
-    EF_UNEQUIP_ITEM = &H78&
+    EF_FESTER = &H26&
+    EF_FIRE_VULN = &H2C&
+    EF_PIERCE_VULN = &H2E&
+    EF_BLADE_VULN = &H30&
+    EF_ACID_VULN = &H32&
+    EF_COLD_VULN = &H34&
+    EF_LIGHTNING_VULN = &H36&
+    EF_IMPERIL_BLUDG = &H38&
+    EF_FIZZLE = &H51&
+    EF_EQUIP_ITEM = &H78&
+    EF_UNEQUIP_ITEM = &H79&
 End Enum
+
 
 '====================================================================
 ' Coverages

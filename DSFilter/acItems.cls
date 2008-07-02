@@ -681,7 +681,7 @@ On Error GoTo ErrorHandler
         Set objItem = Find(ObjectGUID, False)
         
         If Valid(objItem) Then
-            'MyDebug "OnWieldObject: " & .Name
+            myDebug "OnWieldObject: " & objItem.Name
             objItem.Wielder = WielderGUID
             
             If objItem.Wielder = g_Objects.Player.GUID Then
@@ -826,7 +826,7 @@ On Error GoTo ErrorHandler
     
     Set objItem = Find(ObjectGUID, False)
     If Valid(objItem) Then
-        'MyDebug "OnWearItem: equipping " & .Name
+        myDebug "OnWearItem: equipping " & objItem.Name
         objItem.Equiped = True
         
         'Fire the event

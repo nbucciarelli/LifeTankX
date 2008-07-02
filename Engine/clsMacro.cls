@@ -1782,7 +1782,7 @@ On Error GoTo ErrorHandler
                     Call ValidState
                 End If
                 
-            Case ST_STICK_NAV   ' moving back to sticky point
+10            Case ST_STICK_NAV   ' moving back to sticky point
                 'check if we need healing
                 If m_mustHeal Then
                     If GoHealing Then GoTo Fin
@@ -1801,7 +1801,7 @@ On Error GoTo ErrorHandler
                     Call GoIdle
                 End If
  
-            Case ST_NAV 'a "in-motion" variation of ST_IDLE
+11            Case ST_NAV 'a "in-motion" variation of ST_IDLE
                 'check if we need healing
                 If m_mustHeal Then
                     If GoHealing Then GoTo Fin
@@ -1827,7 +1827,7 @@ On Error GoTo ErrorHandler
                     Call GoIdle
                 End If
             
-            Case ST_FOLLOW_NAV
+12            Case ST_FOLLOW_NAV
                 'check if we need healing
                 If m_mustHeal Then
                     If GoHealing Then GoTo Fin
@@ -1841,7 +1841,7 @@ On Error GoTo ErrorHandler
                 Call ClearSpellQueue
                 
                 'Look for targets
-                If Not g_ui.Macro.chkNoCombatFollow And m_attackCritter Then
+                If Not g_ui.Macro.chkNoCombatFollow.Checked And m_attackCritter Then
                     locDebug "ST_FOLLOW_NAV : found target while following, going to Idle state"
                     Call GoIdle
                     GoTo Fin
@@ -1853,7 +1853,7 @@ On Error GoTo ErrorHandler
                     Call GoIdle
                 End If
             
-            Case ST_COMBAT
+13            Case ST_COMBAT
                 'check if we need Healing
                 If m_mustHeal Then
                     If GoHealing Then GoTo Fin
@@ -1896,7 +1896,7 @@ On Error GoTo ErrorHandler
                     Call m_tmrNextLootCheck.SetNextTime(LOOT_CHECK_INTERVAL)
                 End If
                 
-            Case ST_RESTAM
+14            Case ST_RESTAM
                 'check if we need healing
                 If m_mustHeal Then
                     If GoHealing Then GoTo Fin
@@ -1905,7 +1905,7 @@ On Error GoTo ErrorHandler
                 'Run restam state
                 Call m_Restam.RunState
                 
-            Case ST_BUDDYREBUFF
+15            Case ST_BUDDYREBUFF
                 'First check to make sure Buddy is still in range
                 If Not ValidRangeTo(g_buffBuddy, g_ui.Macro.txtAssistRange.Text) Then
                     PrintMessage "Buff Buddy out of range, disabling buff buddy!"
@@ -1935,7 +1935,7 @@ On Error GoTo ErrorHandler
                     End If
                 End If
                 
-            Case ST_REBUFF
+16            Case ST_REBUFF
                 'check if we still need to be in rebuff mode
                 If g_Buffer.BuffQueue.Count <= 0 Then
                     locDebug "clsMacro.RunState:ST_REBUFF: no more buffs on the stack, moving back to IDLE"
@@ -1955,10 +1955,10 @@ On Error GoTo ErrorHandler
                     End If
                 End If
             
-            Case ST_HEALING
+17            Case ST_HEALING
                 Call m_Healing.RunState
                 
-            Case ST_FELLOWHEAL
+18            Case ST_FELLOWHEAL
                 'check to see if fellow members nearby need healing
                 If g_ui.Macro.chkHealFellow.Checked And g_Objects.Fellowship.Active And m_fellowNeedsHealing Then
                     locDebug "ST_FELLOWHEAL: checking for fellow members in need of healing"
@@ -1987,7 +1987,7 @@ On Error GoTo ErrorHandler
                 Call m_tmrFellowHeal.Reset
                 Call GoIdle
             
-            Case ST_FLETCHING
+19            Case ST_FLETCHING
                 ' If we have a War spell in the queue, be sure to clear it out
                 Call ClearSpellQueue
                 
@@ -1995,7 +1995,7 @@ On Error GoTo ErrorHandler
                     Call m_Fletcher.RunState
                 End If
                 
-            Case ST_FELLOW_CMD
+20            Case ST_FELLOW_CMD
                 ' If we have a War spell in the queue, be sure to clear it out
                 Call ClearSpellQueue
                 
@@ -2003,7 +2003,7 @@ On Error GoTo ErrorHandler
                     Call m_FellowCmd.RunState
                 End If
                 
-            Case ST_LOOT
+21            Case ST_LOOT
                 'check if we need healing
                 If m_mustHeal Then
                     If GoHealing Then GoTo Fin
@@ -2035,7 +2035,7 @@ On Error GoTo ErrorHandler
                     Call m_Loot.RunState
                 End If
                 
-            Case ST_SALVAGE
+22            Case ST_SALVAGE
                 ' If we have a War spell in the queue, be sure to clear it out
                 Call ClearSpellQueue
                 
@@ -2043,7 +2043,7 @@ On Error GoTo ErrorHandler
                     Call m_Salvager.RunState
                 End If
             
-            Case ST_BUYSELL
+23            Case ST_BUYSELL
                 ' If we have a War spell in the queue, be sure to clear it out
                 Call ClearSpellQueue
                 
@@ -2051,7 +2051,7 @@ On Error GoTo ErrorHandler
                     Call PhatLoot.RunState
                 End If
             
-            Case ST_MANACHARGE
+24            Case ST_MANACHARGE
                 'check if we need healing
                 If m_mustHeal Then
                     If GoHealing Then GoTo Fin
@@ -3321,6 +3321,9 @@ On Error GoTo ErrorHandler
             Case ST_FELLOW_CMD
                 sRet = "Fellow Cmd"
                 
+            Case ST_FOLLOW_NAV
+                sRet = "Follow Target"
+            
             Case ST_LOOT
                 sRet = "Looting (" & m_Loot.GetStateString & ")"
                 
