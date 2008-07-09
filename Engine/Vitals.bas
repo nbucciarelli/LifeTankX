@@ -220,6 +220,7 @@ On Error GoTo ErrorMessage
     Next objItem
 
 Fin:
+    Set objItem = Nothing
     Exit Sub
 ErrorMessage:
     PrintErrorMessage "Error in Vitals.idManaStones: " & Err.Description & " - " & Err.Source
@@ -347,6 +348,7 @@ Fin:
     findManaCharge = found
     MyDebug "findManaCharge: " & g_manaItem.Guid & " : " & g_manaItem.Name & " (" & g_manaItem.Mana & ")"
     g_bFindingItem = False
+    Set objItem = Nothing
     Exit Function
 ErrorMessage:
     PrintErrorMessage "Error in Vitals.findManaCharge: " & Err.Description & " - " & Err.Source

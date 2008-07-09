@@ -555,6 +555,7 @@ On Error GoTo ErrorHandler
     
 Fin:
     Set Clone = objClone
+    Set objClone = Nothing
     Exit Function
 ErrorHandler:
     Set objClone = Nothing

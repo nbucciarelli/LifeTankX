@@ -533,8 +533,8 @@ On Error GoTo ErrorHandler
     m_tmrDroppedRebuff.Enabled = False
 
 Fin:
-    Set m_droppedQueue = New clsSpellQueue
-    Set m_buffItems = New colObjects
+    Set m_droppedQueue = Nothing
+    Set m_buffItems = Nothing
     Set objBuff = Nothing
     Set objItem = Nothing
     Set buffSpell = Nothing
@@ -626,6 +626,7 @@ On Error GoTo ErrorHandler
     MyDebug "BuildBuffList: total spells: " & m_colBuffs.Count
     
 Fin:
+    Set objItem = Nothing
     Exit Sub
 ErrorHandler:
     PrintErrorMessage "BuildBuffList - " & Err.Description
@@ -672,6 +673,8 @@ found:
     Next objBuff
 
 Fin:
+    Set objBuff = Nothing
+    Set objSpell = Nothing
     Exit Sub
 ErrorHandler:
     PrintErrorMessage "existingSpellList - " & Err.Description & " - line: " & Erl
@@ -705,6 +708,7 @@ On Error GoTo ErrorHandler
 
 Fin:
     existingSpellFamilyOnPlayer = isFound
+    Set objSpell = Nothing
     Exit Function
 ErrorHandler:
     PrintErrorMessage "existingSpellFamilyOnPlayer - " & Err.Description & " - line: " & Erl
@@ -769,6 +773,8 @@ On Error GoTo ErrorHandler
 
 Fin:
     existingSpellsOnPlayer = isFound
+    Set newSpell = Nothing
+    Set oldSpell = Nothing
     Exit Function
 ErrorHandler:
     PrintErrorMessage "existingSpellsOnPlayer - " & Err.Description & " - line: " & Erl

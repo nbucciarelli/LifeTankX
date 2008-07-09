@@ -195,6 +195,7 @@ On Error GoTo ErrorHandler
     End If
     
 Fin:
+    Set objNewTarget = Nothing
     Exit Function
 ErrorHandler:
     BetterTargetAvailable = False
@@ -243,6 +244,7 @@ On Error GoTo ErrorHandler
     TargetScanner = False
 
 Fin:
+    Set objEntity = Nothing
     Exit Function
 ErrorHandler:
     TargetScanner = False
@@ -300,6 +302,8 @@ On Error GoTo ErrorHandler
 
 Fin:
     FindRingSpellTarget = bFound
+    Set objEntity = Nothing
+    Set colTargets = Nothing
     Exit Function
 ErrorHandler:
     bFound = False
@@ -483,6 +487,8 @@ NextEntity:
 Fin:
     Set objTargetOut = objBestTarget
     FindTargetInCol = bFoundTarget
+    Set objEntity = Nothing
+    Set objBestTarget = Nothing
     Exit Function
 ErrorHandler:
     bFoundTarget = False

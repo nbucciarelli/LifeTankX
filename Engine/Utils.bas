@@ -717,6 +717,7 @@ On Error GoTo ErrorHandler
     End If
        
 Fin:
+    Set objPlayer = Nothing
     Exit Sub
 ErrorHandler:
     PrintErrorMessage "RecruitPlayerByGUID - " & Err.Description
@@ -964,6 +965,7 @@ On Error GoTo ErrorHandler
     Next i
     
 Fin:
+    Set best_item = Nothing
     Exit Sub
 ErrorHandler:
     PrintErrorMessage "SortBySalvageQuantity - " & Err.Description
@@ -989,6 +991,7 @@ On Error GoTo ErrorHandler
     ColToArray = theArray
     
 Fin:
+    Set obj = Nothing
     Exit Function
 ErrorHandler:
     PrintErrorMessage "ColToArray - " & Err.Description

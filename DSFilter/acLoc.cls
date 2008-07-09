@@ -361,6 +361,7 @@ On Error GoTo ErrorHandler
     
 Fin:
     Set Clone = newLoc
+    Set newLoc = Nothing
     Exit Function
 ErrorHandler:
     Set newLoc = Nothing

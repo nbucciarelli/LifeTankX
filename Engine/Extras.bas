@@ -788,6 +788,7 @@ NextItem:
     Next objItem
 
 Fin:
+    Set objItem = Nothing
     Exit Sub
 ErrorHandler:
     PrintErrorMessage "PutSalvageInUst - " & Err.Description

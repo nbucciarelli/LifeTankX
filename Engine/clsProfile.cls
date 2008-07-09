@@ -367,6 +367,7 @@ On Error GoTo ErrorHandler
     Next objMonster
     
 Fin:
+    Set objMonster = Nothing
     LoadProfile = m_bProfileLoaded
     Exit Function
 ErrorHandler:

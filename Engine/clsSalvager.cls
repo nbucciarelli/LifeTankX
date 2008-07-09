@@ -304,6 +304,7 @@ On Error GoTo ErrorHandler
     Next objItem
 
 Fin:
+    Set objItem = Nothing
     Exit Sub
 ErrorHandler:
     PrintErrorMessage "clsSalvager.GetSalvagesList - " & Err.Description
@@ -961,6 +962,7 @@ On Error GoTo ErrorHandler
     locDebug "ScanSalvages : " & m_IdQueue.GetObjectsList
     
 Fin:
+    Set objItem = Nothing
     Exit Sub
 ErrorHandler:
     PrintErrorMessage "clsSalvager.ScanSalvages - " & Err.Description
@@ -979,6 +981,7 @@ On Error GoTo ErrorHandler
     Set m_ItemsToSalvage = New colObjects
     
 Fin:
+    Set objItem = Nothing
     Exit Sub
 ErrorHandler:
     PrintErrorMessage "clsSalvager.AddSalvagesToUst - " & Err.Description

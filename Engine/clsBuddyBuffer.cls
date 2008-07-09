@@ -239,6 +239,7 @@ On Error GoTo ErrorHandler
     End If
     
 Fin:
+    Set objItem = Nothing
     Exit Sub
 ErrorHandler:
     PrintErrorMessage "CheckCollectionBanes"
@@ -469,6 +470,7 @@ On Error GoTo ErrorHandler
     MyDebug "BuildBuffList: total spells: " & m_colBuffs.Count
 
 Fin:
+    Set objItem = Nothing
     Exit Sub
 ErrorHandler:
     PrintErrorMessage "clsBuddyBuffer.BuildBuffList - " & Err.Description & " line: " & Erl
@@ -658,6 +660,10 @@ On Error GoTo ErrorHandler
     m_tmrSecure.Enabled = True
     
 Fin:
+    Set objItem = Nothing
+    Set objBuff = Nothing
+    Set objSpell = Nothing
+    Set spellList = Nothing
     Exit Sub
 ErrorHandler:
     PrintErrorMessage "CastNextSpell"

@@ -597,6 +597,8 @@ On Error GoTo ErrorHandler
     HandleConsoleCommand = True
     
 Fin:
+    Set objItem = Nothing
+    Set objSpell = Nothing
     Exit Function
 ErrorHandler:
     HandleConsoleCommand = False

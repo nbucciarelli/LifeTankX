@@ -77,6 +77,7 @@ On Error GoTo ErrorHandler
     End With
 
 Fin:
+    Set oMobData = Nothing
     Exit Sub
 ErrorHandler:
     PrintErrorMessage "InitMonster - " & Err.Description
@@ -125,6 +126,7 @@ On Error GoTo ErrorHandler
     Next objMonster
     
 Fin:
+    Set objMonster = Nothing
     Exit Sub
 ErrorHandler:
     PrintErrorMessage "UpdateMonstersInWorld - " & Err.Description

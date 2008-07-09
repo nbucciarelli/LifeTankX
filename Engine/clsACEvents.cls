@@ -874,7 +874,6 @@ ErrorHandler:
     Resume Fin
 End Sub
 
-
 Private Sub m_Objects_OnObjectMoved(ByVal obj As DarksideFilter.acObject)
 On Error GoTo ErrorHandler
 
@@ -899,6 +898,28 @@ ErrorHandler:
     PrintErrorMessage "clsACEvents.OnObjectMoved"
     Resume Fin
 End Sub
+
+Private Sub m_Objects_OnSelectObject(ByVal obj As DarksideFilter.acObject)
+On Error GoTo ErrorHandler
+
+    If Not Valid(obj) Then Exit Sub
+
+    'If we are in Melee combat mode and have a target, make sure we have it selected
+    If IsMelee And Valid(g_Macro.Combat.Target) Then
+        'make sure target is selected
+        If g_Hooks.CurrentSelection <> m_objTarget.Guid Then
+            locDebug "Target is not selected - Forcing selection."
+            Call g_Service.SelectObject(m_objTarget)
+        End If
+    End If
+
+Fin:
+    Exit Sub
+ErrorHandler:
+    PrintErrorMessage "clsACEvents.OnSelectObject"
+    Resume Fin
+End Sub
+
 
 '######################################################################################
 '#

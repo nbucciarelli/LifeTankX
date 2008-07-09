@@ -345,10 +345,9 @@ On Error GoTo ErrorHandler
         If tmpItem.Equiped Then Msg = Msg & " [Equiped]"
         myDebug Msg
     Next tmpItem
-    
-    Set tmpItem = Nothing
 
 Fin:
+    Set tmpItem = Nothing
     Exit Sub
 ErrorHandler:
     myError "acItems.DisplayInventory: " & Err.Description

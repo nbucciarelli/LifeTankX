@@ -921,7 +921,7 @@ On Error GoTo Error_Handler
             If Not g_ui.Options.chkFilterLTMsg.Checked Then
                 PrintMessage "Better target available - Switching from " & m_objTarget.Name & " to " & objNewTarget.Name & "..."
             Else
-                locDebug "clsMacroCombat.EngageBetterTarget: Switching from " & m_objTarget.Name & " to " & objNewTarget.Name & "..."
+                MyDebug "clsMacroCombat.EngageBetterTarget: Switching from " & m_objTarget.Name & " to " & objNewTarget.Name & "..."
             End If
             bRes = EngageCombat(objNewTarget, "EngageBetterTarget")
         Else
@@ -932,6 +932,7 @@ On Error GoTo Error_Handler
     End If
 
 Fin:
+    Set objNewTarget = Nothing
     EngagingBetterTarget = bRes
     Exit Function
 Error_Handler:
@@ -976,6 +977,7 @@ On Error GoTo Error_Handler
     End If
     
 Fin:
+    Set objNewTarget = Nothing
     EngagingDangerousTarget = bRes
     Exit Function
 Error_Handler:

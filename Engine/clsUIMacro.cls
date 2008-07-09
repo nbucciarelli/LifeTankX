@@ -1974,6 +1974,7 @@ On Error GoTo ErrorMessage
         
 Fin:
     Set findObjectFromList = aObj
+    Set aObj = Nothing
     Exit Function
 ErrorMessage:
     Set aObj = Nothing

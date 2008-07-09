@@ -220,6 +220,7 @@ On Error GoTo ErrorHandler
     
 Fin:
     Set CreatePlayer = objPlayer
+    Set objPlayer = Nothing
     Exit Function
 ErrorHandler:
     Set objPlayer = Nothing
@@ -236,6 +237,7 @@ On Error GoTo ErrorHandler
    
 Fin:
     Set CreateMonster = objMonster
+    Set objMonster = Nothing
     Exit Function
 ErrorHandler:
     Set objMonster = Nothing
@@ -311,6 +313,7 @@ On Error GoTo ErrorHandler
     Next objItem
 
 Fin:
+    Set objItem = Nothing
     Exit Sub
 ErrorHandler:
     myError "GameObjects.RemoveWieldedItems - " & Err.Description

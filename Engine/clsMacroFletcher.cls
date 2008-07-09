@@ -160,6 +160,7 @@ On Error GoTo ErrorHandler
     End If
     
 Fin:
+    Set objArrows = Nothing
     Exit Sub
 ErrorHandler:
     PrintErrorMessage "clsMacroFletcher.EquipAvailableArrows - " & Err.Description
