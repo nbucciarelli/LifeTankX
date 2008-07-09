@@ -238,19 +238,19 @@ On Error GoTo ErrorHandler
         Call g_DOT.playerEvade(sAttacker)
     End If
 
-    'This is here to find those pesky critters that are "invisible" to dsfilter
-    If g_Macro.isIdle And Not TargetScanner(g_Objects.Monsters) Then
-        'Idle and No citters within range, yet we just took melee damage, WTF?
-        ' Maybe we should not be shooting wars?
-        If Not g_ui.Macro.chkNoWar.Checked Then
-            'Ok, try select closest critter and see what that gets us
-            Call g_Core.SendKey(g_Keys.KeyClosestMonster)
-            MyDebug "clsACEvents.OnPlayerEvade: ST_IDLE, no target and evading melee damage"
-            MyDebug "clsACEvents.OnPlayerEvade: LOST CRITTER!"
-            Call g_Hooks.IDQueueAdd(g_Hooks.CurrentSelection)
-            g_Macro.m_lostCritter = True
-        End If
-    End If
+    ''This is here to find those pesky critters that are "invisible" to dsfilter
+    'If g_Macro.isIdle And Not TargetScanner(g_Objects.Monsters) Then
+    '    'Idle and No citters within range, yet we just took melee damage, WTF?
+    '    ' Maybe we should not be shooting wars?
+    '    If Not g_ui.Macro.chkNoWar.Checked Then
+    '        'Ok, try select closest critter and see what that gets us
+    '        Call g_Core.SendKey(g_Keys.KeyClosestMonster)
+    '        MyDebug "clsACEvents.OnPlayerEvade: ST_IDLE, no target and evading melee damage"
+    '        MyDebug "clsACEvents.OnPlayerEvade: LOST CRITTER!"
+    '        Call g_Hooks.IDQueueAdd(g_Hooks.CurrentSelection)
+    '        g_Macro.m_lostCritter = True
+    '    End If
+    'End If
 
 Fin:
     Exit Sub
@@ -306,18 +306,18 @@ On Error GoTo ErrorHandler
     End If
     
     'This is here to find those pesky critters that are "invisible" to decal/dsfilter
-    If g_Macro.isIdle And Not TargetScanner(g_Objects.Monsters) Then
-        'Idle and No citters within range, yet we just took melee damage, WTF?
-        ' Maybe we should not be shooting wars?
-        If Not g_ui.Macro.chkNoWar.Checked Then
-            'Ok, try select closest critter and see what that gets us
-            Call g_Core.SendKey(g_Keys.KeyClosestMonster)
-            MyDebug "clsACEvents.OnReceiveMeleeDamage: ST_IDLE, no target and taking melee damage!"
-            MyDebug "clsACEvents.OnReceiveMeleeDamage: LOST CRITTER! IDing now"
-            Call g_Hooks.IDQueueAdd(g_Hooks.CurrentSelection)
-            g_Macro.m_lostCritter = True
-        End If
-    End If
+    'If g_Macro.isIdle And Not TargetScanner(g_Objects.Monsters) Then
+    '    'Idle and No citters within range, yet we just took melee damage, WTF?
+    '    ' Maybe we should not be shooting wars?
+    '    If Not g_ui.Macro.chkNoWar.Checked Then
+    '        'Ok, try select closest critter and see what that gets us
+    '        Call g_Core.SendKey(g_Keys.KeyClosestMonster)
+    '        MyDebug "clsACEvents.OnReceiveMeleeDamage: ST_IDLE, no target and taking melee damage!"
+    '        MyDebug "clsACEvents.OnReceiveMeleeDamage: LOST CRITTER! IDing now"
+    '        Call g_Hooks.IDQueueAdd(g_Hooks.CurrentSelection)
+    '        g_Macro.m_lostCritter = True
+    '    End If
+    'End If
     
 Fin:
     Exit Sub
@@ -519,8 +519,13 @@ On Error GoTo ErrorHandler
     'If Valid(objSpell) Then
     '    Call g_Buffer.CheckExpiredItemSpellObj(spellID)
     'End If
+    Set objSpell = g_Spells.sBuffs.FindSpellByID(SpellID)
+    If Valid(objSpell) Then
+        Call g_Buffer.CheckExpiredSpell(objSpell.SpellName)
+    End If
 
 Fin:
+    Set objSpell = Nothing
     Exit Sub
 ErrorHandler:
     PrintErrorMessage "clsACEvents.OnRemoveEnchantment - " & Err.Description
@@ -539,7 +544,13 @@ On Error GoTo ErrorHandler
     '    Call g_Buffer.CheckExpiredItemSpellObj(spellID)
     'End If
 
+    Set objSpell = g_Spells.sBuffs.FindSpellByID(SpellID)
+    If Valid(objSpell) Then
+        Call g_Buffer.CheckExpiredSpell(objSpell.SpellName)
+    End If
+
 Fin:
+    Set objSpell = Nothing
     Exit Sub
 ErrorHandler:
     PrintErrorMessage "clsACEvents.OnRemoveMultEnchantment - " & Err.Description
@@ -558,7 +569,13 @@ On Error GoTo ErrorHandler
     '    Call g_Buffer.CheckExpiredItemSpellObj(spellID)
     'End If
 
+    Set objSpell = g_Spells.sBuffs.FindSpellByID(SpellID)
+    If Valid(objSpell) Then
+        Call g_Buffer.CheckExpiredSpell(objSpell.SpellName)
+    End If
+
 Fin:
+    Set objSpell = Nothing
     Exit Sub
 ErrorHandler:
     PrintErrorMessage "clsACEvents.OnSilentRemoveEnchantment - " & Err.Description
@@ -576,8 +593,14 @@ On Error GoTo ErrorHandler
     'If Valid(objSpell) Then
     '    Call g_Buffer.CheckExpiredItemSpellObj(spellID)
     'End If
+    
+    Set objSpell = g_Spells.sBuffs.FindSpellByID(SpellID)
+    If Valid(objSpell) Then
+        Call g_Buffer.CheckExpiredSpell(objSpell.SpellName)
+    End If
 
 Fin:
+    Set objSpell = Nothing
     Exit Sub
 ErrorHandler:
     PrintErrorMessage "clsACEvents.OnSilentRemoveMultEnchantment - " & Err.Description
@@ -887,8 +910,8 @@ End Sub
 Private Sub m_Items_OnOpenContainer(ByVal objContainer As DarksideFilter.acObject, ByVal colItems As DarksideFilter.colObjects)
 On Error GoTo ErrorHandler
     
-      'if we're not in loot mode, don't even bother
-    If (g_Macro.State = ST_LOOT) Or (g_Macro.State = ST_IDLE) And g_Macro.Active Then
+    'if we're not in loot mode, don't even bother
+    If (g_Macro.State = ST_LOOT) Then
         Call g_Macro.Loot.OnOpenContainer(objContainer, colItems)
     End If
     
@@ -1115,6 +1138,8 @@ On Error GoTo ErrorHandler
     
     If InStr(bstrMsg, "too busy") Or InStr(bstrMsg, "Casting") Then
         bFilterMsg = True
+    ElseIf InStr(bstrMsg, "is already a member of a fellowship") Then
+        'Need to let them know they are aleady in a fellow and they need to drop the old one
     Else
         bFilterMsg = False
     End If
