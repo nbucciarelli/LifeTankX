@@ -907,9 +907,9 @@ On Error GoTo ErrorHandler
     'If we are in Melee combat mode and have a target, make sure we have it selected
     If IsMelee And Valid(g_Macro.Combat.Target) Then
         'make sure target is selected
-        If g_Hooks.CurrentSelection <> m_objTarget.Guid Then
+        If g_Hooks.CurrentSelection <> g_Macro.Combat.Target.Guid Then
             locDebug "Target is not selected - Forcing selection."
-            Call g_Service.SelectObject(m_objTarget)
+            Call g_Service.SelectObject(g_Macro.Combat.Target)
         End If
     End If
 
