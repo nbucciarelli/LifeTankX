@@ -1129,7 +1129,7 @@ Public Sub GoFletching()
 On Error GoTo ErrorHandler
 
     If m_Fletcher.StartFletching("clsMacro.GoFletching") Then
-        LogEvent "Fletching " & g_Data.GetArrowType & " with " & g_Data.GetArrowHead & " and " & g_Data.ArrowShaft
+        MyDebug "Fletching " & g_Data.GetArrowType & " and " & g_Data.GetArrowHead & " and " & g_Data.ArrowShaft
         Call SetState(ST_FLETCHING)
     Else
         MyDebug "GoFletching - StartFletching failed"
@@ -2959,7 +2959,7 @@ On Error GoTo ErrorHandler
     Dim objArrow As acObject
 
     'ArrowName = g_Data.Arrows
-    ArrowName = g_Data.GetArrowType
+    ArrowName = g_Data.GetArrowType(False)
     PrintMessage "Out of " & ArrowName & ". Looking up for some in inventory..."
     MyDebug "Out of " & ArrowName & ". Looking up for some in inventory..."
     NumArrowsInInventory = g_Objects.Items.InvCntByName(ArrowName, True)
@@ -2979,7 +2979,7 @@ On Error GoTo ErrorHandler
         'Fletch if needed and enabled
         If g_ui.Macro.chkEnableFletching.Checked Then
             'look up for arrow heads
-            ArrowName = g_Data.GetArrowHead
+            ArrowName = g_Data.GetArrowHead(False)
             NumArrowHeads = g_Objects.Items.InvCntByName(ArrowName, True)
             MyDebug "...NumArrowHeads = " & NumArrowHeads
 
@@ -3012,7 +3012,7 @@ Fin:
     Set objArrow = Nothing
     Exit Sub
 ErrorHandler:
-    PrintErrorMessage "clsMacro.OnOutOfArrow - " & Err.Description & " line: " & Erl
+    PrintErrorMessage "clsMacro.ReloadArrows - " & Err.Description & " line: " & Erl
     Resume Fin
 End Sub
 

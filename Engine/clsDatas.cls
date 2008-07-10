@@ -417,48 +417,71 @@ ErrorHandler:
     Resume Fin
 End Function
 
-Public Function GetArrowType() As String
+Public Function GetArrowType(Optional ByVal ooaCheck As Boolean = True) As String
 On Error GoTo ErrorHandler
 
     Dim ArrowName As String
+    Dim weapName As String
     Dim NumArrowHeads As Integer
     
     ArrowName = TAG_NOT_SET
     
     If Valid(g_currentEquip) Then
-        Select Case g_currentEquip.DamageType
-            Case DMG_SLASHING
-                ArrowName = m_sArrowSlash
-            Case DMG_BLUDGEONING
-                ArrowName = m_sArrowBludge
-            Case DMG_PIERCING
-                ArrowName = m_sArrowPierce
-            Case DMG_FIRE
-                ArrowName = m_sArrowFire
-            Case DMG_COLD
-                ArrowName = m_sArrowCold
-            Case DMG_ACID
-                ArrowName = m_sArrowAcid
-            Case DMG_LIGHTNING
-                ArrowName = m_sArrowLight
-            Case Else
-                ArrowName = m_sArrows
-        End Select
+        weapName = g_currentEquip.Name
+    End If
+    
+    MyDebug "clsDatas.GetArrowType: weapon: :" & weapName & ":"
+
+    If g_ui.Macro.chkWeapSlash.Checked And Valid(g_Data.WeapSlash) Then
+        If (weapName = g_Data.WeapSlash.Name) Then
+            ArrowName = m_sArrowSlash
+        End If
+        End If
+    If g_ui.Macro.chkWeapBludge.Checked And Valid(g_Data.WeapBludge) Then
+        If (weapName = g_Data.WeapBludge.Name) Then
+            ArrowName = m_sArrowBludge
+        End If
+        End If
+    If g_ui.Macro.chkWeapPierce.Checked And Valid(g_Data.WeapPierce) Then
+        If (weapName = g_Data.WeapPierce.Name) Then
+            ArrowName = m_sArrowPierce
+        End If
+    End If
+    If g_ui.Macro.chkWeapFire.Checked And Valid(g_Data.WeapFire) Then
+        MyDebug "clsData.GetArrowType: FireWeap: :" & g_Data.WeapFire.Name & ":"
+        If (weapName = g_Data.WeapFire.Name) Then
+            ArrowName = m_sArrowFire
+        End If
+    End If
+    If g_ui.Macro.chkWeapCold.Checked And Valid(g_Data.WeapCold) Then
+        If (weapName = g_Data.WeapCold.Name) Then
+            ArrowName = m_sArrowCold
+        End If
+    End If
+    If g_ui.Macro.chkWeapAcid.Checked And Valid(g_Data.WeapAcid) Then
+        If (weapName = g_Data.WeapAcid.Name) Then
+            ArrowName = m_sArrowAcid
+        End If
+    End If
+    If g_ui.Macro.chkWeapLight.Checked And Valid(g_Data.WeapLight) Then
+        If (weapName = g_Data.WeapLight.Name) Then
+            ArrowName = m_sArrowLight
+        End If
     End If
     
     If ArrowName = TAG_NOT_SET Then
-        MyDebug "GetArrowType: arrow not set for this bow!"
+        MyDebug "GetArrowType: arrow not set for this bow. Using Default"
         ArrowName = m_sArrows
     End If
     
     GetArrowType = ArrowName
     
-    MyDebug "GetArrowType: " & ArrowName
+    MyDebug "clsDatas.GetArrowType: " & ArrowName
     
     NumArrowHeads = g_Objects.Items.InvCntByName(ArrowName, True)
     
     If NumArrowHeads > 0 Then
-        MyDebug "GetArrowType: Found a total of " & NumArrowHeads & " " & ArrowName & " in inventory"
+        MyDebug "clsDatas.GetArrowType: Found a total of " & NumArrowHeads & " " & ArrowName & " in inventory"
         Set g_currentArrow = g_Objects.Items.InvFindByName(ArrowName)
     End If
     
@@ -471,33 +494,53 @@ ErrorHandler:
 End Function
 
 'Arrow heads for fletching
-Public Function GetArrowHead() As String
+Public Function GetArrowHead(Optional ByVal ooaCheck As Boolean = True) As String
 On Error GoTo ErrorHandler
 
     Dim ArrowHeadName As String
     Dim NumArrowHeads As Integer
+    Dim weapName As String
     
     ArrowHeadName = TAG_NOT_SET
     
     If Valid(g_currentEquip) Then
-        Select Case g_currentEquip.DamageType
-            Case DMG_SLASHING
-                ArrowHeadName = m_sHeadSlash
-            Case DMG_BLUDGEONING
-                ArrowHeadName = m_sHeadBludge
-            Case DMG_PIERCING
-                ArrowHeadName = m_sHeadPierce
-            Case DMG_FIRE
-                ArrowHeadName = m_sHeadFire
-            Case DMG_COLD
-                ArrowHeadName = m_sHeadCold
-            Case DMG_ACID
-                ArrowHeadName = m_sHeadAcid
-            Case DMG_LIGHTNING
-                ArrowHeadName = m_sHeadLight
-            Case Else
-                ArrowHeadName = m_sArrowHead
-        End Select
+        weapName = g_currentEquip.Name
+    End If
+    
+    If g_ui.Macro.chkWeapSlash.Checked Then
+        If (weapName = g_Data.WeapSlash.Name) Then
+            ArrowHeadName = m_sHeadSlash
+        End If
+    End If
+    If g_ui.Macro.chkWeapBludge.Checked Then
+        If (weapName = g_Data.WeapBludge.Name) Then
+            ArrowHeadName = m_sHeadBludge
+        End If
+    End If
+    If g_ui.Macro.chkWeapPierce.Checked Then
+        If (weapName = g_Data.WeapPierce.Name) Then
+            ArrowHeadName = m_sHeadPierce
+        End If
+    End If
+    If g_ui.Macro.chkWeapFire.Checked Then
+        If (weapName = g_Data.WeapFire.Name) Then
+            ArrowHeadName = m_sHeadFire
+        End If
+    End If
+    If g_ui.Macro.chkWeapCold.Checked Then
+        If (weapName = g_Data.WeapCold.Name) Then
+            ArrowHeadName = m_sHeadCold
+        End If
+    End If
+    If g_ui.Macro.chkWeapAcid.Checked Then
+        If (weapName = g_Data.WeapAcid.Name) Then
+            ArrowHeadName = m_sHeadAcid
+        End If
+    End If
+    If g_ui.Macro.chkWeapLight.Checked Then
+        If (weapName = g_Data.WeapLight.Name) Then
+            ArrowHeadName = m_sHeadLight
+        End If
     End If
     
     If ArrowHeadName = TAG_NOT_SET Then
