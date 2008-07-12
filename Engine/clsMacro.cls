@@ -686,17 +686,8 @@ End Sub
 Private Sub m_Equip_OnItemEquipped()
     locDebug "OnItemEquipped Fired"
     If m_iSubState = SUBST_EQUIP Then
-        MyDebug "Macro : item equipped."
-        If m_iCombatType = TYPE_MELEE Then
-            If g_Data.Shield.Equiped Then
-                Call ResetSubState
-            Else
-                Call ResetSubState
-                Call ValidState(TYPE_MELEE)
-            End If
-        Else
-            Call ResetSubState
-        End If
+        MyDebug "clsMacro_OnItemEquipped: item equipped."
+        Call ResetSubState
     Else
         PrintWarning "m_Equip_OnItemEquipped fired, but SubState != SUBST_EQUIP"
     End If

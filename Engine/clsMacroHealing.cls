@@ -279,6 +279,14 @@ On Error GoTo ErrorMessage
                         End If
                     End If
                     
+                    If Valid(g_Data.Shield) Then
+                        If Not g_Data.Shield.Equiped Then
+                            MyDebug "Healing : Shield not equipped, equipping now: " & g_Data.Shield.Name
+                            Call g_Macro.ValidState
+                            GoTo Fin
+                        End If
+                    End If
+                    
                     'MyDebug "Healing: We're in peace mode. Using Kit..."
                     Call g_Service.UseItemOnSelf(m_objHealingKit)
                     MyDebug "Used Kit..."
