@@ -613,9 +613,10 @@ On Error GoTo ErrorHandler
     End If
     
     'Unknown scrolls
-    If g_ui.Loot.chkUnknownScrolls.Checked And InStr(LCase(objItem.Name), "scroll") Then
+    If g_ui.Loot.chkUnknownScrolls.Checked And (InStr(LCase(objItem.Name), "scroll") Or (objItem.itemType = ITEM_SCROLL)) Then
         Dim sName As String
         Dim SpellID As Long
+        Dim aSkill As Long
         Dim aSpell As clsSpell
         'get scroll name
         sName = objItem.Name
@@ -630,12 +631,19 @@ On Error GoTo ErrorHandler
 2            Set aSpell = g_Spells.FindSpellByID(SpellID)
 3            If Valid(aSpell) Then
 4                MyDebug "PhatLoot.scrolls: Name: " & sName & "   school: " & aSpell.SpellSchool & " isTrained: " & g_Hooks.Skill(aSpell.SpellSchool)
-5                If (g_Hooks.Skill(aSpell.SpellSchool) > 0) Then
+5                aSkill = MagicSchoolToSkillId(aSpell.SpellSchool)
+6                If g_Hooks.SkillTrainLevel(aSkill) <> eUntrained Then
                     ' add to array so we can read it later
-6                    MyDebug "Looting unknown scroll: " & sName
+                    MyDebug "Looting unknown scroll: " & sName
                     ' all done, pick up!
                     GoTo Fin
                 End If
+'5                If (g_Hooks.Skill(aSpell.SpellSchool) > 0) Then
+'                    ' add to array so we can read it later
+'6                    MyDebug "Looting unknown scroll: " & sName
+'                    ' all done, pick up!
+'                    GoTo Fin
+'                End If
             Else
                 MyDebug "Looting unknow scroll: " & sName
                 GoTo Fin

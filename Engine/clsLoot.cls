@@ -1191,12 +1191,7 @@ On Error GoTo ErrorHandler
         locDebug "PassedPickupFilters(" & obj.Name & ") - OK : Item in Specials List"
         bOk = True
         GoTo Fin
-    
-    ElseIf g_ui.Loot.ItemInIgnoreList(obj.Name) Then
-        locDebug "PassedPickupFilters(" & obj.Name & ") - NO : Item in Ignore List"
-        bOk = False
-        GoTo Fin
-        
+            
     ElseIf MustIdItems And IsWorthAssessing(obj.itemType) Then
     
         'if ID on this item still pending, ignore it until we receive the stats
