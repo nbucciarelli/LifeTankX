@@ -63,6 +63,19 @@ Private Enum eWeaponKindTabs
     TAB_MISSILE_WEAPONS
 End Enum
 
+Private Enum ePickupListColumns
+    COL_ENABLED
+    COL_ITEM_NAME
+    COL_EXACT_MATCH
+    COL_NUM_PICKUP
+End Enum
+
+Private Enum eExceptionListColumns
+    EX_COL_ICON = 0
+    EX_COL_NAME
+    EX_COL_GUID
+End Enum
+
 Private Const m_COLOR_DEL_COL = 15383387
 
 'Settings tab -----------------------------------------------------
@@ -183,6 +196,7 @@ Attribute cmdAddWand.VB_VarHelpID = -1
 
 'Items tab ---------------------------------------------------------
 Public txtAddItemToPickup As DecalControls.Edit
+Public txtNumToPickup As DecalControls.Edit
 Public WithEvents btnAddItemToPickup As DecalControls.PushButton
 Attribute btnAddItemToPickup.VB_VarHelpID = -1
 Public WithEvents btnPickupSetSelection As DecalControls.PushButton
@@ -210,13 +224,6 @@ Attribute btnAddCorpse.VB_VarHelpID = -1
 Public WithEvents btnCorpseSetSelection As DecalControls.PushButton
 Attribute btnCorpseSetSelection.VB_VarHelpID = -1
 
-Private Enum ePickupListColumns
-    COL_ENABLED
-    COL_ITEM_NAME
-    COL_EXACT_MATCH
-    COL_NUM_PICKUP
-End Enum
-
 'Exceptions tab ---------------------------------------------------------
 Public WithEvents lstExceptions As DecalControls.list
 Attribute lstExceptions.VB_VarHelpID = -1
@@ -229,12 +236,6 @@ Attribute cmdAddException.VB_VarHelpID = -1
 'Public txtMinMana As DecalControls.Edit
 'Public txtMaxStone As DecalControls.Edit
 'Public txtMaxCharge As DecalControls.Edit
-
-Private Enum eExceptionListColumns
-    EX_COL_ICON = 0
-    EX_COL_NAME
-    EX_COL_GUID
-End Enum
 
 '-----------------------------------------------------------------
 
@@ -279,6 +280,7 @@ On Error GoTo Error_Handler
     
     Set txtAddItemToPickup = g_MainView.Control("txtAddItemToPickup")
     Set btnAddItemToPickup = g_MainView.Control("btnAddItemToPickup")
+    Set txtNumToPickup = g_MainView.Control("txtNumToPickup")
     Set btnPickupSetSelection = g_MainView.Control("btnPickupSetSelection")
     Set lstPickup = g_MainView.Control("lstPickup")
     
@@ -471,8 +473,8 @@ On Error GoTo Error_Handler
     End With
     
     Call LoadItemsList(lstPickup, GetPickupListPath)
-    Call LoadItemsList(lstIgnore, GetIgnoreListPath)
-    Call LoadItemsList(lstCorpse, GetCorpseListPath)
+    'Call LoadItemsList(lstIgnore, GetIgnoreListPath)
+    'Call LoadItemsList(lstCorpse, GetCorpseListPath)
     
     'Load Filters Lists
     Call LoadArmorControls
@@ -582,6 +584,7 @@ On Error GoTo Error_Handler
 
     Set txtAddItemToPickup = Nothing
     Set btnAddItemToPickup = Nothing
+    Set txtNumToPickup = Nothing
     Set btnPickupSetSelection = Nothing
     Set lstPickup = Nothing
     
@@ -794,7 +797,7 @@ On Error GoTo Error_Handler
     
     i = FindItemInList(lstControl, FullItemName)
     If i >= 0 Then
-        iNumCount = lstControl.Data(COL_NUM_PICKUP, i)
+        iNumCount = CInt(lstControl.Data(COL_NUM_PICKUP, i))
     Else
         iNumCount = 0
     End If
@@ -857,6 +860,8 @@ On Error GoTo Error_Handler
     Dim curItemName As String
     Dim curExactMatch As Boolean
     
+    'MyDebug INTERFACE_NAME & ".AddItemToList: " & sItemName
+    
     'First check if it's not already in the list
     For i = 0 To lstControl.Count - 1
         curItemName = lstControl.Data(COL_ITEM_NAME, i)
@@ -902,7 +907,8 @@ On Error GoTo Error_Handler
         If iNumToPickup > 0 Then
             .Data(COL_NUM_PICKUP, i) = iNumToPickup
         Else
-            .Data(COL_NUM_PICKUP, i) = ""
+            'Do Nothing!
+            '.Data(COL_NUM_PICKUP, i) = ""
         End If
     End With
     
@@ -928,13 +934,20 @@ On Error GoTo Error_Handler
     Dim i As Integer
     
     MyDebug INTERFACE_NAME & ".SaveItemsList - Saving list to " & sFullPath
+    MyDebug INTERFACE_NAME & ".SaveItemsList - CountCols: " & lstControl.CountCols
     
     For i = 0 To lstControl.Count - 1
         Set dat = New clsDataEntry
         dat.AddParam TAG_ENABLED, BoolToInteger(lstControl.Data(COL_ENABLED, i))
         dat.AddParam TAG_ITEM_NAME, lstControl.Data(COL_ITEM_NAME, i)
         dat.AddParam TAG_EXACT_MATCH, lstControl.Data(COL_EXACT_MATCH, i)
-        dat.AddParam TAG_NUM_PICKUP, lstControl.Data(COL_NUM_PICKUP, i)
+        If lstControl.CountCols > 3 Then
+            If CInt(lstControl.Data(COL_NUM_PICKUP, i)) > 0 Then
+                dat.AddParam TAG_NUM_PICKUP, lstControl.Data(COL_NUM_PICKUP, i)
+            Else
+                dat.AddParam TAG_NUM_PICKUP, 0
+            End If
+        End If
         
         If Not db.AddData(dat) Then
             PrintErrorMessage INTERFACE_NAME & ".SaveItemsList - db.AddData(dat) failed"
@@ -996,10 +1009,11 @@ On Error GoTo Error_Handler
                     bEnable = False
                 End If
                 
+                iNumToPickup = 0
                 If dat.ParamExist(TAG_NUM_PICKUP) Then
-                    iNumToPickup = dat.Param(TAG_NUM_PICKUP)
-                Else
-                    iNumToPickup = 0
+                    If dat.Param(TAG_NUM_PICKUP) <> "" Then
+                        iNumToPickup = CInt(dat.Param(TAG_NUM_PICKUP))
+                    End If
                 End If
                 
                 Call AddItemToList(lstControl, Trim(sItemName), bEnable, bExactMatch, iNumToPickup)
@@ -1066,7 +1080,7 @@ On Error GoTo Error_Handler
     If ItemCheckedInList(lstIgnore, ItemName) Then
         PrintMessage "Impossible to add " & ItemName & " to the Pickup list : " & ItemName & " is on the Ignored items list. Remove it from there first."
     Else
-        If AddItemToList(lstPickup, txtAddItemToPickup.Text, True, True) Then
+        If AddItemToList(lstPickup, txtAddItemToPickup.Text, True, True, txtNumToPickup.Text) Then
             Call SaveItemsList(lstPickup, GetPickupListPath)
         End If
     End If
