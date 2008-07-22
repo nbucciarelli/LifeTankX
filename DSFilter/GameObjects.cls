@@ -545,8 +545,6 @@ On Error GoTo ErrorHandler
     
     'myDebug "NetEvent_OnCreateObject: " & lObjGUID & " : " & sObjName
 
-
-    '
 ' Don't care about duplicates, as colObjects.addObject now just removes the old one and adds the new one
     '
     'Make sure we're not trying to add an already existing object that hasn't been deleted (happens sometimes)
@@ -572,6 +570,10 @@ On Error GoTo ErrorHandler
     objEntity.Name = sObjName
     objEntity.Icon = xGame.Value("icon")
     objEntity.gameDataType = xGame.Value("type")
+    
+    If Not Valid(objEntity) Then
+        myError "NetEvent_OnCreateObject: not VALID objEntity: " & sObjName & " :guid: " & lObjGUID
+    End If
     
     myDebug "NetEvent_OnCreateObject: " & objEntity.Name & " [" & objEntity.GUID & "] - gameFlags1 =" & Hex(gameFlags1)
     
@@ -646,7 +648,7 @@ On Error GoTo ErrorHandler
             Else
                 If Not m_colPlayers.AddObject(objEntity) Then
                     myError "GameObjects.NetEcho_OnCreateObject: failed to add player " & objEntity.Name & " [" & objEntity.GUID & "] to Players collection"
-                    GoTo Fin
+                    'GoTo Fin
                 End If
             End If
 
@@ -662,11 +664,14 @@ On Error GoTo ErrorHandler
             
         'Monsters
         ElseIf (behaveFlag = &H14&) Then
-            'myDebug "Object type MONSTER: " & objEntity.Name
+            myDebug "NetEcho_OnCreateObject: Object type MONSTER: " & objEntity.Name
             objEntity.ObjectType = TYPE_MONSTER
             If Not m_colMonsters.AddObject(objEntity) Then
-                myError "GameObjects.NetEcho_OnCreateObject: failed to add monster " & objEntity.Name & " [" & objEntity.GUID & "] to Monsters collection"
-                GoTo Fin
+                myError "GameObjects.NetEcho_OnCreateObject: 1st try failed to add monster " & objEntity.Name & " [" & objEntity.GUID & "] to Monsters collection"
+                If Not m_colMonsters.AddObject(objEntity) Then
+                    myError "GameObjects.NetEcho_OnCreateObject: 2nd try failed to add monster " & objEntity.Name & " [" & objEntity.GUID & "] to Monsters collection"
+                    'GoTo Fin
+                End If
             End If
         
         'All the rest (NPCs, etc.)
@@ -800,12 +805,12 @@ On Error GoTo ErrorHandler
                 Call m_Items.UpdateInventoryCount
             Else
                 myError "GameObjects.NetEcho_OnCreateObject: failed to add item " & objEntity.Name & " [" & objEntity.GUID & "] to Inventory Items collection"
-                GoTo Fin
+                'GoTo Fin
             End If
         Else
             If Not m_Items.AddWorldItemEx(objEntity) Then
                 myError "GameObjects.NetEcho_OnCreateObject: failed to add item " & objEntity.Name & " [" & objEntity.GUID & "] to World Items collection"
-                GoTo Fin
+                'GoTo Fin
             End If
         End If
         

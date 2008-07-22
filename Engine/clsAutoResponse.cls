@@ -411,6 +411,10 @@ On Error GoTo ErrorHandler
     ElseIf InStr(search, "[inscribe]") Then
         retString = "What?"
     
+    ElseIf InStr(search, "[date]") Then
+        'Figure out what today is
+        retString = "Todays date?"
+    
     ElseIf InStr(search, "[emote]") Then
     
         Dim iNum As Integer

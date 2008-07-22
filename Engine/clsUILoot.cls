@@ -788,7 +788,7 @@ Error_Handler:
     Resume Fin
 End Function
 
-'ItemCheckCount
+'Finds the number of items in our inventory
 Public Function ItemCheckCount(ByRef lstControl As DecalControls.list, FullItemName As String) As Boolean
 On Error GoTo Error_Handler
 

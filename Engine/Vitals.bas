@@ -29,20 +29,23 @@ Public Function NeedMana(Optional bIsMelee As Boolean = False) As Boolean
 On Error GoTo ErrorHandler
     Dim bRet As Boolean
     
-    If (bIsMelee) Then
-        'Only worry about mana if we are buffing (Melee or Archer)
-        If (g_ui.Buffs.chkEnableBuffing.Checked) And (g_Buffer.BuffQueue.Count > 0) Then
-            'Ok, we should check
-            bRet = g_Filters.Mana <= GetPercent(g_Filters.MaxMana, g_Data.MinManaThreshold)
-        Else
-            'Nope, don't worry about mana
-            bRet = False
-            GoTo Fin
-        End If
-    Else
-        'Mages need to worry about mana all the time
-        bRet = g_Filters.Mana <= GetPercent(g_Filters.MaxMana, g_Data.MinManaThreshold)
-    End If
+    'Even melee's need to worry about mana (what if they use spells to heal in combat?)
+    bRet = g_Filters.Mana <= GetPercent(g_Filters.MaxMana, g_Data.MinManaThreshold)
+
+    'If (bIsMelee) Then
+    '    'Only worry about mana if we are buffing (Melee or Archer)
+    '    If (g_ui.Buffs.chkEnableBuffing.Checked) And (g_Buffer.BuffQueue.Count > 0) Then
+    '        'Ok, we should check
+    '        bRet = g_Filters.Mana <= GetPercent(g_Filters.MaxMana, g_Data.MinManaThreshold)
+    '    Else
+    '        'Nope, don't worry about mana
+    '        bRet = False
+    '        GoTo Fin
+    '    End If
+    'Else
+    '    'Mages need to worry about mana all the time
+    '    bRet = g_Filters.Mana <= GetPercent(g_Filters.MaxMana, g_Data.MinManaThreshold)
+    'End If
     
     'If Not g_Macro.ValidState(TYPE_CASTER) Then
     '    bRet = False
@@ -311,14 +314,13 @@ On Error GoTo ErrorMessage
                         smallestMana = objItem.Mana
                         Set g_manaItem = objItem
                         found = True
+                        GoTo Fin
                     End If
                 End If
             End If
         Next objItem
     
     End If
-    
-    If found Then GoTo Fin
     
     'Loop through inventory items, looking for Mana Charges
     'However, don't use Massive mana charges unless enabled as peeps use them as DI's

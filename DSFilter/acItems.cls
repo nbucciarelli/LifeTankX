@@ -111,9 +111,9 @@ End Property
 
 Private Sub InventoryToWorld(ByVal lObjGUID As Long)
 On Error GoTo ErrorHandler
+    Dim objItem As acObject
 
     If m_colInv.Exists(lObjGUID) Then
-        Dim objItem As acObject
         
         'Keep a reference to the item object
         Set objItem = m_colInv(lObjGUID)
@@ -137,6 +137,7 @@ On Error GoTo ErrorHandler
     End If
     
 Fin:
+    Set objItem = Nothing
     Exit Sub
 ErrorHandler:
     myError "acItems.InventoryToWorld - " & Err.Description
@@ -145,10 +146,10 @@ End Sub
 
 Private Sub WorldToInventory(lObjGUID As Long, Optional lPackGUID As Long = 0)
 On Error GoTo ErrorHandler
+    Dim objItem As acObject
 
     If m_colWorld.Exists(lObjGUID) Then
         Dim bIsPack As Boolean
-        Dim objItem As acObject
         
         'Keep a reference to this item
         Set objItem = m_colWorld(lObjGUID)
@@ -173,6 +174,7 @@ On Error GoTo ErrorHandler
     End If
     
 Fin:
+    Set objItem = Nothing
     Exit Sub
 ErrorHandler:
     myError "acItems.InventoryToWorld - " & Err.Description
@@ -188,7 +190,7 @@ End Sub
 Public Function AddInventoryItem(ByVal itmName As String, ByVal itmGUID As Long) As acObject
 On Error GoTo ErrorHandler
     
-    'myError "Inventory Items: added " & itmName
+    myDebug "Inventory Items: added " & itmName
     Set AddInventoryItem = m_colInv.Add(itmGUID, itmName)
     Call UpdateInventoryCount
 
@@ -203,7 +205,7 @@ End Function
 Public Function AddInventoryItemEx(objItem As acObject) As Boolean
 On Error GoTo ErrorHandler
     
-    'myError "Inventory Items: added " & itmName
+    myDebug "Inventory Items: added " & objItem.Name
     AddInventoryItemEx = m_colInv.AddObject(objItem)
     Call UpdateInventoryCount
 
@@ -219,7 +221,7 @@ End Function
 Public Function AddWorldItem(ByVal itmName As String, ByVal itmGUID As Long) As acObject
 On Error GoTo ErrorHandler
 
-    'myError "m_colWorld Items: added " & itmName & " : " & itmGUID & "  (" & m_colWorld.Count & ")"
+    myDebug "AddWorldItem: m_colWorld Items: added " & itmName & " : " & itmGUID & "  (" & m_colWorld.Count & ")"
     Set AddWorldItem = m_colWorld.Add(itmGUID, itmName)
 
 Fin:
@@ -232,7 +234,8 @@ End Function
 
 Public Function AddWorldItemEx(objItem As acObject) As Boolean
 On Error GoTo ErrorHandler
-    'myError "m_colWorld Items: added " & objItem.Name & " : " & objItem.GUID & "  (" & m_colWorld.Count & ")"
+    
+    myDebug "AddWorldItemEx: m_colWorld Items: added " & objItem.Name & " : " & objItem.GUID & "  (" & m_colWorld.Count & ")"
     AddWorldItemEx = m_colWorld.AddObject(objItem)
 
 Fin:
@@ -911,13 +914,13 @@ On Error GoTo ErrorHandler
     
     Dim objItem As acObject
     
-    'myDebug "acItems.CreateItem - " & ObjectName & " [" & ObjectGUID & "]"
+    myDebug "acItems.CreateItem - " & ObjectName & " [" & ObjectGUID & "]"
     
     'If object belongs to us
     If (ContainerGUID = g_Objects.Player.GUID) Or (WielderGUID = g_Objects.Player.GUID) Then
         Set objItem = AddInventoryItem(ObjectName, ObjectGUID)
     Else
-        'The current objet's Container can be a Pack in our inventory. Check to see if it's the case
+        'The current object's Container can be a Pack in our inventory. Check to see if it's the case
         If InInventory(ContainerGUID) Then 'object belongs to one our packs, add it to inventory
             Set objItem = AddInventoryItem(ObjectName, ObjectGUID)
         Else    'world object

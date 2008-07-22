@@ -438,7 +438,7 @@ Public Sub ResetCastingFlag(Optional sSource As String = "", Optional ByVal bRes
     m_bCasting = False
     'g_Macro.OkToCast = True
     Call m_tmrPrecastDelay.ExpireNow
-    Call g_Macro.PostCastDelayTimer.SetNextTime(0.5)
+    'Call g_Macro.PostCastDelayTimer.SetNextTime(0.5)
 End Sub
 
 Public Function CastVitalSpell(ByVal SpellBaseName As String, Optional ByVal SpellLevelWanted As Integer = 7, Optional ByVal TargetId As Long = 0) As Boolean
@@ -927,7 +927,7 @@ End Sub
 Private Sub m_tmrSecureCasting_OnTimeout()
     If m_bCasting Then
         'Call g_Hooks.FaceHeading(g_Hooks.HeadingDegrees + 30, False)
-        locDebug "tmrSecureCasting timer expired. Resetting casting flags."
+        MyDebug "tmrSecureCasting timer expired. Resetting casting flags."
         Call ResetCastingFlag(, True)
     End If
 End Sub

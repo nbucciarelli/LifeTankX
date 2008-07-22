@@ -54,7 +54,7 @@ Public Function AddObject(objEntity As acObject) As Boolean
 On Error GoTo ErrorHandler
 
     If Not Valid(objEntity) Then
-        myDebug "colObjects.AddObject(objEntity) - Invalid objEntity, ignoring"
+        myError "colObjects.AddObject(objEntity) - Invalid objEntity, ignoring"
         AddObject = False
         GoTo Fin
     End If
