@@ -700,6 +700,7 @@ Public Function IsEnvoyName(ByVal sPlayerName As String) As Boolean
     sPlayerName = LCase(sPlayerName)
     IsEnvoyName = (InStr(sPlayerName, "+envoy") _
                     Or InStr(sPlayerName, "+") _
+                    Or InStr(sPlayerName, "+turbine") _
                     Or InStr(sPlayerName, "envoy"))
 End Function
 

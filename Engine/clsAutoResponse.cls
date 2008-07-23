@@ -413,6 +413,7 @@ On Error GoTo ErrorHandler
     
     ElseIf InStr(search, "[date]") Then
         'Figure out what today is
+        MyDebug "parseComplex: Date: d:" & Day(Now) & " WeekdayName:" & WeekdayName(Weekday(Now))
         retString = "Todays date?"
     
     ElseIf InStr(search, "[emote]") Then

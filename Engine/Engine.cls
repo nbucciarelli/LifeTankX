@@ -359,8 +359,10 @@ On Error GoTo ErrorHandler
     'LogEvent "Login Complete", True
 
     If g_Filters.playerName = "LocalPlayer" Then
+        MyDebug "OnLoginComplete, but no name for: " & g_Filters.g_charFilter.Name & " : " & g_Filters.g_charFilter.LoginStatus
         PrintMessage "ERROR: === Could not find player name. Exiting LifeTank ==="
         IEngine_OnLoginComplete = False
+        Call g_Service.UnloadPlugin
         Exit Function
     End If
     

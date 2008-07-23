@@ -14,7 +14,7 @@ On Error Resume Next
     m_PluginEnabled = True
 
     If m_Variable("PM", vbLf) <> "NONE" And m_Variable("PM", vbLf) <> "NULL" Then
-        PrintMessage "Private Message from LTxi Admins: " & m_Variable("PM", vbLf)
+        PrintMessage "Private Message from LTx Admins: " & m_Variable("PM", vbLf)
     End If
     
     If m_Variable("AuthKey", vbLf) = "NULL" Then
@@ -64,7 +64,7 @@ On Error Resume Next
     End If
     
     If m_Variable("MOTD", vbLf) <> "NONE" And m_Variable("MOTD", vbLf) <> "NULL" Then
-        PrintMessage "LTxi Message of the Day: " & m_Variable("MOTD", vbLf)
+        PrintMessage "LTx Message of the Day: " & m_Variable("MOTD", vbLf)
     End If
     
     Call VerifyPluginBans(strbPlugins, m_Variable("BanLevel", vbLf))

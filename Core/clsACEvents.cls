@@ -125,11 +125,11 @@ On Error GoTo ErrorHandler
         'g_Hooks.addChatTextRaw "eXtra code by ", COLOR_BLUE, 0
         'g_Hooks.AddChatTextRaw "Xeon Xarid ", COLOR_YELLOW, 0
         'g_Hooks.AddChatText "of LeafCull", COLOR_BLUE, 0
+        'g_Hooks.AddChatText "Original plugin by Spax/Spk of WintersEbb", COLOR_CYAN, 0
+        'g_Hooks.AddChatText "Additional Code by C'relic and Swordz", COLOR_CYAN, 0
         
-        g_Hooks.AddChatText "[" & PLUG_NAME & "] Version " & App.Major & "." & App.Minor & " - Rev: " & App.Revision, COLOR_CYAN, 0
-        g_Hooks.AddChatText "Original plugin by Spax/Spk of WintersEbb", COLOR_CYAN, 0
-        g_Hooks.AddChatText "Additional Code by C'relic and Swordz", COLOR_CYAN, 0
-        g_Hooks.AddChatText "Now Developed by Xeon Xarid / Xeonx", COLOR_BRIGHT_YELLOW, 0
+        'g_Hooks.AddChatText "[" & PLUG_NAME & "] Version " & App.Major & "." & App.Minor & " - Rev: " & App.Revision, COLOR_CYAN, 0
+        g_Hooks.AddChatText "Developed by Xeon Xarid / Xeonx", COLOR_CYAN, 0
         
         'Print MOTD
         'PrintMessage MOTD
