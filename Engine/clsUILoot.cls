@@ -1080,7 +1080,7 @@ On Error GoTo Error_Handler
     If ItemCheckedInList(lstIgnore, ItemName) Then
         PrintMessage "Impossible to add " & ItemName & " to the Pickup list : " & ItemName & " is on the Ignored items list. Remove it from there first."
     Else
-        If AddItemToList(lstPickup, txtAddItemToPickup.Text, True, True, txtNumToPickup.Text) Then
+        If AddItemToList(lstPickup, txtAddItemToPickup.Text, True, True, g_Data.NumToPickup) Then
             Call SaveItemsList(lstPickup, GetPickupListPath)
         End If
     End If

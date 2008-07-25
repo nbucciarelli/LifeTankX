@@ -691,7 +691,7 @@ On Error GoTo ErrorHandler
 
     If Not Valid(obj) Then Exit Sub
     
-    MyDebug "clsACEvents.OnCreateObject: " & obj.Name & " : " & obj.Guid
+    locDebug "clsACEvents.OnCreateObject: " & obj.Name & " : " & obj.Guid
     
 1    Select Case obj.ObjectType
         Case TYPE_PLAYER

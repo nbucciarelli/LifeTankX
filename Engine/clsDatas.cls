@@ -223,6 +223,10 @@ Public Property Get LootMinBurdenRatio() As Integer
     LootMinBurdenRatio = Val(g_ui.Loot.txtBurdenRatio.Text)
 End Property
 
+Public Property Get NumToPickup() As Integer
+    NumToPickup = Val(g_ui.Loot.txtNumToPickup.Text)
+End Property
+
 Public Property Get CastBreakerTime() As Integer    'in Seconds!
     'CastBreakerTime = g_ui.Macro.sldCastBreaker.SliderPosition
     CastBreakerTime = 1

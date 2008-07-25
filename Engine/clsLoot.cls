@@ -1667,6 +1667,7 @@ On Error GoTo ErrorHandler
             id = id & ", +" & getRealAttackBonus(aObj) & " atk"
             If (aObj.DefenseBonus > 0) Then id = id & "/+" & getRealMeleeD(aObj) & " MeleeD"
             If (aObj.MagicDefense > 0) Then id = id & "/+" & aObj.MagicDefense & " MagicD"
+            If (aObj.MissileDefense > 0) Then id = id & "/+" & aObj.MissileDefense & " MissileD"
             If (aObj.ElementBonusDamage > 0) Then id = id & "/+" & aObj.ElementBonusDamage & " DMG"
             If (aObj.WieldReqVal > 0) And (aObj.WieldReqType = 2) Then
                 id = id & ", " & g_ACConst.GetWeaponSkillName(aObj.WieldReqID)
@@ -1719,6 +1720,7 @@ On Error GoTo ErrorHandler
             id = id & getUberRangedRating(aObj)
             id = id & " +" & getRealMeleeD(aObj) & " MeleeD"
             If (aObj.MagicDefense > 0) Then id = id & "/+" & aObj.MagicDefense & " MagicD"
+            If (aObj.MissileDefense > 0) Then id = id & "/+" & aObj.MissileDefense & " MissileD"
             If (aObj.ElementBonusDamage > 0) Then id = id & "/+" & aObj.ElementBonusDamage & " DMG"
             If (aObj.WieldReqVal > 0) And (aObj.WieldReqType = 2) Then
                 id = id & ", " & g_ACConst.GetWeaponSkillName(aObj.WieldReqID)
@@ -1770,6 +1772,7 @@ On Error GoTo ErrorHandler
             If (aObj.ManaConvMod > 0) Then id = id & ", +" & getRealManaC(aObj) & " ManaC"
             If (aObj.DefenseBonus > 0) Then id = id & "/+" & getRealMeleeD(aObj) & " MeleeD"
             If (aObj.MagicDefense > 0) Then id = id & "/+" & aObj.MagicDefense & " MagicD"
+            If (aObj.MissileDefense > 0) Then id = id & "/+" & aObj.MissileDefense & " MissileD"
             If (aObj.PvMBonus > 0) Then id = id & "/+" & getRealPvM(aObj) & " PvM"
             
             bPrint = True

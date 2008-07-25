@@ -1055,9 +1055,7 @@ On Error GoTo ErrorHandler
                                 bAddImbueComma = True
                             End If
                         End If
-                    End If
-                    
-                    If lVal = 2 Then
+                    ElseIf lVal = 2 Then
                         If InStr(objEntity.Imbue, "Crippling Blow") = 0 Then
                             If bAddImbueComma Then
                                 objEntity.Imbue = LTrim(objEntity.Imbue & ", Crippling Blow")
@@ -1066,9 +1064,7 @@ On Error GoTo ErrorHandler
                                 bAddImbueComma = True
                             End If
                         End If
-                    End If
-                    
-                    If lVal = 4 Then
+                    ElseIf lVal = 4 Then
                         If InStr(objEntity.Imbue, "Armor Rending") = 0 Then
                             If bAddImbueComma Then
                                 objEntity.Imbue = LTrim(objEntity.Imbue & ", Armor Rending")
@@ -1077,9 +1073,7 @@ On Error GoTo ErrorHandler
                                 bAddImbueComma = True
                             End If
                         End If
-                    End If
-                    
-                    If lVal = 8 Then
+                    ElseIf lVal = 8 Then
                         objEntity.DamageType = DMG_SLASHING
                         If InStr(objEntity.Imbue, "Slash Rending") = 0 Then
                             If bAddImbueComma Then
@@ -1089,9 +1083,7 @@ On Error GoTo ErrorHandler
                                 bAddImbueComma = True
                             End If
                         End If
-                    End If
-                    
-                    If lVal = 16 Then
+                    ElseIf lVal = 16 Then
                         objEntity.DamageType = DMG_PIERCING
                         If InStr(objEntity.Imbue, "Pierce Rending") = 0 Then
                             If bAddImbueComma Then
@@ -1101,9 +1093,7 @@ On Error GoTo ErrorHandler
                                 bAddImbueComma = True
                             End If
                         End If
-                    End If
-                    
-                    If lVal = 32 Then
+                    ElseIf lVal = 32 Then
                         objEntity.DamageType = DMG_BLUDGEONING
                         If InStr(objEntity.Imbue, "Bludgeon Rending") = 0 Then
                             If bAddImbueComma Then
@@ -1113,9 +1103,7 @@ On Error GoTo ErrorHandler
                                 bAddImbueComma = True
                             End If
                         End If
-                    End If
-                    
-                    If lVal = 64 Then
+                    ElseIf lVal = 64 Then
                         objEntity.DamageType = DMG_ACID
                         If InStr(objEntity.Imbue, "Acid Rending") = 0 Then
                             If bAddImbueComma Then
@@ -1125,9 +1113,7 @@ On Error GoTo ErrorHandler
                                 bAddImbueComma = True
                             End If
                         End If
-                    End If
-                    
-                    If lVal = 128 Then
+                    ElseIf lVal = 128 Then
                         objEntity.DamageType = DMG_COLD
                         If InStr(objEntity.Imbue, "Frost Rending") = 0 Then
                             If bAddImbueComma Then
@@ -1137,9 +1123,7 @@ On Error GoTo ErrorHandler
                                 bAddImbueComma = True
                             End If
                         End If
-                    End If
-                    
-                    If lVal = 256 Then
+                    ElseIf lVal = 256 Then
                         objEntity.DamageType = DMG_LIGHTNING
                         If InStr(objEntity.Imbue, "Lightning Rending") = 0 Then
                             If bAddImbueComma Then
@@ -1149,9 +1133,7 @@ On Error GoTo ErrorHandler
                                 bAddImbueComma = True
                             End If
                         End If
-                    End If
-                    
-                    If lVal = 512 Then
+                    ElseIf lVal = 512 Then
                         objEntity.DamageType = DMG_FIRE
                         If InStr(objEntity.Imbue, "Fire Rending") = 0 Then
                             If bAddImbueComma Then
@@ -1161,13 +1143,10 @@ On Error GoTo ErrorHandler
                                 bAddImbueComma = True
                             End If
                         End If
-                    End If
-                    
-                    'myDebug "Imbue #" & Hex(lVal) & " on " & objEntity.Name
-                    'Else
+                    Else
+                        myDebug "ID: " & objEntity.Name & " - Uknown Imbue: " & Hex(lVal)
                         'objEntity.Imbue = "Unknown Imbue #" & Hex(lVal) & " on " & objEntity.Name
-                    'End If
-                    'myDebug "ID: " & objEntity.Name & " - Imbue: " & objEntity.Imbue
+                    End If
                 
                 Case &HCC& 'ElementBonusDamage
                     objEntity.ElementBonusDamage = lVal
@@ -1385,6 +1364,18 @@ On Error GoTo ErrorHandler
         'If objEntity.DamageModifier <> 0 Then MyDebug "Damage Mod : +" & objEntity.DamageModifier & "%"
 
     End If
+    
+    If Hex(lAssessFlag) = "103D" Then ' Cast on Strike property
+        If InStr(objEntity.Imbue, "Cast on Strike") = 0 Then
+            If bAddImbueComma Then
+                objEntity.ResistanceCleaving = LTrim(objEntity.Imbue & ", Cast on Strike")
+            Else
+                objEntity.ResistanceCleaving = LTrim(objEntity.Imbue & "Cast on Strike")
+                bAddImbueComma = True
+            End If
+        End If
+    End If
+
 
     '----------------------------------------------------------------
     ' Character Assess (Player)
@@ -1450,19 +1441,7 @@ On Error GoTo ErrorHandler
         'End If
 
     End If 'lAssesFlag & H100
-    
-    If Hex(lAssessFlag) = "103D" Then ' Cast on Strike property
-        If InStr(objEntity.Imbue, "Cast on Strike") = 0 Then
-            If bAddImbueComma Then
-                objEntity.ResistanceCleaving = LTrim(objEntity.Imbue & ", Cast on Strike")
-            Else
-                objEntity.ResistanceCleaving = LTrim(objEntity.Imbue & "Cast on Strike")
-                bAddImbueComma = True
-            End If
-        End If
-    End If
-
-    
+        
     'If (objEntity.Container = m_objPlayer.GUID) _
     'Or (objEntity.Wielder = m_objPlayer.GUID) _
     'Or m_Items.InInventory(objEntity.Container) Then
