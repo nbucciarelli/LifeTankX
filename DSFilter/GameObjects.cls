@@ -899,7 +899,7 @@ On Error GoTo ErrorHandler
             
             Select Case lKey
                 Case &H1&  'Name
-                    If (objEntity.Name = "UnknownEntity") Or isNewObj Then
+                    If (objEntity.Name = "UnknownEntity") Or (objEntity.Name = "LocalPlayer") Or (objEntity.Name = "None") Or isNewObj Then
                         objEntity.Name = sVal
                         myDebug "New Obj Name: " & sVal
                     End If
