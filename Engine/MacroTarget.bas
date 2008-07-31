@@ -340,11 +340,11 @@ On Error GoTo ErrorHandler
             locDebug "Target not on same ground level, can't be reached."
             bRet = False
         Else
-            locDebug "TargetCanBeReached:YES: " & AttackRange & "::" & fSquareRangeOut & " : " & objTarget.Name
+            locDebug "TargetCanBeReached:YES: " & AttackRange & "::" & fSquareRangeOut & " : " & objTarget.Name & " : " & objTarget.Guid
             bRet = True
         End If
     Else
-        locDebug "TargetCanBeReached:NO: " & AttackRange & "::" & fSquareRangeOut & " : " & objTarget.Name
+        locDebug "TargetCanBeReached:NO: " & AttackRange & "::" & fSquareRangeOut & " : " & objTarget.Name & " : " & objTarget.Guid
         bRet = False
     End If
     

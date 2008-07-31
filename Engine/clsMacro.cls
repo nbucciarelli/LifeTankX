@@ -199,6 +199,8 @@ Private WithEvents m_tmrCastSpell As clsTimer
 Attribute m_tmrCastSpell.VB_VarHelpID = -1
 Private WithEvents m_tmrFellowHeal As clsTimer
 Attribute m_tmrFellowHeal.VB_VarHelpID = -1
+Private WithEvents m_tmrCleanCollections As clsTimer
+Attribute m_tmrCleanCollections.VB_VarHelpID = -1
 
 'Macro Extansion Modules
 Private WithEvents m_CombatMode As clsMacroChangeCM
@@ -250,6 +252,7 @@ Private Sub Class_Initialize()
     Set m_tmr5MinTimer = CreateTimer
     Set m_tmrCastSpell = CreateTimer
     Set m_tmrFellowHeal = CreateTimer
+    Set m_tmrCleanCollections = CreateTimer
     
     Call m_tmrBusyDelay.Reset
     Call m_tmrPostCastDelayTimer.Reset
@@ -261,6 +264,7 @@ Private Sub Class_Initialize()
     Call m_tmr5MinTimer.Reset
     Call m_tmrCastSpell.Reset
     Call m_tmrFellowHeal.Reset
+    Call m_tmrCleanCollections.Reset
     
     Call ResetTargetScanTimer
     
@@ -371,6 +375,7 @@ Private Sub Class_Terminate()
     Set m_tmrManaChargeTimer = Nothing
     Set m_tmrNextStatsUpdate = Nothing
     Set m_tmrNextTargetScan = Nothing
+    Set m_tmrCleanCollections = Nothing
     
     Set m_CombatMode = Nothing
     Set m_Equip = Nothing
@@ -2153,7 +2158,8 @@ On Error GoTo ErrorHandler
 
 3   Call m_tmrNextStatsUpdate.Reset
 4   Call m_tmrNextStatsUpdate.SetNextTime(5)
-
+    Call m_tmrCleanCollections.SetNextTime(300)
+    
     'reset counters
 5    Call UpdateNextRebuffDisplay
      m_dStartTime = g_Core.ElapsedSeconds
@@ -3399,6 +3405,34 @@ End Sub
 
 Private Sub m_tmrCastSpell_OnTimeout()
     m_bOKToCast = True
+End Sub
+
+'m_tmrCleanCollections
+Private Sub m_tmrCleanCollections_OnTimeout()
+On Error GoTo ErrorHandler
+    Dim objMonster As acObject
+    Dim i As Integer
+
+    For Each objMonster In g_Objects.Monsters
+        If Valid(objMonster) Then
+            ' If it's more than 40 away, it's probably been silently ignored (no OnDestroy event)
+            If (objMonster.GetRange > 40) Then
+                i = objMonster.UserData(INT_DELETE) + 1
+                Call objMonster.SetUserData(INT_DELETE, i)
+                If (objMonster.UserData(INT_DELETE) > 3) Then
+                    objMonster.canDelete = True
+                    MyDebug "clsMacro.m_tmrCleanCollections: canDelete True: " & objMonster.Guid & " : " & objMonster.Name
+                End If
+            End If
+        End If
+    Next objMonster
+
+Fin:
+    Set objMonster = Nothing
+    Exit Sub
+ErrorHandler:
+    PrintErrorMessage "clsMacro.m_tmrCleanCollections - " & Err.Description
+    Resume Fin
 End Sub
 
 Private Sub m_tmrFellowHeal_OnTimeout()

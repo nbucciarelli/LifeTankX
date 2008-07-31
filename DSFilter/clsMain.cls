@@ -82,7 +82,7 @@ Attribute m_GameObjects.VB_VarHelpID = -1
 
 'Clock
 Private Const CLOCK_TIMER_INTERVAL = 100 'msec
-Private Const CHECK_TIMER_INTERVAL = 15000 'msec -- 15 seconds
+Private Const CHECK_TIMER_INTERVAL = 30000 'msec -- 30 seconds
 Private WithEvents m_tmrClock As Timer
 Attribute m_tmrClock.VB_VarHelpID = -1
 Public WithEvents m_tmrCheck As Timer
@@ -203,6 +203,7 @@ On Error GoTo ErrorHandler
                 ' Remove Dead or objects that have been marked canDelete
                 Call removeCol.AddObject(objEntity)
             End If
+            
             'If (objEntity.timeData <> 0) And (objEntity.timeData > g_Time) Then
             '    'if timeData has passed, mark it for deletion
             '    objEntity.canDelete = True
