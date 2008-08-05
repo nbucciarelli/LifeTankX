@@ -191,12 +191,30 @@ Public Function hasEmptyManaStone() As Boolean
     hasEmptyManaStone = m_bEmptyManaStone
 End Function
 
+Public Function hasHighManaItem() As Boolean
+On Error GoTo ErrorHandler
+
+    If m_colHighManaItems.Count > 0 Then
+        hasHighManaItem = True
+    Else
+        hasHighManaItem = False
+    End If
+    
+Fin:
+    Exit Function
+ErrorHandler:
+    hasHighManaItem = False
+    PrintErrorMessage "clsLoot.hasHighManaItem - " & Err.Description
+    Resume Fin
+End Function
+
 Public Function getHighManaItem() As acObject
 On Error GoTo ErrorHandler
     Dim objItem As acObject
 
     If m_colHighManaItems.Count <= 0 Then
         Set getHighManaItem = Nothing
+        GoTo Fin
     End If
 
     For Each objItem In m_colHighManaItems

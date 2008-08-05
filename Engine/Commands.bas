@@ -355,7 +355,9 @@ On Error GoTo ErrorHandler
                         'Case "countmcitems"
                             'Call Vitals.countChargeItems
                             'Call Vitals.countManaStones
-                                                
+                        Case "mouse"
+                            Call g_Core.MouseDebug
+                        
                         Case "corpsetoignore"
                             Call g_Macro.Loot.DebugIgnoreCorpseList
                             

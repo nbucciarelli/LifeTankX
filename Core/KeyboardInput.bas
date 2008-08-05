@@ -193,6 +193,16 @@ End Sub
 '  End With
 'End Sub
 
+Public Sub myMouseDebugPos()
+    Dim rect As POINTAPI
+    ' Get the current mouse cursor coordinates:
+    Call GetCursorPos(rect)
+    ' Print out current position on the form:
+    MyDebug "myMouseDebugPos: Current X = " & rect.x
+    MyDebug "myMouseDebugPos: Current Y = " & rect.y
+    PrintErrorMessage "X: " & rect.x & " Y: " & rect.y
+End Sub
+
 
 Public Sub myMouseClick(ByVal xPos As Integer, ByVal yPos As Integer)
     Dim lParam As Long

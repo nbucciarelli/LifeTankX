@@ -1782,7 +1782,7 @@ On Error GoTo ErrorHandler
                     End If
 
                     'Check to see if we need to recharge an empty mana stone
-                    If g_Macro.Loot.hasEmptyManaStone And Valid(g_emptyManaItem) Then
+                    If g_ui.Macro.chkRechargeManaStones And g_Macro.Loot.hasEmptyManaStone And g_Macro.Loot.hasHighManaItem Then
                         Call goManaStoneRecharge
                     End If
                 
@@ -2891,7 +2891,7 @@ Private Sub goManaStoneRecharge()
 On Error GoTo ErrorHandler
 
     Set m_objHighManaTarget = g_Macro.Loot.getHighManaItem
-    
+
     If Valid(m_objHighManaTarget) Then
         Call SetState(ST_RECHARGESTONE)
         Call m_tmrManaChargeTimer.SetNextTime(8)    'Allow 8 seconds for mana charge to be used

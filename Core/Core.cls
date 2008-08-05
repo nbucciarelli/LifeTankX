@@ -185,6 +185,10 @@ Private Property Get ICore_MainView() As DecalPlugins.IView
     Set ICore_MainView = g_MainView
 End Property
 
+Private Sub ICore_MouseDebug()
+    Call myMouseDebugPos
+End Sub
+
 Private Sub ICore_MouseClick(ByVal xPos As Integer, ByVal yPos As Integer)
     Call myMouseClick(xPos, yPos)
 End Sub
