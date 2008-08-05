@@ -57,6 +57,7 @@ Public Enum eMacroStates
     ST_SALVAGE
     ST_BUYSELL
     ST_MANACHARGE
+    ST_RECHARGESTONE
 End Enum
 
 Public Enum eMacroSubStates
@@ -174,7 +175,8 @@ Private m_iFellowAction As eFellowshipAction
 Private m_FellowCollection As Dictionary
 
 'Looting
-Public m_colChargeItems As colObjects 'List of all the charge items.
+Private m_colChargeItems As colObjects 'List of all the charge items.
+Private m_objHighManaTarget As acObject
 Private m_NavFails As Integer
 
 'Salvager
@@ -393,6 +395,7 @@ Private Sub Class_Terminate()
     
     Set m_FellowCollection = Nothing
     Set m_colChargeItems = Nothing
+    Set m_objHighManaTarget = Nothing
 End Sub
 
 Private Sub ResetFellowAction()
@@ -1778,10 +1781,17 @@ On Error GoTo ErrorHandler
                 
                     End If
 
+                    'Check to see if we need to recharge an empty mana stone
+                    If g_Macro.Loot.hasEmptyManaStone And Valid(g_emptyManaItem) Then
+                        Call goManaStoneRecharge
+                    End If
+                
                 Else
                     Call GoCombat    'resume combat
+                    GoTo Fin
                 End If
-                    
+                
+                
                 ' Make sure we are in combat state when Idle
                 If Not (g_ui.Loot.chkLootForcePeaceMode.Checked) And (g_Hooks.CombatMode <> COMBATSTATE_PEACE) Then
                     Call ValidState
@@ -2062,11 +2072,16 @@ On Error GoTo ErrorHandler
                     If GoHealing Then GoTo Fin
                 End If
                 
-                ' If we have a War spell in the queue, be sure to clear it out
-                Call ClearSpellQueue
                 
                 If Not ACBusy Then
                     Call UseManaCharge
+                End If
+
+25            Case ST_RECHARGESTONE
+                ' If we have a War spell in the queue, be sure to clear it out
+                Call ClearSpellQueue
+                If Not ACBusy Then
+                    Call RechargeManaStone
                 End If
                 
         End Select
@@ -2871,6 +2886,54 @@ ErrorHandler:
     Resume Fin
 End Sub
 
+' Recharge Empty Mana Stones
+Private Sub goManaStoneRecharge()
+On Error GoTo ErrorHandler
+
+    Set m_objHighManaTarget = g_Macro.Loot.getHighManaItem
+    
+    If Valid(m_objHighManaTarget) Then
+        Call SetState(ST_RECHARGESTONE)
+        Call m_tmrManaChargeTimer.SetNextTime(8)    'Allow 8 seconds for mana charge to be used
+        Call m_tmrBusyDelay.SetNextTime(1)          'One second pause between tries
+    Else
+        GoTo Fin
+    End If
+    
+    If Valid(g_emptyManaItem) And (g_manaItem.Guid <> -1) Then
+        MyDebug "goManaStoneRecharge: Using " & g_emptyManaItem.Name & " on " & m_objHighManaTarget.Name
+        Call g_Service.UseItemOn(g_manaItem, m_objHighManaTarget)
+        m_bUsingManaCharge = True
+    End If
+
+Fin:
+    Exit Sub
+ErrorHandler:
+    PrintErrorMessage "clsMacro.goManaStoneRecharge - " & Err.Description & " line: " & Erl
+    Resume Fin
+End Sub
+
+'RechargeManaStone
+Private Sub RechargeManaStone()
+
+    If Not Valid(m_objHighManaTarget) Then Call doneManaCharge
+    
+    If Not m_tmrBusyDelay.Expired Then
+        'Wait a slight pause
+        Exit Sub
+    End If
+
+    'There should be a pop-up asking if we want to destroy this item
+    'to charge up the mana stone. For now, just mouse click on yes button
+    Call Utils.ClickButton(600, 400)
+    
+    'There should be an OnDestroy event called, so remove the item from g_Macro.Loot.getHighManaItem
+    
+    'All done
+    Call doneManaCharge
+
+End Sub
+
 Public Sub setLowManaCheck()
     If g_ui.Macro.chkUseManaCharge.Checked Then
         m_bNeedManaCharge = True
@@ -2935,6 +2998,7 @@ ErrorHandler:
     PrintErrorMessage "clsMacro.UseManaCharge - " & Err.Description & " line: " & Erl
     Resume Fin
 End Sub
+
 
 Public Sub doneManaCharge()
 On Error GoTo ErrorHandler
@@ -3341,6 +3405,9 @@ On Error GoTo ErrorHandler
             
             Case ST_MANACHARGE
                 sRet = "Mana Charge"
+            
+            Case ST_RECHARGESTONE
+                sRet = "Recharge Stone"
             
             Case Else
                 sRet = "Unknown Macro State " & m_iState

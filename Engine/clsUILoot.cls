@@ -236,6 +236,7 @@ Attribute cmdAddException.VB_VarHelpID = -1
 'Public txtMinMana As DecalControls.Edit
 'Public txtMaxStone As DecalControls.Edit
 'Public txtMaxCharge As DecalControls.Edit
+Public txtHighMana As DecalControls.Edit
 
 '-----------------------------------------------------------------
 
@@ -277,6 +278,8 @@ On Error GoTo Error_Handler
     Set txtPickupRange = g_MainView.Control("txtPickupRange")
     
     Set txtPickupMinValue = g_MainView.Control("txtPickupMinValue")
+    
+    Set txtHighMana = g_MainView.Control("txtHighMana")
     
     Set txtAddItemToPickup = g_MainView.Control("txtAddItemToPickup")
     Set btnAddItemToPickup = g_MainView.Control("btnAddItemToPickup")
@@ -413,6 +416,8 @@ On Error GoTo Error_Handler
         chkPickupMajors.Checked = .GetValue("chkPickupMajors", True)
         chkUnknownScrolls.Checked = .GetValue("chkUnknownScrolls", False)
         
+        txtHighMana.Text = .GetValue("txtHighMana", 2000)
+        
         chkLootFellowshipKills.Checked = .GetValue("chkLootFellowshipKills", False)
         chkFilterCorpses.Checked = .GetValue("chkFilterCorpses", False)
         chkLootGround.Checked = .GetValue("chkLootGround", False)
@@ -532,6 +537,8 @@ On Error GoTo Error_Handler
         .SaveCheckbox chkPickupMajors, "chkPickupMajors"
         .SaveCheckbox chkUnknownScrolls, "chkUnknownScrolls"
         
+        .SaveTextbox txtHighMana, "txtHighMana"
+        
         'Filters
         .SaveCheckbox chkLootSalvages, "chkLootSalvages"
         .SaveChoice chSalvageMinWork, "chSalvageMinWork"
@@ -601,6 +608,8 @@ On Error GoTo Error_Handler
     Set chkPickupMinors = Nothing
     Set chkPickupMajors = Nothing
     Set chkUnknownScrolls = Nothing
+    
+    Set txtHighMana = Nothing
 
     Set chkLootFellowshipKills = Nothing
     Set lstCorpse = Nothing

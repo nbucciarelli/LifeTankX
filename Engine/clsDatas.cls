@@ -219,6 +219,10 @@ Public Property Get LootMinValue() As Long
     LootMinValue = Val(g_ui.Loot.txtPickupMinValue.Text)
 End Property
 
+Public Property Get HighManaValue() As Integer
+    HighManaValue = Val(g_ui.Loot.txtHighMana.Text)
+End Property
+
 Public Property Get LootMinBurdenRatio() As Integer
     LootMinBurdenRatio = Val(g_ui.Loot.txtBurdenRatio.Text)
 End Property

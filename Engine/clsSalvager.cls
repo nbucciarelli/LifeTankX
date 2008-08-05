@@ -350,7 +350,6 @@ ErrorHandler:
 End Function
 
 'List all the valid non-salvaged-yet items in main inventory we can salvage
-'FIXME: make private
 Public Sub MakeValidSalvagesList()
 On Error GoTo ErrorHandler
     
@@ -849,6 +848,7 @@ ErrorHandler:
 End Sub
 
 'An object has been destroyed, check if it's one of the items we were salvaging
+'or an object that was used to recharge a mana stone
 Public Sub OnRemoveObject(objItem As acObject)
 On Error GoTo ErrorHandler
 
@@ -878,7 +878,9 @@ On Error GoTo ErrorHandler
             Call m_tmrSecure.SetNextTime(3)
             Call SetState(ST_LOAD_SALVAGES)
         End If
-        
+    ElseIf g_Macro.State = ST_RECHARGESTONE Then
+        MyDebug "clsSalvager.OnRemoveObject: mana stone recharged from: " & objItem.Name
+        Call g_Macro.Loot.removeHighManaItem(objItem.Guid)
     End If
   
 Fin:

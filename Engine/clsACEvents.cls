@@ -879,7 +879,7 @@ On Error GoTo ErrorHandler
 
     If Not Valid(obj) Then Exit Sub
     
-    If g_Nav.NavType = NAVTYPE_FOLLOW Then
+    If g_Nav.NavType = NAVTYPE_FOLLOW And Valid(g_Nav.objToFollow) Then
         If obj.Guid = g_Nav.objToFollow.Guid Then
             Call g_Nav.OnTargetMoved
         End If
@@ -1299,6 +1299,11 @@ On Error GoTo ErrorHandler
             If g_ui.Options.chkAlertFellowDead.Checked And _
                 InStr(LCase(bstrMsg), "your fellow") And InStr(LCase(bstrMsg), "has died") Then
                         Call PlaySound(SOUND_FELLOW_DEAD)
+            End If
+            
+            If g_Macro.State = ST_FELLOW_CMD And InStr(LCase(bstrMsg), "already a memer of a fellowship") Then
+                Call g_Macro.FellowCmd.notifyPlayer("You are already in a fellow, drop old fellow!")
+                Call g_Macro.FellowCmd.ActionFinished
             End If
         End If
     

@@ -271,6 +271,7 @@ Attribute chAttackHeight.VB_VarHelpID = -1
 Public chkUseManaCharge As DecalControls.CheckBox
 Public chkUseManaStone As DecalControls.CheckBox
 Public chkUseMassiveCharges As DecalControls.CheckBox
+Public chkRechargeManaStones As DecalControls.CheckBox
 'Public headerButton As DecalControls.PushButton
 Public WithEvents btnStopSounds As DecalControls.PushButton
 Attribute btnStopSounds.VB_VarHelpID = -1
@@ -468,6 +469,7 @@ On Error GoTo ErrorHandler
     Set chkUseManaCharge = g_MainView.Control("chkUseManaCharge")
     Set chkUseManaStone = g_MainView.Control("chkUseManaStone")
     Set chkUseMassiveCharges = g_MainView.Control("chkUseMassiveCharges")
+    Set chkRechargeManaStones = g_MainView.Control("chkRechargeManaStones")
     
     Set btnStopSounds = g_MainView.Control("btnStopSounds")
     Set btnResetHUD = g_MainView.Control("btnResetHUD")
@@ -671,6 +673,7 @@ On Error GoTo Error_Handler
         chkUseManaCharge.Checked = g_Settings.GetValue("chkUseManaCharge", True)
         chkUseManaStone.Checked = g_Settings.GetValue("chkUseManaStone", True)
         chkUseMassiveCharges.Checked = g_Settings.GetValue("chkUseMassiveCharges", False)
+        chkRechargeManaStones.Checked = g_Settings.GetValue("chkRechargeManaStones", False)
                 
     End With
     
@@ -734,6 +737,7 @@ On Error GoTo Error_Handler
         .SaveCheckbox chkUseManaCharge, "chkUseManaCharge"
         .SaveCheckbox chkUseManaStone, "chkUseManaStone"
         .SaveCheckbox chkUseMassiveCharges, "chkUseMassiveCharges"
+        .SaveCheckbox chkRechargeManaStones, "chkRechargeManaStones"
         
     End With
         
@@ -973,6 +977,7 @@ On Error GoTo Error_Handler
     Set chkUseManaCharge = Nothing
     Set chkUseManaStone = Nothing
     Set chkUseMassiveCharges = Nothing
+    Set chkRechargeManaStones = Nothing
     'Set headerButton = Nothing
     Set btnStopSounds = Nothing
     Set btnResetHUD = Nothing

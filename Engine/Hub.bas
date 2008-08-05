@@ -45,6 +45,7 @@ Public g_ui As clsPluginInterface
 'Global var
 Public g_bProfileLoaded As Boolean
 Public g_manaItem As acObject
+Public g_emptyManaItem As acObject
 Public g_bFindingItem As Boolean
 Public g_bLootRare As Boolean
 Public g_currentEquip As acObject
@@ -136,6 +137,7 @@ On Error GoTo ErrorHandler
     Set g_RareTracker = Nothing
     
     Set g_manaItem = Nothing
+    Set g_emptyManaItem = Nothing
     Set g_buffBuddy = Nothing
                 
     DeleteEngineObjects = True

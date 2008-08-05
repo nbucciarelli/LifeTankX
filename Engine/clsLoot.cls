@@ -54,6 +54,7 @@ Private m_ItemsPending As colObjects        'list of items left to receive a OnC
 Private m_ItemsOnCorpse As colObjects       'list of the items created on the body
 Private m_ItemsToLoot As colObjects         'list of the items we want to loot (items that passed the filters)
 Private m_corpseList As colObjects          'list of corpses we need to loot
+Private m_colHighManaItems As colObjects    'list of High Mana items we will DESTROY!
 
 Private m_bLootCorpses As Boolean       'true if the macro is allowed to loot corpses
 Private m_bLootGround As Boolean        'true if macro is allowed to loot items on the ground
@@ -74,6 +75,7 @@ Attribute m_tmrExportInv.VB_VarHelpID = -1
 Private m_NavHold As Long
 
 Private m_silentID As Boolean
+Private m_bEmptyManaStone As Boolean
 
 Public Event OnItemLooted(objItem As acObject)
 Public Event OnLootingComplete()
@@ -85,7 +87,7 @@ Private Sub Reset()
     Set m_ItemsPending = New colObjects
     Set m_ItemsOnCorpse = New colObjects
     Set m_ItemsToLoot = New colObjects
-    
+
     Set m_curCorpse = Nothing
     Set m_curItem = Nothing
     
@@ -107,6 +109,7 @@ On Error GoTo ErrorHandler
     m_bLootCorpses = True
     m_bLootGround = False
     g_bLootRare = False
+    m_bEmptyManaStone = False
     
     Set m_rareCorpse = Nothing
     Set m_tmrSecure = CreateTimer
@@ -117,10 +120,11 @@ On Error GoTo ErrorHandler
     Set m_corpseList = New colObjects
     Set m_IdQueue = New colObjects
     Set m_ItemsIdQueue = New colObjects
+    Set m_colHighManaItems = New colObjects
   
     Set m_dicCorpseToIgnore = New Dictionary
     
-     m_NavHold = 0
+    m_NavHold = 0
 
     Call Reset
 
@@ -134,6 +138,8 @@ ErrorHandler:
 End Sub
 
 Private Sub Class_Terminate()
+    Set m_colHighManaItems = Nothing
+    
     Set m_curCorpse = Nothing
     Set m_curItem = Nothing
     Set m_IdQueue = Nothing
@@ -180,6 +186,49 @@ End Sub
 Public Function silentID() As Boolean
     silentID = m_silentID
 End Function
+
+Public Function hasEmptyManaStone() As Boolean
+    hasEmptyManaStone = m_bEmptyManaStone
+End Function
+
+Public Function getHighManaItem() As acObject
+On Error GoTo ErrorHandler
+    Dim objItem As acObject
+
+    If m_colHighManaItems.Count <= 0 Then
+        Set getHighManaItem = Nothing
+    End If
+
+    For Each objItem In m_colHighManaItems
+        If Valid(objItem) Then
+            Set getHighManaItem = objItem
+        End If
+    Next objItem
+    
+Fin:
+    Set objItem = Nothing
+    Exit Function
+ErrorHandler:
+    Set getHighManaItem = Nothing
+    PrintErrorMessage "clsLoot.getHighManaItem - " & Err.Description
+    Resume Fin
+End Function
+
+Public Sub removeHighManaItem(ByVal aGuid As Long)
+On Error GoTo ErrorHandler
+
+    If m_colHighManaItems.Count <= 0 Then
+        Exit Sub
+    End If
+
+    Call m_colHighManaItems.Remove(aGuid)
+    
+Fin:
+    Exit Sub
+ErrorHandler:
+    PrintErrorMessage "clsLoot.removeHighManaItem - " & Err.Description
+    Resume Fin
+End Sub
 
 Public Function canLoot() As Boolean
 On Error GoTo ErrorHandler
@@ -604,6 +653,18 @@ On Error GoTo Error_Handler
         End If
     End If
     
+    If (objItem.Container = g_Objects.Player.Guid) Then
+        If (objItem.itemType = ITEM_MANA_STONES) And (objItem.Name Like "*Stone*") Then
+            'See if we have any empty stones
+            If objItem.Mana <= 0 Then
+                MyDebug "clsLoot.OnIdentify: found empty mana stone: " & objItem.Name & " (" & objItem.Mana & ")"
+                m_bEmptyManaStone = True
+                Set g_emptyManaItem = objItem
+            End If
+        End If
+    End If
+
+    
     
 Fin:
     Exit Sub
@@ -847,8 +908,7 @@ On Error GoTo Error_Handler
                     End If
                     Call SetSubState(ST_LOOT_PICKUP_ITEM)
                 Else
-                    'make sure we don't have item IDs pending on this corpse
-                    'before closing it
+                    'make sure we don't have item IDs pending on this corpse before closing it
                     If m_ItemsIdQueue.Count > 0 Then
                         locDebug "Waiting for pending loot IDs on : " & m_ItemsIdQueue.GetObjectsList
                         Call m_tmrNextTime.SetNextTime(2)
@@ -1309,6 +1369,14 @@ On Error GoTo Error_Handler
                 If PhatLoot.PassActiveFilters(curItem, True, False, False, False, False, False) And g_Macro.Salvager.CheckValidSalvageItem(curItem) Then
                     MyDebug "clsLoot: OnItemPickup: Adding to SalvageList: " & curItem.Name
                     Call g_Macro.Salvager.AddLootToSalvageList(curItem)
+                'See if we should add it to the Mana Stone charger list
+                ElseIf PhatLoot.PassActiveFilters(curItem, False, False, False, False, False, False) And (curItem.Mana >= g_Data.HighManaValue) Then
+                    'Add to High Mana item collection
+                    If m_colHighManaItems.addObject(curItem) Then
+                        locDebug "clsLoot.OnPickUp: added to HighManaItems collection: " & curItem.Name
+                    Else
+                        MyDebug "clsLoot.OnPickUp: colHighManaItems.addObject FAILED: " & curItem.Name
+                    End If
                 Else
                     locDebug "clsLoot: OnItemPickup: did NOT pass salvage Filters: " & curItem.Name
                     locDebug "clsLoot: PhatLoot: " & PhatLoot.PassActiveFilters(curItem, True, False, False, False, False, False)

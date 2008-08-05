@@ -1052,3 +1052,25 @@ ErrorHandler:
     Resume Fin
 End Sub
 
+Public Sub ClickButton(xOff As Long, yOff As Long)
+    Dim iPosX As Integer, iPosY As Integer
+    
+    Call g_Window.UpdateDimensions
+    'iPosX = g_Hooks.Area3DWidth + Xoff
+    'iPosY = g_Window.Height - Yoff
+    
+    'MyDebug "ClickButton: Top: " & g_Hooks.AC3DRegionRect.Top & " - Bottom: " & g_Hooks.AC3DRegionRect.Bottom
+    'MyDebug "ClickButton: Left: " & g_Hooks.AC3DRegionRect.Left & " - Right: " & g_Hooks.AC3DRegionRect.Right
+
+    MyDebug "Utils.ClickButton: g_Window.Width: " & g_Window.Width & " - g_Window.Height " & g_Window.Height
+
+    iPosX = g_Window.Width - xOff
+    iPosY = g_Window.Height - yOff
+    
+    MyDebug "Utils.ClickButton: Xoff: " & xOff & "   Yoff: " & yOff
+    MyDebug "Utils.ClickButton: iPosX: " & iPosX & "  iPosY: " & iPosY
+    
+    g_Core.MouseClick iPosX, iPosY
+    
+End Sub
+

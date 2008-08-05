@@ -36,11 +36,10 @@ Private Const SECURE_RECRUIT_TIME = 20
 Private Enum eSubStates
     FST_NONE
     FST_RECRUIT_START
-        FST_RECRUIT_OPEN_PANEL
-        FST_RECRUIT_SELECT
-        FST_RECRUIT_CLICK_RECRUIT
-        FST_RECRUIT_DONE
-        
+    FST_RECRUIT_OPEN_PANEL
+    FST_RECRUIT_SELECT
+    FST_RECRUIT_CLICK_RECRUIT
+    FST_RECRUIT_DONE
 End Enum
 
 Public Enum eFellowshipAction
@@ -84,41 +83,25 @@ End Sub
 
 '#####################################################################################
 
-Private Sub ClickButton(xOff As Long, yOff As Long)
-    Dim iPosX As Integer, iPosY As Integer
-    
-    Call g_Window.UpdateDimensions
-    'iPosX = g_Hooks.Area3DWidth + Xoff
-    'iPosY = g_Window.Height - Yoff
-    
-    'MyDebug "ClickButton: Top: " & g_Hooks.AC3DRegionRect.Top & " - Bottom: " & g_Hooks.AC3DRegionRect.Bottom
-    'MyDebug "ClickButton: Left: " & g_Hooks.AC3DRegionRect.Left & " - Right: " & g_Hooks.AC3DRegionRect.Right
-
-    MyDebug "ClickButton: g_Window.Width: " & g_Window.Width & " - g_Window.Height " & g_Window.Height
-
-    iPosX = g_Window.Width - xOff
-    iPosY = g_Window.Height - yOff
-    
-    MyDebug "clsFellowCmd.ClickButton: Xoff: " & xOff & "   Yoff: " & yOff
-    MyDebug "clsFellowCmd.ClickButton: iPosX: " & iPosX & "  iPosY: " & iPosY
-    
-    g_Core.MouseClick iPosX, iPosY
-    
-End Sub
-
 Public Sub ClickRecruit()
-    Call ClickButton(FELLOW_RECRUIT_XOFF, FELLOW_RECRUIT_YOFF)
+    Call Utils.ClickButton(FELLOW_RECRUIT_XOFF, FELLOW_RECRUIT_YOFF)
 End Sub
 
 Public Sub ClickDisband()
-    Call ClickButton(FELLOW_DISBAND_XOFF, FELLOW_DISBAND_YOFF)
+    Call Utils.ClickButton(FELLOW_DISBAND_XOFF, FELLOW_DISBAND_YOFF)
 End Sub
 
 Public Sub ClickQuit()
-    Call ClickButton(FELLOW_QUIT_XOFF, FELLOW_QUIT_YOFF)
+    Call Utils.ClickButton(FELLOW_QUIT_XOFF, FELLOW_QUIT_YOFF)
 End Sub
 
 '#####################################################################################
+
+Public Sub notifyPlayer(ByVal aMsg As String)
+    If Valid(m_objTarget) Then
+        SendTell m_objTarget.Name, aMsg
+    End If
+End Sub
 
 Public Sub CheckCommand(ByVal playerName As String, ByVal sMsg As String)
     sMsg = LCase(Trim(sMsg))
@@ -163,7 +146,7 @@ ErrorHandler:
     Resume Fin
 End Function
 
-Private Sub ActionFinished()
+Public Sub ActionFinished()
     Call Reset
     RaiseEvent OnActionComplete
 End Sub

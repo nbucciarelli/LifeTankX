@@ -483,7 +483,8 @@ Public Function PassActiveFilters(objItem As acObject, _
                                     Optional ByVal bWeaponFilters As Boolean = True, _
                                     Optional ByVal bWandFilters As Boolean = True, _
                                     Optional ByVal bMajorMinorFilters As Boolean = True, _
-                                    Optional ByVal bValueFilter As Boolean = False)
+                                    Optional ByVal bValueFilter As Boolean = False, _
+                                    Optional ByVal bHighManaFilter As Boolean = True)
 On Error GoTo ErrorHandler
 
     'Assume true
@@ -648,6 +649,13 @@ On Error GoTo ErrorHandler
                 MyDebug "Looting unknow scroll: " & sName
                 GoTo Fin
             End If
+        End If
+    End If
+    
+    'Should we look at items Mana?
+    If g_ui.Macro.chkRechargeManaStones.Checked And g_Macro.Loot.hasEmptyManaStone And bHighManaFilter Then
+        If objItem.Mana > g_Data.HighManaValue Then
+            GoTo Fin
         End If
     End If
 
