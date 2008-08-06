@@ -15,8 +15,13 @@ Public Declare Function timeGetTime Lib "winmm.dll" () As Long
 'Public Declare Function GetActiveWindow Lib "user32" () As Long 'returns handle of the active window
 'Public Declare Function MapVirtualKey Lib "user32" Alias "MapVirtualKeyA" (ByVal wCode As Long, ByVal wMapType As Long) As Long
 
+Public Declare Function GetCursorPos Lib "user32" (lpPoint As POINTAPI) As Long
+Public Declare Function SetCursorPos Lib "user32" (ByVal x As Long, ByVal y As Long) As Long
+    
+Public Declare Function ScreenToClient Lib "user32" (ByVal hWnd As Long, lpPoint As POINTAPI) As Long
+Public Declare Function ClientToScreen Lib "user32" (ByVal hWnd As Long, lpPoint As POINTAPI) As Long
 
-Public Declare Function GetWindowRect Lib "user32" (ByVal hwnd As Long, lpRect As RECT) As Long
+Public Declare Function GetWindowRect Lib "user32" (ByVal hWnd As Long, lpRect As rect) As Long
 
 'Public Declare Function GetWindowPlacement Lib "user32" (ByVal hwnd As Long, lpwndpl As WINDOWPLACEMENT) As Long
 
@@ -32,7 +37,7 @@ Public Declare Sub CopyMemory Lib "kernel32" Alias "RtlMoveMemory" _
 Public Declare Function SHGetFolderPath Lib "shfolder.dll" Alias "SHGetFolderPathA" (ByVal hwndOwner As Long, ByVal nFolder As Long, ByVal hToken As Long, ByVal dwFlags As Long, ByVal lpszPath As String) As Long
 
 
-Public Type RECT
+Public Type rect
   Left As Long
   Top As Long
   Right As Long
@@ -70,14 +75,13 @@ Public Type POINTAPI
   y As Long
 End Type
 
-
 Public Type WINDOWPLACEMENT
   Length As Long
   flags As Long
   showCmd As Long
   ptMinPosition As POINTAPI
   ptMaxPosition As POINTAPI
-  rcNormalPosition As RECT
+  rcNormalPosition As rect
 End Type
 
 Public Const MK_LBUTTON = &H1&
@@ -102,11 +106,11 @@ ErrorHandler:
 End Function
 
 
-Public Function GetACWindowRect() As RECT
+Public Function GetACWindowRect() As rect
 On Error GoTo ErrorHandler
 
-    Dim acRect As RECT
-    Call GetWindowRect(g_PluginSite.hwnd, acRect)
+    Dim acRect As rect
+    Call GetWindowRect(g_PluginSite.hWnd, acRect)
     
 Fin:
     GetACWindowRect = acRect
@@ -117,4 +121,14 @@ ErrorHandler:
 End Function
 
 
+Public Function MouseX() As Long
+    Dim lpPoint As POINTAPI
+    Call ClientToScreen(g_PluginSite.hWnd, lpPoint)
+    MouseX = lpPoint.x
+End Function
 
+Public Function MouseY() As Long
+    Dim lpPoint As POINTAPI
+    Call ClientToScreen(g_PluginSite.hWnd, lpPoint)
+    MouseY = lpPoint.y
+End Function

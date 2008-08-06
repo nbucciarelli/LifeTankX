@@ -31,7 +31,7 @@ On Error GoTo ErrorHandler
 Fin:
     Exit Sub
 ErrorHandler:
-    PrintErrorMessage "clsACEvent.Class_Initialize - " & Err.Description & " - " & Erl
+    PrintErrorMessage "clsACEvents.Class_Initialize - " & Err.Description & " - " & Erl
     Resume Fin
 End Sub
 

@@ -7,6 +7,11 @@ Public Declare Function FindWindow Lib "user32" Alias "FindWindowA" (ByVal lpCla
 Public Declare Function PostMessage Lib "user32" Alias "PostMessageA" (ByVal hwnd As Long, ByVal wMsg As Long, ByVal wParam As Long, lParam As Any) As Long
 Public Declare Function SendMessage Lib "user32" Alias "SendMessageA" (ByVal hwnd As Long, ByVal wMsg As Long, ByVal wParam As Long, lParam As Any) As Long
 
+Public Declare Sub mouse_event Lib "user32" (ByVal dwFlags As Long, ByVal dx As Long, ByVal dy As Long, ByVal cButtons As Long, ByVal dwExtraInfo As Long)
+ 
+Public Declare Function SetCursorPos Lib "user32" (ByVal x As Long, ByVal y As Long) As Long
+Public Declare Function ClientToScreen Lib "user32" (ByVal hwnd As Long, lpPoint As POINTAPI) As Long
+    
 Public Declare Function GetWindowThreadProcessId Lib "user32" (ByVal hwnd As Long, lpdwProcessId As Long) As Long
 Public Declare Function OpenProcess Lib "kernel32" (ByVal dwDesiredAccess As Long, ByVal bInheritHandle As Long, ByVal dwProcessId As Long) As Long
 Public Declare Function CloseHandle Lib "kernel32" (ByVal hObject As Long) As Long
@@ -19,8 +24,6 @@ Public Declare Function GetWindowPlacement Lib "user32" (ByVal hwnd As Long, lpw
 
 Public Declare Function GetKeyState Lib "user32" (ByVal nVirtKey As Long) As Integer
 Public Declare Function GetAsyncKeyState Lib "user32" (ByVal vKey As Long) As Integer
-
-Public Declare Sub GetCursorPos Lib "User" (lpPoint As POINTAPI)
 
 Private Declare Sub CopyMemory Lib "kernel32" Alias "RtlMoveMemory" (ByRef lpvDest As Any, ByRef lpvSrc As Any, ByVal cbLength As Long)
 
@@ -39,17 +42,33 @@ Public Declare Function SHGetFolderPath Lib "shfolder.dll" Alias "SHGetFolderPat
 '#define WM_MBUTTONUP                    0x0208
 '#define WM_MBUTTONDBLCLK                0x0209
 
+Public Const MOUSEEVENTF_LEFTDOWN = &H2
+Public Const MOUSEEVENTF_LEFTUP = &H4
+Public Const MOUSEEVENTF_MIDDLEDOWN = &H20
+Public Const MOUSEEVENTF_MIDDLEUP = &H40
+Public Const MOUSEEVENTF_RIGHTDOWN = &H8
+Public Const MOUSEEVENTF_RIGHTUP = &H10
+Public Const MOUSEEVENTF_MOVE = &H1
+
+Public Const MK_LBUTTON = &H1&
+Public Const MK_RBUTTON = &H2&
+Public Const MK_SHIFT = &H4&
+Public Const MK_CONTROL = &H8&
+Public Const MK_MBUTTON = &H10&
 
 Public Const WM_KEYDOWN = &H100
 Public Const WM_KEYUP = &H101
 Public Const WM_CHAR = &H102
-    
+
+Public Const WM_SETFOCUS = &H7
+
 Public Const WM_ACTIVATE = &H6
 Public Const WA_ACTIVATE = &H1
 
 Public Const TabKey = &H9&
 Public Const WM_PASTE = &H302
 
+Public Const BM_CLICK = &HF5
 Public Const WM_MOUSEMOVE = &H200
 Public Const WM_LBUTTONDOWN = &H201
 Public Const WM_LBUTTONUP = &H202
@@ -77,11 +96,6 @@ Public Type WINDOWPLACEMENT
   rcNormalPosition As rect
 End Type
 
-Public Const MK_LBUTTON = &H1&
-Public Const MK_RBUTTON = &H2&
-Public Const MK_SHIFT = &H4&
-Public Const MK_CONTROL = &H8&
-Public Const MK_MBUTTON = &H10&
 
 '----------------------
 

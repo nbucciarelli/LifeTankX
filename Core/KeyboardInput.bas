@@ -4,6 +4,7 @@ Option Explicit
 
 Public Function mySendMessage(ByVal wMsg As Long, ByVal wParam As Long, lParam As Long) As Long
     If g_PluginSite.hwnd <> 0 Then
+        'Call SendMessage(g_PluginSite.hwnd, WM_SETFOCUS, 0, ByVal 0&)
         mySendMessage = SendMessage(g_PluginSite.hwnd, ByVal wMsg, ByVal wParam, ByVal lParam)        'modified : Byval lParam
     End If
 End Function
@@ -193,16 +194,6 @@ End Sub
 '  End With
 'End Sub
 
-Public Sub myMouseDebugPos()
-    Dim rect As POINTAPI
-    ' Get the current mouse cursor coordinates:
-    Call GetCursorPos(rect)
-    ' Print out current position on the form:
-    MyDebug "myMouseDebugPos: Current X = " & rect.x
-    MyDebug "myMouseDebugPos: Current Y = " & rect.y
-    PrintErrorMessage "X: " & rect.x & " Y: " & rect.y
-End Sub
-
 
 Public Sub myMouseClick(ByVal xPos As Integer, ByVal yPos As Integer)
     Dim lParam As Long
@@ -217,18 +208,38 @@ Public Sub myMouseClick(ByVal xPos As Integer, ByVal yPos As Integer)
     'click fine. That's why Im adding a MOUSEMOVE message before clicking
     
     lParam = (yPos * &H10000) + xPos
-    wParam = 0
     
     MyDebug "myMouseClick: xPos = " & xPos & ", yPos = " & yPos & " -- lParam = " & Hex(lParam)
     
+    'Doesn't move the mouse onscreen and works out of focus
     wParam = 0
     Call mySendMessage(WM_MOUSEMOVE, wParam, lParam)
+    
+    ' Doesn't work when not in Focus and moves mouse on screen (bleh)
+    'Call MoveMouseCursor(xPos, yPos, g_PluginSite.hwnd)
     
     wParam = MK_LBUTTON
     Call mySendMessage(WM_LBUTTONDOWN, wParam, lParam)
     Call mySendMessage(WM_LBUTTONUP, wParam, lParam)
+    
+    'Call mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0)
+    'Call mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)
 
 End Sub
+
+'Move mouse inside a window (or onscreen if window is zero)
+Sub MoveMouseCursor(ByVal x As Long, ByVal y As Long, Optional ByVal hwnd As Long)
+    If hwnd = 0 Then
+        SetCursorPos x, y
+    Else
+        Dim lpPoint As POINTAPI
+        lpPoint.x = x
+        lpPoint.y = y
+        Call ClientToScreen(hwnd, lpPoint)
+        Call SetCursorPos(lpPoint.x, lpPoint.y)
+    End If
+End Sub
+
 
 Public Function KeyIsDown(ByVal lKey As Long) As Boolean
     KeyIsDown = (GetKeyState(lKey) And &H8000)

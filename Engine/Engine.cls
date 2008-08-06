@@ -340,6 +340,8 @@ On Error GoTo ErrorHandler
 
     mAuth.LoadSettingsAuth
     
+    g_Data.mDebugMode = False
+    
     MyDebug "IEngine_OnLogin all done"
 
     

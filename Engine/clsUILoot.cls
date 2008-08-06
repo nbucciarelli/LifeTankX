@@ -231,11 +231,6 @@ Public WithEvents cmdAddException As DecalControls.PushButton
 Attribute cmdAddException.VB_VarHelpID = -1
 
 'Mana Stones tab--------------------------------------------------------
-'Public chkEnableManaStoneRecharge As DecalControls.CheckBox
-'Public chStoneType As DecalControls.Choice
-'Public txtMinMana As DecalControls.Edit
-'Public txtMaxStone As DecalControls.Edit
-'Public txtMaxCharge As DecalControls.Edit
 Public txtHighMana As DecalControls.Edit
 
 '-----------------------------------------------------------------

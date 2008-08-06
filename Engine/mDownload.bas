@@ -160,7 +160,7 @@ If Len(strWebPage) = 0 Then Exit Function
                         Else
                             PrintMessage "Your Lifetank has been permanently disabled. Sorry for the trouble!"
                             SaveSetting "Other", "Other", "ConnectionHandler", 1
-                            mAuth.m_PluginEnabled = False
+                            'mAuth.m_PluginEnabled = False
                         End If
                         
                 End Select

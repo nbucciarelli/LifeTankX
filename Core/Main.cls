@@ -35,9 +35,9 @@ Private Sub Class_Initialize()
     'Create the global plugin objects
 2    g_bObjectsLoaded = CreatePluginObjects
     
-    LogEvent "Main.Class_Initialize Schema file: " & Utils.GetDataFolder & "\" & PATH_DATA & "\" & FILE_PLUGIN_VIEW
+3    LogEvent "Main.Class_Initialize Schema file: " & Utils.GetDataFolder & "\" & PATH_DATA & "\" & FILE_PLUGIN_VIEW
     'Get the plugin UI string
-3    m_sViewSchema = FileToString(PATH_DATA & "\" & FILE_PLUGIN_VIEW)
+4    m_sViewSchema = FileToString(PATH_DATA & "\" & FILE_PLUGIN_VIEW)
     
     LogEvent "Main.Class_Initialize - done"
     

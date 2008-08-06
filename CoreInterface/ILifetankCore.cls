@@ -68,9 +68,6 @@ End Sub
 Public Sub SendTextToConsole(ByVal sText As String, Optional ByVal bForceSend As Boolean = False, Optional ByVal bSendMessage As Boolean = True)
 End Sub
 
-Public Sub MouseDebug()
-End Sub
-
 Public Sub MouseClick(ByVal xPos As Integer, ByVal yPos As Integer)
 End Sub
 

@@ -1,8 +1,7 @@
 Attribute VB_Name = "Commands"
 Option Explicit
 
-
-Public Function HandleConsoleCommand(ByVal bstrMsg As String)
+Public Function HandleConsoleCommand(ByVal bstrMsg As String) As Boolean
 On Error GoTo ErrorHandler
 
     Dim sCmdLine As String
@@ -355,8 +354,29 @@ On Error GoTo ErrorHandler
                         'Case "countmcitems"
                             'Call Vitals.countChargeItems
                             'Call Vitals.countManaStones
+                        
                         Case "mouse"
-                            Call g_Core.MouseDebug
+                            PrintMessage "Top: " & g_Hooks.AC3DRegionRect.Top & " - Bottom: " & g_Hooks.AC3DRegionRect.Bottom
+                            PrintMessage "Left: " & g_Hooks.AC3DRegionRect.Left & " - Right: " & g_Hooks.AC3DRegionRect.Right
+                            ' Print out mouse position
+                            MyDebug "MousePos: Current X = " & MouseX
+                            MyDebug "MousePos: Current Y = " & MouseY
+                            PrintMessage "Mouse X: " & MouseX & "  Y: " & MouseY
+                        
+                        Case "recharge"
+                            PrintMessage "Clicking on 715, 485"
+                            Call Utils.ClickButton(715, 485, False)
+                            
+                        Case "recharge1"
+                            PrintMessage "Clicking on " & CLng(Arg3) & "," & CLng(Arg4)
+                            Call Utils.ClickButton(CLng(Arg3), CLng(Arg4), False)
+                            
+                        Case "recharge3"
+                            Dim lpPoint As POINTAPI
+                            lpPoint.x = 715
+                            lpPoint.y = 485
+                            Call ClientToScreen(g_PluginSite.hWnd, lpPoint)
+                            Call SetCursorPos(lpPoint.x, lpPoint.y)
                         
                         Case "corpsetoignore"
                             Call g_Macro.Loot.DebugIgnoreCorpseList

@@ -84,7 +84,7 @@ Private Sub Class_Initialize()
 On Error GoTo ErrorHandler
 
     mLogOutputPath = PATH_LOGS
-    mDebugMode = False
+    mDebugMode = True
     
     mMaxWarLevel = 7
     mMaxVulnLevel = 7

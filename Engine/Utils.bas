@@ -1054,7 +1054,7 @@ ErrorHandler:
     Resume Fin
 End Sub
 
-Public Sub ClickButton(xOff As Long, yOff As Long)
+Public Sub ClickButton(xOff As Long, yOff As Long, Optional ByVal useOffSet As Boolean = True)
     Dim iPosX As Integer, iPosY As Integer
     
     Call g_Window.UpdateDimensions
@@ -1072,7 +1072,11 @@ Public Sub ClickButton(xOff As Long, yOff As Long)
     MyDebug "Utils.ClickButton: Xoff: " & xOff & "   Yoff: " & yOff
     MyDebug "Utils.ClickButton: iPosX: " & iPosX & "  iPosY: " & iPosY
     
-    g_Core.MouseClick iPosX, iPosY
+    If useOffSet Then
+        Call g_Core.MouseClick(iPosX, iPosY)
+    Else
+        Call g_Core.MouseClick(xOff, yOff)
+    End If
     
 End Sub
 

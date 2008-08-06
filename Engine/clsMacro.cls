@@ -2920,7 +2920,7 @@ Private Sub RechargeManaStone()
 
     'There should be a pop-up asking if we want to destroy this item
     'to charge up the mana stone. For now, just mouse click on yes button
-    Call Utils.ClickButton(600, 400)
+    Call Utils.ClickButton(720, 485, False)
     
     'When OnRemoveObject event called, remove the item from g_Macro.Loot.getHighManaItem collection
     
