@@ -1388,7 +1388,7 @@ On Error GoTo Error_Handler
                     MyDebug "clsLoot: OnItemPickup: Adding to SalvageList: " & curItem.Name
                     Call g_Macro.Salvager.AddLootToSalvageList(curItem)
                 'See if we should add it to the Mana Stone charger list
-                ElseIf PhatLoot.PassActiveFilters(curItem, False, False, False, False, False, False) And (curItem.Mana >= g_Data.HighManaValue) Then
+                ElseIf PhatLoot.PassActiveFilters(curItem, False, False, False, False, False, False, True) And (curItem.Mana >= g_Data.HighManaValue) Then
                     'Add to High Mana item collection
                     If m_colHighManaItems.addObject(curItem) Then
                         locDebug "clsLoot.OnPickUp: added to HighManaItems collection: " & curItem.Name

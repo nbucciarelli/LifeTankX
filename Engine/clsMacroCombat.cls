@@ -209,12 +209,17 @@ On Error GoTo ErrorMessage
 
     If m_tmrSecure.Expired Then
         'PrintWarning "Busy Timeout - reseting combat flags"
+        MyDebug "clsMacroCombat: m_tmrSecure.Expired - reseting combat, calling StopCombat"
         Call StopCombat("clsMacroCombat.m_tmrSecure.Expired")
         Exit Sub
     End If
 
     If g_Macro.MustHeal Then
-        Call StopCombat("Must Heal")
+        Call g_Macro.GoIdle
+        'RaiseEvent OnStopCombat
+
+        ' Do not call StopCombat, as we will loose the current Target
+        'Call StopCombat("Must Heal")
         Exit Sub
     End If
     
@@ -377,8 +382,8 @@ End Sub
 '**************************************
 ' SetTarget
 '
-' Configure the combat for the
-' new target
+' Configure the combat for the new target
+'
 '**************************************
 Public Function SetTarget(objTarget As acObject) As Boolean
 On Error GoTo ErrorHandler
@@ -470,7 +475,7 @@ End Sub
 Private Sub ReleaseTarget()
 On Error GoTo ErrorHandler
 
-    locDebug "ReleaseTarget - Releasing current target"
+    MyDebug "ReleaseTarget - Releasing current target: Set m_objTarget = Nothing"
     
     'Remember current target
     If Valid(m_objTarget) Then

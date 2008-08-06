@@ -1782,7 +1782,7 @@ On Error GoTo ErrorHandler
                     End If
 
                     'Check to see if we need to recharge an empty mana stone
-                    If g_ui.Macro.chkRechargeManaStones And g_Macro.Loot.hasEmptyManaStone And g_Macro.Loot.hasHighManaItem Then
+                    If g_ui.Macro.chkRechargeManaStones.Checked And g_Macro.Loot.hasEmptyManaStone And g_Macro.Loot.hasHighManaItem Then
                         Call goManaStoneRecharge
                     End If
                 
@@ -2892,15 +2892,10 @@ On Error GoTo ErrorHandler
 
     Set m_objHighManaTarget = g_Macro.Loot.getHighManaItem
 
-    If Valid(m_objHighManaTarget) Then
+    If Valid(m_objHighManaTarget) And Valid(g_emptyManaItem) Then
         Call SetState(ST_RECHARGESTONE)
-        Call m_tmrManaChargeTimer.SetNextTime(8)    'Allow 8 seconds for mana charge to be used
+        Call m_tmrManaChargeTimer.SetNextTime(5)    'Allow 5 seconds for Recharge of Mana Stone
         Call m_tmrBusyDelay.SetNextTime(1)          'One second pause between tries
-    Else
-        GoTo Fin
-    End If
-    
-    If Valid(g_emptyManaItem) And (g_manaItem.Guid <> -1) Then
         MyDebug "goManaStoneRecharge: Using " & g_emptyManaItem.Name & " on " & m_objHighManaTarget.Name
         Call g_Service.UseItemOn(g_manaItem, m_objHighManaTarget)
         m_bUsingManaCharge = True
@@ -2927,7 +2922,7 @@ Private Sub RechargeManaStone()
     'to charge up the mana stone. For now, just mouse click on yes button
     Call Utils.ClickButton(600, 400)
     
-    'There should be an OnDestroy event called, so remove the item from g_Macro.Loot.getHighManaItem
+    'When OnRemoveObject event called, remove the item from g_Macro.Loot.getHighManaItem collection
     
     'All done
     Call doneManaCharge
@@ -3464,6 +3459,9 @@ Private Sub m_tmrManaChargeTimer_OnTimeout()
     If (m_bUsingManaCharge) Then
         PrintErrorMessage "ManaCharge Timeout. Failed to use mana charge"
     End If
+    If Valid(m_objHighManaTarget) Then
+        Set m_objHighManaTarget = Nothing
+    End If
     m_bNeedManaCharge = False
     m_bUsingManaCharge = False
     Set g_manaItem = Nothing
@@ -3474,7 +3472,7 @@ Private Sub m_tmrCastSpell_OnTimeout()
     m_bOKToCast = True
 End Sub
 
-'m_tmrCleanCollections
+'Every 5 minutes, check to see if we should clean up the monster list
 Private Sub m_tmrCleanCollections_OnTimeout()
 On Error GoTo ErrorHandler
     Dim objMonster As acObject
@@ -3482,8 +3480,8 @@ On Error GoTo ErrorHandler
 
     For Each objMonster In g_Objects.Monsters
         If Valid(objMonster) Then
-            ' If it's more than 40 away, it's probably been silently ignored (no OnDestroy event)
-            If (objMonster.GetRange > 40) Then
+            ' If it's more than 60 away, it's probably been silently ignored (no OnDestroy event)
+            If (objMonster.GetRange > 60) Or (objMonster.GetRange = 0) Then
                 i = objMonster.UserData(INT_DELETE) + 1
                 Call objMonster.SetUserData(INT_DELETE, i)
                 If (objMonster.UserData(INT_DELETE) > 3) Then

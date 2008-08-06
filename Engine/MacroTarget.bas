@@ -459,7 +459,7 @@ On Error GoTo ErrorHandler
                     'locDebug "........Skipping " & objEntity.Name & " [P:" & objEntity.Priority & "] @ " & fRange & " - Best Target Closer @ " & fBestTargetRange
                     GoTo NextEntity
                     
-                'Else we're the newt best target
+                'Else we're the new best target
                 Else
                 
                     Set objBestTarget = objEntity

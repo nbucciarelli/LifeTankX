@@ -256,7 +256,9 @@ End Function
 Public Function SkillToSpellLevel(iSkill As Integer) As Integer
 Dim iVal As Integer
 
-    If iSkill >= 300 Then
+    If iSkill >= 350 Then
+        iVal = 8
+    ElseIf iSkill >= 300 Then
         iVal = 7
     ElseIf iSkill >= 250 Then
         iVal = 6
