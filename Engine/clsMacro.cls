@@ -177,6 +177,7 @@ Private m_FellowCollection As Dictionary
 'Looting
 Private m_colChargeItems As colObjects 'List of all the charge items.
 Private m_objHighManaTarget As acObject
+Private m_objEmptyManaStone As acObject
 Private m_NavFails As Integer
 
 'Salvager
@@ -396,6 +397,7 @@ Private Sub Class_Terminate()
     Set m_FellowCollection = Nothing
     Set m_colChargeItems = Nothing
     Set m_objHighManaTarget = Nothing
+    Set m_objEmptyManaStone = Nothing
 End Sub
 
 Private Sub ResetFellowAction()
@@ -1731,7 +1733,11 @@ On Error GoTo ErrorHandler
                         Call m_tmrNextSalvageTime.SetNextTime(SALVAGER_CHECK_INTERVAL)
                     End If
                         
-                        
+                    'Check to see if we need to recharge an empty mana stone
+                    If g_ui.Macro.chkRechargeManaStones.Checked And g_Macro.Loot.hasEmptyManaStone And g_Macro.Loot.hasHighManaItem Then
+                        If goManaStoneRecharge Then GoTo Fin
+                    End If
+
                     'Check if there's something to loot
                     If g_ui.Loot.chkEnableLooting.Checked _
                     And (Not g_Objects.Items.BackpackFull) _
@@ -1787,11 +1793,6 @@ On Error GoTo ErrorHandler
                             End If
                         End If
                 
-                    End If
-
-                    'Check to see if we need to recharge an empty mana stone
-                    If g_ui.Macro.chkRechargeManaStones.Checked And g_Macro.Loot.hasEmptyManaStone And g_Macro.Loot.hasHighManaItem Then
-                        Call goManaStoneRecharge
                     End If
                 
                 Else
@@ -2895,31 +2896,36 @@ ErrorHandler:
 End Sub
 
 ' Recharge Empty Mana Stones
-Private Sub goManaStoneRecharge()
+Private Function goManaStoneRecharge() As Boolean
 On Error GoTo ErrorHandler
 
     Set m_objHighManaTarget = g_Macro.Loot.getHighManaItem
+    Set m_objEmptyManaStone = g_Macro.Loot.getEmptyManaStone
 
-    If Valid(m_objHighManaTarget) And Valid(g_emptyManaStone) Then
+    If Valid(m_objHighManaTarget) And Valid(m_objEmptyManaStone) Then
         Call SetState(ST_RECHARGESTONE)
         Call m_tmrManaChargeTimer.SetNextTime(5)    'Allow 5 seconds for Recharge of Mana Stone
         Call m_tmrBusyDelay.SetNextTime(1)          'One second pause between tries
-        MyDebug "goManaStoneRecharge: Using " & g_emptyManaStone.Name & " on " & m_objHighManaTarget.Name
-        Call g_Service.UseItemOn(g_emptyManaStone, m_objHighManaTarget)
+        MyDebug "goManaStoneRecharge: Using " & m_objEmptyManaStone.Name & " on " & m_objHighManaTarget.Name
+        Call g_Service.UseItemOn(m_objEmptyManaStone, m_objHighManaTarget)
         m_bUsingManaCharge = True
+        goManaStoneRecharge = True
     End If
 
 Fin:
-    Exit Sub
+    Exit Function
 ErrorHandler:
     PrintErrorMessage "clsMacro.goManaStoneRecharge - " & Err.Description & " line: " & Erl
     Resume Fin
-End Sub
+End Function
 
 'RechargeManaStone
 Private Sub RechargeManaStone()
 
-    If Not Valid(m_objHighManaTarget) Then Call doneManaCharge
+    If Not Valid(m_objHighManaTarget) Then
+        Call doneManaCharge
+        Exit Sub
+    End If
     
     If Not m_tmrBusyDelay.Expired Then
         'Wait a slight pause
@@ -2931,11 +2937,12 @@ Private Sub RechargeManaStone()
     Call Utils.ClickButton(720, 485, False)
     
     'When OnRemoveObject event called, remove the item from g_Macro.Loot.getHighManaItem collection
-    Set g_emptyManaStone = Nothing
+    Set m_objEmptyManaStone = Nothing
     Set m_objHighManaTarget = Nothing
     
     'See if we have any more empty mana stones
     Call Vitals.idManaStones
+    Call g_Macro.Loot.countEmptyManaStones
     
     'All done
     Call doneManaCharge
@@ -2982,7 +2989,10 @@ End Sub
 Private Sub UseManaCharge()
 On Error GoTo ErrorHandler
 
-    If Not (m_bNeedManaCharge) Then Call doneManaCharge
+    If Not (m_bNeedManaCharge) Then
+        Call doneManaCharge
+        GoTo Fin
+    End If
     
     If Not m_tmrBusyDelay.Expired Then
         Call Vitals.idManaStones
@@ -3012,14 +3022,18 @@ Public Sub doneManaCharge()
 On Error GoTo ErrorHandler
     
     MyDebug "doneManaCharge: all done!"
+    Call m_tmrManaChargeTimer.Reset
+    
     Set g_manaItem = Nothing
+    Set m_objHighManaTarget = Nothing
+    Set m_objEmptyManaStone = Nothing
+    
     m_bNeedManaCharge = False
     m_bUsingManaCharge = False
-    Call m_tmrManaChargeTimer.Reset
-    Set m_objHighManaTarget = Nothing
-    Set g_emptyManaStone = Nothing
-    Call GoIdle
+    
     Call Vitals.idManaStones
+    Call g_Macro.Loot.countEmptyManaStones
+    Call GoIdle
 
 Fin:
     Exit Sub

@@ -55,6 +55,7 @@ Private m_ItemsOnCorpse As colObjects       'list of the items created on the bo
 Private m_ItemsToLoot As colObjects         'list of the items we want to loot (items that passed the filters)
 Private m_corpseList As colObjects          'list of corpses we need to loot
 Private m_colHighManaItems As colObjects    'list of High Mana items we will DESTROY!
+Private m_colEmptyManaStones As colObjects   'list of Empty Mana items we will recharge
 
 Private m_bLootCorpses As Boolean       'true if the macro is allowed to loot corpses
 Private m_bLootGround As Boolean        'true if macro is allowed to loot items on the ground
@@ -121,6 +122,7 @@ On Error GoTo ErrorHandler
     Set m_IdQueue = New colObjects
     Set m_ItemsIdQueue = New colObjects
     Set m_colHighManaItems = New colObjects
+    Set m_colEmptyManaStones = New colObjects
   
     Set m_dicCorpseToIgnore = New Dictionary
     
@@ -139,6 +141,7 @@ End Sub
 
 Private Sub Class_Terminate()
     Set m_colHighManaItems = Nothing
+    Set m_colEmptyManaStones = Nothing
     
     Set m_curCorpse = Nothing
     Set m_curItem = Nothing
@@ -188,24 +191,75 @@ Public Function silentID() As Boolean
 End Function
 
 Public Function hasEmptyManaStone() As Boolean
-    hasEmptyManaStone = m_bEmptyManaStone
+    If m_colEmptyManaStones.Count > 0 Then
+        hasEmptyManaStone = True
+    Else
+        hasEmptyManaStone = False
+    End If
 End Function
 
-Public Function hasHighManaItem() As Boolean
+Public Function getEmptyManaStone() As acObject
 On Error GoTo ErrorHandler
+    Dim objItem As acObject
 
+    If m_colEmptyManaStones.Count <= 0 Then
+        Set getEmptyManaStone = Nothing
+        GoTo Fin
+    End If
+
+Restart:
+
+    Set objItem = Nothing
+    For Each objItem In m_colEmptyManaStones
+        If Valid(objItem) Then
+            If g_Objects.Items.InInventory(objItem.Guid) And (objItem.Mana = 0) Then
+                Set getEmptyManaStone = objItem
+            Else
+                Call m_colEmptyManaStones.Remove(objItem.Guid)
+                GoTo Restart
+            End If
+        End If
+    Next objItem
+    
+Fin:
+    Set objItem = Nothing
+    Exit Function
+ErrorHandler:
+    Set getEmptyManaStone = Nothing
+    PrintErrorMessage "clsLoot.getEmptyManaStone - " & Err.Description
+    Resume Fin
+End Function
+
+Public Sub countEmptyManaStones()
+On Error GoTo ErrorMessage
+    Dim objItem As acObject
+
+    Set m_colEmptyManaStones = New colObjects
+    
+    For Each objItem In g_Objects.Items.Inv
+        If Valid(objItem) Then
+            If (objItem.itemType = ITEM_MANA_STONES) And (objItem.Name Like "*Stone*") And (objItem.Mana = 0) Then
+                MyDebug "countEmptyManaStones: " & objItem.Name & " (" & objItem.Mana & ")"
+                Call m_colEmptyManaStones.addObject(objItem)
+            End If
+        End If
+    Next objItem
+
+Fin:
+    Set objItem = Nothing
+    Exit Sub
+ErrorMessage:
+    PrintErrorMessage "Error in clsLoot.countEmptyManaStones: " & Err.Description & " - " & Err.Source
+    Exit Sub
+End Sub
+
+
+Public Function hasHighManaItem() As Boolean
     If m_colHighManaItems.Count > 0 Then
         hasHighManaItem = True
     Else
         hasHighManaItem = False
     End If
-    
-Fin:
-    Exit Function
-ErrorHandler:
-    hasHighManaItem = False
-    PrintErrorMessage "clsLoot.hasHighManaItem - " & Err.Description
-    Resume Fin
 End Function
 
 Public Function getHighManaItem() As acObject
@@ -217,9 +271,18 @@ On Error GoTo ErrorHandler
         GoTo Fin
     End If
 
+Restart:
+
+    Set objItem = Nothing
     For Each objItem In m_colHighManaItems
         If Valid(objItem) Then
-            Set getHighManaItem = objItem
+            If g_Objects.Items.InInventory(objItem.Guid) Then
+                'g_Objects.FindObject(objItem.GUID,False)
+                Set getHighManaItem = objItem
+            Else
+                Call m_colHighManaItems.Remove(objItem.Guid)
+                GoTo Restart
+            End If
         End If
     Next objItem
     
@@ -678,19 +741,6 @@ On Error GoTo Error_Handler
             If m_State = ST_LOOT_SEARCH_ITEM Then Call m_tmrNextTime.ExpireNow
         End If
     End If
-    
-    If (objItem.Container = g_Objects.Player.Guid) Then
-        If (objItem.itemType = ITEM_MANA_STONES) And (objItem.Name Like "*Stone*") Then
-            'See if we have any empty stones
-            If objItem.Mana <= 0 Then
-                MyDebug "clsLoot.OnIdentify: found empty mana stone: " & objItem.Name & " (" & objItem.Mana & ")"
-                m_bEmptyManaStone = True
-                Set g_emptyManaStone = objItem
-            End If
-        End If
-    End If
-
-    
     
 Fin:
     Exit Sub
