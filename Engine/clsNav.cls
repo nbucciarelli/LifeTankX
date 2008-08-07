@@ -916,7 +916,7 @@ On Error GoTo ErrorHandler
 
     ' Check to see if we are too far away from the Sticky Waypoint
     If (m_StickyWP.Get2DRange > aRange) Then
-        MyDebug "CheckStickyRange: To far from sticky waypoint!"
+        locDebug "CheckStickyRange: To far from sticky waypoint!"
         bRet = True
     End If
 
