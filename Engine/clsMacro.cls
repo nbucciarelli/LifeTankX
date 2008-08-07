@@ -559,6 +559,14 @@ Public Property Let ForceSalvage(ByVal bVal As Boolean)
     If bVal Then Call m_tmrNextSalvageTime.ExpireNow
 End Property
 
+Public Property Get HighManaTarget() As acObject
+    HighManaTarget = m_objHighManaTarget
+End Property
+
+Public Property Let HighManaTarget(ByVal anObj As acObject)
+    m_objHighManaTarget = anObj
+End Property
+
 'Salvager - Number of items picked up since last salvaging
 Public Property Get NumItemsPickedUp() As Integer
     NumItemsPickedUp = m_iNumItemsPickedUp
@@ -2892,12 +2900,12 @@ On Error GoTo ErrorHandler
 
     Set m_objHighManaTarget = g_Macro.Loot.getHighManaItem
 
-    If Valid(m_objHighManaTarget) And Valid(g_emptyManaItem) Then
+    If Valid(m_objHighManaTarget) And Valid(g_emptyManaStone) Then
         Call SetState(ST_RECHARGESTONE)
         Call m_tmrManaChargeTimer.SetNextTime(5)    'Allow 5 seconds for Recharge of Mana Stone
         Call m_tmrBusyDelay.SetNextTime(1)          'One second pause between tries
-        MyDebug "goManaStoneRecharge: Using " & g_emptyManaItem.Name & " on " & m_objHighManaTarget.Name
-        Call g_Service.UseItemOn(g_manaItem, m_objHighManaTarget)
+        MyDebug "goManaStoneRecharge: Using " & g_emptyManaStone.Name & " on " & m_objHighManaTarget.Name
+        Call g_Service.UseItemOn(g_emptyManaStone, m_objHighManaTarget)
         m_bUsingManaCharge = True
     End If
 
@@ -2923,6 +2931,11 @@ Private Sub RechargeManaStone()
     Call Utils.ClickButton(720, 485, False)
     
     'When OnRemoveObject event called, remove the item from g_Macro.Loot.getHighManaItem collection
+    Set g_emptyManaStone = Nothing
+    Set m_objHighManaTarget = Nothing
+    
+    'See if we have any more empty mana stones
+    Call Vitals.idManaStones
     
     'All done
     Call doneManaCharge
@@ -2994,7 +3007,7 @@ ErrorHandler:
     Resume Fin
 End Sub
 
-
+'All done recharging mana items
 Public Sub doneManaCharge()
 On Error GoTo ErrorHandler
     
@@ -3003,6 +3016,8 @@ On Error GoTo ErrorHandler
     m_bNeedManaCharge = False
     m_bUsingManaCharge = False
     Call m_tmrManaChargeTimer.Reset
+    Set m_objHighManaTarget = Nothing
+    Set g_emptyManaStone = Nothing
     Call GoIdle
     Call Vitals.idManaStones
 
@@ -3112,8 +3127,6 @@ On Error GoTo ErrorHandler
         If iTaperCount < 50 Then
             sReasonOut = "Running out of Prismatic Tapers (" & iTaperCount & ")"
             bRet = True
-            ' Never force logout if we need healing!
-            If m_Healing.NeedHealing("clsMacro.MustLogOut") Then bRet = False
         End If
     End If
     
@@ -3130,13 +3143,9 @@ On Error GoTo ErrorHandler
         If g_Objects.Items.InvCntByName(STR_ITEM_PLAT) <= 0 Then
             sReasonOut = "Running out of " & STR_ITEM_PLAT
             bRet = True
-            ' Never force logout if we need healing!
-            If m_Healing.NeedHealing("clsMacro.MustLogOut") Then bRet = False
         ElseIf g_Objects.Items.InvCntByName(STR_ITEM_PYREAL_SCARAB) <= 0 Then
             sReasonOut = "Running out of " & STR_ITEM_PYREAL_SCARAB
             bRet = True
-            ' Never force logout if we need healing!
-            If m_Healing.NeedHealing("clsMacro.MustLogOut") Then bRet = False
         End If
     End If
     

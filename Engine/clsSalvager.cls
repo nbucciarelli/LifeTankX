@@ -878,11 +878,13 @@ On Error GoTo ErrorHandler
             Call m_tmrSecure.SetNextTime(3)
             Call SetState(ST_LOAD_SALVAGES)
         End If
-    ElseIf g_Macro.State = ST_RECHARGESTONE Then
-        MyDebug "clsSalvager.OnRemoveObject: mana stone recharged from: " & objItem.Name
+        
+    ElseIf (objItem.Container = g_Objects.Player.Guid) Then
+        
         Call g_Macro.Loot.removeHighManaItem(objItem.Guid)
+    
     End If
-  
+
 Fin:
     Exit Sub
 ErrorHandler:

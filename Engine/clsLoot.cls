@@ -239,7 +239,15 @@ On Error GoTo ErrorHandler
         Exit Sub
     End If
 
-    Call m_colHighManaItems.Remove(aGuid)
+    If Valid(g_Macro.HighManaTarget) Then
+        If g_Macro.HighManaTarget.Guid = aGuid Then
+            g_Macro.HighManaTarget = Nothing
+        End If
+    End If
+
+    If m_colHighManaItems.Exists(aGuid) Then
+        Call m_colHighManaItems.Remove(aGuid)
+    End If
     
 Fin:
     Exit Sub
@@ -677,7 +685,7 @@ On Error GoTo Error_Handler
             If objItem.Mana <= 0 Then
                 MyDebug "clsLoot.OnIdentify: found empty mana stone: " & objItem.Name & " (" & objItem.Mana & ")"
                 m_bEmptyManaStone = True
-                Set g_emptyManaItem = objItem
+                Set g_emptyManaStone = objItem
             End If
         End If
     End If

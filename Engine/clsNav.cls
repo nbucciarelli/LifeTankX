@@ -341,6 +341,10 @@ On Error GoTo ErrorHandler
         
     End If
     
+    If m_iNavType = NAVTYPE_FOLLOW And Valid(m_objToFollow) Then
+        Call UpdateTargetWP(m_targetWp)
+    End If
+
     If Valid(m_targetWp) Then
         Dim fDist As Single
         fDist = m_targetWp.Get2DRange
