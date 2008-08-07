@@ -166,7 +166,7 @@ End Function
 Public Sub StopCombat(Optional sSource As String = "")
 On Error GoTo ErrorHandler
     
-    locDebug "EndCombat - Src: " & sSource
+    locDebug "StopCombat - Src: " & sSource
     
     'DS Filter hack to deal with no getting OnDelete messages
     'If Valid(m_objTarget) Then
@@ -181,7 +181,7 @@ On Error GoTo ErrorHandler
     '    End If
     'End If
     
-    Call ReleaseTarget
+    Call ReleaseTarget("StopCombat: " & sSource)
     Call m_tmrSecure.Reset
     Call m_tmrAttackCheck.Reset
     If g_Spells.Casting Then
@@ -385,23 +385,28 @@ End Sub
 ' Configure the combat for the new target
 '
 '**************************************
-Public Function SetTarget(objTarget As acObject) As Boolean
+Public Function SetTarget(newTarget As acObject) As Boolean
 On Error GoTo ErrorHandler
     Dim bRet As Boolean
     
-    If Not Valid(objTarget) Then
+    If Not Valid(newTarget) Then
         MyDebug "clsMacroCombat.SetTarget: invalid objTarget"
         GoTo Fin
     End If
-        
-    locDebug "SetTarget: setting target to " & objTarget.Name
+
     
     'if we already have a target, release it
-    If Valid(m_objTarget) Then Call ReleaseTarget
+    If Valid(m_objTarget) Then
+        Call ReleaseTarget("From SetTarget")
+        m_lastTargetName = m_objTarget.Name
+    Else
+        m_lastTargetName = newTarget.Name
+    End If
+    
+    MyDebug "SetTarget: setting target to " & newTarget.Name
     
     'set reference to object
-    Set m_objTarget = objTarget
-    m_lastTargetName = objTarget.Name
+    Set m_objTarget = newTarget
     
     'Select the monster for when we fire attack key if in non casting mode
     If IsMelee Then
@@ -472,14 +477,15 @@ End Sub
 '
 ' Resets the current target datas
 '**************************************
-Private Sub ReleaseTarget()
+Private Sub ReleaseTarget(Optional sSource As String = "")
 On Error GoTo ErrorHandler
 
-    MyDebug "ReleaseTarget - Releasing current target: Set m_objTarget = Nothing"
+    MyDebug "ReleaseTarget: " & sSource
     
     'Remember current target
     If Valid(m_objTarget) Then
         m_lLastTargetGUID = m_objTarget.Guid
+        MyDebug "ReleaseTarget: (" & m_objTarget.Guid & "):: " & m_objTarget.Name
     End If
     
     'Release current target reference

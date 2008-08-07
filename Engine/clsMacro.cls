@@ -2942,7 +2942,6 @@ Private Sub RechargeManaStone()
     
     'See if we have any more empty mana stones
     Call Vitals.idManaStones
-    Call g_Macro.Loot.countEmptyManaStones
     
     'All done
     Call doneManaCharge
@@ -3032,7 +3031,6 @@ On Error GoTo ErrorHandler
     m_bUsingManaCharge = False
     
     Call Vitals.idManaStones
-    Call g_Macro.Loot.countEmptyManaStones
     Call GoIdle
 
 Fin:
