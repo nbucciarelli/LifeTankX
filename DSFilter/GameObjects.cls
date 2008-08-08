@@ -1071,6 +1071,33 @@ On Error GoTo ErrorHandler
                     myDebug "IDObject: H1->B3: " & objEntity.Name & " Key:" & Hex(lKey) & " Val:" & lVal
                     myDebug "IDObject: Hex(Imbue): " & Hex(lVal)
                     
+                    'These need to be bitwise and as they can exist with other imbues
+                    '0x20000000= Magic Absorbing
+                    '0x20000004= Magic Absorbing (really some other imbue + Magic Absorbing
+                    If (lVal And &H20000000) Then
+                        lVal = Hex(lVal) - &H20000000
+                        If InStr(objEntity.Imbue, "Magic Absorbing") = 0 Then
+                            If bAddImbueComma Then
+                                objEntity.Imbue = LTrim(objEntity.Imbue & ", Magic Absorbing")
+                            Else
+                                objEntity.Imbue = LTrim(objEntity.Imbue & "Magic Absorbing")
+                                bAddImbueComma = True
+                            End If
+                        End If
+                    End If
+                    '0x80000000= Phantasmal
+                    If (lVal And &H80000000) Then
+                        lVal = Hex(lVal) - &H80000000
+                        If InStr(objEntity.Imbue, "Phantasmal") = 0 Then
+                            If bAddImbueComma Then
+                                objEntity.Imbue = LTrim(objEntity.Imbue & ", Phantasmal")
+                            Else
+                                objEntity.Imbue = LTrim(objEntity.Imbue & "Phantasmal")
+                                bAddImbueComma = True
+                            End If
+                        End If
+                    End If
+                    
                     If lVal = 1 Then
                         If InStr(objEntity.Imbue, "Critical Strike") = 0 Then
                             If bAddImbueComma Then
@@ -1170,30 +1197,6 @@ On Error GoTo ErrorHandler
                         End If
                     End If
                     
-                    'These need to be bitwise and as they can exist with the above imbues
-                    '0x20000000= Magic Absorbing
-                    '0x20000004= Magic Absorbing (really some other imbue + Magic Absorbing
-                    If (lVal And &H20000000) Then
-                        If InStr(objEntity.Imbue, "Magic Absorbing") = 0 Then
-                            If bAddImbueComma Then
-                                objEntity.Imbue = LTrim(objEntity.Imbue & ", Magic Absorbing")
-                            Else
-                                objEntity.Imbue = LTrim(objEntity.Imbue & "Magic Absorbing")
-                                bAddImbueComma = True
-                            End If
-                        End If
-                    End If
-                    '0x80000000= Phantasmal
-                    If (lVal And &H80000000) Then
-                        If InStr(objEntity.Imbue, "Phantasmal") = 0 Then
-                            If bAddImbueComma Then
-                                objEntity.Imbue = LTrim(objEntity.Imbue & ", Phantasmal")
-                            Else
-                                objEntity.Imbue = LTrim(objEntity.Imbue & "Phantasmal")
-                                bAddImbueComma = True
-                            End If
-                        End If
-                    End If
                 
                 Case &HCC& 'ElementBonusDamage
                     objEntity.ElementBonusDamage = lVal
@@ -1436,7 +1439,8 @@ On Error GoTo ErrorHandler
         'MyDebug "ID : Weapon Info - " & objEntity.Name & " : Type=" & objEntity.GetWeaponTypeName & ", HighDmg=" & objEntity.HighDamage & ", LowDmg=" & objEntity.GetLowDamage & " Var=" & objEntity.Variance & ", Att%=" & objEntity.AttackBonus & ", Def%=" & objEntity.DefenseBonus & ", DmgFlags=" & objEntity.DamageFlags
         'If objEntity.DamageModifier <> 0 Then MyDebug "Damage Mod : +" & objEntity.DamageModifier & "%"
         
-        If (lAssessFlag And &H103D&) Then ' Cast on Strike property
+        'If (lAssessFlag And &H103D&) Then ' Cast on Strike property
+        If Hex(lAssessFlag) = &H103D& Then ' Cast on Strike property
             myDebug "OnIdentifyObject H20 -> H103D Weap: " & objEntity.Name & " : lAssessFlag: " & Hex(lAssessFlag) & "  lCharFlags: " & Hex(lCharFlags)
             If InStr(objEntity.Imbue, "Cast on Strike") = 0 Then
                 If bAddImbueComma Then
