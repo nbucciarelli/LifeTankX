@@ -200,6 +200,9 @@ End Function
 Private Sub CheckItemBuff(ByVal bChecked As Boolean, ByVal sSpellFamily As String, objItem As acObject)
 On Error GoTo ErrorHandler
     
+    If Not Valid(objItem) Then Exit Sub
+    If objItem.unEnchantable Then Exit Sub
+    
     If bChecked And Valid(objItem) Then
         Call AddBuffToList(sSpellFamily, , , objItem, , SCHOOL_ITEM)
     End If
@@ -212,6 +215,10 @@ ErrorHandler:
 End Sub
 
 Private Sub CheckItemBanes(ByVal bChecked As Boolean, objItem As acObject)
+
+    If Not Valid(objItem) Then Exit Sub
+    If objItem.unEnchantable Then Exit Sub
+    
     If bChecked And Valid(objItem) Then
         Call AddBanes(objItem)
     End If
@@ -237,6 +244,9 @@ ErrorHandler:
 End Sub
 
 Private Sub CheckAddBane(ByVal iElement As Integer, ByVal bChecked As Boolean, objItem As acObject, ByVal aFamily As String)
+    If Not Valid(objItem) Then Exit Sub
+    If objItem.unEnchantable Then Exit Sub
+    
     If bChecked Then
         Call AddBuffToList(aFamily, SPELLTYPE_BANE, iElement, objItem, , SCHOOL_ITEM)
     End If
@@ -248,6 +258,11 @@ On Error GoTo ErrorHandler
 
     If Not Valid(objItem) Then
         PrintErrorMessage "clsBuffer.AddBanes : invalid objItem"
+        Exit Sub
+    End If
+    
+    If objItem.unEnchantable Then
+        MyDebug "clsBuffer.AddBanes: Can not enchant: " & objItem.Name
         Exit Sub
     End If
     

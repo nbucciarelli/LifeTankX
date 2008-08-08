@@ -807,11 +807,11 @@ On Error GoTo Error_Handler
     End If
     
     If iNumCount > 0 Then
-        'Need to find # we currently have in our Inventory
-        If g_Objects.Items.InvCntByName(FullItemName) > iNumCount Then
-            ItemCheckCount = False
-        Else
+        'Compare to # we currently have in our Inventory
+        If iNumCount > g_Objects.Items.InvCntByName(FullItemName) Then
             ItemCheckCount = True
+        Else
+            ItemCheckCount = False
         End If
     Else
         ItemCheckCount = True

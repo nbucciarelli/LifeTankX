@@ -895,7 +895,7 @@ On Error GoTo ErrorHandler
             sVal = xS.Struct(i).Value("value")
             lKey = xS.Struct(i).Value("key")
         
-            'myDebug "IDObject: Strings: " & objEntity.Name & " Key:" & Hex(lKey) & " Value:" & sVal
+            myDebug "IDObject: Strings: " & objEntity.Name & " Key:" & Hex(lKey) & " Value:" & sVal
             
             Select Case lKey
                 Case &H1&  'Name
@@ -959,9 +959,12 @@ On Error GoTo ErrorHandler
             lVal = xVal.Value("value")
             lKey = xVal.Value("key")
             
-            'myDebug "IDObject: " & objEntity.Name & " Key:" & Hex(lKey) & " Val:" & lVal
+            myDebug "IDObject: H1: " & objEntity.Name & " Key:" & Hex(lKey) & " Val:" & lVal
             
             Select Case lKey
+                Case &H5& 'Burden
+                    objEntity.Burden = lVal
+
                 Case &H11& 'Rare #
                     objEntity.IsRare = True
                     objEntity.RareNumber = lVal
@@ -981,9 +984,27 @@ On Error GoTo ErrorHandler
                         Call objEntity.UpdateArmorType
                     End If
 
+                Case &H21&  'Bonded
+                    'objEntity.Bonded = True
+                    
+                Case &H24&  'Unechantable
+                    objEntity.unEnchantable = True
+
                 Case &H2D&  'Elemental Damage Bonus: DamageType
                     'objEntity.ElementBonusDamageType = lVal
                     
+                Case &H56&  'Min level restriction
+                    'objEntity.minLevel = lVal
+
+                Case &H57&  'Max level restriction
+                    'objEntity.maxLevel = lVal
+
+                Case &H5B&  'Total Uses
+                    'objEntity.totalUses = lVal
+
+                Case &H5C&  'Uses Remaining
+                    'objEntity.usesRemaining = lVal
+
                 Case &H69& 'Workmanship
                     objEntity.Workmanship = lVal
 
@@ -1002,24 +1023,15 @@ On Error GoTo ErrorHandler
                 Case &H6C& 'Max Mana
                     objEntity.MaxMana = lVal
 
-                Case &H83& 'Material Type
-                    objEntity.MaterialType = lVal
-                    'Call g_ACConst.CheckNewMaterial(objEntity.MaterialType, objEntity.Name)
-
-                Case &HAA& 'Workmanship divisor
-                    If lVal <> 0 Then
-                        objEntity.Workmanship = Round(objEntity.Workmanship / lVal)
-                        'myDebug "ID: " & objEntity.Name & " - Workmanship Divisor: " & lVal & " - Updated Workmanship = " & objEntity.Workmanship
-                    End If
-
-                Case &H5& 'Burden
-                    objEntity.Burden = lVal
-
                 Case &H6D& 'Arcane Lore req
                     objEntity.LoreReq = lVal
                 
                 Case &H6E& 'Rank activation req
                     objEntity.RankReq = lVal
+
+                Case &H83& 'Material Type
+                    objEntity.MaterialType = lVal
+                    'Call g_ACConst.CheckNewMaterial(objEntity.MaterialType, objEntity.Name)
 
                 Case &H9E& 'Wield Req Type
                     objEntity.WieldReqType = lVal
@@ -1033,9 +1045,18 @@ On Error GoTo ErrorHandler
                     objEntity.WieldReqVal = lVal
                     'MyDebug "ID: " & objEntity.Name & " - Wield Req Value : " & objEntity.WieldReqVal
 
+                Case &HA6& 'Slayer Species
+                    'objEntity.slayerType = lVal
+
                 Case &HAB& 'Number times tinked
                     objEntity.TinkCount = lVal
-                
+
+                Case &HAA& 'Workmanship divisor
+                    If lVal <> 0 Then
+                        objEntity.Workmanship = Round(objEntity.Workmanship / lVal)
+                        'myDebug "ID: " & objEntity.Name & " - Workmanship Divisor: " & lVal & " - Updated Workmanship = " & objEntity.Workmanship
+                    End If
+
                 Case &HB0& 'Activation Skill Name
                     objEntity.ActivateSkill = g_Const.GetSkillName(lVal)
                 
@@ -1047,6 +1068,9 @@ On Error GoTo ErrorHandler
                 
                 Case &HB3& 'special properties
                     '0x01=Critical Strike, 0x02=Crippling Blow, 0x04=Armor Rending, 0x80000000= Phantasmal
+                    myDebug "IDObject: H1->B3: " & objEntity.Name & " Key:" & Hex(lKey) & " Val:" & lVal
+                    myDebug "IDObject: Hex(Imbue): " & Hex(lVal)
+                    
                     If lVal = 1 Then
                         If InStr(objEntity.Imbue, "Critical Strike") = 0 Then
                             If bAddImbueComma Then
@@ -1144,9 +1168,31 @@ On Error GoTo ErrorHandler
                                 bAddImbueComma = True
                             End If
                         End If
-                    Else
-                        myDebug "ID: " & objEntity.Name & " - Uknown Imbue: " & Hex(lVal)
-                        'objEntity.Imbue = "Unknown Imbue #" & Hex(lVal) & " on " & objEntity.Name
+                    End If
+                    
+                    'These need to be bitwise and as they can exist with the above imbues
+                    '0x20000000= Magic Absorbing
+                    '0x20000004= Magic Absorbing (really some other imbue + Magic Absorbing
+                    If (lVal And &H20000000) Then
+                        If InStr(objEntity.Imbue, "Magic Absorbing") = 0 Then
+                            If bAddImbueComma Then
+                                objEntity.Imbue = LTrim(objEntity.Imbue & ", Magic Absorbing")
+                            Else
+                                objEntity.Imbue = LTrim(objEntity.Imbue & "Magic Absorbing")
+                                bAddImbueComma = True
+                            End If
+                        End If
+                    End If
+                    '0x80000000= Phantasmal
+                    If (lVal And &H80000000) Then
+                        If InStr(objEntity.Imbue, "Phantasmal") = 0 Then
+                            If bAddImbueComma Then
+                                objEntity.Imbue = LTrim(objEntity.Imbue & ", Phantasmal")
+                            Else
+                                objEntity.Imbue = LTrim(objEntity.Imbue & "Phantasmal")
+                                bAddImbueComma = True
+                            End If
+                        End If
                     End If
                 
                 Case &HCC& 'ElementBonusDamage
@@ -1161,40 +1207,47 @@ On Error GoTo ErrorHandler
                     If lVal = 2 Then
                         objEntity.ResistanceCleavingType = "Piercing"
                     End If
+                
+                'Case Else
+                '    myDebug "IDObject: H1: Else unknown prop: " & objEntity.Name & " Key:" & Hex(lKey) & " Val:" & lVal
 
             End Select
         Next i
     End If
 
     '----------------------------------------------------------------
-    ' Boolean (infinite uses, etc.)
+    ' Booleans
     '----------------------------------------------------------------
-3    If (lAssessFlag) Then
+3    'If (lAssessFlag And &H2&) Then
 
-        Dim xB As DecalNet.IMessageMember
-        iNumData = pMsg.Value("booleanCount")
-        Set xB = pMsg.Struct("booleans")
+        'Dim xB As DecalNet.IMessageMember
+        'iNumData = pMsg.Value("booleanCount")
+        'Set xB = pMsg.Struct("booleans")
 
         'myDebug "IDObject: Booleans: " & objEntity.Name & " [NumData=" & iNumData & "]"
 
-        For i = 0 To iNumData - 1
-            bVal = xB.Struct(i).Value("value")
-            lKey = xB.Struct(i).Value("key")
-            
-            'myDebug "Boolean"
-            'myDebug "IDObject: " & objEntity.Name & " Key:" & Hex(lKey) & " Val:" & bVal
-                    
-            Select Case lKey
-                'Case &HE&  'Use Instruction
-                    'myDebug "ID: " & objEntity.Name & " - Use Instruction : " & sVal
+        'For i = 0 To iNumData - 1
+        '    bVal = xB.Struct(i).Value("value")
+        '    lKey = xB.Struct(i).Value("key")
+        '
+        '    'myDebug "Boolean"
+        '    myDebug "IDObject: Booleans:  " & objEntity.Name & " Key:" & Hex(lKey) & " Val:" & bVal
+        '
+        '    Select Case lKey
+        '        'Case &H5B& 'Retained
+        '            'objEntity.retained = True
+        '        'Case &H63& 'Ivoryable
+        '            'objEntity.ivoryable = True
+        '        'Case &H64& 'Dyable
+        '            'objEntity.dyable = True
+        '        'Case &HE&  'Use Instruction
+        '            'myDebug "ID: " & objEntity.Name & " - Use Instruction : " & sVal
+        '        'Case &HF3&  'Unlimited Uses
+        '            'myDebug "ID: " & objEntity.Name & " - Unlimited Uses : " & sVal
+        '    End Select
+        'Next i
 
-                'Case &HF&  'Simple Description
-                    'myDebug "ID: " & objEntity.Name & " - Simple Description : " & sVal
-
-            End Select
-        Next i
-
-    End If
+    'End If
     
     '----------------------------------------------------------------
     ' Wand/Item Bonus Info
@@ -1208,8 +1261,11 @@ On Error GoTo ErrorHandler
         For i = 0 To iNumData - 1
             dVal = xD.Struct(i).Value("value")
             lKey = xD.Struct(i).Value("key")
+            
+            myDebug "IDObject: H4: " & objEntity.Name & " Key:" & Hex(lKey) & " Val:" & dVal
+            
             Select Case lKey
-                
+
                 Case &H1D  'Melee Defense Bonus
                     objEntity.DefenseBonus = Round((dVal - 1) * 100)
                     If objEntity.DefenseBonus < 0 Then objEntity.DefenseBonus = 0
@@ -1239,12 +1295,28 @@ On Error GoTo ErrorHandler
                     If lVal >= 1 Then
                         myDebug "Found Crushing Blow property."
                         objEntity.CrushingBlow = True
+                        If InStr(objEntity.Imbue, "Crushing Blow") = 0 Then
+                            If bAddImbueComma Then
+                                objEntity.Imbue = LTrim(objEntity.Imbue & ", Crushing Blow")
+                            Else
+                                objEntity.Imbue = LTrim(objEntity.Imbue & "Crushing Blow")
+                                bAddImbueComma = True
+                            End If
+                        End If
                     End If
                 
                 Case &H93 'Biting Strike
                     If lVal >= 1 Then
                         myDebug "Found Biting Strike property."
                         objEntity.BitingStrike = True
+                        If InStr(objEntity.Imbue, "Biting Strike") = 0 Then
+                            If bAddImbueComma Then
+                                objEntity.Imbue = LTrim(objEntity.Imbue & ", Biting Strike")
+                            Else
+                                objEntity.Imbue = LTrim(objEntity.Imbue & "Biting Strike")
+                                bAddImbueComma = True
+                            End If
+                        End If
                     End If
                     
                 Case &H9D 'Resistance Cleaving
@@ -1363,20 +1435,21 @@ On Error GoTo ErrorHandler
 
         'MyDebug "ID : Weapon Info - " & objEntity.Name & " : Type=" & objEntity.GetWeaponTypeName & ", HighDmg=" & objEntity.HighDamage & ", LowDmg=" & objEntity.GetLowDamage & " Var=" & objEntity.Variance & ", Att%=" & objEntity.AttackBonus & ", Def%=" & objEntity.DefenseBonus & ", DmgFlags=" & objEntity.DamageFlags
         'If objEntity.DamageModifier <> 0 Then MyDebug "Damage Mod : +" & objEntity.DamageModifier & "%"
+        
+        If (lAssessFlag And &H103D&) Then ' Cast on Strike property
+            myDebug "OnIdentifyObject H20 -> H103D Weap: " & objEntity.Name & " : lAssessFlag: " & Hex(lAssessFlag) & "  lCharFlags: " & Hex(lCharFlags)
+            If InStr(objEntity.Imbue, "Cast on Strike") = 0 Then
+                If bAddImbueComma Then
+                    objEntity.Imbue = LTrim(objEntity.Imbue & ", Cast on Strike")
+                Else
+                    objEntity.Imbue = LTrim(objEntity.Imbue & "Cast on Strike")
+                    bAddImbueComma = True
+                End If
+            End If
+        End If
 
     End If
     
-    If Hex(lAssessFlag) = "103D" Then ' Cast on Strike property
-        If InStr(objEntity.Imbue, "Cast on Strike") = 0 Then
-            If bAddImbueComma Then
-                objEntity.ResistanceCleaving = LTrim(objEntity.Imbue & ", Cast on Strike")
-            Else
-                objEntity.ResistanceCleaving = LTrim(objEntity.Imbue & "Cast on Strike")
-                bAddImbueComma = True
-            End If
-        End If
-    End If
-
 
     '----------------------------------------------------------------
     ' Character Assess (Player)

@@ -1458,6 +1458,10 @@ On Error GoTo Error_Handler
                     locDebug "clsLoot: PhatLoot: " & PhatLoot.PassActiveFilters(curItem, True, False, False, False, False, False)
                     locDebug "clsLoot: ValidSalvage: " & g_Macro.Salvager.CheckValidSalvageItem(curItem)
                 End If
+                If (curItem.itemType = ITEM_MANA_STONES) And (curItem.Name Like "*Stone*") And (curItem.Mana = 0) Then
+                    Call g_Macro.Loot.countEmptyManaStones
+                End If
+
             End If
         End If
     End If
@@ -1773,21 +1777,21 @@ On Error GoTo ErrorHandler
             'If (aObj.TinkCount > 0) Then
                 If (Len(aObj.Imbue) > 1) Then id = id & ", (" & aObj.Imbue
                 
-                If aObj.CrushingBlow = True And (Len(aObj.Imbue) > 1) Then
-                    id = id & ", Crushing Blow"
-                ElseIf aObj.CrushingBlow = True And (Len(aObj.Imbue) < 1) Then
-                    'MyDebug "Crushing Blow found and no imbue string."
-                    id = id & ", (Crushing Blow"
-                End If
+                'If aObj.CrushingBlow = True And (Len(aObj.Imbue) > 1) Then
+                '    id = id & ", Crushing Blow"
+                'ElseIf aObj.CrushingBlow = True And (Len(aObj.Imbue) < 1) Then
+                '    'MyDebug "Crushing Blow found and no imbue string."
+                '    id = id & ", (Crushing Blow"
+                'End If
                 
-                If aObj.BitingStrike = True And (Len(aObj.Imbue) > 1 Or aObj.CrushingBlow = True) Then
-                    id = id & ", Biting Strike"
-                ElseIf aObj.BitingStrike = True And (Len(aObj.Imbue) < 1 Or aObj.CrushingBlow = False) Then
-                    'MyDebug "Biting Strike found and no imbue string."
-                    If aObj.CrushingBlow = False Then
-                        id = id & ", (Biting Strike"
-                    End If
-                End If
+                'If aObj.BitingStrike = True And (Len(aObj.Imbue) > 1 Or aObj.CrushingBlow = True) Then
+                '    id = id & ", Biting Strike"
+                'ElseIf aObj.BitingStrike = True And (Len(aObj.Imbue) < 1 Or aObj.CrushingBlow = False) Then
+                '    'MyDebug "Biting Strike found and no imbue string."
+                '    If aObj.CrushingBlow = False Then
+                '        id = id & ", (Biting Strike"
+                '    End If
+                'End If
 
                 If (Len(aObj.ResistanceCleaving) > 1) Then
                     If ((Len(aObj.ResistanceCleaving) > 1) Or aObj.CrushingBlow = True Or aObj.BitingStrike = True) Then
@@ -1831,21 +1835,21 @@ On Error GoTo ErrorHandler
             'If (aObj.TinkCount > 0) Then
                 If (Len(aObj.Imbue) > 1) Then id = id & ", (" & aObj.Imbue
                 
-                If aObj.CrushingBlow = True And Len(aObj.Imbue) > 1 Then
-                    id = id & ", Crushing Blow"
-                ElseIf aObj.CrushingBlow = True And (Len(aObj.Imbue) < 1) Then
-                    'MyDebug "Crushing Blow found and no imbue string."
-                    id = id & ", (Crushing Blow"
-                End If
+                'If aObj.CrushingBlow = True And Len(aObj.Imbue) > 1 Then
+                '    id = id & ", Crushing Blow"
+                'ElseIf aObj.CrushingBlow = True And (Len(aObj.Imbue) < 1) Then
+                '    'MyDebug "Crushing Blow found and no imbue string."
+                '    id = id & ", (Crushing Blow"
+                'End If
                 
-                If aObj.BitingStrike = True And (Len(aObj.Imbue) > 1 Or aObj.CrushingBlow = True) Then
-                    id = id & ", Biting Strike"
-                ElseIf aObj.BitingStrike = True And (Len(aObj.Imbue) < 1 Or aObj.CrushingBlow = False) Then
-                    'MyDebug "Biting Strike found and no imbue string."
-                    If aObj.CrushingBlow = False Then
-                        id = id & ", (Biting Strike"
-                    End If
-                End If
+                'If aObj.BitingStrike = True And (Len(aObj.Imbue) > 1 Or aObj.CrushingBlow = True) Then
+                '    id = id & ", Biting Strike"
+                'ElseIf aObj.BitingStrike = True And (Len(aObj.Imbue) < 1 Or aObj.CrushingBlow = False) Then
+                '    'MyDebug "Biting Strike found and no imbue string."
+                '    If aObj.CrushingBlow = False Then
+                '        id = id & ", (Biting Strike"
+                '    End If
+                'End If
 
                 If (Len(aObj.ResistanceCleaving) > 1) Then
                     id = id & aObj.ResistanceCleaving & aObj.ResistanceCleavingType & ")"
@@ -1884,21 +1888,21 @@ On Error GoTo ErrorHandler
             'If (aObj.TinkCount > 0) Then
                 If (Len(aObj.Imbue) > 1) Then id = id & ", (" & aObj.Imbue
                 
-                If aObj.CrushingBlow = True And Len(aObj.Imbue) > 1 Then
-                    id = id & ", Crushing Blow"
-                ElseIf aObj.CrushingBlow = True And (Len(aObj.Imbue) < 1) Then
-                    'MyDebug "Crushing Blow found and no imbue string."
-                    id = id & ", (Crushing Blow"
-                End If
+                'If aObj.CrushingBlow = True And Len(aObj.Imbue) > 1 Then
+                '    id = id & ", Crushing Blow"
+                'ElseIf aObj.CrushingBlow = True And (Len(aObj.Imbue) < 1) Then
+                '    'MyDebug "Crushing Blow found and no imbue string."
+                '    id = id & ", (Crushing Blow"
+                'End If
                 
-                If aObj.BitingStrike = True And (Len(aObj.Imbue) > 1 Or aObj.CrushingBlow = True) Then
-                    id = id & ", Biting Strike"
-                ElseIf aObj.BitingStrike = True And (Len(aObj.Imbue) < 1 Or aObj.CrushingBlow = False) Then
-                    'MyDebug "Biting Strike found and no imbue string."
-                    If aObj.CrushingBlow = False Then
-                        id = id & ", (Biting Strike"
-                    End If
-                End If
+                'If aObj.BitingStrike = True And (Len(aObj.Imbue) > 1 Or aObj.CrushingBlow = True) Then
+                '    id = id & ", Biting Strike"
+                'ElseIf aObj.BitingStrike = True And (Len(aObj.Imbue) < 1 Or aObj.CrushingBlow = False) Then
+                '    'MyDebug "Biting Strike found and no imbue string."
+                '    If aObj.CrushingBlow = False Then
+                '        id = id & ", (Biting Strike"
+                '    End If
+                'End If
 
                 If (Len(aObj.ResistanceCleaving) > 1) Then
                     id = id & ", " & aObj.ResistanceCleaving & aObj.ResistanceCleavingType & ")"
@@ -1927,21 +1931,21 @@ On Error GoTo ErrorHandler
                 
                 If (Len(aObj.Imbue) > 1) Then id = id & ", (" & aObj.Imbue
                 
-                If aObj.CrushingBlow = True And Len(aObj.Imbue) > 1 Then
-                    id = id & ", Crushing Blow"
-                ElseIf aObj.CrushingBlow = True And (Len(aObj.Imbue) < 1) Then
-                    MyDebug "Crushing Blow found and no imbue string."
-                    id = id & ", (Crushing Blow"
-                End If
+                'If aObj.CrushingBlow = True And Len(aObj.Imbue) > 1 Then
+                '    id = id & ", Crushing Blow"
+                'ElseIf aObj.CrushingBlow = True And (Len(aObj.Imbue) < 1) Then
+                '    MyDebug "Crushing Blow found and no imbue string."
+                '    id = id & ", (Crushing Blow"
+                'End If
                 
-                If aObj.BitingStrike = True And (Len(aObj.Imbue) > 1 Or aObj.CrushingBlow = True) Then
-                    id = id & ", Biting Strike"
-                ElseIf aObj.BitingStrike = True And (Len(aObj.Imbue) < 1 Or aObj.CrushingBlow = False) Then
-                    MyDebug "Biting Strike found and no imbue string."
-                    If aObj.CrushingBlow = False Then
-                        id = id & ", (Biting Strike"
-                    End If
-                End If
+                'If aObj.BitingStrike = True And (Len(aObj.Imbue) > 1 Or aObj.CrushingBlow = True) Then
+                '    id = id & ", Biting Strike"
+                'ElseIf aObj.BitingStrike = True And (Len(aObj.Imbue) < 1 Or aObj.CrushingBlow = False) Then
+                '    MyDebug "Biting Strike found and no imbue string."
+                '    If aObj.CrushingBlow = False Then
+                '        id = id & ", (Biting Strike"
+                '    End If
+                'End If
 
                 If (Len(aObj.ResistanceCleaving) > 1) Then
                     id = id & aObj.ResistanceCleaving & aObj.ResistanceCleavingType & ")"

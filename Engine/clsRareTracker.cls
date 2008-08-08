@@ -137,13 +137,13 @@ On Error GoTo ErrorHandler
     ShortDesc = Replace(ShortDesc, "%", " percent")
     UseInst = Replace(UseInst, "%", " percent")
     
-    If BitingStrike = True Then
-        Imbue = Imbue & ", Biting Strike"
-    End If
+    'If BitingStrike = True Then
+    '    Imbue = Imbue & ", Biting Strike"
+    'End If
     
-    If CrushingBlow = True Then
-        Imbue = Imbue & ", Crushing Blow"
-    End If
+    'If CrushingBlow = True Then
+    '    Imbue = Imbue & ", Crushing Blow"
+    'End If
     
     If g_ui.Loot.chkSendName.Checked Then
         MyDebug "No character name change needed."

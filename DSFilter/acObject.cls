@@ -167,6 +167,7 @@ Public RareNumber As Long               'Number of the rare item.
 Public Spells As Dictionary             'List of inate spells on this item
 Public SpellsActive As Dictionary       'List of Active spells on this item
 Public Spellcraft As Long               'Spellcraft of the item.
+Public unEnchantable As Boolean         'Is this item unEnchantable?
 
 '---------------------------------------------------------
 ' Vulns Info
@@ -288,6 +289,7 @@ Private Sub Class_Initialize()
     AssociatedSpellId = 0
     Priority = 0
     Spellcraft = 0
+    unEnchantable = False
     
     VendorMaxBuy = 0
     VendorFractBuy = 0
