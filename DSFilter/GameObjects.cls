@@ -903,15 +903,7 @@ On Error GoTo ErrorHandler
                         objEntity.Name = sVal
                         myDebug "New Obj Name: " & sVal
                     End If
-                    
-                Case &HE&  'Use Instruction
-                    objEntity.UsageInstructions = sVal
-                    'myDebug "ID: " & objEntity.Name & " - Use Instruction : " & sVal
-
-                Case &HF&  'Simple Description
-                    objEntity.ShortDesc = sVal
-                    'myDebug "ID: " & objEntity.Name & " - Simple Description : " & sVal
-
+                
                 Case &H7& 'Inscription
                     objEntity.Inscription = sVal
 
@@ -931,6 +923,15 @@ On Error GoTo ErrorHandler
                             'MyDebug "ID: " & objEntity.Name & " - Killer : " & objEntity.KillerName
                         End If
                     End If
+                
+                Case &HE&  'Use Instruction
+                    objEntity.UsageInstructions = sVal
+                    'myDebug "ID: " & objEntity.Name & " - Use Instruction : " & sVal
+
+                Case &HF&  'Simple Description
+                    objEntity.ShortDesc = sVal
+                    'myDebug "ID: " & objEntity.Name & " - Simple Description : " & sVal
+
                 Case &H2B& 'Date of Birth
                     If isNewObj Then
                         objEntity.ObjectType = TYPE_PLAYER
