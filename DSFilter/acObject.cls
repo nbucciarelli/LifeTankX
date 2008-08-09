@@ -118,6 +118,7 @@ Public BitingStrike As Boolean
 Public CrushingBlow As Boolean
 Public ResistanceCleaving As String
 Public ResistanceCleavingType As String
+Public slayerType As Integer
 
 'Wand info
 Public ManaConvMod As Integer
@@ -303,6 +304,8 @@ Private Sub Class_Initialize()
     
     ResistanceCleaving = ""
     ResistanceCleavingType = ""
+    
+    slayerType = 0
 
     Vulnerability = -1 'DMG_SLASHING
     m_Vulns = -1
@@ -534,6 +537,8 @@ On Error GoTo ErrorHandler
         
         .BitingStrike = BitingStrike
         .CrushingBlow = CrushingBlow
+        
+        .slayerType = slayerType
         
         .ResistanceCleaving = ResistanceCleaving
         .ResistanceCleavingType = ResistanceCleavingType

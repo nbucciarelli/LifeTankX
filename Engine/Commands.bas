@@ -239,17 +239,30 @@ On Error GoTo ErrorHandler
                         Dim wRange As Single
                         wRange = g_Filters.g_worldFilter.Distance2D(Arg2, g_Filters.PlayerGUID)
                         If Valid(farobj) Then
-                            PrintMessage "Name: " & farobj.Name
-                            PrintMessage "GUID: " & farobj.Guid
+                            PrintMessage "Name: " & farobj.Name & " (" & farobj.Guid & ")"
                             PrintMessage "Type: " & farobj.ObjectType
-                            PrintMessage "Range: " & farobj.GetRange
-                            PrintMessage "Range: " & farobj.Loc.landblock & " : " & farobj.Loc.DungeonId & " : " & farobj.Loc.Coords
+                            PrintMessage "GetRange: " & farobj.GetRange
+                            PrintMessage "Landblock: " & farobj.Loc.landblock & " : " & farobj.Loc.DungeonId & " : " & farobj.Loc.Coords
                             PrintMessage "wRange: " & wRange
                         Else
                             PrintMessage "wRange: " & wRange
                         End If
+                    ElseIf g_Hooks.CurrentSelection Then
+                        Dim farobj2 As acObject
+                        Set farobj2 = g_Objects.FindObject(Arg2)
+                        Dim wRange2 As Single
+                        wRange2 = g_Filters.g_worldFilter.Distance2D(Arg2, g_Filters.PlayerGUID)
+                        If Valid(farobj2) Then
+                            PrintMessage "Name: " & farobj2.Name & " (" & farobj2.Guid & ")"
+                            PrintMessage "Type: " & farobj2.ObjectType
+                            PrintMessage "GetRange: " & farobj2.GetRange
+                            PrintMessage "Landblock: " & farobj2.Loc.landblock & " : " & farobj2.Loc.DungeonId & " : " & farobj2.Loc.Coords
+                            PrintMessage "wRange: " & wRange2
+                        Else
+                            PrintMessage "wRange: " & wRange2
+                        End If
                     Else
-                        PrintMessage "try: /lt dist 1234567890"
+                        PrintMessage "try: /lt dist 198000356"
                     End If
                 
                 Case "selection"
@@ -287,11 +300,10 @@ On Error GoTo ErrorHandler
                                     PrintMessage "ObjClass: " & wObj.ObjectClass
                                 Else
                                     aRange = g_Filters.g_worldFilter.Distance2D(obj.Guid, g_Filters.PlayerGUID)
-                                    PrintMessage "Current Selection Info : " & obj.Name
-                                    PrintMessage "GUID: " & obj.Guid
+                                    PrintMessage "Name: " & obj.Name & " (" & obj.Guid & ")"
                                     PrintMessage "Type: " & obj.ObjectType
-                                    PrintMessage "Range: " & obj.GetRange & " :w: " & aRange
-                                    PrintMessage "Range: " & WorldRange(obj.Guid)
+                                    PrintMessage "GetRange: " & obj.GetRange & " :w: " & aRange
+                                    PrintMessage "WorldRange: " & WorldRange(obj.Guid)
                                     PrintMessage "Dead : " & CStr(obj.Dead)
                                     PrintMessage "Dangerous : " & CStr(obj.UserData(B_DANGEROUS))
                                     PrintMessage "ValidTarget: " & IsValidTarget(obj, Not g_ui.Macro.chkAttackAny.Checked)

@@ -58,6 +58,7 @@ Public Enum eMacroStates
     ST_BUYSELL
     ST_MANACHARGE
     ST_RECHARGESTONE
+    ST_LOGOUTSPELL
 End Enum
 
 Public Enum eMacroSubStates
@@ -2092,7 +2093,14 @@ On Error GoTo ErrorHandler
                 If Not ACBusy Then
                     Call RechargeManaStone
                 End If
-                
+
+26            Case ST_LOGOUTSPELL
+                ' If we have a War spell in the queue, be sure to clear it out
+                Call ClearSpellQueue
+                If Not ACBusy Then
+                    If castLogoutSpell Then Call GoIdle
+                End If
+            
         End Select
     End If
     
@@ -3114,6 +3122,41 @@ Public Sub OnOutOfArrow()
     Call GoIdle
 End Sub
 
+Public Function castLogoutSpell() As Boolean
+On Error GoTo ErrorHandler
+    Dim bRet As Boolean
+    
+    'Wait for retry timer to expire
+    If Not m_tmrPostCastDelayTimer.Expired Then Exit Function
+
+    'First make sure we are in casting mode
+    If Not g_Macro.ValidState(TYPE_CASTER) Then
+        Call m_tmrPostCastDelayTimer.SetNextTime(1)
+        MyDebug "castLogoutSpell - Waiting for caster mode before casting logout spell"
+        bRet = True
+    Else
+        Call g_Spells.c_SpellQueue.Clear
+        Call g_Spells.c_PrioritySpellQueue.Clear
+        
+        MyDebug "castLogoutSpell - Will Cast LOGOUT Spell: " & g_ui.Macro.chLogoutSpell.Text(g_ui.Macro.chLogoutSpell.Selected)
+        
+        Dim outSpell As New clsSpell
+        Set outSpell = g_Spells.Items.FindSpell(g_ui.Macro.chLogoutSpell.Text(g_ui.Macro.chLogoutSpell.Selected), 3, , True)
+        Call g_Spells.CastThisSpell(outSpell, 0, True)
+        m_logoutSpellCast = True
+        m_bOKToCast = True
+        bRet = False
+    End If
+
+Fin:
+    castLogoutSpell = bRet
+    Exit Function
+ErrorHandler:
+    bRet = False
+    PrintErrorMessage "clsMacro.castLogOutSpell - " & Err.Description & " line: " & Erl
+    Resume Fin
+End Function
+
 '#####################################################################################
 '#
 '#                                UTILS
@@ -3175,21 +3218,11 @@ On Error GoTo ErrorHandler
     
     If bRet And g_ui.Macro.chkLogoutCastSpell.Checked And bCheckSpell Then
         If Not m_logoutSpellCast Then
-            'First make sure we are in casting mode
-            If Not g_Macro.ValidState(TYPE_CASTER) Then
-                MyDebug "MustLogOut - Waiting for caster mode before casting logout spell"
-                bRet = False
-            Else
-                MyDebug "MustLogOut - Will Cast LOGOUT Spell: " & g_ui.Macro.chLogoutSpell.Text(g_ui.Macro.chLogoutSpell.Selected)
-                'Put the spell at top of the Priority Queue
-                Call g_Spells.c_SpellQueue.Clear
-                Dim outSpell As New clsSpell
-                Set outSpell = g_Spells.Items.FindSpell(g_ui.Macro.chLogoutSpell.Text(g_ui.Macro.chLogoutSpell.Selected), 3, , True)
-                Call g_Spells.CastThisSpell(outSpell, 0, True)
-                m_logoutSpellCast = True
-                m_bOKToCast = True
-                bRet = False
-            End If
+            Call SetState(ST_LOGOUTSPELL)
+            Call m_tmrPostCastDelayTimer.SetNextTime(1)
+            bRet = False
+        Else
+            bRet = True
         End If
     End If
 
@@ -3502,7 +3535,7 @@ On Error GoTo ErrorHandler
     For Each objMonster In g_Objects.Monsters
         If Valid(objMonster) Then
             ' If it's more than 60 away, it's probably been silently ignored (no OnDestroy event)
-            If (objMonster.GetRange > 60) Or (objMonster.GetRange = 0) Then
+            If (objMonster.GetRange > 60) Or (objMonster.GetRange <= 0) Then
                 i = objMonster.UserData(INT_DELETE) + 1
                 Call objMonster.SetUserData(INT_DELETE, i)
                 If (objMonster.UserData(INT_DELETE) > 3) Then

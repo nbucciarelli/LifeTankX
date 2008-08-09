@@ -664,11 +664,16 @@ On Error GoTo ErrorHandler
             
             For Each nodeAttrib In xmlNode.Attributes
                 Select Case LCase(nodeAttrib.nodeName)
+                
                     Case "id"
                         oDungeon.Id = CLng("&H" + nodeAttrib.Value)
                         
                     Case "name"
                         oDungeon.Name = nodeAttrib.Value
+                        
+                    Case "coords"
+                        oDungeon.Info = nodeAttrib.Value
+                        
                 End Select
             Next nodeAttrib
             

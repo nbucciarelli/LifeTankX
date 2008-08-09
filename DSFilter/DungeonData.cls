@@ -15,6 +15,7 @@ Option Explicit
 
 Public Id As Long
 Public Name As String
+Public Info As String
 
 Private Sub Class_Initialize()
     Id = 0

@@ -397,8 +397,8 @@ On Error GoTo ErrorHandler
     
     'if we already have a target, release it
     If Valid(m_objTarget) Then
-        Call ReleaseTarget("From SetTarget")
         m_lastTargetName = m_objTarget.Name
+        Call ReleaseTarget("From SetTarget")
     Else
         m_lastTargetName = newTarget.Name
     End If

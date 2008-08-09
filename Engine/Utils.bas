@@ -629,7 +629,16 @@ On Error GoTo ErrorHandler
     
     'Compare square ranges for speed optimization
     'fSquareRange = objEntity.GetSquareRange
+    
     fRange = WorldRange(objEntity.Guid)
+    'WorldRange = (g_Filters.g_worldFilter.Distance2D(aGuid, g_Filters.PlayerGUID) * 200)
+    
+    'Should NEVER have a range of ZERO!!!!
+    ' FUCKING DECAL!
+    If fRange <= 0 Then
+        fRange = objEntity.GetRange
+    End If
+    
     fSquareRangeOut = fRange
     
     'locDebug "ValidRangeTo: Max:" & MaxRange & " fRange: " & fRange & "  for: " & objEntity.Name

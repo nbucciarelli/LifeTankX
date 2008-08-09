@@ -1030,31 +1030,31 @@ On Error GoTo ErrorHandler
                     objEntity.RankReq = lVal
 
                 Case &H83& 'Material Type
-                    objEntity.MaterialType = lVal
                     'Call g_ACConst.CheckNewMaterial(objEntity.MaterialType, objEntity.Name)
+                    objEntity.MaterialType = lVal
 
                 Case &H9E& 'Wield Req Type
-                    objEntity.WieldReqType = lVal
                     'MyDebug "ID: " & objEntity.Name & " - Wield Req Type : " & objEntity.WieldReqType
+                    objEntity.WieldReqType = lVal
 
                 Case &H9F& ' WieldRequirement - ID
-                    objEntity.WieldReqId = lVal
                     'MyDebug "ID: " & objEntity.Name & " - Wield Req Id : " & objEntity.WieldReqId & " = " & g_ACConst.GetWeaponSkillName(objEntity.WieldReqId)
+                    objEntity.WieldReqId = lVal
 
                 Case &HA0& 'WieldRequirement - Amount
-                    objEntity.WieldReqVal = lVal
                     'MyDebug "ID: " & objEntity.Name & " - Wield Req Value : " & objEntity.WieldReqVal
+                    objEntity.WieldReqVal = lVal
 
                 Case &HA6& 'Slayer Species
-                    'objEntity.slayerType = lVal
+                    objEntity.slayerType = lVal
 
                 Case &HAB& 'Number times tinked
                     objEntity.TinkCount = lVal
 
                 Case &HAA& 'Workmanship divisor
                     If lVal <> 0 Then
-                        objEntity.Workmanship = Round(objEntity.Workmanship / lVal)
                         'myDebug "ID: " & objEntity.Name & " - Workmanship Divisor: " & lVal & " - Updated Workmanship = " & objEntity.Workmanship
+                        objEntity.Workmanship = Round(objEntity.Workmanship / lVal)
                     End If
 
                 Case &HB0& 'Activation Skill Name
@@ -1071,7 +1071,7 @@ On Error GoTo ErrorHandler
                     myDebug "IDObject: H1->B3: " & objEntity.Name & " Key:" & Hex(lKey) & " Val:" & lVal
                     myDebug "IDObject: Hex(Imbue): " & Hex(lVal)
                     
-                    'These need to be bitwise and as they can exist with other imbues
+                    'These need to be a bitwise AND as they can exist with other imbues
                     '0x20000000= Magic Absorbing
                     '0x20000004= Magic Absorbing (really some other imbue + Magic Absorbing
                     If (lVal And &H20000000) Then
