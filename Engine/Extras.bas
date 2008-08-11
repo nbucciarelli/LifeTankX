@@ -811,6 +811,41 @@ ErrorHandler:
     Resume Fin
 End Sub
 
+' Check to see if this object is Valid Salvage
+Public Function CheckHighManaItem(objItem As acObject) As Boolean
+On Error GoTo ErrorHandler
+    Dim bRet As Boolean
+    
+    'MyDebug "PhatLoot.CheckHighManaItem: " & objItem.Name
+    
+        If PhatLoot.IsImportantItem(objItem) Then
+            bRet = False
+        ElseIf objItem.HasMajors Then
+            bRet = False
+        ElseIf objItem.IsRare Then
+            bRet = False
+        ElseIf IsWorthAssessing(objItem.itemType) And (objItem.LastIdTime = 0) Then
+            'If item hasn't been assessed return
+            bRet = False
+        ElseIf PassActiveFilters(objItem, True, True, True, True, True, True, False) Then
+            'Passed some other filter
+            bRet = False
+        ElseIf objItem.Mana < g_Data.HighManaValue Then
+            bRet = False
+        Else
+            'Ok we found a HighMana item, add it to our list
+            bRet = True
+        End If
+
+Fin:
+    CheckHighManaItem = bRet
+    Exit Function
+ErrorHandler:
+    PrintErrorMessage "PhatLoot.CheckHighManaItem - " & Err.Description
+    bRet = False
+    Resume Fin
+End Function
+
 Public Function IsWorthAssessing(lItemType As Long) As Boolean
 On Error GoTo ErrorHandler
 
