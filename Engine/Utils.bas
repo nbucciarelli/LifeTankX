@@ -1,6 +1,10 @@
 Attribute VB_Name = "Utils"
 Option Explicit
 
+
+Private Const DEBUG_ME = False
+
+
 Public Sub MyDebug(strMsg As String, Optional bSilent As Boolean = False)
 On Error GoTo ErrorHandler
 
@@ -635,10 +639,11 @@ On Error GoTo ErrorHandler
     'WorldRange = (g_Filters.g_worldFilter.Distance2D(aGuid, g_Filters.PlayerGUID) * 200)
     
     'Should NEVER have a range of ZERO!!!!
-    ' FUCKING DECAL!
+    ' If it does, the means it's out of range
+    ' However, it sometimes bugs out, so do some double checking
     If wRange <= 0 Then
-        MyDebug "ValidRangeTo: WorldRange ZERO:" & wRange & "  for: " & objEntity.Name
         fRange = objEntity.GetRange
+        locDebug "ValidRangeTo: WorldRange ZERO:" & fRange & "  for: " & objEntity.Name & " (" & objEntity.Guid & ") LB: " & objEntity.Loc.landblock
     Else
         fRange = wRange
     End If
@@ -655,12 +660,12 @@ On Error GoTo ErrorHandler
     End If
     
     If objEntity.Loc.landblock = 0 Then
-        MyDebug "Utils.ValidRangeTo: Landblock is ZERO: " & objEntity.Name & " :: " & objEntity.Guid
+        locDebug "ValidRangeTo: Landblock is ZERO: " & objEntity.Name & " (" & objEntity.Guid & ")"
     End If
     
     If wRange <= 0 Or fRange >= 100 Then
         If (objEntity.ObjectType = TYPE_MONSTER) And Not (objEntity.Loc.landblock = g_ds.Player.Loc.landblock) Then
-            MyDebug "Utils.ValidRangeTo: Monster in Different Landblock: " & objEntity.Name & " : " & objEntity.Guid
+            locDebug "Utils.ValidRangeTo: Monster in Different Landblock: " & objEntity.Name & " : " & objEntity.Guid & " Mlb: " & objEntity.Loc.landblock & " vs Ulb: " & g_ds.Player.Loc.landblock
             'If it's a monster and it has a different landblock than this player, get rid of it in 30 seconds
             Dim i As Integer
             i = objEntity.UserData(INT_DELETE) + 1
@@ -1105,4 +1110,13 @@ Public Sub ClickButton(xOff As Long, yOff As Long, Optional ByVal useOffSet As B
     End If
     
 End Sub
+
+
+'Local Debug
+Private Sub locDebug(DebugMsg As String, Optional bSilent As Boolean = True)
+    If DEBUG_ME Or g_Data.mDebugMode Then
+        Call MyDebug("[Utils] " & DebugMsg, bSilent)
+    End If
+End Sub
+
 
