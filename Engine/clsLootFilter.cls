@@ -238,9 +238,9 @@ On Error GoTo ErrorHandler
         If bRet Then bRet = ((objItem.GetLowDamage >= WeaponMinLowDmg) And (objItem.HighDamage >= WeaponMinHighDmg))
         locDebug "MinDmg     " & WeaponMinLowDmg & "-" & WeaponMinHighDmg & "          " & objItem.GetLowDamage & "-" & objItem.HighDamage & "    Pass:" & CStr(bRet)
         
-        'FIXME : attackBonus not available yet
-        'If bRet Then bRet = (objItem.AttackBonus >= WeaponMinAttackBonus)
-        'locDebug "Att%     " & WeaponMinAttackBonus & "          " & objItem.AttackBonus & "    Pass:" & CStr(bRet)
+        'Check Attack Bonus
+        If bRet Then bRet = (objItem.AttackBonus >= WeaponMinAttackBonus)
+        locDebug "Att%     " & WeaponMinAttackBonus & "          " & objItem.AttackBonus & "    Pass:" & CStr(bRet)
         
     End If
     

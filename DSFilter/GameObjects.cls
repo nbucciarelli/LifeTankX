@@ -548,23 +548,17 @@ On Error GoTo ErrorHandler
 ' Don't care about duplicates, as colObjects.addObject now just removes the old one and adds the new one
     '
     'Make sure we're not trying to add an already existing object that hasn't been deleted (happens sometimes)
-    'Set objEntity = FindObject(lObjGUID, False)
-    'If Not Valid(objEntity) Then
-    '    Set objEntity = New acObject
-    'Else
-    '    If (objEntity.Name = sObjName) Then
-    '        'Must be an update of the object
-    '        myDebug "OnCreateObject: Update to already existing object " & objEntity.Name & " id: " & lObjGUID
-    '    Else
-    '        myDebug "OnCreateObject: Removing already existing object " & objEntity.Name & " id: " & lObjGUID
-    '        'Remove the existing object and re-create it (unless it's this player)
-    '        If (lObjGUID <> m_objPlayer.GUID) Then
-    '            Call RemoveObject(lObjGUID, "OnCreateObject dupe")
-    '        End If
-    '    End If
-    'End If
-    
-    Set objEntity = New acObject
+    If isUpdate Then
+        Set objEntity = FindObject(lObjGUID, False)
+        If Not Valid(objEntity) Then
+            myDebug "OnCreate: isUpdate = TRUE, but can not find existing object"
+            Set objEntity = New acObject
+        Else
+            'Hmm, do we need to do anything here?
+        End If
+    Else
+        Set objEntity = New acObject
+    End If
     
     objEntity.GUID = lObjGUID
     objEntity.Name = sObjName
@@ -582,6 +576,7 @@ On Error GoTo ErrorHandler
     physFlag = xPhysics.Value("flags")
     
     If (physFlag And &H20) Then objEntity.Wielder = xPhysics.Value("equipper")
+    
     If (physFlag And &H8000&) Then
         Dim xLoc As DecalNet.IMessageMember
         Set xLoc = xPhysics.Struct("position")
@@ -1562,20 +1557,26 @@ On Error GoTo ErrorHandler
     Set objEntity = FindObject(lObjGUID, False)
     If Valid(objEntity) Then
         Dim lLandblock As Long
+        Dim oldLoc As acLoc
         Dim x As DecalNet.IMessageMember
         
         Set x = pMsg.Struct("position")
         lLandblock = x.Value("landcell")
-        
+            
+        Set oldLoc = objEntity.Loc.Clone
+
         'AC sometimes send a bugged empty landblock - ignore it
         If lLandblock <> 0 Then
-            Dim oldLoc As acLoc
-            Set oldLoc = objEntity.Loc.Clone
-        
             objEntity.Loc.Landblock = lLandblock
-            objEntity.Loc.Xoff = x.Value("x")
-            objEntity.Loc.Yoff = x.Value("y")
-            objEntity.Loc.Zoff = x.Value("z")
+        End If
+        objEntity.Loc.Xoff = x.Value("x")
+        objEntity.Loc.Yoff = x.Value("y")
+        objEntity.Loc.Zoff = x.Value("z")
+        
+        If Not objEntity.Loc.Equals(oldLoc) Then
+            RaiseEvent OnObjectMoved(objEntity)
+            objEntity.timeData = 0
+        End If
             
             'f = p.Value("flags")
             'If ((f And &H8) = 0) Then
@@ -1608,12 +1609,7 @@ On Error GoTo ErrorHandler
             '    dz = 0#
             'End If
             
-            If Not objEntity.Loc.Equals(oldLoc) Then
-                RaiseEvent OnObjectMoved(objEntity)
-                objEntity.timeData = 0
-            End If
             
-        End If
     End If
 
 Fin:

@@ -620,6 +620,7 @@ Public Function ValidRangeTo(objEntity As acObject, ByVal MaxRange As Single, Op
 On Error GoTo ErrorHandler
 
     Dim fRange As Single
+    Dim wRange As Single
     
     If Not Valid(objEntity) Then
         PrintErrorMessage "ValidRangeTo - invalid objEntity"
@@ -630,13 +631,16 @@ On Error GoTo ErrorHandler
     'Compare square ranges for speed optimization
     'fSquareRange = objEntity.GetSquareRange
     
-    fRange = WorldRange(objEntity.Guid)
+    wRange = WorldRange(objEntity.Guid)
     'WorldRange = (g_Filters.g_worldFilter.Distance2D(aGuid, g_Filters.PlayerGUID) * 200)
     
     'Should NEVER have a range of ZERO!!!!
     ' FUCKING DECAL!
-    If fRange <= 0 Then
+    If wRange <= 0 Then
+        locDebug "ValidRangeTo: WorldRange ZERO:" & wRange & "  for: " & objEntity.Name
         fRange = objEntity.GetRange
+    Else
+        fRange = wRange
     End If
     
     fSquareRangeOut = fRange
@@ -650,6 +654,19 @@ On Error GoTo ErrorHandler
         ValidRangeTo = (fRange <= MaxRange)
     End If
     
+    If objEntity.Loc.landblock = 0 Then
+        MyDebug "Utils.ValidRangeTo: Landblock is ZERO: " & objEntity.Name & " :: " & objEntity.Guid
+    End If
+    
+    If wRange <= 0 Or fRange >= 100 Then
+        If (objEntity.ObjectType = TYPE_MONSTER) And Not (objEntity.Loc.landblock = g_ds.Player.Loc.landblock) Then
+            MyDebug "Utils.ValidRangeTo: Monster in Different Landblock: " & objEntity.Name & " : " & objEntity.Guid
+            'If it's a monster and it has a different landblock than this player, get rid of it in 30 seconds
+            Dim i As Integer
+            i = objMonster.UserData(INT_DELETE) + 1
+            Call objMonster.SetUserData(INT_DELETE, i)
+        End If
+    End If
     'If Not (ValidRangeTo) Then
     '    If (objEntity.ObjectType = TYPE_MONSTER) And Not (landblockInRange(objEntity.Loc.landblock)) Then
     '        MyDebug "Utils.ValidRangeTo: out of range: " & objEntity.Name & " : " & objEntity.Guid

@@ -2190,7 +2190,7 @@ On Error GoTo ErrorHandler
 
 3   Call m_tmrNextStatsUpdate.Reset
 4   Call m_tmrNextStatsUpdate.SetNextTime(5)
-    Call m_tmrCleanCollections.SetNextTime(300)
+    Call m_tmrCleanCollections.SetNextTime(30)
     
     'reset counters
 5    Call UpdateNextRebuffDisplay
@@ -3526,7 +3526,7 @@ Private Sub m_tmrCastSpell_OnTimeout()
     m_bOKToCast = True
 End Sub
 
-'Every 5 minutes, check to see if we should clean up the monster list
+'Every 30 seconds, check to see if we should clean up the monster list
 Private Sub m_tmrCleanCollections_OnTimeout()
 On Error GoTo ErrorHandler
     Dim objMonster As acObject
@@ -3534,8 +3534,8 @@ On Error GoTo ErrorHandler
 
     For Each objMonster In g_Objects.Monsters
         If Valid(objMonster) Then
-            ' If it's more than 60 away, it's probably been silently ignored (no OnDestroy event)
-            If (objMonster.GetRange > 60) Or (objMonster.GetRange <= 0) Then
+            ' If it's more than 100 away, it's probably been silently ignored (no OnDestroy event)
+            If (objMonster.GetRange > 100) Or (objMonster.GetRange <= 0) Then
                 i = objMonster.UserData(INT_DELETE) + 1
                 Call objMonster.SetUserData(INT_DELETE, i)
                 If (objMonster.UserData(INT_DELETE) > 3) Then
@@ -3545,6 +3545,8 @@ On Error GoTo ErrorHandler
             End If
         End If
     Next objMonster
+    
+    Call m_tmrCleanCollections.SetNextTime(30)
 
 Fin:
     Set objMonster = Nothing
