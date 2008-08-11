@@ -637,7 +637,7 @@ On Error GoTo ErrorHandler
     'Should NEVER have a range of ZERO!!!!
     ' FUCKING DECAL!
     If wRange <= 0 Then
-        locDebug "ValidRangeTo: WorldRange ZERO:" & wRange & "  for: " & objEntity.Name
+        MyDebug "ValidRangeTo: WorldRange ZERO:" & wRange & "  for: " & objEntity.Name
         fRange = objEntity.GetRange
     Else
         fRange = wRange
@@ -645,7 +645,7 @@ On Error GoTo ErrorHandler
     
     fSquareRangeOut = fRange
     
-    'locDebug "ValidRangeTo: Max:" & MaxRange & " fRange: " & fRange & "  for: " & objEntity.Name
+    'myDebug "ValidRangeTo: Max:" & MaxRange & " fRange: " & fRange & "  for: " & objEntity.Name
     
     If (fRange <= 0) Then
         ValidRangeTo = False
@@ -663,8 +663,8 @@ On Error GoTo ErrorHandler
             MyDebug "Utils.ValidRangeTo: Monster in Different Landblock: " & objEntity.Name & " : " & objEntity.Guid
             'If it's a monster and it has a different landblock than this player, get rid of it in 30 seconds
             Dim i As Integer
-            i = objMonster.UserData(INT_DELETE) + 1
-            Call objMonster.SetUserData(INT_DELETE, i)
+            i = objEntity.UserData(INT_DELETE) + 1
+            Call objEntity.SetUserData(INT_DELETE, i)
         End If
     End If
     'If Not (ValidRangeTo) Then
