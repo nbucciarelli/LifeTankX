@@ -28,6 +28,7 @@ Private m_dBuffCycleLen As Double           'time for a full buff cycle, in seco
 Private m_bRepeat As Boolean                'repeat buff cycles?
 
 Private m_sCurSpellName As String           'Current spell name
+Private m_sCurTargetName As String          'Current Buff Item target name
 
 'Continuous Rebuff Mode
 Private m_lCurBuff As Long      'index of the current buff
@@ -74,6 +75,7 @@ Private Sub Reset()
     Call m_tmrSecure.Reset
     m_lCurBuff = -1
     m_sCurSpellName = ""
+    m_sCurTargetName = ""
 End Sub
 
 
@@ -389,7 +391,7 @@ End Sub
 
 Private Sub PrepareNextRebuffTime()
     'setup timer
-    m_tmrNextRebuff.SetNextTime m_dRebuffInterval
+    Call m_tmrNextRebuff.SetNextTime(m_dRebuffInterval)
 End Sub
 
 Private Sub m_tmrNextRebuff_OnTimeout()
@@ -625,6 +627,7 @@ On Error GoTo ErrorHandler
         'Setup the casting params
         lTargetGUID = objItem.Guid
         sTargetName = objItem.Name
+        m_sCurTargetName = sTargetName
         
     End If
     
@@ -682,7 +685,7 @@ End Sub
 
 'Read the AC Console to figure out if we have casted the current buff spell,
 'And pop it from the queue
-'You cast Adja's Blessing you yourself
+'You cast Adja's Blessing on yourself
 Public Sub CheckCastedSpell(ByVal sCastMsg As String)
 On Error GoTo ErrorHandler
 
@@ -727,6 +730,46 @@ ErrorHandler:
     PrintErrorMessage "CheckCastedSpell - " & Err.Description
     Resume Fin
 End Sub
+
+'Read the AC Console to figure out if we are trying to cast on an Unenchantable item
+Public Sub CheckUnenchantableItem(ByVal sCastMsg As String)
+On Error GoTo ErrorHandler
+
+    'm_sCurTargetName
+    If m_sCurTargetName <> "" Then
+        If InStr(LCase(sCastMsg), LCase(m_sCurTargetName)) Then
+            
+            locDebug "clsBuddyBuffer.CheckUnenchantableItem - Current spell " & m_sCurTargetName & " resisted our spell"
+            
+            If (g_Macro.State = ST_REBUFF) Then
+                MyDebug "clsBuddyBuffer.CheckUnenchantableItem: poping off BuffQueue: " & m_sCurTargetName
+                Call m_BuffQueue.Pop
+                Call g_Spells.c_SpellQueue.Pop
+                'update progress bar
+                g_ui.Main.progBuffs.Value = g_ui.Main.progBuffs.Value + 1
+                m_sCurTargetName = ""
+            End If
+            
+            If g_Spells.Casting Then
+                locDebug "clsBuddyBuffer.CheckUnenchantableItem - g_Spells.Casting is true, calling OnSpellCastComplete"
+                Call g_Spells.OnSpellCastComplete(True, "CheckCastedSpell")
+            End If
+        Else
+            locDebug "clsBuddyBuffer.CheckUnenchantableItem doesn't match: " & m_sCurTargetName & " : " & sCastMsg
+            If g_Spells.Casting Then
+                locDebug "clsBuffer.CheckUnenchantableItem - g_Spells.Casting is true, calling OnSpellCastComplete"
+                Call g_Spells.OnSpellCastComplete(True, "CheckCastedSpell")
+            End If
+        End If
+    End If
+
+Fin:
+    Exit Sub
+ErrorHandler:
+    PrintErrorMessage "CheckUnechantableItem - " & Err.Description
+    Resume Fin
+End Sub
+
 
 
 'Local Debug

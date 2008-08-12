@@ -1353,10 +1353,16 @@ On Error GoTo ErrorHandler
                 If InStr(bstrMsg, "You cast") Then
                     Call g_Buffer.CheckCastedSpell(bstrMsg)
                     Call g_Macro.Combat.updateSecureTimer(4)
+                ElseIf InStr(Msg, "resists your spell") Then
+                    Call g_Buffer.CheckUnenchantableItem(bstrMsg)
+                    Call g_Macro.Combat.updateSecureTimer(4)
                 End If
             ElseIf g_Macro.State = ST_BUDDYREBUFF Then
                 If InStr(bstrMsg, "You cast") Then
                     Call g_BuddyBuffer.CheckCastedSpell(bstrMsg)
+                    Call g_Macro.Combat.updateSecureTimer(4)
+                ElseIf InStr(Msg, "resists your spell") Then
+                    Call g_BuddyBuffer.CheckUnenchantableItem(bstrMsg)
                     Call g_Macro.Combat.updateSecureTimer(4)
                 End If
             'ElseIf g_Macro.State = ST_FELLOWHEAL Then
