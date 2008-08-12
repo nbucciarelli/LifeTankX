@@ -3543,11 +3543,6 @@ On Error GoTo ErrorHandler
                     MyDebug "clsMacro.m_tmrCleanCollections: canDelete True: " & objMonster.Guid & " : " & objMonster.Name
                 End If
             End If
-            If Not (objMonster.Loc.landblock = g_ds.Player.Loc.landblock) Then
-                'If it has a different landblock than this player, get rid of it
-                locDebug "clsMacro.m_tmrCleanCollections: canDelete Monster in Different Landblock: " & objMonster.Name & " : " & objMonster.Guid & " Mlb: " & objMonster.Loc.landblock & " vs Ulb: " & g_ds.Player.Loc.landblock
-                objMonster.canDelete = True
-            End If
         End If
     Next objMonster
     
