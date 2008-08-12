@@ -663,15 +663,14 @@ On Error GoTo ErrorHandler
         locDebug "ValidRangeTo: Landblock is ZERO: " & objEntity.Name & " (" & objEntity.Guid & ")"
     End If
     
-    If wRange <= 0 Or fRange >= 100 Then
-        If (objEntity.ObjectType = TYPE_MONSTER) And Not (objEntity.Loc.landblock = g_ds.Player.Loc.landblock) Then
-            locDebug "Utils.ValidRangeTo: Monster in Different Landblock: " & objEntity.Name & " : " & objEntity.Guid & " Mlb: " & objEntity.Loc.landblock & " vs Ulb: " & g_ds.Player.Loc.landblock
-            'If it's a monster and it has a different landblock than this player, get rid of it in 30 seconds
-            Dim i As Integer
-            i = objEntity.UserData(INT_DELETE) + 1
-            Call objEntity.SetUserData(INT_DELETE, i)
-        End If
-    End If
+    'If wRange <= 0 Or fRange >= 100 Then
+    '    If (objEntity.ObjectType = TYPE_MONSTER) And Not (objEntity.Loc.landblock = g_ds.Player.Loc.landblock) Then
+    '        locDebug "Utils.ValidRangeTo: Monster in Different Landblock: " & objEntity.Name & " : " & objEntity.Guid & " Mlb: " & objEntity.Loc.landblock & " vs Ulb: " & g_ds.Player.Loc.landblock
+    '        'If it's a monster and it has a different landblock than this player, get rid of it in 30 seconds
+    '        objEntity.canDelete = True
+    '    End If
+    'End If
+    
     'If Not (ValidRangeTo) Then
     '    If (objEntity.ObjectType = TYPE_MONSTER) And Not (landblockInRange(objEntity.Loc.landblock)) Then
     '        MyDebug "Utils.ValidRangeTo: out of range: " & objEntity.Name & " : " & objEntity.Guid
