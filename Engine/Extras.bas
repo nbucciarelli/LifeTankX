@@ -582,7 +582,7 @@ On Error GoTo ErrorHandler
     
     If bValueFilter And g_ui.Loot.chkPickupValuable.Checked Then
         If objItem.Value >= g_Data.LootMinValue Then
-            'apply Value/Burnder filter
+            'apply Value/Burden filter
             If g_ui.Loot.chkBurdenRatio.Checked And (objItem.Burden <> 0) And (objItem.Burden <> -1) Then
                 Dim ratio As Double
                 ratio = Round(objItem.Value / objItem.Burden)
@@ -646,7 +646,7 @@ On Error GoTo ErrorHandler
 '                    GoTo Fin
 '                End If
             Else
-                MyDebug "Looting unknow scroll: " & sName
+                MyDebug "Looting unknown scroll: " & sName
                 GoTo Fin
             End If
         End If
@@ -655,6 +655,7 @@ On Error GoTo ErrorHandler
     'Should we look at items Mana?
     If g_ui.Macro.chkRechargeManaStones.Checked And g_Macro.Loot.hasEmptyManaStone And bHighManaFilter Then
         If objItem.Mana > g_Data.HighManaValue Then
+            MyDebug "Looting High Mana Item: " & objItem.Name & " mana: " & objItem.Mana
             GoTo Fin
         End If
     End If
@@ -824,10 +825,7 @@ On Error GoTo ErrorHandler
             bRet = False
         ElseIf objItem.IsRare Then
             bRet = False
-        ElseIf IsWorthAssessing(objItem.itemType) And (objItem.LastIdTime = 0) Then
-            'If item hasn't been assessed return
-            bRet = False
-        ElseIf PassActiveFilters(objItem, True, True, True, True, True, True, False) Then
+        ElseIf PassActiveFilters(objItem, False, True, True, True, True, False, False) Then
             'Passed some other filter
             bRet = False
         ElseIf objItem.Mana < g_Data.HighManaValue Then
