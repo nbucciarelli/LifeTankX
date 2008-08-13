@@ -221,8 +221,6 @@ On Error GoTo ErrorMessage
             End If
         End If
     Next objItem
-    
-    Call g_Macro.Loot.countEmptyManaStones
 
 Fin:
     Set objItem = Nothing

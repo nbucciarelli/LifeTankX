@@ -657,6 +657,8 @@ On Error GoTo ErrorHandler
         If objItem.Mana > g_Data.HighManaValue Then
             MyDebug "Looting High Mana Item: " & objItem.Name & " mana: " & objItem.Mana
             GoTo Fin
+        'Else
+        '    locDebug "PhatLoot: hasEmptyManaStone, but not enough mana: " & objItem.Name & " mana: " & objItem.Mana
         End If
     End If
 
@@ -861,8 +863,7 @@ On Error GoTo ErrorHandler
             ITEM_BUNDLE, _
             ITEM_COMPS, _
             ITEM_HEALING_KIT, _
-            ITEM_LOCKPICK, _
-            ITEM_MANA_STONES
+            ITEM_LOCKPICK
             
             bRet = False
             

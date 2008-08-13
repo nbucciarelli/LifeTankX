@@ -3597,6 +3597,8 @@ On Error GoTo ErrorHandler
 
     Call m_tmr5MinTimer.SetNextTime(300)
 
+    Call Vitals.idManaStones
+
 Fin:
     Exit Sub
 ErrorHandler:

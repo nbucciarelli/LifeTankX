@@ -212,7 +212,7 @@ Restart:
     Set objItem = Nothing
     For Each objItem In m_colEmptyManaStones
         If Valid(objItem) Then
-            If g_Objects.Items.InInventory(objItem.Guid) And (objItem.Mana = 0) Then
+            If g_Objects.Items.InInventory(objItem.Guid) And (objItem.Mana = 0) And ((g_ds.Time - objItem.LastIdTime) < 30) Then
                 Set getEmptyManaStone = objItem
             Else
                 Call m_colEmptyManaStones.Remove(objItem.Guid)
@@ -245,6 +245,7 @@ On Error GoTo ErrorMessage
         End If
     Next objItem
 
+    MyDebug "countEmptyManaStones: Total : " & m_colEmptyManaStones.Count
 Fin:
     Set objItem = Nothing
     Exit Sub
@@ -742,6 +743,10 @@ On Error GoTo Error_Handler
         End If
     End If
     
+    If (objItem.itemType = ITEM_MANA_STONES) And (objItem.Name Like "*Stone*") Then
+        Call g_Macro.Loot.countEmptyManaStones
+    End If
+
 Fin:
     Exit Sub
 Error_Handler:
@@ -1442,6 +1447,7 @@ On Error GoTo Error_Handler
                 Call RemoveItemFromCorpse(curItem)
                 Call m_tmrNextTime.ExpireNow
                 Call SetSubState(ST_LOOT_ITEM_PICKED_UP)
+                
                 If PhatLoot.PassActiveFilters(curItem, True, False, False, False, False, False) And g_Macro.Salvager.CheckValidSalvageItem(curItem) Then
                     MyDebug "clsLoot: OnItemPickup: Adding to SalvageList: " & curItem.Name
                     Call g_Macro.Salvager.AddLootToSalvageList(curItem)
@@ -1458,6 +1464,7 @@ On Error GoTo Error_Handler
                     locDebug "clsLoot: PhatLoot: " & PhatLoot.PassActiveFilters(curItem, True, False, False, False, False, False)
                     locDebug "clsLoot: ValidSalvage: " & g_Macro.Salvager.CheckValidSalvageItem(curItem)
                 End If
+                
                 If (curItem.itemType = ITEM_MANA_STONES) And (curItem.Name Like "*Stone*") And (curItem.Mana = 0) Then
                     Call g_Macro.Loot.countEmptyManaStones
                 End If

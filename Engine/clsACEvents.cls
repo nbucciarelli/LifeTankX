@@ -1432,6 +1432,7 @@ On Error GoTo ErrorHandler
            (InStr(LCase(bstrMsg), "points of mana to the following") Or _
             InStr(LCase(bstrMsg), "no wielded items require mana") Or _
             InStr(LCase(bstrMsg), "item has no Mana to drain") Or _
+            InStr(LCase(bstrMsg), "points of mana from the") Or _
             InStr(LCase(bstrMsg), "mana stone is destroyed")) Then
             Call g_Macro.doneManaCharge
         End If
