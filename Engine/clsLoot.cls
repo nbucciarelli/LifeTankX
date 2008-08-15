@@ -190,6 +190,32 @@ Public Function silentID() As Boolean
     silentID = m_silentID
 End Function
 
+Public Sub idManaStones()
+On Error GoTo ErrorMessage
+    
+    Dim objItem As acObject
+
+    Set m_IdQueue = New colObjects
+
+    For Each objItem In g_Objects.Items.Inv
+        If Valid(objItem) Then
+            If (objItem.itemType = ITEM_MANA_STONES) And (objItem.Name Like "*Stone*") And ((g_ds.Time - objItem.LastIdTime) > 30) Then
+                'MyDebug "Vitals: id'ing: " & objItem.Name & " (" & objItem.Mana & ")"
+                Call m_IdQueue.Add(objItem.Guid, objItem.Name)
+                Call g_Hooks.IDQueueAdd(objItem.Guid)
+            End If
+        End If
+    Next objItem
+
+Fin:
+    Set objItem = Nothing
+    Exit Sub
+ErrorMessage:
+    PrintErrorMessage "Error in Vitals.idManaStones: " & Err.Description & " - " & Err.Source
+    Exit Sub
+End Sub
+
+
 Public Function hasEmptyManaStone() As Boolean
     If m_colEmptyManaStones.Count > 0 Then
         hasEmptyManaStone = True
@@ -212,7 +238,7 @@ Restart:
     Set objItem = Nothing
     For Each objItem In m_colEmptyManaStones
         If Valid(objItem) Then
-            If g_Objects.Items.InInventory(objItem.Guid) And (objItem.Mana = 0) And ((g_ds.Time - objItem.LastIdTime) < 30) Then
+            If g_Objects.Items.InInventory(objItem.Guid) And (objItem.Mana = 0) Then
                 Set getEmptyManaStone = objItem
             Else
                 Call m_colEmptyManaStones.Remove(objItem.Guid)
@@ -234,6 +260,11 @@ Public Sub countEmptyManaStones()
 On Error GoTo ErrorMessage
     Dim objItem As acObject
 
+    If m_IdQueue.Count > 0 Then
+        'We are still waiting for mana stones to id
+        Exit Sub
+    End If
+    
     Set m_colEmptyManaStones = New colObjects
     
     For Each objItem In g_Objects.Items.Inv

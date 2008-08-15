@@ -208,29 +208,6 @@ Public Function findEmergItem() As acObject
     g_bFindingItem = False
 End Function
 
-Public Sub idManaStones()
-On Error GoTo ErrorMessage
-    
-    Dim objItem As acObject
-
-    For Each objItem In g_Objects.Items.Inv
-        If Valid(objItem) Then
-            If (objItem.itemType = ITEM_MANA_STONES) And (objItem.Name Like "*Stone*") Then
-                'MyDebug "Vitals: id'ing: " & objItem.Name & " (" & objItem.Mana & ")"
-                Call g_Hooks.IDQueueAdd(objItem.Guid)
-            End If
-        End If
-    Next objItem
-
-Fin:
-    Set objItem = Nothing
-    Exit Sub
-ErrorMessage:
-    PrintErrorMessage "Error in Vitals.idManaStones: " & Err.Description & " - " & Err.Source
-    Exit Sub
-End Sub
-
-
 ' Returns the Mana Charge to use if chkUseManaCharge is enabled and
 ' have Mana Charges in inventory
 Public Function findManaCharge() As Boolean

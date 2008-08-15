@@ -447,7 +447,7 @@ Private Sub PrepareNextRebuffTime()
     'setup timer
     Call m_tmrNextRebuff.SetNextTime(m_dRebuffInterval)
     ' See if we have any mana stones to charge
-    Call Vitals.idManaStones
+    g_Macro.Loot.idManaStones
 End Sub
 
 Private Sub m_tmrNextRebuff_OnTimeout()

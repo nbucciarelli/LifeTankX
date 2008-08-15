@@ -2208,7 +2208,7 @@ On Error GoTo ErrorHandler
     'Start 5 Min XP timer
 12    Call m_tmr5MinTimer.SetNextTime(10)
 
-13    Call Vitals.idManaStones
+13    Call g_Macro.Loot.idManaStones
     
 14    Call RunState
     
@@ -2949,7 +2949,7 @@ Private Sub RechargeManaStone()
     Set m_objHighManaTarget = Nothing
     
     'See if we have any more empty mana stones
-    Call Vitals.idManaStones
+    Call g_Macro.Loot.idManaStones
     
     'All done
     Call doneManaCharge
@@ -2970,7 +2970,7 @@ On Error GoTo ErrorHandler
     Call m_tmrManaChargeTimer.SetNextTime(8)    'Allow 8 seconds for mana charge to be used
     Call m_tmrBusyDelay.SetNextTime(1)          'One second pause between tries
     
-    Call Vitals.idManaStones
+    g_Macro.Loot.idManaStones
    
     If Vitals.findManaCharge Then
         If Valid(g_manaItem) And (g_manaItem.Guid <> -1) Then
@@ -3002,7 +3002,7 @@ On Error GoTo ErrorHandler
     End If
     
     If Not m_tmrBusyDelay.Expired Then
-        Call Vitals.idManaStones
+        g_Macro.Loot.idManaStones
         Exit Sub
     End If
 
@@ -3038,7 +3038,7 @@ On Error GoTo ErrorHandler
     m_bNeedManaCharge = False
     m_bUsingManaCharge = False
     
-    Call Vitals.idManaStones
+    Call g_Macro.Loot.idManaStones
     Call GoIdle
 
 Fin:
@@ -3597,7 +3597,7 @@ On Error GoTo ErrorHandler
 
     Call m_tmr5MinTimer.SetNextTime(300)
 
-    Call Vitals.idManaStones
+    g_Macro.Loot.idManaStones
 
 Fin:
     Exit Sub
