@@ -215,6 +215,13 @@ ErrorMessage:
     Exit Sub
 End Sub
 
+Public Function canLootHighManaItem() As Boolean
+    If m_colEmptyManaStones.Count > m_colHighManaItems.Count Then
+        canLootHighManaItem = True
+    Else
+        canLootHighManaItem = False
+    End If
+End Function
 
 Public Function hasEmptyManaStone() As Boolean
     If m_colEmptyManaStones.Count > 0 Then

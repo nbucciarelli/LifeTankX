@@ -653,7 +653,7 @@ On Error GoTo ErrorHandler
     End If
     
     'Should we look at items Mana?
-    If g_ui.Macro.chkRechargeManaStones.Checked And g_Macro.Loot.hasEmptyManaStone And bHighManaFilter Then
+    If g_ui.Macro.chkRechargeManaStones.Checked And g_Macro.Loot.canLootHighManaItem And bHighManaFilter Then
         If objItem.Mana > g_Data.HighManaValue Then
             MyDebug "Looting High Mana Item: " & objItem.Name & " mana: " & objItem.Mana
             GoTo Fin
