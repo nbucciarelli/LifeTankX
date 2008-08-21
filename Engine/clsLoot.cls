@@ -199,7 +199,7 @@ On Error GoTo ErrorMessage
 
     For Each objItem In g_Objects.Items.Inv
         If Valid(objItem) Then
-            If (objItem.itemType = ITEM_MANA_STONES) And (objItem.Name Like "*Stone*") And ((g_ds.Time - objItem.LastIdTime) > 30) Then
+            If (objItem.itemType = ITEM_MANA_STONES) And (objItem.Name Like "*Stone*") Then
                 'MyDebug "Vitals: id'ing: " & objItem.Name & " (" & objItem.Mana & ")"
                 Call m_IdQueue.Add(objItem.Guid, objItem.Name)
                 Call g_Hooks.IDQueueAdd(objItem.Guid)
@@ -245,7 +245,7 @@ Restart:
     Set objItem = Nothing
     For Each objItem In m_colEmptyManaStones
         If Valid(objItem) Then
-            If g_Objects.Items.InInventory(objItem.Guid) And (objItem.Mana = 0) Then
+            If g_Objects.Items.InInventory(objItem.Guid) And (objItem.Mana = 0) And ((g_ds.Time - objItem.LastIdTime) < 30) Then
                 Set getEmptyManaStone = objItem
             Else
                 Call m_colEmptyManaStones.Remove(objItem.Guid)

@@ -1429,7 +1429,7 @@ On Error GoTo ErrorHandler
         End If
         
         If (pColor = 0) And _
-           (InStr(LCase(bstrMsg), "points of mana to the following") Or _
+           (InStr(LCase(bstrMsg), "points of mana to") Or _
             InStr(LCase(bstrMsg), "no wielded items require mana") Or _
             InStr(LCase(bstrMsg), "item has no Mana to drain") Or _
             InStr(LCase(bstrMsg), "points of mana from the") Or _

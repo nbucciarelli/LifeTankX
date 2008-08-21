@@ -2907,6 +2907,9 @@ End Sub
 Private Function goManaStoneRecharge() As Boolean
 On Error GoTo ErrorHandler
 
+    'ID all our mana stones
+    Call g_Macro.Loot.idManaStones
+
     Set m_objHighManaTarget = g_Macro.Loot.getHighManaItem
     Set m_objEmptyManaStone = g_Macro.Loot.getEmptyManaStone
 
