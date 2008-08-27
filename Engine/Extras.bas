@@ -507,13 +507,13 @@ On Error GoTo ErrorHandler
         Dim bPass As Boolean
             
         'Majors
-        If g_ui.Loot.chkPickupMajors.Checked And objItem.HasMajors Then
+        If g_ui.Loot.chkPickupMajors.Checked And (objItem.HasMajors Or objItem.HasEpics) Then
             bPass = True
             If g_ui.Loot.chkMajorIgnoreBane.Checked And Valid(objItem.Spells) Then
                 bPass = False
                 'In case the item has 2 majors...
                 For Each vSpellName In objItem.Spells
-                    If InStr(vSpellName, "Major") Then
+                    If InStr(vSpellName, "Major") Or InStr(vSpellName, "Epic") Then
                         If InStr(vSpellName, " Bane") < 1 Then
                             bPass = True
                             Exit For

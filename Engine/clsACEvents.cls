@@ -816,7 +816,7 @@ On Error Resume Next
     End If
 End Sub
 
-Private Sub m_Objects_OneEpicDetected(ByVal obj As DarksideFilter.acObject, ByVal sSpellName As String)
+Private Sub m_Objects_OnEpicDetected(ByVal obj As DarksideFilter.acObject, ByVal sSpellName As String)
 On Error Resume Next
     If g_ui.Options.chkFilterIdMsg.Checked Or g_Macro.Loot.silentID Then Exit Sub
     If ((g_Hooks.CurrentSelection = obj.Guid) Or (obj.Wielder <> 0)) And g_ui.Loot.chkPickupMajors.Checked Then PrintMessage "[Epic Detected] " & obj.Name & " : " & sSpellName
