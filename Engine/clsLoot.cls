@@ -2043,6 +2043,12 @@ On Error GoTo ErrorHandler
             id = id & " " & aObj.WieldReqVal & "+ to wield"
         End If
         
+        'Wield Req ID #9 is for new Societies
+        If (((aObj.WieldReqVal > 0) And (aObj.WieldReqType = 9)) And ((aObj.itemType = ITEM_ARMOR) Or (aObj.itemType = ITEM_WAND))) Then
+            id = id & ", Society Rank"
+            id = id & " " & aObj.WieldReqVal & "+ to wield"
+        End If
+        
         'If ((aObj.itemType = ITEM_ARMOR) Or (aObj.itemType = ITEM_WAND) Or (aObj.itemType = ITEM_MELEE_WEAPON) Or (aObj.itemType = ITEM_MISSILE_WEAPON)) And (aObj.WieldReqVal > 0) Then
         '    id = id & ", " & g_ACConst.GetSkillName(aObj.WieldReqID)
         '    id = id & " " & aObj.WieldReqVal & "+ to wield"
