@@ -30,6 +30,7 @@ On Error GoTo ErrorHandler
 
     m_lFileDebugLog = -1
     m_lFileErrorLog = -1
+    bDebugMode = True
     Call CreateLogFiles
     
 Fin:

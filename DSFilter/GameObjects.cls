@@ -47,6 +47,7 @@ Public Event OnVulnExpired(ByVal obj As acObject)
 
 Public Event OnMinorDetected(ByVal obj As acObject, ByVal sSpellName As String)
 Public Event OnMajorDetected(ByVal obj As acObject, ByVal sSpellName As String)
+Public Event OnEpicDetected(ByVal obj As acObject, ByVal sSpellName As String)
 Public Event OnRareDetected(ByVal obj As acObject)
 
 
@@ -1397,21 +1398,25 @@ On Error GoTo ErrorHandler
                 
                 myDebug "ID: " & objEntity.Name & " - Spell: " & sSpellName & "  flags: " & sFlags
                 
-                If InStr(LCase(sSpellName), "minor") Then
-                    'PrintMessage "[Minor] Item Detected : " & objEntity.Name & " - " & sSpellName
-                    objEntity.HasMinors = True
-                    RaiseEvent OnMinorDetected(objEntity, sSpellName)
+                If InStr(LCase(sSpellName), "epic") Then
+                    'PrintMessage "[Major] Item Detected : " & objEntity.Name & " - " & sSpellName
+                    objEntity.HasEpics = True
+                    RaiseEvent OnEpicDetected(objEntity, sSpellName)
                 ElseIf InStr(LCase(sSpellName), "major") Then
                     'PrintMessage "[Major] Item Detected : " & objEntity.Name & " - " & sSpellName
                     objEntity.HasMajors = True
                     RaiseEvent OnMajorDetected(objEntity, sSpellName)
+                ElseIf InStr(LCase(sSpellName), "minor") Then
+                    'PrintMessage "[Minor] Item Detected : " & objEntity.Name & " - " & sSpellName
+                    objEntity.HasMinors = True
+                    RaiseEvent OnMinorDetected(objEntity, sSpellName)
                 'ElseIf InStr(LCase(sSpellName), "prodigal") Then
                 '    myDebug "IDObject: Spells: " & objEntity.Name & " Spellname:" & sSpellName
                 '    objEntity.IsRare = True
                 '    RaiseEvent OnRareDetected(objEntity)
                 End If
             Else
-                myDebug "ID: " & objEntity.Name & " - Spell : Unkown spell " & lSpellID
+                myDebug "ID: " & objEntity.Name & " - Spell : Unknown spell " & lSpellID
             End If
 
         Next i
@@ -1454,19 +1459,19 @@ On Error GoTo ErrorHandler
         'MyDebug "ID : Weapon Info - " & objEntity.Name & " : Type=" & objEntity.GetWeaponTypeName & ", HighDmg=" & objEntity.HighDamage & ", LowDmg=" & objEntity.GetLowDamage & " Var=" & objEntity.Variance & ", Att%=" & objEntity.AttackBonus & ", Def%=" & objEntity.DefenseBonus & ", DmgFlags=" & objEntity.DamageFlags
         'If objEntity.DamageModifier <> 0 Then MyDebug "Damage Mod : +" & objEntity.DamageModifier & "%"
         
-        'If (lAssessFlag And &H103D&) Then ' Cast on Strike property
-        If Hex(lAssessFlag) = &H103D& Then ' Cast on Strike property
-            myDebug "OnIdentifyObject H20 -> H103D Weap: " & objEntity.Name & " : lAssessFlag: " & Hex(lAssessFlag) & "  lCharFlags: " & Hex(lCharFlags)
-            If InStr(objEntity.Imbue, "Cast on Strike") = 0 Then
-                If bAddImbueComma Then
-                    objEntity.Imbue = LTrim(objEntity.Imbue & ", Cast on Strike")
-                Else
-                    objEntity.Imbue = LTrim(objEntity.Imbue & "Cast on Strike")
-                    bAddImbueComma = True
-                End If
+    End If
+    
+    'If (lAssessFlag And &H103D&) Then ' Cast on Strike property
+    If Hex(lAssessFlag) = &H103D& Then ' Cast on Strike property
+        myDebug "OnIdentifyObject H20 -> H103D Weap: " & objEntity.Name & " : lAssessFlag: " & Hex(lAssessFlag) & "  lCharFlags: " & Hex(lCharFlags)
+        If InStr(objEntity.Imbue, "Cast on Strike") = 0 Then
+            If bAddImbueComma Then
+                objEntity.Imbue = LTrim(objEntity.Imbue & ", Cast on Strike")
+            Else
+                objEntity.Imbue = LTrim(objEntity.Imbue & "Cast on Strike")
+                bAddImbueComma = True
             End If
         End If
-
     End If
     
 

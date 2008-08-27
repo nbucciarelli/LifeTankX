@@ -341,6 +341,7 @@ On Error GoTo ErrorHandler
     mAuth.LoadSettingsAuth
     
     g_Data.mDebugMode = False
+    Call g_Filters.dsFilter.SetDebugMode(False)
     
     MyDebug "IEngine_OnLogin all done"
 

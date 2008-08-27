@@ -163,6 +163,7 @@ Public IsPack As Boolean                'is it a pack/foci in our inventory?
 Public ShareLoot As Boolean             'if the fellow player has Share Loot on
 Public HasMinors As Boolean             'Indicates that this item holds at least 1 minor spell
 Public HasMajors As Boolean             'Indicates that this item holds at least 1 major spell
+Public HasEpics As Boolean              'Indicates that this item holds at least 1 epic spell
 Public IsRare As Boolean                'Indicates that this item is a Rare
 Public RareNumber As Long               'Number of the rare item.
 Public Spells As Dictionary             'List of inate spells on this item

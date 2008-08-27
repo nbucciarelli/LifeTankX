@@ -653,7 +653,7 @@ On Error GoTo ErrorHandler
     bRet = False
     Set m_colDungeons = New Collection
     
-    myDebug "Loading Dungeons..."
+    myDebug "Loading Dungeons: " & GetDataFolder & "\" & FOLDER_DATA & "\" & FILE_DUNGEONS
     
     If xmlDoc.Load(GetDataFolder & "\" & FOLDER_DATA & "\" & FILE_DUNGEONS) Then
         For Each xmlNode In xmlDoc.documentElement.childNodes
