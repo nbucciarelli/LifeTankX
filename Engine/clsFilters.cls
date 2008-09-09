@@ -171,10 +171,14 @@ On Error GoTo InvalidFilter
             If Valid(spell) Then
                 'MyDebug "spellfilter: spellid: " & spell.spellID & " name: " & spell.Name
                 
-                MyDebug "<id=" & spell.SpellID & "><spl=" & spell.Name & ">"
+                'MyDebug "<id=" & spell.SpellID & "><spl=" & spell.Name & ">"
                 
                 '        <spl=Spirit Drinker II><type=0><family=Spirit Drinker><sch=3><lvl=2><id=3254><icon=100673984><desc=Increases elemental damage bonus of a magic caster by 2%>
-                'MyDebug "<spl=" & spell.Name & "><type=" & spell.SpellType & "<family=" & spell.Name & "><sch=" & spell.SpellSchool & "><lvl=" & spell.Difficulty & "><icon=" & spell.Icon & "><desc=" & spell.Description
+                '        <spl=Piercing Protection Self VI><type=10><family=Piercing Protection Self><sch=0><lvl=6><elemt=2><id=1138><icon=100668347><desc=Reduces damage the caster takes from Piercing by 60%.>
+                '        <spl=Mana Conversion Mastery Self V><type=0><family=Mana Conversion Mastery Self><sch=2><lvl=5><id=657><icon=100668288><desc=Increases the caster's Mana Conversion skill by 30 points.>
+                If spell.Difficulty >= 8 Then
+                MyDebug "<spl=" & spell.Name & "><type=" & spell.SpellType & "<family=" & spell.Name & "><sch=" & spell.SpellSchool & "><lvl=" & spell.Difficulty & "><icon=" & spell.Icon & "><desc=" & spell.Description
+                End If
                 
                 'SpellID,SpellID [Hex], Name              ,Icon [Hex],SortOrder,Difficulty,Duration,DurationUnk,Economy,Effect,EffectOnCaster,EffectOnTarget,Flags [Hex],ManaCost,RangeBase,RangeModifier,Researchable,Speed,SpellSchool,SpellType [Hex],SpellVersion,TargetMask [Hex],LUnknown2 [Hex],LUnknown3 [Hex],LUnknown6 [Hex], ID2,Description
                 '1482,           0x5CA, Impenetrability II,0x60029BE,      3044,        50,    1800,-2.07525870,      1,   160,             0,           141,        0x4,      20,       25,            0,        True, 0.05,          3,            0x1,           1,             0x6,            0x0,     0xC4268000,            0x4,1482,"Improves a shield or piece of armor's armor value by 50 points. Target yourself to cast this spell on all of your equipped armor."
@@ -388,11 +392,11 @@ On Error GoTo ErrorHandler
     End If
   
     'Load SpellFilter
-    'If Not LoadSpellFilter Then
-    '    PrintErrorMessage "[Filter] SpellFilter not loaded"
-    'Else
-    '    MyDebug "[Filters] SpellFilter loaded."
-    'End If
+    If Not LoadSpellFilter Then
+        PrintErrorMessage "[Filter] SpellFilter not loaded"
+    Else
+        MyDebug "[Filters] SpellFilter loaded."
+    End If
     
     'Everything went fine
     bRet = True
