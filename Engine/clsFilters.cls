@@ -165,7 +165,7 @@ On Error GoTo InvalidFilter
     If (bRet) Then
         Dim i As Long
         
-        For i = 0 To 5000
+        For i = 0 To 6000
             Dim spell As SpellFilter.spell
             Set spell = m_spellFilter.SpellByID(i)
             If Valid(spell) Then
@@ -176,9 +176,28 @@ On Error GoTo InvalidFilter
                 '        <spl=Spirit Drinker II><type=0><family=Spirit Drinker><sch=3><lvl=2><id=3254><icon=100673984><desc=Increases elemental damage bonus of a magic caster by 2%>
                 '        <spl=Piercing Protection Self VI><type=10><family=Piercing Protection Self><sch=0><lvl=6><elemt=2><id=1138><icon=100668347><desc=Reduces damage the caster takes from Piercing by 60%.>
                 '        <spl=Mana Conversion Mastery Self V><type=0><family=Mana Conversion Mastery Self><sch=2><lvl=5><id=657><icon=100668288><desc=Increases the caster's Mana Conversion skill by 30 points.>
-                If spell.Difficulty >= 8 Then
-                MyDebug "<spl=" & spell.Name & "><type=" & spell.SpellType & "<family=" & spell.Name & "><sch=" & spell.SpellSchool & "><lvl=" & spell.Difficulty & "><icon=" & spell.Icon & "><desc=" & spell.Description
-                End If
+                '        <spl=Flame Bolt IV><type=1><family=Flame Bolt><sch=1><lvl=4><elemt=3><id=83><icon=100668276><desc=Shoots a bolt of flame at the target.  The bolt does 31-60 points of fire damage to the first thing it hits.>
+                
+                MyDebug "<spl=" & spell.Name & "><type=" & spell.SpellType & "><family=" & spell.Name & "><sch=" & spell.SpellSchool & "><lvl=" & spell.Difficulty & "><id=" & spell.SpellID & "><icon=" & spell.Icon & "><desc=" & spell.Description & ">"
+
+                'MyDebug "Spell Name: " & spell.Name
+                'MyDebug "Spell Description: " & spell.Description
+                'MyDebug "Spell Diff: " & spell.Difficulty
+                'MyDebug "Spell Duration: " & spell.Duration
+                'MyDebug "Spell Economy: " & spell.Economy
+                'MyDebug "Spell Effect: " & spell.Effect
+                'MyDebug "Spell EonCaster: " & spell.EffectOnCaster
+                'MyDebug "Spell EonTarget: " & spell.EffectOnTarget
+                'MyDebug "Spell Flags: " & spell.flags
+                'MyDebug "Spell ID2: " & spell.ID2
+                'MyDebug "Spell ManaCost: " & spell.ManaCost
+                'MyDebug "Spell SortOrder: " & spell.SortOrder
+                'MyDebug "Spell SpellID: " & spell.SpellID
+                'MyDebug "Spell SpellSchool: " & spell.SpellSchool
+                'MyDebug "Spell SpellType: " & spell.SpellType
+                'MyDebug "Spell SpellVersion: " & spell.SpellVersion
+                'MyDebug "Spell TargetMask: " & spell.TargetMask
+
                 
                 'SpellID,SpellID [Hex], Name              ,Icon [Hex],SortOrder,Difficulty,Duration,DurationUnk,Economy,Effect,EffectOnCaster,EffectOnTarget,Flags [Hex],ManaCost,RangeBase,RangeModifier,Researchable,Speed,SpellSchool,SpellType [Hex],SpellVersion,TargetMask [Hex],LUnknown2 [Hex],LUnknown3 [Hex],LUnknown6 [Hex], ID2,Description
                 '1482,           0x5CA, Impenetrability II,0x60029BE,      3044,        50,    1800,-2.07525870,      1,   160,             0,           141,        0x4,      20,       25,            0,        True, 0.05,          3,            0x1,           1,             0x6,            0x0,     0xC4268000,            0x4,1482,"Improves a shield or piece of armor's armor value by 50 points. Target yourself to cast this spell on all of your equipped armor."
