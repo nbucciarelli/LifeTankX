@@ -561,13 +561,13 @@ On Error GoTo ErrorHandler
         ' See if we need to remove it from the other collections first
         If Valid(g_Objects.FindObject(lObjGUID)) Then
             Set objEntity = FindObject(lObjGUID, False)
-            If m_colMonsters.Exists(lObjGUID, objEntity) Then
-                Call m_colMonsters.Remove(lObjGUID)
-                myError "OnCreateObject: DUPLICATE GUID in colMonsters: " & lObjGUID
-            ElseIf m_colPlayers.Exists(lObjGUID, objEntity) Then
-                Call m_colPlayers.Remove(lObjGUID)
-                myDebug "OnCreateObject: DUPLICATE GUID in colPlayers: " & lObjGUID
-            ElseIf m_Items.Exists(lObjGUID, objEntity) Then
+            'If m_colMonsters.Exists(lObjGUID, objEntity) Then
+            '    Call m_colMonsters.Remove(lObjGUID)
+            '    myError "OnCreateObject: DUPLICATE GUID in colMonsters: " & lObjGUID
+            'ElseIf m_colPlayers.Exists(lObjGUID, objEntity) Then
+            '    Call m_colPlayers.Remove(lObjGUID)
+            '    myDebug "OnCreateObject: DUPLICATE GUID in colPlayers: " & lObjGUID
+            If m_Items.Exists(lObjGUID, objEntity) Then
                 Call m_Items.Remove(lObjGUID)
                 myDebug "OnCreateObject: DUPLICATE GUID in colItems: " & lObjGUID
             ElseIf m_colJunk.Exists(lObjGUID, objEntity) Then
