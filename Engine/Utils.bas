@@ -260,7 +260,7 @@ End Function
 Public Function SkillToSpellLevel(iSkill As Integer) As Integer
 Dim iVal As Integer
 
-    If iSkill >= 350 Then
+    If iSkill >= 400 Then
         iVal = 8
     ElseIf iSkill >= 300 Then
         iVal = 7
@@ -667,7 +667,8 @@ On Error GoTo ErrorHandler
         If (objEntity.ObjectType = TYPE_MONSTER) And Not (objEntity.Loc.landblock = g_ds.Player.Loc.landblock) Then
             locDebug "Utils.ValidRangeTo: Monster in Different Landblock: " & objEntity.Name & " : " & objEntity.Guid & " Mlb: " & objEntity.Loc.landblock & " vs Ulb: " & g_ds.Player.Loc.landblock
             'If it's a monster and it has a different landblock than this player, get rid of it in 30 seconds
-            objEntity.canDelete = True
+            'objEntity.canDelete = True
+            objEntity.timeData = g_ds.Time + 120
         End If
     End If
     

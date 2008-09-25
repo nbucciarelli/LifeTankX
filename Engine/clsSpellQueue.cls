@@ -142,7 +142,7 @@ End Sub
 ' Queue up a new Spell (at the end of the queue) based on the data
 ' passed in parameters
 '============================================================================
-Public Sub AddEx(objSpell As clsSpell, Optional lTargetId As Long = 0, Optional lTargetName = "NoTarget", Optional iLevelWanted = 7)
+Public Sub AddEx(objSpell As clsSpell, Optional lTargetId As Long = 0, Optional lTargetName = "NoTarget", Optional iLevelWanted = 8)
 
     Dim newSpell As New clsSpellQueueItem
     

@@ -560,17 +560,17 @@ On Error GoTo ErrorHandler
     Else
         ' See if we need to remove it from the other collections first
         If Valid(g_Objects.FindObject(lObjGUID)) Then
-            Set objEntity = FindObject(lObjGUID, False)
-            'If m_colMonsters.Exists(lObjGUID, objEntity) Then
-            '    Call m_colMonsters.Remove(lObjGUID)
-            '    myError "OnCreateObject: DUPLICATE GUID in colMonsters: " & lObjGUID
-            'ElseIf m_colPlayers.Exists(lObjGUID, objEntity) Then
-            '    Call m_colPlayers.Remove(lObjGUID)
-            '    myDebug "OnCreateObject: DUPLICATE GUID in colPlayers: " & lObjGUID
-            If m_Items.Exists(lObjGUID, objEntity) Then
+        '    Set objEntity = FindObject(lObjGUID, False)
+        '    'If m_colMonsters.Exists(lObjGUID, objEntity) Then
+        '    '    Call m_colMonsters.Remove(lObjGUID)
+        '    '    myError "OnCreateObject: DUPLICATE GUID in colMonsters: " & lObjGUID
+        '    'ElseIf m_colPlayers.Exists(lObjGUID, objEntity) Then
+        '    '    Call m_colPlayers.Remove(lObjGUID)
+        '    '    myDebug "OnCreateObject: DUPLICATE GUID in colPlayers: " & lObjGUID
+            If m_Items.Exists(lObjGUID) Then
                 Call m_Items.Remove(lObjGUID)
                 myDebug "OnCreateObject: DUPLICATE GUID in colItems: " & lObjGUID
-            ElseIf m_colJunk.Exists(lObjGUID, objEntity) Then
+            ElseIf m_colJunk.Exists(lObjGUID) Then
                 Call m_colJunk.Remove(lObjGUID)
                 myDebug "OnCreateObject: DULICATE GUID in colJunk: " & lObjGUID
             End If
@@ -1600,7 +1600,7 @@ On Error GoTo ErrorHandler
         
         If Not objEntity.Loc.Equals(oldLoc) Then
             RaiseEvent OnObjectMoved(objEntity)
-            objEntity.timeData = 0
+            objEntity.timeData = g_Time
         End If
             
             'f = p.Value("flags")

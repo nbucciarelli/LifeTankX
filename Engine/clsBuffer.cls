@@ -152,7 +152,7 @@ Private Sub AddBuffToList(Optional ByVal sFamily As String = "", _
                     Optional ByVal iType As Integer = SPELLTYPE_NORMAL, _
                     Optional ByVal iElement As Integer = DMG_NONE, _
                     Optional objTarget As acObject = Nothing, _
-                    Optional ByVal iLevelWanted = 7, _
+                    Optional ByVal iLevelWanted = 8, _
                     Optional ByVal iSchool As Integer = SCHOOL_CREATURE)
 On Error GoTo ErrorHandler
 
@@ -959,7 +959,7 @@ On Error GoTo ErrorHandler
     If isChecked Then
         objBuff.SpellFamily = sFamily
         objBuff.SpellType = SPELLTYPE_NORMAL
-        objBuff.LevelWanted = 7
+        objBuff.LevelWanted = 8
         objBuff.TargetName = objItem.Name
         objBuff.TargetGUID = objItem.Guid
         objBuff.SpellSchool = SCHOOL_ITEM

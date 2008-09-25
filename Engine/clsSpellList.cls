@@ -144,7 +144,7 @@ End Sub
 '
 '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
-Private Function FindSpellInFamily(objFamily As clsSpellFamily, Optional iWantedLevel As Integer = 7, Optional sPartialSpellName As String = "", Optional bIgnoreSkillReq As Boolean = False) As clsSpell
+Private Function FindSpellInFamily(objFamily As clsSpellFamily, Optional iWantedLevel As Integer = 8, Optional sPartialSpellName As String = "", Optional bIgnoreSkillReq As Boolean = False) As clsSpell
 On Error GoTo ErrorHandler
 
     If Not Valid(objFamily) Then
@@ -198,7 +198,7 @@ ErrorHandler:
     Resume Fin
 End Function
 
-Public Function FindSpell(ByVal sFamilyName As String, Optional iWantedLevel As Integer = 7, Optional sSpellName As String = "", Optional bIgnoreSkillReq As Boolean = False) As clsSpell
+Public Function FindSpell(ByVal sFamilyName As String, Optional iWantedLevel As Integer = 8, Optional sSpellName As String = "", Optional bIgnoreSkillReq As Boolean = False) As clsSpell
 On Error GoTo ErrorHandler
 
     Dim objFamily As clsSpellFamily
@@ -278,7 +278,7 @@ ErrorHandler:
     Resume Fin
 End Function
 
-Public Function FindSpellByType(ByVal iType As Integer, ByVal iElement As Integer, Optional iWantedLevel As Integer = 7, Optional bIgnoreSkillReq As Boolean = False) As clsSpell
+Public Function FindSpellByType(ByVal iType As Integer, ByVal iElement As Integer, Optional iWantedLevel As Integer = 8, Optional bIgnoreSkillReq As Boolean = False) As clsSpell
 On Error GoTo ErrorHandler
     
     Dim objFamily As clsSpellFamily

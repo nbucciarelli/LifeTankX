@@ -160,7 +160,7 @@ Private Sub AddBuffToList(ByVal objTarget As acObject, _
                     Optional ByVal sFamily As String = "", _
                     Optional ByVal iType As Integer = SPELLTYPE_NORMAL, _
                     Optional ByVal iElement As Integer = DMG_NONE, _
-                    Optional ByVal iLevelWanted = 7, _
+                    Optional ByVal iLevelWanted = 8, _
                     Optional ByVal iSchool As Integer = SCHOOL_CREATURE)
 On Error GoTo ErrorHandler
 

@@ -33,7 +33,7 @@ Private Sub Class_Initialize()
     SpellElement = DMG_NONE
     TargetGUID = 0
     TargetName = "NoTarget"
-    LevelWanted = 7
+    LevelWanted = 8
     SpellSchool = SCHOOL_CREATURE
     TimeRemaining = 0
 End Sub

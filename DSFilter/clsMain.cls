@@ -199,7 +199,7 @@ On Error GoTo ErrorHandler
     For Each objEntity In g_Objects.Monsters
         If Valid(objEntity) Then
             ' build up list of objects to be removed
-            If (objEntity.Dead) Or (objEntity.canDelete) Then
+            If ((objEntity.Dead) Or (objEntity.canDelete)) And ((objEntity.timeData <> 0) And (g_Time > objEntity.timeData)) Then
                 ' Remove Dead or objects that have been marked canDelete
                 Call removeCol.AddObject(objEntity)
             End If

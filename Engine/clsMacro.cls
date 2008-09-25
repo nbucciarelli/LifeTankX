@@ -3534,16 +3534,21 @@ Private Sub m_tmrCleanCollections_OnTimeout()
 On Error GoTo ErrorHandler
     Dim objMonster As acObject
     Dim i As Integer
+    
+    Exit Sub
 
     For Each objMonster In g_Objects.Monsters
         If Valid(objMonster) Then
             ' If it's more than 100 away, it's probably been silently ignored (no OnDestroy event)
-            If (objMonster.GetRange > 100) Or (objMonster.GetRange <= 0) Then
+            'If (objMonster.GetRange > 100) Or (objMonster.GetRange <= 0) Then
+            If (objMonster.GetRange <= 0) Then
                 i = objMonster.UserData(INT_DELETE) + 1
                 Call objMonster.SetUserData(INT_DELETE, i)
                 If (objMonster.UserData(INT_DELETE) > 3) Then
                     objMonster.canDelete = True
                     MyDebug "clsMacro.m_tmrCleanCollections: canDelete True: " & objMonster.Guid & " : " & objMonster.Name
+                Else
+                    objMonster.timeData = g_ds.Time + 600
                 End If
             End If
         End If

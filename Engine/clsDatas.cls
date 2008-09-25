@@ -86,9 +86,9 @@ On Error GoTo ErrorHandler
     mLogOutputPath = PATH_LOGS
     mDebugMode = True
     
-    mMaxWarLevel = 7
+    mMaxWarLevel = 8
     mMaxVulnLevel = 7
-    mMaxBuffLevel = 7
+    mMaxBuffLevel = 8
     
     m_WeaponGUID = 0
     m_ShieldGUID = 0

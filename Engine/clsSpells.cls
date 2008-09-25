@@ -313,7 +313,7 @@ Public Sub OnSpellCastFailed(Optional ByVal sSource As String = "")
 End Sub
 
 ' Priority Spell cast
-Public Function CastPrioritySpell(ByRef spellList As clsSpellList, ByVal sSpellFamily As String, ByVal TargetId As Long, Optional ByVal iLevelWanted As Integer = 7) As Boolean
+Public Function CastPrioritySpell(ByRef spellList As clsSpellList, ByVal sSpellFamily As String, ByVal TargetId As Long, Optional ByVal iLevelWanted As Integer = 8) As Boolean
 On Error GoTo ErrorHandler
     
     Dim objSpell As clsSpell
@@ -370,7 +370,7 @@ ErrorHandler:
 End Function
 
 ' Calls CastSpell if everything is OK
-Public Function CastSpell(ByRef spellList As clsSpellList, ByVal sSpellFamily As String, ByVal TargetId As Long, Optional ByVal iLevelWanted As Integer = 7) As Boolean
+Public Function CastSpell(ByRef spellList As clsSpellList, ByVal sSpellFamily As String, ByVal TargetId As Long, Optional ByVal iLevelWanted As Integer = 8) As Boolean
 On Error GoTo ErrorHandler
     
     Dim objSpell As clsSpell
@@ -402,7 +402,7 @@ ErrorHandler:
 End Function
 
 ' Finds the exact spell for a requested Type, Element, level, etc
-Public Function CastSpellType(ByRef spellList As clsSpellList, ByVal iType As Integer, ByVal iElement As Integer, ByVal TargetId As Long, Optional ByVal iLevelWanted As Integer = 7) As Boolean
+Public Function CastSpellType(ByRef spellList As clsSpellList, ByVal iType As Integer, ByVal iElement As Integer, ByVal TargetId As Long, Optional ByVal iLevelWanted As Integer = 8) As Boolean
 On Error GoTo ErrorHandler
 
     Dim objSpell As clsSpell
@@ -441,25 +441,25 @@ Public Sub ResetCastingFlag(Optional sSource As String = "", Optional ByVal bRes
     'Call g_Macro.PostCastDelayTimer.SetNextTime(0.5)
 End Sub
 
-Public Function CastVitalSpell(ByVal SpellBaseName As String, Optional ByVal SpellLevelWanted As Integer = 7, Optional ByVal TargetId As Long = 0) As Boolean
+Public Function CastVitalSpell(ByVal SpellBaseName As String, Optional ByVal SpellLevelWanted As Integer = 8, Optional ByVal TargetId As Long = 0) As Boolean
     'Call g_Spells.c_SpellQueue.Clear
     Call g_Spells.c_PrioritySpellQueue.Clear
     CastVitalSpell = CastPrioritySpell(m_Vitals, SpellBaseName, TargetId, SpellLevelWanted)
 End Function
 
-Public Function CastWarSpell(ByVal SpellBaseName As String, Optional ByVal SpellLevelWanted As Integer = 7, Optional ByVal TargetId As Long = 0) As Boolean
+Public Function CastWarSpell(ByVal SpellBaseName As String, Optional ByVal SpellLevelWanted As Integer = 8, Optional ByVal TargetId As Long = 0) As Boolean
     CastWarSpell = CastSpell(m_War, SpellBaseName, TargetId, SpellLevelWanted)
 End Function
 
-Public Function CastWarType(ByVal iType As Integer, ByVal iElement As Integer, Optional ByVal SpellLevelWanted As Integer = 7) As Boolean
+Public Function CastWarType(ByVal iType As Integer, ByVal iElement As Integer, Optional ByVal SpellLevelWanted As Integer = 8) As Boolean
     CastWarType = CastSpellType(m_War, iType, iElement, SpellLevelWanted)
 End Function
 
-Public Function CastItemSpell(ByVal SpellBaseName As String, Optional SpellLevelWanted As Integer = 7, Optional ByVal TargetId As Long = 0) As Boolean
+Public Function CastItemSpell(ByVal SpellBaseName As String, Optional SpellLevelWanted As Integer = 8, Optional ByVal TargetId As Long = 0) As Boolean
     CastItemSpell = CastSpell(m_Items, SpellBaseName, TargetId, SpellLevelWanted)
 End Function
 
-Public Function CastCreatureBuff(ByVal SpellBaseName As String, Optional ByVal SpellLevelWanted As Integer = 7, Optional ByVal TargetId As Long = 0) As Boolean
+Public Function CastCreatureBuff(ByVal SpellBaseName As String, Optional ByVal SpellLevelWanted As Integer = 8, Optional ByVal TargetId As Long = 0) As Boolean
 Dim spellList As clsSpellList
     
     If (TargetId <> 0) And (TargetId <> g_Objects.Player.Guid) Then
@@ -471,7 +471,7 @@ Dim spellList As clsSpellList
     CastCreatureBuff = CastSpell(spellList, SpellBaseName, TargetId, SpellLevelWanted)
 End Function
 
-Public Function CastLifeBuff(ByVal SpellBaseName As String, Optional SpellLevelWanted As Integer = 7, Optional ByVal TargetId As Long = 0) As Boolean
+Public Function CastLifeBuff(ByVal SpellBaseName As String, Optional SpellLevelWanted As Integer = 8, Optional ByVal TargetId As Long = 0) As Boolean
 Dim spellList As clsSpellList
     
     If (TargetId <> 0) And (TargetId <> g_Objects.Player.Guid) Then
@@ -538,7 +538,7 @@ Public Function Cast_Emergency_Revitalize() As Boolean
     Cast_Emergency_Revitalize = Cast_Revitalize(g_Data.EmergencySpellsLevel)
 End Function
 
-Public Function FindSpell(ByVal sSpellFamily As String, Optional ByVal iLevel As Integer = 7) As clsSpell
+Public Function FindSpell(ByVal sSpellFamily As String, Optional ByVal iLevel As Integer = 8) As clsSpell
 On Error GoTo ErrorHandler
 
     Dim objSpell As clsSpell
