@@ -139,7 +139,7 @@ End Enum
 Enum eSkillId
     WEAPON_ANY_MELEE = -1
     WEAPON_ANY_MISSILE = -2
-    
+
     SKILLID_AXE = 1
     SKILLID_BOW = 2
     SKILLID_CROSSBOW = 3
@@ -174,6 +174,7 @@ Enum eSkillId
     SKILLID_FLETCHING = &H24
     SKILLID_ALCHEMY = &H26
     SKILLID_COOKING = &H27
+    SKILLID_VOID = &H28
 End Enum
 
 
@@ -199,7 +200,7 @@ Public Enum eArmorTypes
     ARMORTYPE_ROUNDSHIELD
     ARMORTYPE_TOWERSHIELD
     ARMORTYPE_COVENANTSHIELD
-    
+
     ARMORTYPE_ANY
 End Enum
 
@@ -210,18 +211,18 @@ Public Enum eArmorCoverage
     ARMORCOVER_HANDS = COV_HANDS
     ARMORCOVER_CHEST = COV_CHEST
     ARMORCOVER_GIRTH = COV_GIRTH
-    
+
     ARMORCOVER_UPPER_ARMS = COV_UPPER_ARMS
     ARMORCOVER_LOWER_ARMS = COV_LOWER_ARMS
     ARMORCOVER_UPPER_LEGS = COV_UPPER_LEGS
     ARMORCOVER_LOWER_LEGS = COV_LOWER_LEGS
-    
+
     ARMORCOVER_LEGGINGS = COV_UPPER_LEGS Or COV_LOWER_LEGS
 
     ARMORCOVER_TOP = MASK_TOP
     ARMORCOVER_BOTTOM = MASK_BOTTOM
     ARMORCOVER_SHIELD = COV_SHIELD
-    
+
     ARMORCOVER_ANY = -1
 End Enum
 
@@ -233,7 +234,7 @@ Public Enum eWeaponDamageFlags
     FL_DMG_FIRE = &H10
     FL_DMG_ACID = &H20
     FL_DMG_LIGHTNING = &H40
-    
+
     FL_DMG_ANY = &H80
     FL_DMG_SLASHPIERCE = FL_DMG_PIERCING Or FL_DMG_SLASHING
 End Enum
@@ -259,8 +260,8 @@ Public Enum eActionFailureErrors
     FAIL_INVALID_COMMAND = 38       'This is not a valid console command
     FAIL_UNPREPARED_TO_CAST = 1034  'Your are unprepared to cast that spell
     FAIL_NOT_ENOUGH_MANA_ON_ITEM = &H4C8&
-    
-    
+
+
     'Custom Error IDs
     FAIL_NOT_READY = -1
     FAIL_CAN_ONLY_MOVE_ONE = -2
@@ -400,6 +401,7 @@ Private Sub LoadSkills()
         .Add SKILLID_ITEM, "Item Enchantment"
         .Add SKILLID_LIFE, "Life Magic"
         .Add SKILLID_WAR, "War Magic"
+        .Add SKILLID_VOID, "Void Magic"
         .Add SKILLID_LEADERSHIP, "Leadership"
         .Add SKILLID_ALCHEMY, "Alchemy"
         .Add SKILLID_FLETCHING, "Fletching"
@@ -573,7 +575,7 @@ On Error GoTo ErrorHandler
         myError "acConst.LoadMaterialsList - Failed to load " & sPath
         bRet = False
     End If
-    
+
 Fin:
     LoadMaterialsList = bRet
     Exit Function
@@ -591,18 +593,18 @@ On Error GoTo ErrorHandler
     Dim oData As DataItem
 
     Call m_db.ResetData
-    
+
     If sPath = "" Then
         sPath = m_db.FileName
     End If
-    
+
     For Each oData In m_colMaterials
         Set dat = New clsDataEntry
         Call dat.AddParam(TAG_MATERIAL_ID, oData.Key)
         Call dat.AddParam(TAG_MATERIAL_NAME, oData.Val)
         Call m_db.AddData(dat)
     Next oData
-    
+
     If m_db.Save(sPath) Then
         myDebug "acConst.SaveMaterialsList - List saved to " & sPath
         bRet = True
@@ -610,7 +612,7 @@ On Error GoTo ErrorHandler
         myError "acConst.SaveMaterialsList - Failed to save list to " & sPath
         bRet = False
     End If
-    
+
 Fin:
     SaveMaterialsList = bRet
     Set oData = Nothing
@@ -646,49 +648,49 @@ Friend Function LoadDungeons() As Boolean
 On Error GoTo ErrorHandler
 
     Dim bRet As Boolean
-    
+
     Dim xmlNode As IXMLDOMNode
     Dim xmlDoc As New DOMDocument
-    
+
     bRet = False
     Set m_colDungeons = New Collection
-    
+
     myDebug "Loading Dungeons: " & GetDataFolder & "\" & FOLDER_DATA & "\" & FILE_DUNGEONS
-    
+
     If xmlDoc.Load(GetDataFolder & "\" & FOLDER_DATA & "\" & FILE_DUNGEONS) Then
         For Each xmlNode In xmlDoc.documentElement.childNodes
             Dim nodeAttrib As IXMLDOMAttribute
-            
+
             Dim oDungeon As DungeonData
             Set oDungeon = New DungeonData
-            
+
             For Each nodeAttrib In xmlNode.Attributes
                 Select Case LCase(nodeAttrib.nodeName)
-                
+
                     Case "id"
                         oDungeon.Id = CLng("&H" + nodeAttrib.Value)
-                        
+
                     Case "name"
                         oDungeon.Name = nodeAttrib.Value
-                        
+
                     Case "coords"
                         oDungeon.Info = nodeAttrib.Value
-                        
+
                 End Select
             Next nodeAttrib
-            
+
             If Not FindDungeon(oDungeon.Id) Then
                 'myDebug "Added Dungeon: " & oDungeon.Name & " (" & Hex(oDungeon.Id) & ")"
                 Call m_colDungeons.Add(oDungeon, CStr(oDungeon.Id))
             End If
-            
+
             Set oDungeon = Nothing
         Next xmlNode
         bRet = True
     Else
         myError "acConst.LoadDungeons - Failed to load XML file"
     End If
-    
+
 Fin:
     LoadDungeons = bRet
     Exit Function
@@ -700,41 +702,41 @@ End Function
 
 Public Function GetServerName(ByVal ServerID As eGameServer) As String
 Dim sRet As String
-    
+
     Select Case ServerID
         Case SV_WINTERSEBB
             sRet = "Wintersebb"
-            
+
         Case SV_MORNINGTHAW
             sRet = "Morningthaw"
-    
+
         Case SV_HARVESTGAIN
             sRet = "Harvestgain"
-            
+
         Case SV_FROSTFELL
             sRet = "Frostfell"
-            
+
         Case SV_SOLCLAIM
             sRet = "Solclaim"
-            
+
         Case SV_THISTLEDOWN
             sRet = "Thistledown"
-    
+
         Case SV_LEAFCULL
             sRet = "Leafcull"
-            
+
         Case SV_DARKTIDE
             sRet = "Darktide"
-            
+
         Case SV_VERDANTINE
             sRet = "Verdantine"
-            
+
         Case SV_ANY
             sRet = "Any"
-        
+
         Case Else
             sRet = "Unknown Server " & ServerID
-            
+
     End Select
 
     GetServerName = sRet
@@ -742,41 +744,41 @@ End Function
 
 Public Function GetShortServerName(ByVal ServerID As eGameServer) As String
 Dim sRet As String
-    
+
     Select Case ServerID
         Case SV_WINTERSEBB
             sRet = "WE"
-            
+
         Case SV_MORNINGTHAW
             sRet = "MT"
-    
+
         Case SV_HARVESTGAIN
             sRet = "HG"
-            
+
         Case SV_FROSTFELL
             sRet = "FF"
-            
+
         Case SV_SOLCLAIM
             sRet = "SC"
-            
+
         Case SV_THISTLEDOWN
             sRet = "TD"
-    
+
         Case SV_LEAFCULL
             sRet = "LC"
-            
+
         Case SV_DARKTIDE
             sRet = "DT"
-            
+
         Case SV_VERDANTINE
             sRet = "VT"
-            
+
         Case SV_ANY
             sRet = "ANY"
-        
+
         Case Else
             sRet = "UNKN" & ServerID
-            
+
     End Select
 
     GetShortServerName = sRet
@@ -784,44 +786,44 @@ End Function
 
 Public Function GetVBServerName(ByVal ServerID As eGameServer) As String
 Dim sRet As String
-    
+
     Select Case ServerID
         Case SV_WINTERSEBB
             sRet = "SV_WINTERSEBB"
-            
+
         Case SV_MORNINGTHAW
             sRet = "SV_MORNINGTHAW"
-    
+
         Case SV_HARVESTGAIN
             sRet = "SV_HARVESTGAIN"
-            
+
         Case SV_FROSTFELL
             sRet = "SV_FROSTFELL"
-            
+
         Case SV_SOLCLAIM
             sRet = "SV_SOLCLAIM"
-            
+
         Case SV_THISTLEDOWN
             sRet = "SV_THISTLEDOWN"
-    
+
         Case SV_LEAFCULL
             sRet = "SV_LEAFCULL"
-            
+
         Case SV_DARKTIDE
             sRet = "SV_DARKTIDE"
-            
+
         Case SV_VERDANTINE
             sRet = "SV_VERDANTINE"
-            
+
         Case SV_ANY
             sRet = "SV_ANY"
-        
+
         Case SV_NONE
             sRet = "SV_NONE"
-        
+
         Case Else
             sRet = "Unknown Serverid " & ServerID
-            
+
     End Select
 
     GetVBServerName = sRet
@@ -829,49 +831,49 @@ End Function
 
 Public Function GetServerIdByName(ByVal ServerName As String) As eGameServer
     Dim iRet As eGameServer
-    
+
     ServerName = LCase(ServerName)
-    
+
     Select Case ServerName
         Case "wintersebb"
             iRet = SV_WINTERSEBB
-            
+
         Case "morningthaw"
             iRet = SV_MORNINGTHAW
-    
+
         Case "harvestgain"
             iRet = SV_HARVESTGAIN
-            
+
         Case "frostfell"
             iRet = SV_FROSTFELL
-            
+
         Case "solclaim"
             iRet = SV_SOLCLAIM
-            
+
         Case "thistledown"
             iRet = SV_THISTLEDOWN
-    
+
         Case "leafcull"
             iRet = SV_LEAFCULL
-            
+
         Case "darktide"
             iRet = SV_DARKTIDE
-            
+
         Case "verdantine"
             iRet = SV_VERDANTINE
-        
+
         Case Else
             iRet = SV_NONE
-            
+
     End Select
-    
+
     'Assume it's darktide if server name couldn't be determined...
     If iRet = SV_NONE Then 'And InStr(1, ServerName, "darktide") Then
         iRet = SV_DARKTIDE
     End If
-    
+
     GetServerIdByName = iRet
-    
+
 End Function
 
 Public Function GetSpellName(ByVal lSpellID As Long) As String
@@ -883,7 +885,7 @@ On Error GoTo ErrorHandler
     Else
         sRet = ""
     End If
-    
+
 Fin:
     GetSpellName = sRet
     Exit Function
@@ -897,11 +899,11 @@ End Function
 Private Function LoadSpellNames(ByVal sPath As String) As Boolean
 On Error GoTo ErrorHandler
     Dim bRet As Boolean
-    
+
     Dim db As New DataFile
     Dim dat As clsDataEntry
     Dim i As Integer
-       
+
     If db.Load(sPath) Then
         For Each dat In db
             i = i + 1
@@ -911,14 +913,14 @@ On Error GoTo ErrorHandler
                 Call m_dicSpellNames.Add(lSpellID, dat.Param(TAG_SPELL_NAME))
             End If
         Next dat
-        
+
         myDebug "LoadSpellNames : loaded " & m_dicSpellNames.Count & "/" & i & " spellnames"
         bRet = True
     Else
         myError "acConst.LoadSpellNames : failed to load SpellNames from " & sPath
         bRet = False
     End If
-    
+
 Fin:
     Set db = Nothing
     Set dat = Nothing
