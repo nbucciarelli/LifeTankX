@@ -279,7 +279,7 @@ Public Enum eGameServer
     SV_FROSTFELL
     SV_SOLCLAIM
     SV_THISTLEDOWN
-    SV_LEAFCULL
+SV_REEFCULL
     SV_DARKTIDE
     SV_VERDANTINE
     NUM_AC_SERVERS
@@ -722,8 +722,8 @@ Dim sRet As String
         Case SV_THISTLEDOWN
             sRet = "Thistledown"
 
-        Case SV_LEAFCULL
-            sRet = "Leafcull"
+                                        Case SV_REEFCULL
+                                          sRet = "Reefcull"
 
         Case SV_DARKTIDE
             sRet = "Darktide"
@@ -764,8 +764,8 @@ Dim sRet As String
         Case SV_THISTLEDOWN
             sRet = "TD"
 
-        Case SV_LEAFCULL
-            sRet = "LC"
+                                        Case SV_REEFCULL
+            sRet = "RC"
 
         Case SV_DARKTIDE
             sRet = "DT"
@@ -806,8 +806,8 @@ Dim sRet As String
         Case SV_THISTLEDOWN
             sRet = "SV_THISTLEDOWN"
 
-        Case SV_LEAFCULL
-            sRet = "SV_LEAFCULL"
+                                        Case SV_REEFCULL
+                                          sRet = "SV_REEFCULL"
 
         Case SV_DARKTIDE
             sRet = "SV_DARKTIDE"
@@ -853,8 +853,8 @@ Public Function GetServerIdByName(ByVal ServerName As String) As eGameServer
         Case "thistledown"
             iRet = SV_THISTLEDOWN
 
-        Case "leafcull"
-            iRet = SV_LEAFCULL
+                                        Case "reefcull"
+                                          iRet = SV_REEFCULL
 
         Case "darktide"
             iRet = SV_DARKTIDE
